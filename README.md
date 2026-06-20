@@ -1,8 +1,7 @@
 # Daana — TOEFL, IELTS & more
 
 **Daana** (دانا — "wise") is a standalone, domain-portable exam-prep platform by Arian Academy. **TOEFL iBT (2026) is live now**;
-IELTS, GRE and Duolingo are planned. The current build replicates the **2026 TOEFL iBT** format
-(Reading · Listening · Writing · Speaking) and the on-screen exam layout.
+IELTS, GRE and Duolingo are planned. The current build replicates the **2026 TOEFL iBT** format (Reading · Listening · Writing · Speaking) and the on-screen exam layout.
 **Single file, no build step, no backend** — everything (HTML, CSS, JS, content) lives in `index.html`.
 Reading and Listening are auto-scored; Writing and Speaking are timed like the real exam.
 All content is original (not ETS material).
@@ -31,7 +30,7 @@ Fully static, so it hosts anywhere and moves domains with zero code changes.
 **Cloudflare Pages (recommended):**
 1. This repo is the source.
 2. Cloudflare dashboard → Pages → Connect to Git → pick this repo. Build command: *none*. Output dir: `/`.
-3. Add a custom domain: `ielts.mustafaarian.com` now.
+3. Add a custom domain: `daana.mustafaarian.com` now.
 4. Later, point a dedicated domain (e.g. `toeflprep.com`) at the same Pages project — nothing in the code changes.
 
 ## Structure
