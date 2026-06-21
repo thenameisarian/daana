@@ -3,468 +3,141 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Daana — TOEFL iBT 2026 · IELTS & more coming</title>
+<title>Daana — Access · TOEFL iBT 2026 by Arian Academy</title>
+<meta name="description" content="Daana — smart exam prep by Arian Academy. Follow on Instagram and join the WhatsApp channel to get your access code.">
 <style>
-:root{--ink:#28323b;--mut:#6b7785;--line:#dfe3e7;--teal:#1a8f93;--teald:#157074;--green:#16a06a;--greend:#0f8456;--yellow:#f7e9b8;--ybd:#ecd98c;--panel:#f5f7f8;--blue:#2b7cc9}
+:root{--ink:#28323b;--mut:#6b7785;--line:#dfe3e7;--teal:#1a8f93;--teald:#157074;--green:#16a06a;--greend:#0f8456;--panel:#f5f7f8}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.5}
-button{font-family:inherit;cursor:pointer}
-.hidden{display:none!important}
-/* ---- generic centered screens (home, directions, results) ---- */
-.center-wrap{max-width:860px;margin:0 auto;padding:36px 22px 70px}
-.h1{font-size:30px;font-weight:800;margin:.2em 0}
-.lead{color:var(--mut);font-size:15px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
-.scard{border:1px solid var(--line);border-radius:14px;padding:22px 14px;text-align:center;background:#fff;display:flex;flex-direction:column;align-items:center;gap:8px}
-.scard .ic{width:46px;height:46px;border-radius:50%;background:var(--panel);display:flex;align-items:center;justify-content:center;color:var(--teal)}
-.scard .nm{font-weight:700}
-.scard .mt{font-size:12px;color:var(--mut)}
-.btn{background:var(--green);color:#fff;border:none;border-radius:24px;padding:11px 26px;font-weight:800;font-size:14px}
+html,body{margin:0;min-height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:radial-gradient(1200px 500px at 50% -10%,#eafbf8,#fff 60%);line-height:1.55}
+.wrap{max-width:560px;margin:0 auto;padding:44px 20px 70px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;justify-content:center}
+.mk{width:34px;height:34px;border:1.5px solid var(--teal);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--teal);font-weight:800;font-size:18px}
+.kic{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);text-align:center;margin-top:6px}
+.badges{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:16px 0 6px}
+.badge{font-size:11.5px;font-weight:800;letter-spacing:.02em;padding:5px 12px;border-radius:999px}
+.badge.live{background:#1f9c8e;color:#eafff9}
+.badge.soon{border:1px solid var(--line);color:var(--mut)}
+h1{font-size:26px;font-weight:800;text-align:center;margin:18px 0 4px}
+.lead{color:var(--mut);text-align:center;font-size:14.5px;margin:0 auto;max-width:440px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:24px;box-shadow:0 8px 30px rgba(20,60,60,.06)}
+.steps{display:flex;flex-direction:column;gap:12px;margin:0 0 18px}
+.step{display:flex;gap:13px;align-items:flex-start}
+.num{flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:var(--panel);color:var(--teal);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.step .t{font-weight:700;font-size:14.5px}
+.step .d{color:var(--mut);font-size:13px}
+.social{display:flex;gap:10px;margin:4px 0 6px}
+.sbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:800;font-size:13.5px;padding:11px 12px;border-radius:12px;color:#fff}
+.sbtn.ig{background:linear-gradient(45deg,#f09433,#e6683c 30%,#dc2743 60%,#cc2366 90%)}
+.sbtn.wa{background:#25d366}
+.sbtn:hover{filter:brightness(.96)}
+.hr{height:1px;background:var(--line);margin:18px 0}
+label.fl{display:block;font-weight:700;font-size:13.5px;margin-bottom:7px}
+.codebox{display:flex;gap:8px}
+#code{flex:1;font-size:16px;letter-spacing:.06em;text-transform:uppercase;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;outline:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+#code:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,143,147,.15)}
+.btn{background:var(--green);color:#fff;border:none;border-radius:12px;padding:0 22px;font-weight:800;font-size:14.5px;cursor:pointer;white-space:nowrap}
 .btn:hover{background:var(--greend)}
-.btn.teal{background:var(--teal)}.btn.teal:hover{background:var(--teald)}
-.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:8px}
-.btn.ghost:hover{border-color:var(--teal)}
-.dir-card{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:18px}
-.dir-head{background:var(--teal);color:#fff;font-weight:800;padding:14px 20px;display:flex;align-items:center;gap:8px}
-.dir-body{padding:20px}.dir-body p{margin:0 0 12px;color:#374550}
-.banner-full{background:linear-gradient(180deg,#0e131b,#0e131b);}
-/* ---- test chrome ---- */
-#test{display:none;flex-direction:column;min-height:100vh}
-#test.on{display:flex}
-.thead{max-width:1180px;margin:0 auto;width:100%;padding:22px 28px 8px;display:flex;justify-content:space-between;align-items:flex-start}
-.thead .sec{font-size:26px;font-weight:800}
-.thead .sub{font-size:13px;color:var(--mut);margin-top:2px}
-.thead .right{display:flex;align-items:center;gap:22px;font-weight:700}
-.flag{display:flex;align-items:center;gap:6px;color:var(--mut);cursor:pointer}
-.flag.on{color:#e07b39}
-.clock{display:flex;align-items:center;gap:6px;color:var(--ink)}
-.clock .ht{font-size:11px;color:var(--teal);cursor:pointer;font-weight:600}
-.ibanner{background:var(--yellow);border-top:1px solid var(--ybd);border-bottom:1px solid var(--ybd);text-align:center;padding:15px;font-weight:700;color:#5b5530;font-size:17px;margin-top:8px}
-.tbody{flex:1;max-width:1180px;margin:0 auto;width:100%;padding:26px 28px 30px}
-.split{display:grid;grid-template-columns:1fr 1fr;gap:34px}
-.passcol{max-height:62vh;overflow:auto}
-.qcol{}
-.cloze-card,.center-card{max-width:760px;margin:0 auto;border:1px solid var(--line);border-radius:10px;padding:26px 30px}
-.cloze{font-size:18px;line-height:2.3;color:#33424d}
-.blank{display:inline-block;background:#d9dde1;border:none;border-radius:3px;height:22px;vertical-align:middle;font-size:15px;padding:0 4px;color:#28323b;outline:none}
-.blank:focus{box-shadow:0 0 0 2px var(--teal)}
-.email{border:2px solid var(--teal);border-radius:8px;overflow:hidden;max-width:520px;margin:0 auto;background:#fff}
-.email-sub{display:flex;align-items:stretch;background:#cdeef0;border-bottom:2px solid var(--teal)}
-.email-sub b{padding:10px 12px;border-right:2px solid var(--teal);white-space:nowrap}
-.email-sub span{padding:10px 12px;background:#fff;flex:1;font-size:14px}
-.email-body{padding:16px 18px;font-size:15px}
-.email-body p{margin:0 0 10px}
-.emailwrap .lbl{text-align:center;font-weight:800;font-size:18px;margin-bottom:14px;color:#3a4a55}
-.passage-title{font-weight:800;font-size:19px;margin-bottom:4px}
-.passage-text p{margin:0 0 12px;font-size:15.5px;color:#33424d}
-.qtext{font-size:18px;color:#46555f;margin-bottom:16px;font-weight:600}
-.opt{display:flex;gap:11px;align-items:flex-start;padding:10px 4px;cursor:pointer;border-radius:6px}
-.opt:hover{background:#f3f6f7}
-.opt input{margin-top:4px}
-.navbar{background:#e9ecee;border-top:1px solid var(--line)}
-.navin{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 28px;gap:12px}
-.navmid{color:#4a5762;font-weight:700}
-.nav-r{display:flex;gap:10px}
-.btn.prev{background:#fff;color:var(--teal);border:1px solid var(--teal);border-radius:24px;padding:10px 22px;font-weight:800}
-.btn.end{background:#6b3fa0}.btn.end:hover{background:#582f87}
-.btn.prev:disabled{opacity:.4;cursor:not-allowed}
-.chip{display:inline-block;background:#eef1f3;border:1px solid var(--line);border-radius:8px;padding:8px 13px;margin:4px;cursor:pointer;font-size:15px}
-.chip:hover{border-color:var(--teal)}.chip.used{opacity:.35;pointer-events:none}
-.built{min-height:46px;border:1px dashed var(--line);border-radius:8px;padding:11px;font-size:16px;margin:8px 0}
-.toolbar{display:flex;gap:6px;align-items:center;background:#eef1f3;border:1px solid var(--line);border-bottom:none;border-radius:8px 8px 0 0;padding:7px}
-.toolbar .tb{background:#fff;border:1px solid var(--line);border-radius:5px;padding:4px 10px;font-size:12px}
-.toolbar .wc{margin-left:auto;font-size:12px;color:var(--mut)}
-textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:0 0 8px 8px;padding:14px;font-size:15px;font-family:inherit;outline:none;resize:vertical}
-textarea:focus{border-color:var(--teal)}
-.tofrom{font-size:14px;color:#374550;margin-bottom:2px}
-.bigtimer{font-size:54px;font-weight:800;color:var(--teal);text-align:center;font-variant-numeric:tabular-nums}
-.note{background:#eef6f6;border:1px solid #cfe6e6;border-radius:8px;padding:10px 14px;font-size:13px;color:#3c5b5b;margin-bottom:14px}
-.post{border-left:3px solid var(--line);padding:6px 0 6px 12px;margin:8px 0}.post b{color:var(--teal)}
-.scoregrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
-.scell{background:var(--panel);border-radius:10px;padding:16px;text-align:center}
-.scell .n{font-size:26px;font-weight:800;color:var(--teal)}
-.brand{display:flex;align-items:center;gap:9px;font-weight:800}
-.mk{width:30px;height:30px;border:1.5px solid var(--teal);border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--teal);font-weight:800}
-.spanel{border:1px solid var(--line);border-radius:10px;padding:16px;min-height:300px;display:flex;flex-direction:column}
-.sprow{display:flex;justify-content:space-between;color:var(--mut);font-size:13px}
-.sprow .link{color:var(--mut)}
-.avs{flex:1;display:flex;align-items:center;justify-content:center;gap:22px;padding:16px 0}
-.av{width:110px;height:150px;border-radius:12px;background:#eaeff1;display:flex;align-items:center;justify-content:center;font-size:60px}
-.audiostate{text-align:center;color:var(--mut);font-weight:700;padding:9px;background:#eef1f3;border-radius:20px}
-.agtab{width:100%;border-collapse:collapse}.agtab td{border:1px solid var(--line);padding:8px 10px;font-size:14px}.agtab td:first-child{font-weight:700;white-space:nowrap;width:96px}
-.statusbar{padding:12px 16px;border-radius:8px;font-weight:700;margin-bottom:14px}
-.st-ok{background:#dff3e6;color:#1a7a4f}
-.st-bad{background:#fbe3e3;color:#a32d2d}
-.st-none{background:#f3e6c6;color:#7a5b16}
-.opt.rev-correct{background:#eafaf0;border:1px solid var(--green);border-radius:6px}
-.opt.rev-wrong{background:#fdeeee;border:1px solid #e2a5a5;border-radius:6px}
-.expcard{margin-top:18px;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
-.expcard .h{font-weight:800;color:var(--teal);margin-bottom:8px}
-.expcard p{margin:0 0 8px}
-.progress{height:5px;background:#e3e7ea}
-.progress>i{display:block;height:100%;background:var(--teal);transition:width .25s}
-.navov{position:fixed;inset:0;background:rgba(20,30,40,.5);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}
-.navpanel{background:#fff;border-radius:14px;max-width:560px;width:100%;padding:22px;max-height:80vh;overflow:auto}
-.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:8px;margin:14px 0}
-.ncell{height:44px;border-radius:8px;border:1px solid var(--line);background:#fff;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.ncell:hover{border-color:var(--teal)}
-.ncell.done{background:#e6f4ef;border-color:var(--green);color:#157a4f}
-.ncell.flag{background:#fdf3d0;border-color:#e0b94a;color:#8a6a16}
-.ncell.cur{outline:2px solid var(--teal);outline-offset:-2px}
-.leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mut)}
-.leg b{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
-.gauge{height:16px;border-radius:8px;background:linear-gradient(90deg,#e26b6b,#e8c15a,#5ec08a);position:relative;margin:12px auto;max-width:360px}
-.gauge .mk{position:absolute;top:-6px;width:4px;height:28px;background:#11161f;border-radius:2px;transform:translateX(-2px)}
-.sbar{height:8px;background:#e3e7ea;border-radius:5px;overflow:hidden;margin-top:6px}.sbar>i{display:block;height:100%;background:var(--teal)}
-.fab{position:fixed;right:18px;bottom:18px;z-index:40;background:var(--teal);color:#fff;border:none;border-radius:24px;padding:10px 16px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.15);cursor:pointer}
-.notespanel{position:fixed;right:18px;bottom:64px;z-index:40;width:280px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.16);padding:12px;display:none}
-.notespanel.on{display:block}.notespanel textarea{min-height:160px}
-.homestat{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:14px 0;color:var(--mut);font-size:13px}
-.homestat b{color:var(--ink)}
-.scard .desc{font-size:11px;color:var(--mut);line-height:1.35;min-height:30px}
-@media(max-width:760px){.cards{grid-template-columns:1fr 1fr}.split{grid-template-columns:1fr;gap:18px}.passcol{max-height:none}.thead .sec{font-size:21px}}
+.btn:disabled{opacity:.6;cursor:default}
+.msg{margin-top:12px;font-size:13.5px;padding:11px 13px;border-radius:10px;display:none}
+.msg.err{display:block;background:#fdecec;color:#a3271f;border:1px solid #f3c9c5}
+.msg.ok{display:block;background:#eafaf0;color:#0f8456;border:1px solid #bce8d2}
+.msg.info{display:block;background:#fff7e6;color:#8a6d1e;border:1px solid #efe0b3}
+.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:22px}
+.foot a{color:var(--teal);text-decoration:none}
+@media(max-width:480px){.social{flex-direction:column}h1{font-size:23px}}
 </style>
 </head>
 <body>
-<div id="home"></div>
-<div id="test"></div>
-<button class="fab" id="nfab" onclick="toggleNotes()" style="display:none">&#128221; Notes</button>
-<div class="notespanel" id="npanel"><div style="font-weight:700;margin-bottom:6px">Your notes (not scored)</div><textarea id="nta" placeholder="Jot quick notes while you work…"></textarea></div>
+<div class="wrap">
+  <div class="brand"><span class="mk">D</span><span>Daana</span></div>
+  <div class="kic">Study smart · by Arian Academy</div>
+  <div class="badges">
+    <span class="badge live">TOEFL iBT · live</span>
+    <span class="badge soon">IELTS · soon</span>
+    <span class="badge soon">GRE · soon</span>
+    <span class="badge soon">Duolingo · soon</span>
+  </div>
+  <h1>Members-only access</h1>
+  <p class="lead">Daana's full TOEFL iBT 2026 practice test is open to followers. Follow along, grab your code, and start practicing.</p>
+
+  <div class="card">
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div><div class="t">Follow Arian Academy</div><div class="d">Follow on Instagram and join the WhatsApp channel — that's where access codes are posted.</div></div></div>
+      <div class="step"><div class="num">2</div><div><div class="t">Find your code</div><div class="d">Look for the latest access code in the channel, or use the personal code you were sent.</div></div></div>
+      <div class="step"><div class="num">3</div><div><div class="t">Enter it below</div><div class="d">Your access stays active for 7 days on this device.</div></div></div>
+    </div>
+    <div class="social">
+      <a class="sbtn ig" id="igLink" href="#" target="_blank" rel="noopener">&#128247; Instagram</a>
+      <a class="sbtn wa" id="waLink" href="#" target="_blank" rel="noopener">&#128172; WhatsApp Channel</a>
+    </div>
+    <div class="hr"></div>
+    <form id="gate" autocomplete="off">
+      <label class="fl" for="code">Access code</label>
+      <div class="codebox">
+        <input id="code" name="code" placeholder="DAANA-XXXX-XXXX" autocapitalize="characters" spellcheck="false" inputmode="text" aria-label="Access code">
+        <button class="btn" id="go" type="submit">Unlock</button>
+      </div>
+      <div class="msg" id="msg"></div>
+    </form>
+  </div>
+
+  <div class="foot">Don't have a code yet? Follow above — new codes are posted regularly.<br>
+    <span id="extra"></span>
+  </div>
+</div>
+
 <script>
-/* ---------- DATA (original; 2026 task types, layout per Magoosh/TestReady) ---------- */
-const CL = (s)=>({t:s}); const BK=(pre,ans)=>({pre,ans});
-const DATA = {
- reading:{ name:"Reading", minutes:35, instrDir:"In this section you will read passages and answer questions. Move with Next; return with Previous. Your notes are not scored.",
-  tasks:[
-   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[
-     CL("On a summer night, a city can be several degrees war"),BK("war","mer"),CL(" than the farmland around it. Scientists call this the urban heat is"),BK("is","land"),CL(" effect. Hard surfaces like asphalt and con"),BK("con","crete"),CL(" absorb heat in the day and rele"),BK("rele","ase"),CL(" it slowly at ni"),BK("ni","ght"),CL(". Planting trees and painting roofs white can red"),BK("red","uce"),CL(" the warmth and make cities more liv"),BK("liv","able"),CL(".") ]},
-   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[
-     CL("Economics is the study of how societies use scarce resources to produce goods and dis"),BK("dis","tribute"),CL(" them among people. Economists cre"),BK("cre","ate"),CL(" models t"),BK("t","o"),CL(" understand h"),BK("h","ow"),CL(" economic systems w"),BK("w","ork"),CL(" and pre"),BK("pre","dict"),CL(" future tr"),BK("tr","ends"),CL(". They exa"),BK("exa","mine"),CL(" the ways policies shape ma"),BK("ma","rkets"),CL(".") ]},
-   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Fitness class", body:["Dear Mr. Garcia,","There has been a change in the fitness class that you registered for at HealthHub Gym. The beginners’ weight-training class will still meet on Monday and Wednesday, but not on Friday. We will adjust your automatic payments accordingly.","Regards,","Laura Bennett"]},
-     qs:[ {q:"What is the class about?",opts:["Weight-training for beginners","Advanced aerobics","Riding stationary bikes","Breathing exercises"],a:0,exp:"The email names the class directly as the beginners' weight-training class, so A is correct. Aerobics, stationary bikes, and breathing exercises are never mentioned."},
-          {q:"On what day will the class no longer meet?",opts:["Monday","Tuesday","Wednesday","Friday"],a:3,exp:"The email says the class will still meet Monday and Wednesday but not on Friday, so D (Friday) is the day it stops."} ]},
-   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Upcoming enhancements to project management software", body:["Dear Mr. Tanaka,","I hope this message finds you well. I’m writing to inform you of upcoming updates to our project management software, scheduled to go live next Thursday. These enhancements are designed to improve user experience.","Key improvements include: customizable dashboards for personalized project views; a redesigned, more intuitive interface for easier navigation; and new collaboration tools, including real-time editing and integrated messaging to support teamwork.","Please note that a scheduled system downtime will occur from 2:00 a.m. to 4:00 a.m. (local time) on Thursday to implement these changes. We recommend informing your team and adjusting any time-sensitive activities accordingly.","Regards,","Lisa Chen"]},
-     qs:[ {q:"What is the main focus of the software updates?",opts:["Expanding the number of projects the software can manage","Analyzing how teams work together","Increasing the software’s speed","Making the software easier for individuals to use"],a:3,exp:"The email says the changes are designed to improve user experience, and the examples center on ease of use, so D. Speed and project capacity are not claimed, and analyzing teamwork is only one feature."},
-          {q:"It can be inferred that the current software lacks which of the following?",opts:["The ability to track tasks team members perform","The ability for team members to contact one another within the same system","A user interface for navigation","A way to inform users of tasks"],a:1,exp:"New integrated messaging is listed as an improvement, which implies users currently cannot message each other inside the system, so B. Task tracking and a navigation interface already exist."},
-          {q:"What can be inferred about the downtime period?",opts:["Employees will not be able to use the system during that time","The period will be longer than expected","The period has already been adjusted once","Lisa Chen will inform employees of the exact time"],a:0,exp:"Downtime from 2 to 4 a.m. is needed to install the changes, so the system will be unavailable then (A). Nothing says the window grew, was changed before, or that an exact time will be re-sent."} ]},
-   {type:"agenda", instr:"Choose the option that best answers the question.", source:{title:"Company Training Agenda", rows:[["9:00 a.m.","Welcome and Introduction"],["10:00 a.m.","Safety Procedures"],["11:00 a.m.","Team Building Exercises"],["1:00 p.m.","Technical Skills Workshop"],["3:00 p.m.","Q&A and Closing"]]},
-     qs:[ {q:"At what time will participants learn about safety?",opts:["9:00 a.m.","10:00 a.m.","11:00 a.m.","1:00 p.m."],a:1,exp:"Scan the agenda for the item about safety. \"Safety Procedures\" is listed at 10:00 a.m., so B is correct. 9:00 is Welcome, 11:00 is Team Building, and 1:00 is the Technical Skills Workshop."},
-          {q:"What is the final item on the agenda?",opts:["Welcome and Introduction","Technical Skills Workshop","Q&A and Closing","Team Building Exercises"],a:2,exp:"The last row is 3:00 p.m. Q&A and Closing, so C is the final item."} ]},
-   {type:"chat", instr:"Choose the option that best answers the question.", msgs:[
-     {who:"Martin Blake",time:"9:12 A.M.",text:"Hey everyone! The final exam is coming up soon for our cultural anthropology class. What do you all think of forming a study group?"},
-     {who:"James Patel",time:"9:15 A.M.",text:"Great idea! I always find it helpful to study with others. Plus, my notes are kind of a mess. Professor Martin speaks very quickly! When should we meet?"},
-     {who:"Susan Wong",time:"9:16 A.M.",text:"Honestly, I prefer to study on my own. But I’d be happy to make copies of my notes to share with everyone."},
-     {who:"Martin Blake",time:"9:17 A.M.",text:"I get that, Susan! No worries. I’ll try to keep us all focused. And thanks for the notes offer."},
-     {who:"Agnes Grant",time:"9:26 A.M.",text:"Let’s meet at 4 P.M. in front of the library on Tuesday. I know a room we can use."} ],
-     qs:[ {q:"At 9:16 A.M., what does Susan Wong imply when she writes, “Honestly, I prefer to study on my own”?",opts:["She will not join a study group.","She is not concerned about the exam.","She admires Professor Martin.","She is unable to meet on Tuesday."],a:0,exp:"Saying she prefers to study alone signals she will not join the group (A), even though she still offers to share her notes. She does not say she is unconcerned, admiring, or busy Tuesday."},
-          {q:"What can be concluded about James Patel?",opts:["He has prior knowledge of anthropology.","He is from Martin’s hometown.","He will offer his notes to the group.","He has difficulty following the professor’s lectures."],a:3,exp:"James says the professor speaks very quickly and his notes are a mess, showing he struggles to follow the lectures (D). He never claims prior knowledge, a hometown link, or offers his own notes."},
-          {q:"What does Martin Blake indicate he will do?",opts:["Make copies of Susan’s notes","Study separately with Susan","Keep the group focused on studying","Arrange a meeting room"],a:2,exp:"Martin writes that he will try to keep everyone focused (C). Susan offers the notes and Agnes arranges the room."} ]},
-   {type:"passage", instr:"Choose the option that best answers the question.", source:{title:"Light in the Deep Sea", paras:[
-     "In the darkness of the deep ocean, many animals make their own light. This ability, called bioluminescence, is produced by a chemical reaction inside the animal’s body, in which a molecule called luciferin reacts with oxygen and releases energy as light.",
-     "The light serves many purposes. Some fish dangle a glowing lure to attract prey toward their mouths. Others release a bright cloud to confuse a predator and escape, much as a squid uses ink near the surface. Still others use patterns of light to find and signal mates in water where sunlight never reaches.",
-     "Because the deep sea is the largest habitat on Earth, scientists believe bioluminescence may be the most common form of communication on the planet. Yet it remains hard to study: the animals are fragile, the pressure is crushing, and bringing them to the surface alive is nearly impossible." ]},
-     qs:[ {q:"What produces bioluminescence?",opts:["sunlight stored in the body","a chemical reaction involving luciferin and oxygen","electricity from the water","reflected moonlight"],a:1,exp:"Paragraph 1 says the light comes from a chemical reaction in which luciferin reacts with oxygen, so B is correct. The passage never mentions stored sunlight, electricity, or reflected moonlight."},
-          {q:"Why might a deep-sea fish use a glowing lure?",opts:["to attract prey","to warm itself","to find the surface","to clean its body"],a:0,exp:"Paragraph 2 says some fish dangle a glowing lure to attract prey, so A. Warmth, finding the surface, and cleaning are not mentioned."},
-          {q:"The bright cloud released by some animals is compared to",opts:["a squid’s ink","a fishing net","a lightning bolt","a flower"],a:0,exp:"The passage compares the bright cloud to the way a squid uses ink, so A."},
-          {q:"Why do scientists think bioluminescence may be very common?",opts:["it is easy to study","the deep sea is the largest habitat on Earth","it is used only by fish","it works in sunlight"],a:1,exp:"Scientists reason that because the deep sea is the largest habitat on Earth, this kind of communication may be the most common (B). It is described as hard to study and not limited to fish or sunlight."},
-          {q:"Why is bioluminescence hard to study?",opts:["the animals glow too brightly","the animals are fragile and the pressure is crushing","it only happens at the surface","there are too few animals"],a:1,exp:"The last paragraph says the animals are fragile and the pressure is crushing, so B. They are not too bright or too few, and it does not only happen at the surface."},
-          {kind:"insert", sentence:"Some believe bioluminescence could be used to monitor water pollution or the health of crops.", q:"There are four places [▪] where the sentence could be added. Where does it best fit?", opts:["[▪] (A)","[▪] (B)","[▪] (C)","[▪] (D)"], a:3,exp:"The new sentence introduces future, applied uses such as monitoring pollution or crop health, so it fits best at the end, slot D, after the discussion of why the topic matters, not in the middle of explaining how or why animals glow."} ]}
-  ]},
- listening:{ name:"Listening", minutes:18, instrDir:"You will hear short statements, conversations, announcements, and academic talks, then answer. Three task types: Listen and Choose a Response, Conversations, and Announcements & Academic Talks. You cannot return to previous questions.",
-  tasks:[
-   {type:"lchoose", instr:"Choose the option that best answers the question.", audio:"How often do you exercise?", opts:["Walking is good for your health.","I ride my bike daily.","About three times a week.","I always count my steps."], a:2,exp:"How often asks for frequency, so the direct reply is about three times a week (C). The other options give a benefit, a single activity, or a habit rather than answering how often."},
-   {type:"lchoose", instr:"Choose the option that best answers the question.", audio:"Could you tell me where the lecture is being held?", opts:["At 10:00 a.m.","Two mornings a week.","In Smith Hall.","Research methods."], a:2,exp:"Where asks for a place, and the only location offered is In Smith Hall (C). The others give a time, a frequency, and a course topic."},
-   {type:"lchoose", instr:"Choose the option that best answers the question.", audio:"I am sorry I am late. The bus did not come.", opts:["That is a nice bus.","No problem, we just started.","You should buy a car.","The bus is yellow."], a:1,exp:"An apology for being late is best met with reassurance: No problem, we just started (B). The other replies comment on the bus or give unrelated advice."},
-   {type:"lchoose", instr:"Choose the option that best answers the question.", audio:"Would you like to join us for the study session on Friday?", opts:["Friday is the sixth.","Sure, what time?","I studied yesterday.","The session is over."], a:1,exp:"This is an invitation, so the natural reply accepts and asks for details: Sure, what time? (B). The others talk about the date, the past, or say it is over."},
-   {type:"lconv", instr:"Choose the option that best answers the question.", audio:"Man: Hey, did you decide where to go for the break? Woman: I am thinking Hawaii, but the hotels near the beach are so expensive. Man: What about that swimming class you mentioned? Woman: Oh, that is separate. This time I just want to relax on the beach. Man: Then look for a hotel a little inland; they are cheaper and you can still walk to the water.",
-     qs:[ {q:"What is the conversation mainly about?",opts:["A beach party","A vacation destination","A hotel in Hawaii","A swimming class"],a:1,exp:"The speakers discuss where to go for the break and beach hotels, so the topic is a vacation destination (B). The swimming class comes up only briefly."},
-          {q:"What does the man suggest the woman do?",opts:["Take a swimming class","Stay at a beachfront hotel","Choose a hotel further inland","Cancel the trip"],a:2,exp:"The man advises choosing a hotel a little inland that is cheaper but still walkable to the water (C). He does not push the swimming class, a beachfront hotel, or cancelling."} ]},
-   {type:"lannounce", instr:"Choose the option that best answers the question.", audio:"Attention, students. For tomorrow's seminar, the assigned reading has been posted online. You can access it by clicking the link in the course syllabus. Please read it before class, as we will discuss it in small groups. Paper copies are also available in the library if you prefer.",
-     qs:[ {q:"How can the students access the assigned reading?",opts:["Click a link in the course syllabus","Log in to the library website","Email the instructor","Download it from a public platform"],a:0,exp:"The announcement says to click the link in the course syllabus (A). Paper copies are in the library, but that is not a website login, and email or public platforms are not mentioned."},
-          {q:"What will students do in class?",opts:["Take a quiz","Discuss the reading in small groups","Watch a video","Give presentations"],a:1,exp:"Students are told they will discuss the reading in small groups (B). No quiz, video, or presentations are mentioned."} ]},
-   {type:"ltalk", instr:"Choose the option that best answers the question.", audio:"Today we will look at how migrating birds find their way. They use three main cues. First, the sun, combined with an internal clock, as a compass. Second, the stars; some night-flying birds orient by star patterns. Third, the Earth's magnetic field, which they can sense like a built-in map. Often birds switch between these cues, relying on the magnetic sense when clouds cover the sky.",
-     qs:[ {q:"What is the talk mainly about?",opts:["why birds migrate","how migrating birds navigate","bird species","star patterns"],a:1,exp:"The talk explains the three cues migrating birds use to find their way, so it is about how they navigate (B), not why they migrate or specific species."},
-          {q:"How do birds use the sun?",opts:["they wait for noon","with an internal clock, as a compass","they ignore it","only at sunset"],a:1,exp:"The talk says birds use the sun together with an internal clock, as a compass (B)."},
-          {q:"When do birds rely on the magnetic sense?",opts:["never","when clouds cover the sky","only in daylight","only near the coast"],a:1,exp:"The talk says birds rely on the magnetic sense when clouds cover the sky (B)."} ]}
-  ]},
- writing:{ name:"Writing", minutes:23, instrDir:"You will complete three writing tasks: Build a Sentence, Write an Email, and Write for an Academic Discussion.",
-  tasks:[
-   {type:"build", instr:"Put the words in the correct order to form a sentence.", items:[
-     {words:["will","The committee","the results","announce","next week"],answer:"The committee will announce the results next week"},
-     {words:["find","Many students","extremely useful","the new library"],answer:"Many students find the new library extremely useful"},
-     {words:["could not","because","She","attend","she was ill"],answer:"She could not attend because she was ill"},
-     {words:["explained","Our teacher","very clearly","the problem"],answer:"Our teacher explained the problem very clearly"},
-     {words:["opens","The museum","every morning","at nine"],answer:"The museum opens at nine every morning"},
-     {words:["have lived","They","for ten years","in this city"],answer:"They have lived in this city for ten years"},
-     {words:["finished","He","before the deadline","the report"],answer:"He finished the report before the deadline"},
-     {words:["collected","The scientists","data","from many countries"],answer:"The scientists collected data from many countries"},
-     {words:["should reduce","We","we use","the amount of plastic"],answer:"We should reduce the amount of plastic we use"},
-     {words:["will affect","The new policy","every department"],answer:"The new policy will affect every department"} ]},
-   {type:"email_write", instr:"Read the situation and write an email.", minutes:7, to:"editor@sunshinepoetrymagazine.com", subject:"Problem using submission form",
-     prompt:"A new poetry magazine has asked its readers for submissions, and you decided to submit two of your poems. However, you had a problem using the online submission form, and you are not certain that your submissions were received. Write an email to the editor of the magazine. In your email, do the following:",
-     bullets:["Tell the editor what you like about the new magazine.","Describe the problem you experienced.","Ask about the status of your submissions."], close:"Write as much as you can and in complete sentences." },
-   {type:"discussion", instr:"Write a post responding to the discussion.", minutes:10,
-     professor:"Dr. Lee: This week we’re discussing technology in schools. Some schools give every student a laptop or tablet. Do the benefits of giving every student a device outweigh the drawbacks? Why or why not?",
-     posts:[ {who:"Maria",text:"Devices are essential — students can access unlimited resources, learn at their own pace, and build digital skills."},
-             {who:"Tomas",text:"I’m not sure. Devices are a big distraction, and not every family has reliable internet at home."} ],
-     close:"An effective response will contain at least 100 words." }
-  ]},
- speaking:{ name:"Speaking", minutes:8, instrDir:"You will complete two speaking tasks: Listen and Repeat, and Take an Interview. Speak clearly into your microphone. You cannot return to previous questions.",
-  tasks:[
-   {type:"repeat", instr:"Listen and repeat only once.", scenario:"You are welcoming new employees to the office kitchen. Listen to the speaker and repeat what they say. You will hear each statement once.", statements:[
-     "Welcome to the office.",
-     "The coffee machine is over there.",
-     "Please wash your cup after using it.",
-     "We keep the milk in the refrigerator on the left.",
-     "If the machine runs out of coffee, the extra bags are in the cabinet above.",
-     "On Fridays, the team usually shares breakfast here at nine in the morning.",
-     "Whenever you take the last of anything, please add it to the shopping list on the door." ]},
-   {type:"interview", instr:"Please speak for up to 45 seconds after the question has been read.", scenario:"You have agreed to take part in a research study about teamwork. A researcher will ask you a few questions. There is no preparation time; speak for up to 45 seconds after each question.", qs:[
-     "How do you usually spend your free time?",
-     "Do you prefer to plan your day in advance or decide as you go? Why?",
-     "Describe a subject you enjoyed studying and explain why.",
-     "When working in a group, do you prefer to lead or to support others? Why?" ]}
-  ]}
+/* ===== EDIT THESE TWO LINKS ===== */
+const CONFIG = {
+  instagram: "https://www.instagram.com/arianismyname/",
+  whatsapp:  "https://whatsapp.com/channel/0029VbCe7n22v1J00hGDUW2J",
+  // Optional: add more follow links here as { label, url } and they'll appear in the footer.
+  extraLinks: [{ label: "Threads", url: "https://www.threads.net/@arianismyname" }]
 };
+/* ================================= */
 
-/* ---------- state + helpers ---------- */
-let flow=[], secIdx=0, screens=[], si=0, ans={}, flags={}, timerInt=null, secTimer=0, hideTime=false, mode="home", testStartedAt=0;
-const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
-const fmt=s=>{const m=Math.floor(s/60),x=s%60;return m+":"+String(x).padStart(2,"0");};
-function tts(text){ if("speechSynthesis"in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=0.96;u.lang="en-US";window.speechSynthesis.speak(u);} }
-function homeEl(){return document.getElementById("home");}
-function testEl(){return document.getElementById("test");}
-
-function showHome(){
- if(timerInt)clearInterval(timerInt); if(window.speechSynthesis)speechSynthesis.cancel(); mode="home"; setFab(false);
- testEl().classList.remove("on"); testEl().innerHTML="";
- homeEl().style.display="block";
- const desc={reading:"Complete the Words, daily-life texts, and academic passages.",listening:"Short responses, conversations, announcements, and academic talks.",speaking:"Listen and repeat, then a short interview.",writing:"Build a sentence, write an email, join a discussion."};
- homeEl().innerHTML=`<div class="center-wrap">
-   <div class="brand"><span class="mk">D</span><span>Daana</span></div>
-   <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-top:4px">Study smart · by Arian Academy</div>
-   <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px">
-     <span style="font-size:12px;font-weight:800;letter-spacing:.03em;padding:5px 13px;border-radius:999px;background:#1f9c8e;color:#eafff9">TOEFL iBT · live</span>
-     <span style="font-size:12px;font-weight:600;padding:5px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.16);color:#9aa3a0">IELTS · soon</span>
-     <span style="font-size:12px;font-weight:600;padding:5px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.16);color:#9aa3a0">GRE · soon</span>
-     <span style="font-size:12px;font-weight:600;padding:5px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.16);color:#9aa3a0">Duolingo · soon</span>
-   </div>
-   <h1 class="h1" style="margin-top:14px">TOEFL iBT® Full Practice Test — 2026</h1>
-   <p class="lead">All four sections in the real 2026 format, with instant scoring and answer explanations. Original practice material. <span style="opacity:.7">More exams — IELTS, GRE, Duolingo — are on the way.</span></p>
-   <div class="homestat"><span><b>4</b> sections</span><span><b>~90</b> min</span><span>band <b>1.0–6.0</b></span><span><b>Auto-scored</b> Reading &amp; Listening</span></div>
-   <div style="margin-top:6px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="begin(['reading','listening','writing','speaking'])">Start Full Practice Test</button><button class="btn ghost" onclick="showTips()">Tips &amp; Strategy</button></div>
-   <p class="lead" style="margin-top:24px">Or practice one section:</p>
-   <div class="cards">
-     ${["reading","listening","speaking","writing"].map(k=>`<div class="scard"><div class="ic">${ICON[k]}</div><div class="nm">${DATA[k].name}</div><div class="mt">${DATA[k].tasks.length} tasks · ${DATA[k].minutes} min</div><div class="desc">${desc[k]}</div><button class="btn" style="margin-top:8px;padding:8px 20px" onclick="begin(['${k}'])">Start</button></div>`).join("")}
-   </div></div>`;
-}
-const ICON={reading:"&#128214;",listening:"&#127911;",speaking:"&#127908;",writing:"&#9999;&#65039;"};
-const TIPS=[
- {h:"How the 2026 test works",items:["The test is about 90 minutes: Reading, Listening, Writing, then Speaking.","Reading and Listening are adaptive — they get harder or easier based on how you do.","Scores use a 1.0–6.0 band (with a 0–120 estimate). In Listening you cannot return to earlier questions.","Keep moving — the clock does not stop. If unsure, eliminate two wrong options, then choose."]},
- {h:"Reading",items:["Complete the Words: read the whole sentence first; use grammar (plural, tense) and the letters shown. The blank length hints the word length.","Daily Life (email, agenda, text chain): scan for the exact detail asked — watch dates, times, and names. \"Infer\" questions need reading between the lines.","Academic Passage: get the main idea first. For vocabulary, use the surrounding context. For EXCEPT questions, cross off what IS stated. For insert-text, match linking words (this, however, for example) to the slot."]},
- {h:"Listening",items:["Take notes as you listen — who is speaking, the problem, and the decision or main point.","Listen and Choose a Response: notice the function (a question? a complaint? an offer?) and pick the natural reply.","Conversations: note the problem and the solution the speakers agree on.","Talks: catch the topic, the structure (first… second… third…), and any examples."]},
- {h:"Writing",items:["Build a Sentence: find the subject and verb first; put time and place phrases near the end; read it back in your head.","Write an Email: answer every bullet, use a greeting and a sign-off, write 100–150 words in complete sentences.","Academic Discussion: state a clear opinion, give one reason and one example, and react to a classmate's point. Aim for 100–130 words."]},
- {h:"Speaking",items:["Listen and Repeat: listen to the whole statement, then repeat it naturally and in one go — you get one chance.","Take an Interview: there is no prep time. Start with a direct answer, then a reason, then an example. Keep talking for the full 45 seconds.","A simple structure works: Point → because → for example."]}
-];
-function showTips(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="tips"; setFab(false); homeEl().style.display="none"; testEl().classList.add("on");
- testEl().innerHTML=`<div class="center-wrap"><div class="brand"><span class="mk">D</span><span>Daana</span></div>
-   <h1 class="h1" style="margin-top:16px">Tips &amp; Strategy</h1>
-   <p class="lead">General strategies for the 2026 TOEFL iBT. Per-question explanations are added as each test's content is built.</p>
-   ${TIPS.map(b=>`<div class="dir-card" style="margin-top:16px"><div class="dir-head">${b.h}</div><div class="dir-body"><ul style="margin:0;padding-left:18px">${b.items.map(i=>`<li style="margin-bottom:8px">${i}</li>`).join("")}</ul></div></div>`).join("")}
-   <div style="text-align:center;margin-top:20px"><button class="btn teal" onclick="showHome()">Back to start</button></div></div>`;
+document.getElementById("igLink").href = CONFIG.instagram;
+document.getElementById("waLink").href = CONFIG.whatsapp;
+if (CONFIG.extraLinks && CONFIG.extraLinks.length) {
+  document.getElementById("extra").innerHTML = "Also: " + CONFIG.extraLinks
+    .map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join(" · ");
 }
 
-function begin(f){flow=f;secIdx=0;ans={};flags={};bsPick={};testStartedAt=Date.now();directions();}
-function directions(){
- const sec=DATA[flow[secIdx]];
- homeEl().style.display="none"; testEl().classList.add("on");
- testEl().innerHTML=`<div class="center-wrap"><div class="dir-card">
-   <div class="dir-head">${sec.name} — Test Directions</div>
-   <div class="dir-body"><p>${esc(sec.instrDir)}</p><p style="color:#6b7785;font-size:13px">Time: about ${sec.minutes} minutes.</p></div>
- </div><div style="text-align:center;margin-top:20px"><button class="btn teal" onclick="runSection()">Start</button></div></div>`;
-}
-function runSection(){ buildScreens(DATA[flow[secIdx]]); si=0; secTimer=DATA[flow[secIdx]].minutes*60; startTimer(); render(); }
-function startTimer(){ if(timerInt)clearInterval(timerInt); timerInt=setInterval(()=>{secTimer--; const t=document.getElementById("clk"); if(t&&!hideTime)t.textContent=fmt(Math.max(0,secTimer)); if(secTimer<=0){clearInterval(timerInt);finishSection();}},1000); }
+const msg = document.getElementById("msg");
+function showMsg(text, kind){ msg.className = "msg " + kind; msg.textContent = text; }
 
-function buildScreens(sec){
- screens=[]; const T=sec.tasks.length;
- sec.tasks.forEach((task,ti)=>{
-   if(task.type==="cloze"){ const n=task.parts.filter(p=>p.ans).length; screens.push({sec,task,ti,T,label:`Questions 1–${n} for Task ${ti+1} of ${T}`}); }
-   else if(task.type==="email"||task.type==="chat"||task.type==="passage"||task.type==="agenda"){ task.qs.forEach((q,qi)=>screens.push({sec,task,ti,T,qi,label:`Question ${qi+1} for Task ${ti+1} of ${T}`})); }
-   else if(task.type==="lchoose"){ screens.push({sec,task,ti,T,label:`Task ${ti+1} of ${T}`}); }
-   else if(task.type==="lconv"||task.type==="lannounce"||task.type==="ltalk"){ task.qs.forEach((q,qi)=>screens.push({sec,task,ti,T,qi,label:`Question ${qi+1} for Task ${ti+1} of ${T}`})); }
-   else if(task.type==="build"){ task.items.forEach((it,qi)=>screens.push({sec,task,ti,T,qi,label:`Question ${qi+1} for Task ${ti+1} of ${T}`})); }
-   else { screens.push({sec,task,ti,T,label:`Task ${ti+1} of ${T}`}); }
- });
-}
+// If middleware bounced the user here.
+const q = new URLSearchParams(location.search);
+if (q.get("locked") === "expired") showMsg("Your 7-day access expired. Enter a new code to continue.", "info");
+else if (q.get("locked") === "1") showMsg("Please enter your access code to continue.", "info");
 
-/* ---------- render shell ---------- */
-function render(){
- window.scrollTo(0,0); mode="run"; setFab(true);
- const sc=screens[si]; const sec=sc.sec;
- const flagged=flags[si]?"on":"";
- testEl().innerHTML=`
-  <div class="thead"><div><div class="sec">${sec.name}</div><div class="sub">Arian Academy · practice question</div></div>
-   <div class="right">
-     <div class="flag ${flagged}" onclick="toggleFlag()">&#9873; Flag</div>
-     <div class="clock">&#9201; <span id="clk">${hideTime?"":fmt(Math.max(0,secTimer))}</span> <span class="ht" onclick="toggleHide()">${hideTime?"Show Time":"Hide Time"}</span></div>
-   </div></div>
-  <div class="progress"><i style="width:${Math.round((si+1)/screens.length*100)}%"></i></div>
-  <div class="ibanner">${esc(sc.task.instr)}</div>
-  <div class="tbody">${body(sc)}</div>
-  <div class="navbar"><div class="navin">
-     <button class="btn ghost" onclick="reviewSection()">Review Section</button>
-     <div class="navmid">${sc.label}</div>
-     <div class="nav-r"><button class="btn prev" onclick="prev()" ${si===0?"disabled":""}>Previous</button>
-       <button class="btn ${(si===screens.length-1 && secIdx!==flow.length-1)?'end':''}" onclick="next()">${si!==screens.length-1?"Next":(secIdx===flow.length-1?"Submit":"End Section")}</button></div>
-  </div></div>`;
- if(sc.task.type==="build") renderBuild();
- if(["lchoose","lconv","lannounce","ltalk"].includes(sc.task.type)) setTimeout(()=>playListen(sc),350);
-}
-function toggleFlag(){flags[si]=!flags[si];document.querySelector(".flag").classList.toggle("on");}
-function toggleHide(){hideTime=!hideTime;render();}
-function answeredState(i){ const sc=screens[i],t=sc.task,sk=flow[secIdx];
- if(t.type==="cloze"){ let any=false,bi=0; t.parts.forEach(p=>{if(p.ans){if((ans[sk+"-"+sc.ti+"-b"+bi]||"")!=="")any=true; bi++;}}); return any; }
- if(["email","agenda","chat","passage","lconv","lannounce","ltalk"].includes(t.type)) return ans[sk+"-"+sc.ti+"-"+sc.qi]!=null;
- if(t.type==="lchoose") return ans[sk+"-"+sc.ti+"-0"]!=null;
- if(t.type==="build") return (bsPick[sc.qi]||[]).length>0;
- if(t.type==="email_write") return !!ans["w-email"]; if(t.type==="discussion") return !!ans["w-disc"];
- return false; }
-function reviewSection(){ const cells=screens.map((sc,i)=>{ let cls="ncell"; if(i===si)cls+=" cur"; if(flags[i])cls+=" flag"; else if(answeredState(i))cls+=" done"; return `<div class="${cls}" onclick="jumpTo(${i})">${i+1}</div>`; }).join("");
- const ov=document.createElement("div"); ov.className="navov"; ov.id="navov"; ov.onclick=(e)=>{if(e.target===ov)closeNav();};
- ov.innerHTML=`<div class="navpanel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0;font-size:18px">Review — ${DATA[flow[secIdx]].name}</h2><button class="btn ghost" onclick="closeNav()">Close</button></div><div class="navgrid">${cells}</div><div class="leg"><span><b style="background:#e6f4ef;border:1px solid var(--green)"></b>Answered</span><span><b style="background:#fdf3d0;border:1px solid #e0b94a"></b>Flagged</span><span><b style="background:#fff;border:1px solid var(--line)"></b>Not answered</span></div></div>`;
- document.body.appendChild(ov); }
-function closeNav(){ const o=document.getElementById("navov"); if(o)o.remove(); }
-function jumpTo(i){ closeNav(); si=i; render(); }
-
-/* ---------- bodies ---------- */
-function body(sc){
- const t=sc.task;
- if(t.type==="cloze") return clozeBody(sc);
- if(t.type==="email") return `<div class="split"><div class="passcol"><div class="emailwrap"><div class="lbl">Read an email.</div>${emailHTML(t.source)}</div></div><div class="qcol">${qBlock(sc)}</div></div>`;
- if(t.type==="agenda") return `<div class="split"><div class="passcol"><div class="emailwrap"><div class="lbl">Read an agenda.</div>${agendaHTML(t.source)}</div></div><div class="qcol">${qBlock(sc)}</div></div>`;
- if(t.type==="passage") return `<div class="split"><div class="passcol"><div class="passage-title">${esc(t.source.title)}</div><div class="passage-text">${t.source.paras.map(p=>`<p>${esc(p)}</p>`).join("")}</div></div><div class="qcol">${qBlock(sc)}</div></div>`;
- if(t.type==="chat") return `<div class="split"><div class="passcol"><div class="emailwrap"><div class="lbl">Read a text chain.</div>${chatHTML(t.msgs)}</div></div><div class="qcol">${qBlock(sc)}</div></div>`;
- if(t.type==="lchoose"||t.type==="lconv"||t.type==="lannounce"||t.type==="ltalk") return listenBody(sc);
- if(t.type==="build") return `<div class="center-card"><p class="lead">Tap the words in order. Tap the line to clear it.</p><div id="buildwrap"></div></div>`;
- if(t.type==="email_write") return emailWriteBody(t);
- if(t.type==="discussion") return discussionBody(t);
- if(t.type==="repeat") return repeatBody(t);
- if(t.type==="interview") return interviewBody(t);
- return "";
-}
-function emailHTML(s){return `<div class="email"><div class="email-sub"><b>Subject:</b><span>${esc(s.subject)}</span></div><div class="email-body">${s.body.map(p=>`<p>${esc(p)}</p>`).join("")}</div></div>`;}
-function agendaHTML(s){return `<div class="email"><div class="email-sub"><b>Agenda</b><span>${esc(s.title)}</span></div><div class="email-body"><table class="agtab">${s.rows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</table></div></div>`;}
-function chatHTML(msgs){return `<div class="email" style="border-color:#caa84a"><div class="email-sub" style="background:#fbe7b0;border-color:#caa84a"><b style="border-color:#caa84a">&#128172; Live Chat</b><span style="background:#fbe7b0"></span></div><div class="email-body">${msgs.map(m=>`<p><b>${esc(m.who)} (${esc(m.time)})</b><br>${esc(m.text)}</p>`).join("")}</div></div>`;}
-function secKeyQ(sc){return flow[secIdx]+"-"+sc.ti+"-"+(sc.qi||0);}
-function qBlock(sc){ const t=sc.task; const q=t.qs?t.qs[sc.qi]:null; if(!q)return ""; const ins=q.kind==="insert"?`<div style="font-weight:700;margin:8px 0 4px">${esc(q.sentence)}</div>`:""; return `<div class="qtext">${esc(q.q)}</div>${ins}${optsHTML(secKeyQ(sc),q.opts)}`; }
-function optsHTML(key,opts){ return opts.map((o,j)=>`<label class="opt" onclick="pick('${key}',${j})"><input type="radio" name="${key}" ${ans[key]===j?"checked":""}> <span>${esc(o)}</span></label>`).join(""); }
-function pick(key,j){ans[key]=j;document.querySelectorAll(`input[name="${key}"]`).forEach((r,i)=>r.checked=(i===j));}
-function listenBody(sc){ const t=sc.task; const right = t.type==="lchoose" ? optsHTML(secKeyQ(sc), t.opts) : `<div class="qtext">${esc(t.qs[sc.qi].q)}</div>${optsHTML(secKeyQ(sc), t.qs[sc.qi].opts)}`; return `<div class="split"><div>${speakerPanel(t.type==="lconv"?2:1)}</div><div class="qcol">${right}</div></div>`; }
-function speakerPanel(n){ const av=n===2?'<div class="av">&#128104;</div><div class="av">&#128105;</div>':'<div class="av">&#128100;</div>'; return `<div class="spanel"><div class="sprow"><span>Volume &#128266;</span><span class="link">Trouble hearing/recording?</span></div><div class="avs">${av}</div><div class="audiostate" id="astate">Loading audio…</div></div>`; }
-const AUDIO_BASE="audio/";
-function playFileOrTTS(url,text,onStart,onDone){ let done=false; const fin=()=>{if(!done){done=true;onDone&&onDone();}};
- const a=new Audio(url); a.onplaying=()=>onStart&&onStart(); a.onended=fin;
- a.onerror=()=>{ if("speechSynthesis"in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=0.96;u.lang="en-US";u.onstart=()=>onStart&&onStart();u.onend=fin;window.speechSynthesis.speak(u);} else {onStart&&onStart();setTimeout(fin,1200);} };
- a.play().catch(()=>a.onerror()); return a; }
-function playListen(sc){ const st=document.getElementById("astate"); if(!st)return; st.textContent="Audio Is Playing";
- playFileOrTTS(AUDIO_BASE+"listen-"+(sc.ti+1)+".mp3", sc.task.audio, ()=>{const e=document.getElementById("astate");if(e)e.textContent="Audio Is Playing";}, ()=>{const e=document.getElementById("astate");if(e)e.innerHTML='<button class="btn" onclick="replayListen()">&#9654; Replay</button>';}); }
-function replayListen(){ playListen(screens[si]); }
-
-function clozeBody(sc){ const t=sc.task; let bi=0; const html=t.parts.map(p=>{ if(p.ans){const id=flow[secIdx]+"-"+sc.ti+"-b"+(bi++); const w=Math.max(2,p.ans.length); return `${esc(p.pre)}<input class="blank" style="width:${w*0.75+1}em" id="${id}" value="${ans[id]?esc(ans[id]):""}" oninput="ans['${id}']=this.value">`;} return esc(p.t); }).join(""); return `<div class="cloze-card"><div class="cloze">${html}</div></div>`; }
-
-/* writing: build a sentence */
-let bsPick={};
-function renderBuild(){ const sc=screens[si]; const it=sc.task.items[sc.qi]; const w=document.getElementById("buildwrap"); if(!w)return; const pk=bsPick[sc.qi]||[];
- w.innerHTML=`<div class="built" onclick="bsClear(${sc.qi})">${pk.length?esc(pk.join(" ")):"<span style='color:#9aa6b8'>tap words…</span>"}</div><div>${it.words.map(wd=>`<span class="chip ${pk.includes(wd)?"used":""}" onclick="bsAdd(${sc.qi},'${wd.replace(/'/g,"\\'")}')">${esc(wd)}</span>`).join("")}</div>`; }
-function bsAdd(ii,wd){bsPick[ii]=bsPick[ii]||[];if(!bsPick[ii].includes(wd))bsPick[ii].push(wd);renderBuild();}
-function bsClear(ii){bsPick[ii]=[];renderBuild();}
-
-function emailWriteBody(t){ return `<div class="split"><div class="passcol"><p style="font-weight:700">${esc(t.prompt)}</p><ul>${t.bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul><p class="lead">${esc(t.close)}</p></div><div class="qcol"><div class="tofrom"><b>To:</b> ${esc(t.to)}</div><div class="tofrom" style="margin-bottom:8px"><b>Subject:</b> ${esc(t.subject)}</div><div class="toolbar"><span class="tb">Cut</span><span class="tb">Paste</span><span class="tb">Undo</span><span class="tb">Redo</span><span class="wc" id="wc1">0 words</span></div><textarea id="wbox" placeholder="Write your email…" oninput="ans['w-email']=this.value;wcount('wbox','wc1')">${ans['w-email']?esc(ans['w-email']):""}</textarea></div></div>`; }
-function discussionBody(t){ return `<div class="split"><div class="passcol"><p style="font-weight:700">${esc(t.professor)}</p>${t.posts.map(p=>`<div class="post"><b>${esc(p.who)}</b><div>${esc(p.text)}</div></div>`).join("")}<p class="lead">${esc(t.close)}</p></div><div class="qcol"><div class="toolbar"><span class="tb">Cut</span><span class="tb">Paste</span><span class="tb">Undo</span><span class="tb">Redo</span><span class="wc" id="wc2">0 words</span></div><textarea id="dbox" placeholder="Write your response…" oninput="ans['w-disc']=this.value;wcount('dbox','wc2')">${ans['w-disc']?esc(ans['w-disc']):""}</textarea></div></div>`; }
-function wcount(id,out){const b=document.getElementById(id);if(!b)return;const n=b.value.trim().split(/\s+/).filter(Boolean).length;const o=document.getElementById(out);if(o)o.textContent=n+" words";}
-
-function spk(av,timerId,labelId,labelText,btnId,onclick){ return `<div class="split"><div><div class="spanel"><div class="sprow"><span>Volume &#128266;</span><span class="link">Trouble hearing/recording?</span></div><div class="avs"><div class="av">${av}</div></div><div class="audiostate" id="sstate">Ready</div></div></div><div class="qcol"><p style="font-weight:700">${labelText}</p><div style="text-align:center;padding:12px 0"><div class="bigtimer" id="${timerId}">--</div><div class="lead" id="${labelId}"></div></div><div style="text-align:center"><button class="btn teal" id="${btnId}" onclick="${onclick}">Begin</button></div></div></div>`; }
-function repeatBody(t){ return spk("&#128104;","rclk","rlbl",esc(t.scenario),"rbtn","repeatRun()"); }
-function interviewBody(t){ return spk("&#128105;","iclk","ilbl",esc(t.scenario),"ibtn","intRun()"); }
-let rIdx=0;
-function speakSeq(items,total,clkId,lblId,labelWord,recSec,btn,prefix){ let i=0; const clk=document.getElementById(clkId),lbl=document.getElementById(lblId);
- function go(){ const ss=document.getElementById("sstate"); if(!ss)return; lbl.textContent=`${labelWord} ${i+1} of ${total}`; ss.textContent="Audio Is Playing"; clk.textContent="--";
-   function rec(){ const s2=document.getElementById("sstate"); if(s2)s2.innerHTML="&#128308; Recording…"; let left=recSec; clk.textContent=left; const iv=setInterval(()=>{left--;clk.textContent=Math.max(0,left); if(left<=0){clearInterval(iv); i++; if(i<total) go(); else {const s3=document.getElementById("sstate"); if(s3)s3.textContent="Done"; clk.textContent="\u2713"; btn.disabled=false; btn.textContent="Finished";}}},1000); }
-   playFileOrTTS(AUDIO_BASE+prefix+(i+1)+".mp3", items[i], ()=>{const s4=document.getElementById("sstate");if(s4)s4.textContent="Audio Is Playing";}, rec);
- } go();
-}
-function repeatRun(){ const t=screens[si].task; const btn=document.getElementById("rbtn"); btn.disabled=true; speakSeq(t.statements,t.statements.length,"rclk","rlbl","Statement",10,btn,"speak-repeat-"); }
-let iIdx=0;
-function intRun(){ const t=screens[si].task; const btn=document.getElementById("ibtn"); btn.disabled=true; speakSeq(t.qs,t.qs.length,"iclk","ilbl","Question",45,btn,"speak-interview-"); }
-
-/* ---------- nav ---------- */
-function prev(){ if(si>0){si--;render();} }
-function next(){ if(window.speechSynthesis)speechSynthesis.cancel(); rIdx=0; iIdx=0;
- if(si<screens.length-1){si++;render();} else finishSection(); }
-function finishSection(){ if(timerInt)clearInterval(timerInt); if(secIdx<flow.length-1){secIdx++;directions();} else results(); }
-
-/* ---------- results ---------- */
-function band(p){return (1+p*5).toFixed(1);}
-function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="result"; setFab(false);
- const did=k=>flow.includes(k);
- let rC=0,rT=0,lC=0,lT=0;
- if(did("reading")) DATA.reading.tasks.forEach((t,ti)=>{ if(t.type==="cloze"){let bi=0;t.parts.forEach(p=>{if(p.ans){const id="reading-"+ti+"-b"+(bi++);rT++;if((ans[id]||"").trim().toLowerCase()===p.ans.toLowerCase())rC++;}});} else if(t.qs){t.qs.forEach((q,qi)=>{rT++;if(ans["reading-"+ti+"-"+qi]===q.a)rC++;});} });
- if(did("listening")) DATA.listening.tasks.forEach((t,ti)=>{ if(t.type==="lchoose"){lT++;if(ans["listening-"+ti+"-0"]===t.a)lC++;} else if(t.qs){t.qs.forEach((q,qi)=>{lT++;if(ans["listening-"+ti+"-"+qi]===q.a)lC++;});} });
- const rP=rT?rC/rT:0,lP=lT?lC/lT:0; const bands=[]; if(did("reading"))bands.push(+band(rP)); if(did("listening"))bands.push(+band(lP));
- const overall=bands.length?(bands.reduce((a,b)=>a+b,0)/bands.length).toFixed(1):null;
- let cells="";
- if(did("reading"))cells+=`<div class="scell"><div class="lead">Reading</div><div class="n">${band(rP)}</div><div class="sbar"><i style="width:${Math.round(rP*100)}%"></i></div><div class="lead" style="font-size:12px;margin-top:4px">${rC}/${rT} · ~${Math.round(rP*30)}/30</div></div>`;
- if(did("listening"))cells+=`<div class="scell"><div class="lead">Listening</div><div class="n">${band(lP)}</div><div class="sbar"><i style="width:${Math.round(lP*100)}%"></i></div><div class="lead" style="font-size:12px;margin-top:4px">${lC}/${lT} · ~${Math.round(lP*30)}/30</div></div>`;
- if(did("writing")){ let bc=0,bt=0; const bteu=DATA.writing.tasks.find(t=>t.type==="build"); if(bteu){bt=bteu.items.length; bteu.items.forEach((it,qi)=>{const built=(bsPick[qi]||[]).join(" ").replace(/\s+/g," ").trim(); if(built.toLowerCase()===it.answer.toLowerCase())bc++;});} cells+=`<div class="scell"><div class="lead">Writing</div><div class="n">&#9999;</div><div class="lead" style="font-size:12px">Build ${bc}/${bt} · email & discussion: review</div></div>`; }
- if(did("speaking"))cells+=`<div class="scell"><div class="lead">Speaking</div><div class="n">&#127908;</div><div class="lead" style="font-size:12px">completed · review</div></div>`;
- testEl().innerHTML=`<div class="center-wrap"><div class="brand"><span class="mk">A</span><span>Arian Academy</span></div>
-   <h1 class="h1" style="margin-top:16px">Your result</h1>
-   ${overall?`<div style="text-align:center"><div class="bigtimer" style="font-size:56px">${overall}<span style="font-size:20px;color:#6b7785"> / 6.0</span></div><div class="lead">estimated band · CEFR ${cefr(overall)}</div><div class="gauge"><div class="mk" style="left:${Math.round((overall-1)/5*100)}%"></div></div></div>`:""}
-   <div class="homestat"><span>Time: <b>${testStartedAt?fmt(Math.round((Date.now()-testStartedAt)/1000)):"—"}</b></span><span>Sections: <b>${flow.length}</b></span></div>
-   <div class="scoregrid">${cells}</div>
-   <p class="lead" style="margin-top:16px">Reading & Listening are auto-scored to the 2026 band (with a 0–120 estimate). Writing & Speaking need a teacher to rate — use the review to self-assess.</p>
-   <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="startReview()">Review answers &amp; explanations</button><button class="btn ghost" onclick="showTips()">Tips</button><button class="btn ghost" onclick="begin(flow)">Retake</button><button class="btn ghost" onclick="showHome()">Home</button></div></div>`;
-}
-let reviewItems=[], reviewIdx=0;
-function collectReview(){ const out=[];
- if(flow.includes("reading")) DATA.reading.tasks.forEach((t,ti)=>{ if(t.type==="cloze"){ let bi=0; const blanks=t.parts.filter(p=>p.ans).map(p=>({pre:p.pre,ans:p.ans,id:"reading-"+ti+"-b"+(bi++)})); out.push({sec:"Reading",kind:"cloze",ti,blanks}); } else if(t.qs){ t.qs.forEach((q,qi)=>out.push({sec:"Reading",kind:"mcq",q,key:"reading-"+ti+"-"+qi})); } });
- if(flow.includes("listening")) DATA.listening.tasks.forEach((t,ti)=>{ if(t.type==="lchoose") out.push({sec:"Listening",kind:"mcq",q:{q:"Listen and choose the best response.",opts:t.opts,a:t.a,exp:t.exp},key:"listening-"+ti+"-0"}); else if(t.qs) t.qs.forEach((q,qi)=>out.push({sec:"Listening",kind:"mcq",q,key:"listening-"+ti+"-"+qi})); });
- if(flow.includes("writing")) DATA.writing.tasks.forEach((t,ti)=>{ if(t.type==="build") t.items.forEach((it,qi)=>out.push({sec:"Writing",kind:"build",qi,answer:it.answer}));
-   else if(t.type==="email_write") out.push({sec:"Writing",kind:"open",title:"Write an Email",prompt:t.prompt,respKey:"w-email",guide:["Addresses all bullet points in the task","Has a greeting and a polite sign-off","100–150 words, complete sentences","Clear, organized, and natural English"]});
-   else if(t.type==="discussion") out.push({sec:"Writing",kind:"open",title:"Write for an Academic Discussion",prompt:t.professor,respKey:"w-disc",guide:["States a clear opinion","Gives at least one reason and one specific example","Responds to or builds on a classmate's point","100–130 words; varied, natural sentences"]}); });
- if(flow.includes("speaking")) DATA.speaking.tasks.forEach((t,ti)=>{ if(t.type==="repeat") out.push({sec:"Speaking",kind:"open",title:"Listen and Repeat",prompt:t.scenario,statements:t.statements,guide:["Repeat each statement exactly and clearly","Don't pause for long — you get one chance","Match the speaker's rhythm and key words"]});
-   else if(t.type==="interview") t.qs.forEach((q,qi)=>out.push({sec:"Speaking",kind:"open",title:"Interview — Question "+(qi+1),prompt:q,guide:["Start with a direct answer","Add one reason (because…)","Add one specific example (for example…)","Speak the full 45 seconds with few fillers"]})); });
- return out; }
-function startReview(){ reviewItems=collectReview(); if(!reviewItems.length){alert("No items to review in this run.");return;} reviewIdx=0; renderReview(); }
-function renderReview(){ window.scrollTo(0,0); mode="review"; setFab(false); const it=reviewItems[reviewIdx]; let status="", main="";
- if(it.kind==="mcq"){ const q=it.q,your=ans[it.key],a=q.a;
-   status = your==null?'<div class="statusbar st-none">You did not answer this question</div>':(your===a?'<div class="statusbar st-ok">Correct</div>':'<div class="statusbar st-bad">Incorrect</div>');
-   const opts=q.opts.map((o,j)=>{let cls="opt";if(j===a)cls+=" rev-correct";if(your===j&&j!==a)cls+=" rev-wrong";const mk=j===a?' <b style="color:var(--green)">&#10003;</b>':((your===j&&j!==a)?' <b style="color:#c0392b">&#10007;</b>':'');return `<div class="${cls}">${esc(o)}${mk}</div>`;}).join("");
-   const exp=q.exp||`The correct answer is "${esc(q.opts[a])}." A full explanation will be added as each test's content is built out.`;
-   main=`<div class="qtext">${esc(q.q)}</div>${opts}<div class="expcard"><div class="h">Text explanation</div><p>${exp}</p></div>`;
- } else if(it.kind==="build"){ const your=(bsPick[it.qi]||[]).join(" ").trim(); const ok=your.toLowerCase()===it.answer.toLowerCase();
-   status = !your?'<div class="statusbar st-none">Not attempted</div>':(ok?'<div class="statusbar st-ok">Correct</div>':'<div class="statusbar st-bad">Incorrect</div>');
-   main=`<div class="qtext">Build a Sentence</div><div class="expcard"><div class="h">Your answer</div><p>${your?esc(your):"(not attempted)"}</p><div class="h">Correct sentence</div><p>${esc(it.answer)}</p></div>`;
- } else if(it.kind==="cloze"){ let correct=0; const rows=it.blanks.map(b=>{ const your=(ans[b.id]||"").trim(); const ok=your.toLowerCase()===b.ans.toLowerCase(); if(ok)correct++; return `<div class="opt ${ok?"rev-correct":"rev-wrong"}">${esc(b.pre)}<b>${esc(b.ans)}</b> &mdash; you wrote: ${your?esc(your):"(blank)"} ${ok?'<b style="color:var(--green)">&#10003;</b>':'<b style="color:#c0392b">&#10007;</b>'}</div>`; }).join(""); const total=it.blanks.length; status=`<div class="statusbar ${correct===total?"st-ok":(correct?"st-bad":"st-none")}">Complete the Words &mdash; ${correct} / ${total} correct</div>`; main=`<div class="qtext">Complete the Words</div>${rows}<div class="expcard"><div class="h">How to do these</div><p>Read the whole sentence first, then use grammar and the letters shown to finish each word. The full word is the shown letters plus your answer.</p></div>`; } else { const resp=it.respKey?ans[it.respKey]:null;
-   status='<div class="statusbar st-none">Open response — self-assess using the guide below</div>';
-   main=`<div class="qtext">${esc(it.title)}</div><div class="expcard"><div class="h">Prompt</div><p>${esc(it.prompt)}</p>${it.statements?('<div class="h">Statements</div>'+it.statements.map(x=>`<p>&bull; ${esc(x)}</p>`).join("")):""}${resp?('<div class="h">Your response</div><p style="white-space:pre-wrap">'+esc(resp)+'</p>'):""}<div class="h">What a strong response includes</div><ul style="margin:0;padding-left:18px">${it.guide.map(g=>`<li style="margin-bottom:6px">${esc(g)}</li>`).join("")}</ul></div>`;
- }
- testEl().innerHTML=`<div class="thead"><div><div class="sec">${it.sec}</div><div class="sub">Answer review &amp; explanation</div></div></div>
-   <div class="ibanner">Review</div>
-   <div class="tbody">${status}${main}</div>
-   <div class="navbar"><div class="navin"><button class="btn ghost" onclick="results()">Back to results</button>
-     <div class="navmid">Item ${reviewIdx+1} of ${reviewItems.length}</div>
-     <div class="nav-r"><button class="btn prev" onclick="reviewNav(-1)" ${reviewIdx===0?"disabled":""}>Previous</button>
-       <button class="btn next" onclick="reviewNav(1)" ${reviewIdx===reviewItems.length-1?"disabled":""}>Next</button></div></div></div>`;
-}
-function reviewNav(d){ reviewIdx=Math.min(reviewItems.length-1,Math.max(0,reviewIdx+d)); renderReview(); }
-function setFab(on){ const f=document.getElementById("nfab"); if(f)f.style.display=on?"block":"none"; if(!on){ const p=document.getElementById("npanel"); if(p)p.classList.remove("on"); } }
-function toggleNotes(){ const p=document.getElementById("npanel"); if(p)p.classList.toggle("on"); }
-function cefr(b){ b=parseFloat(b)||0; return b>=5.5?"C1+":b>=4.5?"B2":b>=3.5?"B1":b>=2.5?"A2":"A1"; }
-document.addEventListener("keydown",function(e){ if(mode!=="run")return; var tag=((e.target&&e.target.tagName)||"").toLowerCase(); if(tag==="input"||tag==="textarea")return; if(e.key==="ArrowRight"){e.preventDefault();next();} else if(e.key==="ArrowLeft"){e.preventDefault();prev();} });
-showHome();
+const form = document.getElementById("gate");
+const go = document.getElementById("go");
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const code = document.getElementById("code").value.trim();
+  if (!code) { showMsg("Enter your access code.", "err"); return; }
+  go.disabled = true; const old = go.textContent; go.textContent = "Checking…";
+  try {
+    const res = await fetch("/api/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok) {
+      showMsg("Access granted — opening your test…", "ok");
+      setTimeout(() => { location.href = "/app.html"; }, 500);
+      return;
+    }
+    showMsg(data.message || "That code didn't work. Check it and try again.", "err");
+  } catch (_) {
+    showMsg("Network error. Please try again.", "err");
+  } finally {
+    go.disabled = false; go.textContent = old;
+  }
+});
 </script>
 </body>
 </html>

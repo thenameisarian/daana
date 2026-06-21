@@ -1,0 +1,15 @@
+# Cloudflare Pages config for the "daana" project.
+# Lets the access-gate Functions bind to KV from the repo (KV namespace id is NOT secret).
+name = "daana"
+compatibility_date = "2026-06-21"
+pages_build_output_dir = "."
+
+# Access-code / session store. Namespace "daana-access".
+[[kv_namespaces]]
+binding = "DAANA_KV"
+id = "251061d100c147a489cd9f8f8724d3db"
+
+# Non-secret config. ADMIN_SECRET is set in the Cloudflare dashboard (encrypted), NOT here.
+[vars]
+IP_STRICT = "false"   # set to "true" to also require the request IP to match the one that redeemed the code
+IP_SALT = "daana-v1"  # salt for hashing IPs at rest (rotate to invalidate all stored IP hashes)
