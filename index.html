@@ -4,139 +4,260 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Daana — Access · TOEFL iBT 2026 by Arian Academy</title>
-<meta name="description" content="Daana — smart exam prep by Arian Academy. Follow on Instagram and join the WhatsApp channel to get your access code.">
+<meta name="description" content="Daana — smart exam prep by Arian Academy. Follow on Instagram, Threads and the WhatsApp channel to get your access code.">
 <style>
-:root{--ink:#28323b;--mut:#6b7785;--line:#dfe3e7;--teal:#1a8f93;--teald:#157074;--green:#16a06a;--greend:#0f8456;--panel:#f5f7f8}
+:root{
+  --teal:#1fb6a6;--teal2:#16a06a;--ink:#0a201e;--paper:#f4fbf9;
+  --glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.14);
+  --line:rgba(255,255,255,.16);--mut:#9fc7c0;--txt:#eafdf8;
+}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:radial-gradient(1200px 500px at 50% -10%,#eafbf8,#fff 60%);line-height:1.55}
-.wrap{max-width:560px;margin:0 auto;padding:44px 20px 70px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;justify-content:center}
-.mk{width:34px;height:34px;border:1.5px solid var(--teal);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--teal);font-weight:800;font-size:18px}
-.kic{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);text-align:center;margin-top:6px}
-.badges{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:16px 0 6px}
-.badge{font-size:11.5px;font-weight:800;letter-spacing:.02em;padding:5px 12px;border-radius:999px}
-.badge.live{background:#1f9c8e;color:#eafff9}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--txt);background:#04201d;line-height:1.5;overflow-x:hidden;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 16px;
+}
+/* ---------- animated aurora background ---------- */
+.aurora,.aurora::before,.aurora::after{position:fixed;inset:-30%;z-index:-2;content:""}
+.aurora{background:
+  radial-gradient(40% 50% at 20% 25%,rgba(31,182,166,.55),transparent 60%),
+  radial-gradient(45% 55% at 80% 20%,rgba(22,160,106,.45),transparent 60%),
+  radial-gradient(50% 50% at 65% 80%,rgba(64,224,208,.40),transparent 60%),
+  radial-gradient(40% 45% at 30% 85%,rgba(20,120,140,.45),transparent 60%);
+  filter:blur(20px);animation:drift 22s ease-in-out infinite alternate;}
+.aurora::before{background:
+  radial-gradient(35% 40% at 70% 35%,rgba(120,255,220,.30),transparent 60%),
+  radial-gradient(40% 45% at 25% 60%,rgba(31,182,166,.35),transparent 60%);
+  animation:drift2 28s ease-in-out infinite alternate;}
+.grain{position:fixed;inset:0;z-index:-1;opacity:.05;pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.6) .5px,transparent .5px);background-size:3px 3px;}
+@keyframes drift{0%{transform:translate(0,0) scale(1) rotate(0)}50%{transform:translate(4%,-3%) scale(1.1) rotate(4deg)}100%{transform:translate(-3%,4%) scale(1.05) rotate(-3deg)}}
+@keyframes drift2{0%{transform:translate(0,0) scale(1.1)}100%{transform:translate(5%,-5%) scale(1)}}
+/* ---------- the ticket / admission pass ---------- */
+.ticket{
+  width:100%;max-width:430px;position:relative;border-radius:26px;
+  background:linear-gradient(160deg,var(--glass2),var(--glass));
+  -webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%);
+  border:1px solid var(--line);
+  box-shadow:0 30px 80px -20px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.18);
+  animation:rise .8s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes rise{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
+.head{padding:30px 30px 18px;text-align:center;position:relative}
+.eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--mut);font-weight:700}
+.monogram{
+  width:84px;height:84px;margin:14px auto 6px;border-radius:22px;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:50px;color:#04201d;
+  background:linear-gradient(145deg,#9af6e4,var(--teal) 55%,var(--teal2));
+  box-shadow:0 12px 30px -8px rgba(31,182,166,.7),inset 0 2px 6px rgba(255,255,255,.5);
+  position:relative;overflow:hidden;
+}
+.monogram::after{content:"";position:absolute;top:-60%;left:-30%;width:60%;height:220%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:rotate(20deg);
+  animation:sheen 5s ease-in-out infinite;}
+@keyframes sheen{0%,70%{left:-40%}85%,100%{left:130%}}
+.wordmark{font-size:30px;font-weight:900;letter-spacing:.02em;margin:2px 0 0}
+.title{font-size:13px;color:var(--mut);margin-top:2px;font-weight:600}
+.badges{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.badge{font-size:10.5px;font-weight:800;letter-spacing:.04em;padding:5px 11px;border-radius:999px;text-transform:uppercase}
+.badge.live{background:var(--teal);color:#04201d}
 .badge.soon{border:1px solid var(--line);color:var(--mut)}
-h1{font-size:26px;font-weight:800;text-align:center;margin:18px 0 4px}
-.lead{color:var(--mut);text-align:center;font-size:14.5px;margin:0 auto;max-width:440px}
-.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:24px;box-shadow:0 8px 30px rgba(20,60,60,.06)}
-.steps{display:flex;flex-direction:column;gap:12px;margin:0 0 18px}
-.step{display:flex;gap:13px;align-items:flex-start}
-.num{flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:var(--panel);color:var(--teal);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:2px}
-.step .t{font-weight:700;font-size:14.5px}
-.step .d{color:var(--mut);font-size:13px}
-.social{display:flex;gap:10px;margin:4px 0 6px}
-.sbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:800;font-size:13.5px;padding:11px 12px;border-radius:12px;color:#fff}
-.sbtn.ig{background:linear-gradient(45deg,#f09433,#e6683c 30%,#dc2743 60%,#cc2366 90%)}
-.sbtn.wa{background:#25d366}
-.sbtn:hover{filter:brightness(.96)}
-.hr{height:1px;background:var(--line);margin:18px 0}
-label.fl{display:block;font-weight:700;font-size:13.5px;margin-bottom:7px}
+/* perforation */
+.perf{position:relative;height:0;border-top:2px dashed rgba(255,255,255,.28);margin:6px 22px}
+.notch{position:absolute;top:-13px;width:26px;height:26px;border-radius:50%;background:#04201d;border:1px solid var(--line)}
+.notch.l{left:-35px}.notch.r{right:-35px}
+.stub{padding:20px 30px 12px}
+/* terminal prompt line */
+.term{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;color:#7fe9d6;
+  background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin-bottom:16px;white-space:nowrap;overflow:hidden}
+.term .pr{color:var(--teal)}
+.cursor{display:inline-block;width:8px;height:15px;background:#7fe9d6;vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+/* funnel steps */
+.steps{display:flex;flex-direction:column;gap:11px;margin-bottom:14px}
+.step{display:flex;gap:11px;align-items:flex-start}
+.snum{flex:0 0 24px;width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.1);border:1px solid var(--line);
+  color:var(--teal);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.step .st{font-weight:700;font-size:14px}
+.step .sd{color:var(--mut);font-size:12.5px}
+/* social icons */
+.social{display:flex;gap:9px;margin:4px 0 18px}
+.sbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;text-decoration:none;font-weight:800;font-size:12.5px;
+  padding:11px 8px;border-radius:13px;color:#fff;border:1px solid rgba(255,255,255,.18);transition:transform .15s,box-shadow .15s}
+.sbtn svg{width:17px;height:17px;flex:0 0 17px}
+.sbtn:hover{transform:translateY(-2px)}
+.sbtn.ig{background:linear-gradient(45deg,#f09433,#e6683c 28%,#dc2743 58%,#cc2366 86%);box-shadow:0 8px 20px -8px #dc2743}
+.sbtn.wa{background:#1ebe5d;box-shadow:0 8px 20px -8px #1ebe5d}
+.sbtn.th{background:#0b0b0b;box-shadow:0 8px 20px -8px #000}
+/* code field */
+.fl{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);margin-bottom:7px;display:block}
 .codebox{display:flex;gap:8px}
-#code{flex:1;font-size:16px;letter-spacing:.06em;text-transform:uppercase;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;outline:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-#code:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,143,147,.15)}
-.btn{background:var(--green);color:#fff;border:none;border-radius:12px;padding:0 22px;font-weight:800;font-size:14.5px;cursor:pointer;white-space:nowrap}
-.btn:hover{background:var(--greend)}
+.inwrap{flex:1;position:relative;display:flex;align-items:center;background:rgba(0,0,0,.32);border:1.5px solid var(--line);border-radius:13px;padding:0 12px}
+.inwrap.focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(31,182,166,.22)}
+#code{flex:1;background:transparent;border:none;outline:none;color:var(--txt);font-family:ui-monospace,monospace;
+  font-size:16px;letter-spacing:.1em;text-transform:uppercase;padding:13px 0}
+#code::placeholder{color:rgba(159,199,192,.5);letter-spacing:.06em}
+.btn{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#03201c;border:none;border-radius:13px;padding:0 20px;
+  font-weight:900;font-size:14px;cursor:pointer;white-space:nowrap;box-shadow:0 8px 22px -8px var(--teal);transition:filter .15s,transform .1s}
+.btn:hover{filter:brightness(1.08)}.btn:active{transform:scale(.97)}
 .btn:disabled{opacity:.6;cursor:default}
-.msg{margin-top:12px;font-size:13.5px;padding:11px 13px;border-radius:10px;display:none}
-.msg.err{display:block;background:#fdecec;color:#a3271f;border:1px solid #f3c9c5}
-.msg.ok{display:block;background:#eafaf0;color:#0f8456;border:1px solid #bce8d2}
-.msg.info{display:block;background:#fff7e6;color:#8a6d1e;border:1px solid #efe0b3}
-.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:22px}
-.foot a{color:var(--teal);text-decoration:none}
-@media(max-width:480px){.social{flex-direction:column}h1{font-size:23px}}
+.msg{margin-top:12px;font-size:13px;padding:10px 13px;border-radius:11px;display:none;font-weight:600}
+.msg.err{display:block;background:rgba(255,90,80,.16);color:#ffd2cd;border:1px solid rgba(255,120,110,.4)}
+.msg.ok{display:block;background:rgba(31,182,166,.18);color:#bff7ec;border:1px solid rgba(31,182,166,.5)}
+.msg.info{display:block;background:rgba(255,210,120,.14);color:#ffe7b3;border:1px solid rgba(255,210,120,.35)}
+/* barcode footer */
+.barcode{height:46px;margin:18px 30px 0;border-radius:7px;
+  background:repeating-linear-gradient(90deg,#0c2a26 0 2px,transparent 2px 4px,#0c2a26 4px 5px,transparent 5px 9px,#0c2a26 9px 12px,transparent 12px 13px);
+  background-color:rgba(255,255,255,.92);opacity:.9}
+.serial{display:flex;justify-content:space-between;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.18em;
+  color:var(--mut);padding:8px 30px 22px}
+.foot{text-align:center;color:var(--mut);font-size:11.5px;margin-top:14px;line-height:1.7}
+.foot a{color:#8df0df;text-decoration:none}
+/* success stamp */
+.stamp{position:absolute;inset:0;display:none;align-items:center;justify-content:center;border-radius:26px;
+  background:rgba(4,32,29,.78);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:5}
+.stamp.on{display:flex}
+.stamp .mark{border:4px solid #5cf2d3;color:#5cf2d3;border-radius:14px;padding:14px 24px;font-weight:900;
+  font-size:22px;letter-spacing:.12em;text-transform:uppercase;transform:rotate(-11deg) scale(.4);opacity:0;
+  box-shadow:0 0 30px rgba(92,242,211,.4);animation:slam .5s cubic-bezier(.2,1.4,.3,1) forwards}
+@keyframes slam{to{transform:rotate(-11deg) scale(1);opacity:1}}
+@media(max-width:430px){.social{flex-direction:column}.wordmark{font-size:26px}.notch{display:none}}
+@media(prefers-reduced-motion:reduce){.aurora,.aurora::before,.monogram::after,.cursor,.stamp .mark{animation:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="brand"><span class="mk">D</span><span>Daana</span></div>
-  <div class="kic">Study smart · by Arian Academy</div>
-  <div class="badges">
-    <span class="badge live">TOEFL iBT · live</span>
-    <span class="badge soon">IELTS · soon</span>
-    <span class="badge soon">GRE · soon</span>
-    <span class="badge soon">Duolingo · soon</span>
-  </div>
-  <h1>Members-only access</h1>
-  <p class="lead">Daana's full TOEFL iBT 2026 practice test is open to followers. Follow along, grab your code, and start practicing.</p>
+<div class="aurora"></div>
+<div class="grain"></div>
 
-  <div class="card">
+<div class="ticket" id="ticket">
+  <div class="head">
+    <div class="eyebrow">Admission Pass</div>
+    <div class="monogram">D</div>
+    <div class="wordmark">DAANA</div>
+    <div class="title">TOEFL iBT 2026 &middot; by Arian Academy</div>
+    <div class="badges">
+      <span class="badge live">TOEFL &middot; live</span>
+      <span class="badge soon">IELTS</span>
+      <span class="badge soon">GRE</span>
+      <span class="badge soon">Duolingo</span>
+    </div>
+  </div>
+
+  <div class="perf"><span class="notch l"></span><span class="notch r"></span></div>
+
+  <div class="stub">
+    <div class="term"><span class="pr">daana@gate:~$</span> <span id="termtxt"></span><span class="cursor"></span></div>
+
     <div class="steps">
-      <div class="step"><div class="num">1</div><div><div class="t">Follow Arian Academy</div><div class="d">Follow on Instagram and join the WhatsApp channel — that's where access codes are posted.</div></div></div>
-      <div class="step"><div class="num">2</div><div><div class="t">Find your code</div><div class="d">Look for the latest access code in the channel, or use the personal code you were sent.</div></div></div>
-      <div class="step"><div class="num">3</div><div><div class="t">Enter it below</div><div class="d">Your access stays active for 7 days on this device.</div></div></div>
+      <div class="step"><div class="snum">1</div><div><div class="st">Follow Arian Academy</div><div class="sd">Codes are posted on Instagram, Threads &amp; the WhatsApp channel.</div></div></div>
+      <div class="step"><div class="snum">2</div><div><div class="st">Grab your code</div><div class="sd">Use the latest shared code, or the personal one you were sent.</div></div></div>
     </div>
+
     <div class="social">
-      <a class="sbtn ig" id="igLink" href="#" target="_blank" rel="noopener">&#128247; Instagram</a>
-      <a class="sbtn wa" id="waLink" href="#" target="_blank" rel="noopener">&#128172; WhatsApp Channel</a>
+      <a class="sbtn ig" id="igLink" href="#" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" stroke="none"/></svg>
+        Instagram</a>
+      <a class="sbtn wa" id="waLink" href="#" target="_blank" rel="noopener" aria-label="WhatsApp Channel">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.6 6.17c.27.14.45.21.52.32.07.14.07.68-.16 1.31-.22.63-1.29 1.2-1.81 1.28-.46.07-1.05.09-1.69-.11-.39-.12-.89-.29-1.53-.57-2.7-1.16-4.46-3.88-4.6-4.06-.14-.18-1.11-1.47-1.11-2.81 0-1.34.7-2 .95-2.27.25-.27.54-.34.72-.34l.52.01c.17 0 .39-.07.61.46.22.54.76 1.87.83 2.01.07.14.11.3.02.48-.09.18-.13.29-.27.45-.14.16-.29.36-.41.48-.14.13-.28.28-.12.55.16.27.7 1.15 1.5 1.86 1.03.91 1.89 1.19 2.16 1.33.27.13.43.11.59-.07.16-.18.68-.78.86-1.05.18-.28.36-.23.61-.14.25.09 1.57.74 1.84.88z"/></svg>
+        WhatsApp</a>
+      <a class="sbtn th" id="thLink" href="#" target="_blank" rel="noopener" aria-label="Threads">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.7 11.2c-.09-.04-.18-.08-.27-.12-.16-2.9-1.75-4.56-4.42-4.58h-.04c-1.6 0-2.93.68-3.75 1.92l1.47 1.01c.61-.93 1.57-1.13 2.28-1.13h.03c.88.01 1.55.27 1.98.77.31.36.52.86.62 1.49-.78-.13-1.62-.17-2.52-.12-2.53.15-4.16 1.62-4.05 3.67.05 1.04.57 1.93 1.46 2.51.75.49 1.72.73 2.73.68 1.33-.07 2.37-.58 3.1-1.51.55-.71.9-1.62 1.06-2.78.64.39 1.11.9 1.37 1.51.44 1.05.46 2.77-.94 4.17-1.23 1.23-2.7 1.76-4.92 1.78-2.46-.02-4.32-.81-5.53-2.34-1.13-1.45-1.72-3.42-1.74-5.82.02-2.4.61-4.37 1.75-5.84C8.14 4.23 10 3.44 12.46 3.42c2.48.02 4.37.82 5.62 2.36.61.76 1.07 1.71 1.37 2.83l1.72-.46c-.36-1.38-.94-2.57-1.73-3.55C17.83 2.6 15.46 1.6 12.47 1.58h-.01C9.48 1.6 7.14 2.6 5.55 4.55 4.13 6.3 3.4 8.7 3.38 11.59v.02c.02 2.89.75 5.29 2.17 7.04 1.59 1.95 3.93 2.95 6.92 2.97h.01c2.66-.02 4.53-.72 6.07-2.26 2.02-2.02 1.96-4.55 1.29-6.1-.48-1.11-1.39-2.01-2.64-2.61zm-4.6 4.32c-1.12.06-2.28-.44-2.34-1.5-.04-.79.56-1.66 2.4-1.77.21-.01.42-.02.62-.02.67 0 1.29.07 1.86.19-.21 2.66-1.46 3.04-2.54 3.1z"/></svg>
+        Threads</a>
     </div>
-    <div class="hr"></div>
+
     <form id="gate" autocomplete="off">
-      <label class="fl" for="code">Access code</label>
+      <label class="fl" for="code">// access code &middot; 7-day pass</label>
       <div class="codebox">
-        <input id="code" name="code" placeholder="DAANA-XXXX-XXXX" autocapitalize="characters" spellcheck="false" inputmode="text" aria-label="Access code">
+        <div class="inwrap" id="inwrap">
+          <input id="code" name="code" placeholder="DAANA-XXXX-XXXX" autocapitalize="characters" spellcheck="false" inputmode="text" aria-label="Access code">
+        </div>
         <button class="btn" id="go" type="submit">Unlock</button>
       </div>
       <div class="msg" id="msg"></div>
     </form>
   </div>
 
-  <div class="foot">Don't have a code yet? Follow above — new codes are posted regularly.<br>
-    <span id="extra"></span>
-  </div>
+  <div class="barcode"></div>
+  <div class="serial"><span id="serial">DAANA &middot; ARIAN ACADEMY</span><span>TOEFL-IBT-2026</span></div>
+
+  <div class="foot">No code yet? Follow above &mdash; new codes drop regularly.<br><span id="extra"></span></div>
+
+  <div class="stamp" id="stamp"><div class="mark">Access Granted</div></div>
 </div>
 
 <script>
-/* ===== EDIT THESE TWO LINKS ===== */
+/* ===== EDIT THESE LINKS ===== */
 const CONFIG = {
   instagram: "https://www.instagram.com/arianismyname/",
   whatsapp:  "https://whatsapp.com/channel/0029VbCe7n22v1J00hGDUW2J",
-  // Optional: add more follow links here as { label, url } and they'll appear in the footer.
-  extraLinks: [{ label: "Threads", url: "https://www.threads.net/@arianismyname" }]
+  threads:   "https://www.threads.net/@arianismyname",
+  extraLinks: []
 };
-/* ================================= */
+/* ============================ */
 
 document.getElementById("igLink").href = CONFIG.instagram;
 document.getElementById("waLink").href = CONFIG.whatsapp;
+document.getElementById("thLink").href = CONFIG.threads;
 if (CONFIG.extraLinks && CONFIG.extraLinks.length) {
   document.getElementById("extra").innerHTML = "Also: " + CONFIG.extraLinks
-    .map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join(" · ");
+    .map(function(l){ return '<a href="'+l.url+'" target="_blank" rel="noopener">'+l.label+'</a>'; }).join(" &middot; ");
 }
 
-const msg = document.getElementById("msg");
+/* terminal typewriter */
+(function(){
+  var phrases = ["authenticating members only...", "awaiting access code...", "follow detected? enter code below"];
+  var el = document.getElementById("termtxt"), p = 0, i = 0, dir = 1;
+  function tick(){
+    var s = phrases[p];
+    i += dir;
+    el.textContent = s.slice(0, i);
+    if (i === s.length){ dir = -1; setTimeout(tick, 1500); return; }
+    if (i === 0){ dir = 1; p = (p + 1) % phrases.length; }
+    setTimeout(tick, dir > 0 ? 45 : 22);
+  }
+  tick();
+})();
+
+/* random serial flavor */
+(function(){
+  var n = Math.floor(100000 + Math.random()*899999);
+  document.getElementById("serial").innerHTML = "NO. " + n + " &middot; ARIAN ACADEMY";
+})();
+
+var inwrap = document.getElementById("inwrap"), codeEl = document.getElementById("code");
+codeEl.addEventListener("focus", function(){ inwrap.classList.add("focus"); });
+codeEl.addEventListener("blur", function(){ inwrap.classList.remove("focus"); });
+
+var msg = document.getElementById("msg");
 function showMsg(text, kind){ msg.className = "msg " + kind; msg.textContent = text; }
 
-// If middleware bounced the user here.
-const q = new URLSearchParams(location.search);
-if (q.get("locked") === "expired") showMsg("Your 7-day access expired. Enter a new code to continue.", "info");
-else if (q.get("locked") === "1") showMsg("Please enter your access code to continue.", "info");
+var q = new URLSearchParams(location.search);
+if (q.get("locked") === "expired") showMsg("Your 7-day pass expired. Enter a new code to continue.", "info");
+else if (q.get("locked") === "1") showMsg("Enter your access code to continue.", "info");
+else if (q.get("locked") === "err") showMsg("Access check is warming up. Try your code again in a moment.", "info");
 
-const form = document.getElementById("gate");
-const go = document.getElementById("go");
-form.addEventListener("submit", async (e) => {
+var form = document.getElementById("gate"), go = document.getElementById("go");
+form.addEventListener("submit", function(e){
   e.preventDefault();
-  const code = document.getElementById("code").value.trim();
-  if (!code) { showMsg("Enter your access code.", "err"); return; }
-  go.disabled = true; const old = go.textContent; go.textContent = "Checking…";
-  try {
-    const res = await fetch("/api/verify", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code })
-    });
-    const data = await res.json().catch(() => ({}));
-    if (res.ok && data.ok) {
-      showMsg("Access granted — opening your test…", "ok");
-      setTimeout(() => { location.href = "/app.html"; }, 500);
-      return;
-    }
-    showMsg(data.message || "That code didn't work. Check it and try again.", "err");
-  } catch (_) {
-    showMsg("Network error. Please try again.", "err");
-  } finally {
-    go.disabled = false; go.textContent = old;
-  }
+  var code = codeEl.value.trim();
+  if (!code){ showMsg("Enter your access code.", "err"); return; }
+  go.disabled = true; var old = go.textContent; go.textContent = "...";
+  fetch("/api/verify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ code: code })
+  }).then(function(res){ return res.json().then(function(d){ return { ok: res.ok, d: d }; }); })
+    .then(function(r){
+      if (r.ok && r.d && r.d.ok){
+        document.getElementById("stamp").classList.add("on");
+        setTimeout(function(){ location.href = "/app"; }, 900);
+        return;
+      }
+      showMsg((r.d && r.d.message) || "That code didn't work. Check it and try again.", "err");
+      go.disabled = false; go.textContent = old;
+    })
+    .catch(function(){ showMsg("Network error. Please try again.", "err"); go.disabled = false; go.textContent = old; });
 });
 </script>
 </body>
