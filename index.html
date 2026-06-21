@@ -37,7 +37,7 @@ body{
 @keyframes drift2{0%{transform:translate(0,0) scale(1.1)}100%{transform:translate(5%,-5%) scale(1)}}
 /* ---------- the ticket / admission pass ---------- */
 .ticket{
-  width:100%;max-width:430px;position:relative;border-radius:26px;
+  width:100%;max-width:430px;position:relative;z-index:2;border-radius:26px;
   background:linear-gradient(160deg,var(--glass2),var(--glass));
   -webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%);
   border:1px solid var(--line);
@@ -136,7 +136,7 @@ body{
 .cd-date{font-size:11px;color:#8df0df;margin-top:9px;font-weight:700;letter-spacing:.04em}
 .logo{margin:14px auto 6px;display:flex;justify-content:center}
 .logo svg{height:84px;width:auto;display:block;filter:drop-shadow(0 8px 22px rgba(31,182,166,.45))}
-.wall{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.wall{position:fixed;inset:0;z-index:1;overflow:hidden;pointer-events:none}
 .app{pointer-events:auto;text-decoration:none;display:flex;align-items:center;justify-content:center;position:absolute;opacity:.5;filter:saturate(.72);transition:opacity .2s,transform .2s,filter .2s}
 .app:hover{opacity:1;filter:saturate(1);transform:scale(1.12);z-index:2}
 .app .tile{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;border:1px solid rgba(255,255,255,.18);box-shadow:0 10px 22px -12px rgba(0,0,0,.7)}
