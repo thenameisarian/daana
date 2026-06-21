@@ -124,6 +124,15 @@ body{
 @keyframes slam{to{transform:rotate(-11deg) scale(1);opacity:1}}
 @media(max-width:430px){.social{flex-direction:column}.wordmark{font-size:26px}.notch{display:none}}
 @media(prefers-reduced-motion:reduce){.aurora,.aurora::before,.monogram::after,.cursor,.stamp .mark{animation:none}}
+
+.cd{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:13px;padding:12px 12px 11px;margin-bottom:16px;text-align:center}
+.cd-l{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);margin-bottom:9px}
+.cd-grid{display:flex;align-items:flex-start;justify-content:center;gap:7px}
+.cd-u{display:flex;flex-direction:column;align-items:center;min-width:44px}
+.cd-u b{font-family:ui-monospace,monospace;font-size:25px;font-weight:800;color:var(--txt);line-height:1;font-variant-numeric:tabular-nums}
+.cd-u span{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--mut);margin-top:5px}
+.cd-c{font-size:20px;color:var(--teal);font-weight:800;margin-top:2px}
+.cd-date{font-size:11px;color:#8df0df;margin-top:9px;font-weight:700;letter-spacing:.04em}
 </style>
 </head>
 <body>
@@ -147,6 +156,17 @@ body{
   <div class="perf"><span class="notch l"></span><span class="notch r"></span></div>
 
   <div class="stub">
+    <div class="cd" id="cd">
+      <div class="cd-l">Next access drop</div>
+      <div class="cd-grid">
+        <div class="cd-u"><b id="cdD">00</b><span>days</span></div><div class="cd-c">:</div>
+        <div class="cd-u"><b id="cdH">00</b><span>hrs</span></div><div class="cd-c">:</div>
+        <div class="cd-u"><b id="cdM">00</b><span>min</span></div><div class="cd-c">:</div>
+        <div class="cd-u"><b id="cdS">00</b><span>sec</span></div>
+      </div>
+      <div class="cd-date" id="cdDate"></div>
+    </div>
+
     <div class="term"><span class="pr">daana@gate:~$</span> <span id="termtxt"></span><span class="cursor"></span></div>
 
     <div class="steps">
@@ -259,6 +279,24 @@ form.addEventListener("submit", function(e){
     })
     .catch(function(){ showMsg("Network error. Please try again.", "err"); go.disabled = false; go.textContent = old; });
 });
+
+(function(){
+  function nextFirst(){ var n=new Date(); return new Date(n.getFullYear(), n.getMonth()+1, 1, 0,0,0,0); }
+  var months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var target=nextFirst();
+  var dE=document.getElementById("cdD"),hE=document.getElementById("cdH"),mE=document.getElementById("cdM"),sE=document.getElementById("cdS"),dateE=document.getElementById("cdDate");
+  function pad(x){return String(x).padStart(2,"0");}
+  function upd(){
+    var now=new Date(); if(now>=target){target=nextFirst();}
+    dateE.textContent=months[target.getMonth()]+" 1, "+target.getFullYear();
+    var diff=Math.max(0,target-now), t=Math.floor(diff/1000);
+    dE.textContent=pad(Math.floor(t/86400));
+    hE.textContent=pad(Math.floor(t%86400/3600));
+    mE.textContent=pad(Math.floor(t%3600/60));
+    sE.textContent=pad(t%60);
+  }
+  upd(); setInterval(upd,1000);
+})();
 </script>
 </body>
 </html>
