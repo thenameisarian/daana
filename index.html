@@ -238,7 +238,7 @@ var ICONS = {
 
 /* ===== EDIT THIS LIST: your apps, sites, initiatives, accounts ===== */
 var APPS = [
-  { name:"Arian Academy", url:"https://order.mustafaarian.com/apply", logo:"order.mustafaarian.com" },
+  { name:"Arian Academy", url:"https://order.mustafaarian.com/apply", src:"/arian-academy.png", logo:"order.mustafaarian.com", color:"#141206" },
   { name:"TAM Network",   url:"https://thetamnetwork.com",            logo:"thetamnetwork.com" },
   { name:"Nawishta",      url:"https://nawishta.org",                 logo:"nawishta.org" },
   { name:"GitHub",        url:"https://github.com/thenameisarian",    icon:"gh", color:"#1a1a1a" },
@@ -256,10 +256,11 @@ var APPS = [
     el.style.setProperty("--glowc", a.color||"#1fb6a6");
     var tile=document.createElement("span"); tile.className="tile";
     tile.style.background=a.color||"#0c2a26";
-    if(a.logo){
+    if(a.src||a.logo){
       var img=document.createElement("img"); img.alt=a.name; img.loading="lazy";
-      img.src="https://"+a.logo+"/apple-touch-icon.png";
-      img.onerror=function(){ this.onerror=null; this.src="https://www.google.com/s2/favicons?domain="+a.logo+"&sz=128"; };
+      var fb=a.logo?("https://www.google.com/s2/favicons?domain="+a.logo+"&sz=128"):null;
+      img.src=a.src||("https://"+a.logo+"/apple-touch-icon.png");
+      img.onerror=function(){ this.onerror=null; if(fb){ this.src=fb; } };
       tile.appendChild(img);
     } else if(a.icon){ tile.innerHTML=ICONS[a.icon]; }
     else { tile.innerHTML='<span>'+(a.mono||'')+'</span>'; }
