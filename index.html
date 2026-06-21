@@ -260,6 +260,7 @@ var APPS = [
       var img=document.createElement("img"); img.alt=a.name; img.loading="lazy";
       var fb=a.logo?("https://www.google.com/s2/favicons?domain="+a.logo+"&sz=128"):null;
       img.src=a.src||("https://"+a.logo+"/apple-touch-icon.png");
+      if(a.src){ img.style.objectFit="contain"; }
       img.onerror=function(){ this.onerror=null; if(fb){ this.src=fb; } };
       tile.appendChild(img);
     } else if(a.icon){ tile.innerHTML=ICONS[a.icon]; }
