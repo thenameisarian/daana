@@ -1,7 +1,7 @@
 import { checkSession } from "./_lib.js";
 
 // Map protected static paths -> required test id.
-const PROTECTED = { "/app.html": "toefl", "/app": "toefl", "/app-ielts.html": "ielts", "/app-ielts": "ielts", "/app-duolingo.html": "duolingo", "/app-duolingo": "duolingo" };
+const PROTECTED = { "/app.html": "toefl", "/app": "toefl", "/app-ielts.html": "ielts", "/app-ielts": "ielts", "/app-duolingo.html": "duolingo", "/app-duolingo": "duolingo", "/app-ged.html": "ged", "/app-ged": "ged" };
 
 export async function onRequest(context) {
   const { request, next } = context;

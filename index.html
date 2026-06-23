@@ -353,7 +353,7 @@ form.addEventListener("submit", function(e){
     .then(function(r){
       if (r.ok && r.d && r.d.ok){
         document.getElementById("stamp").classList.add("on");
-        setTimeout(function(){ var dest = (r.d && r.d.test==="ielts") ? "/app-ielts" : (r.d && r.d.test==="duolingo") ? "/app-duolingo" : "/app"; location.href = dest; }, 900);
+        setTimeout(function(){ var m={ielts:"/app-ielts",duolingo:"/app-duolingo",ged:"/app-ged"}; location.href = (r.d && m[r.d.test]) ? m[r.d.test] : "/app"; }, 900);
         return;
       }
       showMsg((r.d && r.d.message) || "That code didn't work. Check it and try again.", "err");
