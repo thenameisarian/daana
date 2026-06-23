@@ -102,8 +102,9 @@ const IELTS = {
          { id:"13", q:"To join, new members should first", opts:["pay online","bring ID","book a tour"], ans:2 },
          { id:"14", q:"The café is open", opts:["every day","weekdays only","weekends only"], ans:0 },
          { id:"15", q:"The most popular class is", opts:["yoga","pottery","dance"], ans:1 } ] },
-       { type:"map", instr:"Where is each place? Choose the correct letter, A to F, for questions 16 to 20.",
-         options:[["A","front-left room (first door on the left)"],["B","front-right room (opposite the library)"],["C","straight ahead from the entrance"],["D","far-left corner"],["E","far-right corner, by the back door"],["F","south side, reached through the café"]],
+       { type:"map", instr:"Label the plan of Hillside Community Centre. Choose the correct letter, A to F, for questions 16 to 20.",
+         image:"<svg width='320' height='235' viewBox='0 0 320 235' xmlns='http://www.w3.org/2000/svg'><rect x='15' y='12' width='290' height='178' fill='#f5f7f8' stroke='#9bbcbc' stroke-width='1.5'/><rect x='30' y='28' width='70' height='48' fill='#fff' stroke='#bcccd0'/><text x='65' y='58' font-size='19' font-weight='bold' fill='#1a8f93' text-anchor='middle'>D</text><rect x='220' y='28' width='70' height='48' fill='#fff' stroke='#bcccd0'/><text x='255' y='58' font-size='19' font-weight='bold' fill='#1a8f93' text-anchor='middle'>E</text><rect x='30' y='100' width='70' height='48' fill='#fff' stroke='#bcccd0'/><text x='65' y='130' font-size='19' font-weight='bold' fill='#1a8f93' text-anchor='middle'>A</text><rect x='125' y='94' width='70' height='54' fill='#fff' stroke='#bcccd0'/><text x='160' y='127' font-size='19' font-weight='bold' fill='#1a8f93' text-anchor='middle'>C</text><rect x='220' y='100' width='70' height='48' fill='#fff' stroke='#bcccd0'/><text x='255' y='130' font-size='19' font-weight='bold' fill='#1a8f93' text-anchor='middle'>B</text><rect x='205' y='200' width='100' height='28' fill='#eef6f6' stroke='#bcccd0'/><text x='255' y='219' font-size='12' font-weight='bold' fill='#1a8f93' text-anchor='middle'>F (café and garden)</text><text x='160' y='178' font-size='10' fill='#6b7785' text-anchor='middle'>corridor</text><polygon points='95,203 89,191 101,191' fill='#28323b'/><text x='95' y='222' font-size='11' fill='#28323b' text-anchor='middle'>Entrance</text></svg>",
+         options:[["A","A"],["B","B"],["C","C"],["D","D"],["E","E"],["F","F"]],
          questions:[ {id:"16",prompt:"Reception",ans:"C"},{id:"17",prompt:"Library",ans:"A"},{id:"18",prompt:"Gym",ans:"B"},{id:"19",prompt:"Children's room",ans:"E"},{id:"20",prompt:"Garden",ans:"F"} ] }
      ] },
    { n:3, context:"Part 3 - Questions 21 to 30. Two students, Mark and Lena, plan a geography presentation on urban green spaces.",
@@ -233,8 +234,8 @@ const IELTS = {
   dir:"You have 60 minutes for two tasks. Spend about 20 minutes on Task 1 (at least 150 words) and 40 minutes on Task 2 (at least 250 words). Task 2 carries more marks. Both are rated on four criteria: Task Achievement/Response, Coherence and Cohesion, Lexical Resource, and Grammatical Range and Accuracy.",
   parts:[
    { n:1, kind:"task1", minutes:20, context:"Writing Task 1 - spend about 20 minutes. Write at least 150 words.",
-     prompt:"The table below shows the number of visitors (in thousands) to three museums in one city in 2018 and 2023. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-     visual:"<table class='formtab'><tr><td></td><td><b>2018</b></td><td><b>2023</b></td></tr><tr><td>City History Museum</td><td>120</td><td>185</td></tr><tr><td>Modern Art Gallery</td><td>95</td><td>250</td></tr><tr><td>Science Centre</td><td>210</td><td>190</td></tr></table>",
+     prompt:"The bar chart below shows the number of visitors (in thousands) to three museums in one city in 2018 and 2023. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
+     visual:"<svg width='100%' viewBox='0 0 440 235' style='max-width:460px' xmlns='http://www.w3.org/2000/svg'><line x1='48' y1='12' x2='48' y2='185' stroke='#bcccd0'/><line x1='48' y1='185' x2='425' y2='185' stroke='#bcccd0'/><g font-size='10' fill='#6b7785' text-anchor='end'><text x='42' y='188'>0</text><text x='42' y='156'>50</text><text x='42' y='124'>100</text><text x='42' y='92'>150</text><text x='42' y='60'>200</text><text x='42' y='28'>250</text></g><rect x='70' y='108' width='26' height='77' fill='#157074'/><rect x='98' y='67' width='26' height='118' fill='#1a8f93'/><rect x='190' y='124' width='26' height='61' fill='#157074'/><rect x='218' y='25' width='26' height='160' fill='#1a8f93'/><rect x='310' y='51' width='26' height='134' fill='#157074'/><rect x='338' y='63' width='26' height='122' fill='#1a8f93'/><g font-size='11' fill='#28323b' text-anchor='middle'><text x='97' y='200'>City History</text><text x='217' y='200'>Modern Art</text><text x='337' y='200'>Science Centre</text></g><rect x='150' y='214' width='12' height='12' fill='#157074'/><text x='167' y='224' font-size='11' fill='#28323b'>2018</text><rect x='240' y='214' width='12' height='12' fill='#1a8f93'/><text x='257' y='224' font-size='11' fill='#28323b'>2023</text></svg>",
      guide:["Write a clear overview of the main trends","Report key figures and make comparisons","Do not give your own opinion","Use formal, varied language; 150+ words"] },
    { n:2, kind:"task2", minutes:40, context:"Writing Task 2 - spend about 40 minutes. Write at least 250 words.",
      prompt:"Some people think children should start learning a foreign language as early as possible in primary school. Others believe it is better to begin in secondary school. Discuss both views and give your own opinion.",
@@ -331,7 +332,7 @@ function renderGroup(g){
  if(g.type==="fill") return `<div class="qgroup">${instr}${fillHTML(g)}</div>`;
  if(g.type==="mcq") return `<div class="qgroup">${instr}${g.questions.map(mcqHTML).join("")}</div>`;
  if(g.type==="matching") return `<div class="qgroup">${instr}${optboxHTML(g.options)}${g.questions.map(q=>matchRow(q,g.options)).join("")}</div>`;
- if(g.type==="map") return `<div class="qgroup">${instr}${g.image?`<div style="text-align:center;margin:8px 0">${g.image}</div>`:""}${optboxHTML(g.options)}${g.questions.map(q=>matchRow(q,g.options)).join("")}</div>`;
+ if(g.type==="map") return `<div class="qgroup">${instr}${g.image?`<div style="text-align:center;margin:8px 0">${g.image}</div>`:optboxHTML(g.options)}${g.questions.map(q=>matchRow(q,g.options)).join("")}</div>`;
  if(g.type==="tfng") return `<div class="qgroup">${instr}${g.questions.map(q=>judgeRow(q,["TRUE","FALSE","NOT GIVEN"])).join("")}</div>`;
  if(g.type==="ynng") return `<div class="qgroup">${instr}${g.questions.map(q=>judgeRow(q,["YES","NO","NOT GIVEN"])).join("")}</div>`;
  if(g.type==="headings") return `<div class="qgroup">${instr}${optboxHTML(g.options)}${g.questions.map(q=>matchRow(q,g.options)).join("")}</div>`;
@@ -370,7 +371,8 @@ function nextPart(){ if(window.speechSynthesis)speechSynthesis.cancel(); if(pi<p
 function finishSection(){ if(timerInt)clearInterval(timerInt); if(secIdx<flow.length-1){secIdx++;directions();} else results(); }
 
 /* ====== scoring / results ====== */
-function gradeFill(val,accepted){ const v=(val||"").trim().toLowerCase().replace(/\s+/g," "); return accepted.some(a=>a.toLowerCase()===v); }
+function ieNorm(v){ return (v||"").trim().toLowerCase().replace(/[.,!?;:'"]/g,"").replace(/^(a |an |the )/,"").replace(/\s+/g," "); }
+function gradeFill(val,accepted){ const v=ieNorm(val); return accepted.some(a=>ieNorm(a)===v); }
 function scoreSection(secKey){ let correct=0,total=0; (IELTS[secKey].parts||[]).forEach(part=>{ (part.groups||[]).forEach(g=>{
    if(g.keys){ Object.keys(g.keys).forEach(id=>{ total++; if(gradeFill(ans[id],g.keys[id]))correct++; }); }
    else if(g.questions){ g.questions.forEach(q=>{ total++; if(typeof q.ans==="number"){ if(ans[q.id]===q.ans)correct++; } else { if((ans[q.id]||"")===q.ans)correct++; } }); }
