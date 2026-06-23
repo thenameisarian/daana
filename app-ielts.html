@@ -254,11 +254,121 @@ const IELTS = {
   ] }
 };
 
+const IELTS_GT = {
+ reading:{ name:"Reading", minutes:60,
+  dir:"General Training Reading: three sections with everyday and workplace texts, then one longer passage. 40 questions in 60 minutes. Read each instruction carefully.",
+  parts:[
+   { n:1, context:"Section 1 - Questions 1 to 13. Read the library guide and answer the questions.",
+     passage:{ title:"Greenfield Public Library: A Guide for New Members", paras:[
+       "Joining the library is free for anyone who lives in the Greenfield area. To register, simply bring photo identification and a recent letter or bill showing your home address. Children under sixteen are welcome to join, but they must have a parent or guardian sign the application form.",
+       "Once you are a member, you may borrow up to twelve items at any one time, and you may keep them for three weeks. Borrowed items can be renewed online, but only twice, and not if another member has reserved the same item.",
+       "Please return items on time. There is a fine of twenty pence per item for each day an item is overdue. If an item is lost or badly damaged, you will be charged the full replacement cost.",
+       "The library also offers computers, which members may use free of charge for one hour a day. Printing is available at ten pence per page. A quiet study room, ideal for reading or revision, can be found on the first floor.",
+       "Finally, do not miss our popular story time for young children, held every Saturday at ten in the morning. It is completely free and there is no need to book a place." ] },
+     groups:[
+       { type:"tfng", instr:"Do the following statements agree with the information in the text? Choose TRUE, FALSE or NOT GIVEN for questions 1 to 7.",
+         questions:[
+           {id:"1", prompt:"Library membership is free for local residents.", ans:"TRUE"},
+           {id:"2", prompt:"Children under sixteen can join without a parent's permission.", ans:"FALSE"},
+           {id:"3", prompt:"Members may borrow up to twelve items at once.", ans:"TRUE"},
+           {id:"4", prompt:"Items can be renewed online any number of times.", ans:"FALSE"},
+           {id:"5", prompt:"The fine for an overdue item is twenty pence a day.", ans:"TRUE"},
+           {id:"6", prompt:"Using the library computers costs ten pence per hour.", ans:"FALSE"},
+           {id:"7", prompt:"Children's story time must be booked in advance.", ans:"FALSE"} ] },
+       { type:"fill", layout:"lines", instr:"Complete the sentences below. Write ONE WORD AND/OR A NUMBER for each answer.",
+         lines:[
+           "To register, new members must bring photo ID and proof of {8}.",
+           "Borrowed items may be kept for {9} weeks.",
+           "Lost items are charged at the full {10} cost.",
+           "Printing costs {11} pence per page.",
+           "The quiet study room is on the {12} floor.",
+           "Story time for children is held every {13}." ],
+         keys:{ "8":["address"], "9":["3","three"], "10":["replacement"], "11":["10","ten"], "12":["first","1st"], "13":["Saturday","Saturdays"] } }
+     ] },
+   { n:2, context:"Section 2 - Questions 14 to 26. Read the staff handbook extract and answer the questions.",
+     passage:{ title:"New Staff Handbook: Hours, Breaks and Leave", paras:[
+       "Standard working hours are 9 a.m. to 5 p.m., making a 37.5-hour week once breaks are deducted. We operate flexible start times: you may begin work at any point between 8 a.m. and 10 a.m., provided you complete your full hours.",
+       "All full-time staff are entitled to one hour for lunch, which is unpaid, as well as two paid breaks of fifteen minutes, one in the morning and one in the afternoon.",
+       "Any overtime must be approved in advance by your line manager. Approved overtime is paid at 1.5 times the normal rate, or, if you prefer, it may be taken later as time off in lieu.",
+       "Full-time employees receive 25 days of annual leave each year, in addition to public holidays. Requests for leave should be submitted at least two weeks before the dates you wish to take.",
+       "If you are unwell and cannot come to work, you must telephone your manager before 9.30 a.m. on the first day. A doctor's note is only required if your absence lasts longer than five working days.",
+       "With your manager's approval, you may work from home for up to two days each week. Home-working days should be agreed in advance and recorded on the team calendar." ] },
+     groups:[
+       { type:"matching", instr:"Which paragraph contains the following information? Write the correct letter, A to F, for questions 14 to 19. (The paragraphs are labelled A to F in the text.)",
+         options:[["A","paragraph A"],["B","paragraph B"],["C","paragraph C"],["D","paragraph D"],["E","paragraph E"],["F","paragraph F"]],
+         questions:[
+           {id:"14", prompt:"how to report that you are ill", ans:"E"},
+           {id:"15", prompt:"the rule about working from home", ans:"F"},
+           {id:"16", prompt:"the number of annual holiday days", ans:"D"},
+           {id:"17", prompt:"when extra hours are paid at a higher rate", ans:"C"},
+           {id:"18", prompt:"the length of the lunch break", ans:"B"},
+           {id:"19", prompt:"the earliest time staff may start work", ans:"A"} ] },
+       { type:"tfng", instr:"Do the following statements agree with the information in the text? Choose TRUE, FALSE or NOT GIVEN for questions 20 to 26.",
+         questions:[
+           {id:"20", prompt:"The standard working week is 37.5 hours.", ans:"TRUE"},
+           {id:"21", prompt:"The lunch break is paid.", ans:"FALSE"},
+           {id:"22", prompt:"Overtime must be approved before it is worked.", ans:"TRUE"},
+           {id:"23", prompt:"Employees receive 30 days of annual leave.", ans:"FALSE"},
+           {id:"24", prompt:"A doctor's note is needed for every day of sickness.", ans:"FALSE"},
+           {id:"25", prompt:"Staff may work from home up to two days a week.", ans:"TRUE"},
+           {id:"26", prompt:"Home working can be arranged without telling a manager.", ans:"FALSE"} ] }
+     ] },
+   { n:3, context:"Section 3 - Questions 27 to 40. Read the passage and answer the questions.",
+     passage:{ title:"The Surprising History of the Postage Stamp", paras:[
+       "Before the stamp existed, sending a letter was a slow and unfair business. In most countries it was the recipient, not the sender, who paid, and the charge depended on the distance the letter had travelled and the number of sheets of paper. Many people simply refused to accept letters they could not afford.",
+       "In Britain, a teacher named Rowland Hill argued that the whole system should be turned upside down. He proposed a single low price, paid in advance by the sender, no matter how far the letter was going. In 1840 his idea became reality with the Penny Black, the first adhesive postage stamp.",
+       "The change was dramatic. Because postage was now cheap and prepaid, ordinary families began writing to one another as never before, and the number of letters sent each year rose sharply within months.",
+       "Other nations watched with interest, and the idea spread rapidly. Within about ten years, many other countries had issued adhesive stamps of their own, and the prepaid system became the global standard.",
+       "Stamps soon gained a second life as objects to collect. The hobby of philately grew quickly, and today a rare early stamp in good condition can be worth a small fortune at auction.",
+       "In the digital age, email and messaging have reduced the number of personal letters dramatically. Yet the postage stamp has not disappeared: it lives on for parcels, official mail and, of course, the millions of collectors who still treasure it." ] },
+     groups:[
+       { type:"headings", instr:"Choose the correct heading for each paragraph A to F from the list below. Write the correct number, i to ix, for questions 27 to 32.",
+         options:[ ["i","A new hobby is born"],["ii","The unfair system of the past"],["iii","One man's bold idea"],["iv","How the new stamp changed letter-writing"],["v","The stamp in the digital age"],["vi","The idea spreads around the world"],["vii","How stamps are printed"],["viii","The cost of collecting"],["ix","Famous letters in history"] ],
+         questions:[
+           {id:"27", prompt:"Paragraph A", ans:"ii"},
+           {id:"28", prompt:"Paragraph B", ans:"iii"},
+           {id:"29", prompt:"Paragraph C", ans:"iv"},
+           {id:"30", prompt:"Paragraph D", ans:"vi"},
+           {id:"31", prompt:"Paragraph E", ans:"i"},
+           {id:"32", prompt:"Paragraph F", ans:"v"} ] },
+       { type:"fill", layout:"lines", instr:"Complete the summary below. Write ONE WORD ONLY from the passage for each answer.",
+         lines:[
+           "Before stamps existed, the {33} of a letter usually paid for it.",
+           "The charge depended on the {34} the letter had travelled.",
+           "In 1840, Rowland Hill introduced the Penny {35}.",
+           "Within about ten years the idea had spread to many other {36}.",
+           "Today {37} has greatly reduced the number of personal letters." ],
+         keys:{ "33":["recipient"], "34":["distance"], "35":["Black"], "36":["countries"], "37":["email"] } },
+       { type:"mcq", instr:"Choose the correct letter, A, B or C, for questions 38 to 40.",
+         questions:[
+           {id:"38", q:"Before 1840, the cost of sending a letter depended mainly on", opts:["the weight of the letter","the distance and number of sheets","the wealth of the sender"], ans:1},
+           {id:"39", q:"The main effect of the Penny Black was that", opts:["letters became more expensive","far more letters were sent","only the rich could write letters"], ans:1},
+           {id:"40", q:"According to the writer, postage stamps today are mainly used for", opts:["parcels, official mail and collecting","sending personal letters","decorating envelopes"], ans:0} ] }
+     ] }
+  ] },
+ writing:{ name:"Writing", minutes:60,
+  dir:"General Training Writing has two tasks in 60 minutes. Spend about 20 minutes on Task 1 (a letter, at least 150 words) and about 40 minutes on Task 2 (an essay, at least 250 words). Task 2 carries more marks.",
+  parts:[
+   { n:1, kind:"task1", minutes:20, context:"Writing Task 1 - spend about 20 minutes. Write at least 150 words.",
+     prompt:"You recently bought a product from an online shop, but it arrived damaged. Write a letter to the company. In your letter:\n- explain what you bought and when\n- describe the problem with the product\n- say what you would like the company to do.",
+     guide:["Begin with an appropriate greeting and end with a sign-off","Cover all three bullet points","Use a clear, polite (semi-formal) tone","Organise your letter into paragraphs; 150+ words"] },
+   { n:2, kind:"task2", minutes:40, context:"Writing Task 2 - spend about 40 minutes. Write at least 250 words.",
+     prompt:"Some people believe that children should receive pocket money regularly, while others think children should earn money by doing tasks at home. Discuss both views and give your own opinion.",
+     guide:["State a clear position in your introduction","Discuss both views with reasons and examples","Use clear, logical paragraphs","End with a clear conclusion; 250+ words"] }
+  ] }
+};
+
 /* ====== raw-to-band tables (official) ====== */
 function listeningBand(r){ const t=[[39,9],[37,8.5],[35,8],[32,7.5],[30,7],[26,6.5],[23,6],[18,5.5],[16,5],[13,4.5],[10,4],[8,3.5],[6,3],[4,2.5]]; for(const[m,b]of t)if(r>=m)return b; return r>=2?2:r>=1?1:0; }
 function readingBandA(r){ const t=[[39,9],[37,8.5],[35,8],[33,7.5],[30,7],[27,6.5],[23,6],[19,5.5],[15,5],[13,4.5],[10,4],[8,3.5],[6,3]]; for(const[m,b]of t)if(r>=m)return b; return r>=1?2:0; }
 function roundHalf(x){ return Math.round(x*2)/2; }
 function bandWord(b){ return b>=8.5?"Expert / Very good":b>=7?"Good":b>=6?"Competent":b>=5?"Modest":b>=4?"Limited":"Basic"; }
+function readingBandGT(r){ const t=[[40,9],[39,8.5],[37,8],[36,7.5],[34,7],[32,6.5],[30,6],[27,5.5],[23,5],[19,4.5],[15,4],[12,3.5],[9,3]]; for(const[m,b]of t)if(r>=m)return b; return r>=1?2:0; }
+let module_="academic";
+const ACTIVE={};
+function buildActive(){ ACTIVE.listening=IELTS.listening; ACTIVE.speaking=IELTS.speaking; ACTIVE.reading=(module_==="general"?IELTS_GT.reading:IELTS.reading); ACTIVE.writing=(module_==="general"?IELTS_GT.writing:IELTS.writing); }
+buildActive();
+function setModule(m){ module_=m; buildActive(); showHome(); }
 
 /* ====== state ====== */
 let flow=[], secIdx=0, parts=[], pi=0, ans={}, timerInt=null, secTimer=0, hideTime=false, mode="home", startedAt=0;
@@ -270,7 +380,7 @@ function setFab(on){const f=document.getElementById("nfab");if(f)f.style.display
 function toggleNotes(){document.getElementById("npanel").classList.toggle("on");}
 
 /* collect every question id in a section (for palette + scoring) */
-function sectionQuestions(secKey){ const out=[]; (IELTS[secKey].parts||[]).forEach((part,partIdx)=>{ (part.groups||[]).forEach(g=>{ collectGroupIds(g).forEach(id=>out.push({id,partIdx,type:g.type})); }); }); return out; }
+function sectionQuestions(secKey){ const out=[]; (ACTIVE[secKey].parts||[]).forEach((part,partIdx)=>{ (part.groups||[]).forEach(g=>{ collectGroupIds(g).forEach(id=>out.push({id,partIdx,type:g.type})); }); }); return out; }
 function collectGroupIds(g){ if(g.keys) return Object.keys(g.keys); if(g.questions) return g.questions.map(q=>q.id); return []; }
 
 function tts(text){ if("speechSynthesis"in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=0.95;u.lang="en-GB";window.speechSynthesis.speak(u);} }
@@ -282,26 +392,26 @@ function showHome(){
  const desc={listening:"4 recordings, 40 questions.",reading:"3 passages, 40 questions.",writing:"Task 1 + Task 2.",speaking:"3 parts, 11–14 min."};
  homeEl().innerHTML=`<div class="center-wrap">
    <div class="brand"><span class="mk">D</span><span>Daana</span></div>
-   <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-top:4px">IELTS Academic · computer-delivered · by Arian Academy</div>
-   <h1 class="h1" style="margin-top:12px">IELTS Academic — Practice Test</h1>
+   <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-top:4px">IELTS ${module_==="general"?"General Training":"Academic"} · computer-delivered · by Arian Academy</div><div style="margin:12px 0 4px;display:flex;gap:8px"><button class="btn ${module_==="academic"?"teal":"ghost"}" onclick="setModule('academic')">Academic</button><button class="btn ${module_==="general"?"teal":"ghost"}" onclick="setModule('general')">General Training</button></div>
+   <h1 class="h1" style="margin-top:6px">IELTS ${module_==="general"?"General Training":"Academic"} — Practice Test</h1>
    <p class="lead">The computer-delivered format (the only IELTS format from June 2026). Band 0–9 scoring. Listening &amp; Reading auto-scored; Writing &amp; Speaking use guided self-review. Original practice material.</p>
    <div style="margin-top:8px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn teal" onclick="begin(['listening','reading','writing','speaking'])">Start Full Test</button></div>
    <p class="lead" style="margin-top:20px">Or practice one section:</p>
-   <div class="cards">${["listening","reading","writing","speaking"].map(k=>`<div class="scard"><div class="nm">${IELTS[k].name}</div><div class="mt">${IELTS[k].minutes} min</div><div class="mt" style="margin:6px 0">${desc[k]}</div><button class="btn" style="padding:8px 18px" onclick="begin(['${k}'])">Start</button></div>`).join("")}</div>
+   <div class="cards">${["listening","reading","writing","speaking"].map(k=>`<div class="scard"><div class="nm">${ACTIVE[k].name}</div><div class="mt">${ACTIVE[k].minutes} min</div><div class="mt" style="margin:6px 0">${desc[k]}</div><button class="btn" style="padding:8px 18px" onclick="begin(['${k}'])">Start</button></div>`).join("")}</div>
  </div>`;
 }
 
-function begin(f){ flow=f.filter(k=>(IELTS[k].parts||[]).length); if(!flow.length){alert("That section's content is being added.");return;} secIdx=0; ans={}; startedAt=Date.now(); directions(); }
-function directions(){ const sec=IELTS[flow[secIdx]]; homeEl().style.display="none"; testEl().classList.add("on");
+function begin(f){ flow=f.filter(k=>(ACTIVE[k].parts||[]).length); if(!flow.length){alert("That section's content is being added.");return;} secIdx=0; ans={}; startedAt=Date.now(); directions(); }
+function directions(){ const sec=ACTIVE[flow[secIdx]]; homeEl().style.display="none"; testEl().classList.add("on");
  testEl().innerHTML=`<div class="center-wrap"><div class="dir-card"><div class="dir-head">${sec.name} — Directions</div><div class="dir-body"><p>${esc(sec.dir)}</p><p style="color:#6b7785;font-size:13px">Time: ${sec.minutes} minutes.</p></div></div><div style="text-align:center;margin-top:20px"><button class="btn teal" onclick="runSection()">Start ${esc(sec.name)}</button></div></div>`;
 }
-function runSection(){ parts=IELTS[flow[secIdx]].parts; pi=0; secTimer=IELTS[flow[secIdx]].minutes*60; startTimer(); render(); }
+function runSection(){ parts=ACTIVE[flow[secIdx]].parts; pi=0; secTimer=ACTIVE[flow[secIdx]].minutes*60; startTimer(); render(); }
 function startTimer(){ if(timerInt)clearInterval(timerInt); timerInt=setInterval(()=>{ secTimer--; const t=document.getElementById("clk"); if(t&&!hideTime)t.textContent=fmt(Math.max(0,secTimer)); if(secTimer<=0){clearInterval(timerInt);finishSection();} },1000); }
 function toggleHide(){hideTime=!hideTime;render();}
 
 /* ====== render a part ====== */
 function render(){ window.scrollTo(0,0); mode="run"; setFab(true);
- const secKey=flow[secIdx]; const sec=IELTS[secKey]; const part=parts[pi];
+ const secKey=flow[secIdx]; const sec=ACTIVE[secKey]; const part=parts[pi];
  const qs=sectionQuestions(secKey); const answered=qs.filter(q=>ans[q.id]!=null&&ans[q.id]!=="").length;
  const isLast = pi===parts.length-1;
  const audioBlock = secKey==="listening" ? `<div class="spanel" style="margin-bottom:16px"><div class="av">&#127911;</div><div class="audiostate" id="astate">Loading audio…</div></div>` : "";
@@ -373,14 +483,14 @@ function finishSection(){ if(timerInt)clearInterval(timerInt); if(secIdx<flow.le
 /* ====== scoring / results ====== */
 function ieNorm(v){ return (v||"").trim().toLowerCase().replace(/[.,!?;:'"]/g,"").replace(/^(a |an |the )/,"").replace(/\s+/g," "); }
 function gradeFill(val,accepted){ const v=ieNorm(val); return accepted.some(a=>ieNorm(a)===v); }
-function scoreSection(secKey){ let correct=0,total=0; (IELTS[secKey].parts||[]).forEach(part=>{ (part.groups||[]).forEach(g=>{
+function scoreSection(secKey){ let correct=0,total=0; (ACTIVE[secKey].parts||[]).forEach(part=>{ (part.groups||[]).forEach(g=>{
    if(g.keys){ Object.keys(g.keys).forEach(id=>{ total++; if(gradeFill(ans[id],g.keys[id]))correct++; }); }
    else if(g.questions){ g.questions.forEach(q=>{ total++; if(typeof q.ans==="number"){ if(ans[q.id]===q.ans)correct++; } else { if((ans[q.id]||"")===q.ans)correct++; } }); }
  }); }); return {correct,total}; }
 function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="result"; setFab(false);
  const bands=[]; let cells="";
  if(flow.includes("listening")){ const s=scoreSection("listening"); const b=listeningBand(s.correct); bands.push(b); cells+=scellHTML("Listening",b,`${s.correct}/${s.total} correct`); }
- if(flow.includes("reading")){ const s=scoreSection("reading"); const b=readingBandA(s.correct); bands.push(b); cells+=scellHTML("Reading",b,`${s.correct}/${s.total} correct`); }
+ if(flow.includes("reading")){ const s=scoreSection("reading"); const b=(module_==="general"?readingBandGT:readingBandA)(s.correct); bands.push(b); cells+=scellHTML("Reading",b,`${s.correct}/${s.total} correct`); }
  if(flow.includes("writing")) cells+=`<div class="scell"><div class="lead">Writing</div><div class="n">&#9999;</div><div class="lead" style="font-size:12px">self-review</div></div>`;
  if(flow.includes("speaking")) cells+=`<div class="scell"><div class="lead">Speaking</div><div class="n">&#127908;</div><div class="lead" style="font-size:12px">self-review</div></div>`;
  const overall=bands.length?roundHalf(bands.reduce((a,b)=>a+b,0)/bands.length):null;
@@ -395,11 +505,11 @@ function scellHTML(name,band,sub){ return `<div class="scell"><div class="lead">
 
 /* ====== review ====== */
 let reviewItems=[],reviewIdx=0;
-function startReview(){ reviewItems=[]; ["listening","reading"].forEach(secKey=>{ if(!flow.includes(secKey))return; (IELTS[secKey].parts||[]).forEach(part=>{ (part.groups||[]).forEach(g=>{
-   if(g.keys){ Object.keys(g.keys).forEach(id=>reviewItems.push({sec:IELTS[secKey].name,id,your:ans[id],correct:g.keys[id].join(" / "),ok:gradeFill(ans[id],g.keys[id]),kind:"text"})); }
-   else if(g.questions){ g.questions.forEach(q=>{ if(typeof q.ans==="number"){ reviewItems.push({sec:IELTS[secKey].name,id:q.id,your:ans[q.id]!=null?String.fromCharCode(65+ans[q.id]):null,correct:String.fromCharCode(65+q.ans),ok:ans[q.id]===q.ans,kind:"mcq",q}); } else { reviewItems.push({sec:IELTS[secKey].name,id:q.id,your:ans[q.id]||null,correct:q.ans,ok:(ans[q.id]||"")===q.ans,kind:"match",prompt:q.prompt||q.q}); } }); }
- }); }); }); if(flow.includes("writing")) IELTS.writing.parts.forEach(part=>reviewItems.push({sec:"Writing",kind:"open",id:"Task "+part.n,prompt:part.prompt,resp:ans[part.kind==="task1"?"w1":"w2"],guide:part.guide}));
- if(flow.includes("speaking")) IELTS.speaking.parts.forEach(part=>reviewItems.push({sec:"Speaking",kind:"open",id:(part.context.split(" - ")[0]),prompt:part.cue||(part.questions||[]).join("   |   "),guide:part.guide||["Speak in full sentences","Develop your answers with reasons and examples"]}));
+function startReview(){ reviewItems=[]; ["listening","reading"].forEach(secKey=>{ if(!flow.includes(secKey))return; (ACTIVE[secKey].parts||[]).forEach(part=>{ (part.groups||[]).forEach(g=>{
+   if(g.keys){ Object.keys(g.keys).forEach(id=>reviewItems.push({sec:ACTIVE[secKey].name,id,your:ans[id],correct:g.keys[id].join(" / "),ok:gradeFill(ans[id],g.keys[id]),kind:"text"})); }
+   else if(g.questions){ g.questions.forEach(q=>{ if(typeof q.ans==="number"){ reviewItems.push({sec:ACTIVE[secKey].name,id:q.id,your:ans[q.id]!=null?String.fromCharCode(65+ans[q.id]):null,correct:String.fromCharCode(65+q.ans),ok:ans[q.id]===q.ans,kind:"mcq",q}); } else { reviewItems.push({sec:ACTIVE[secKey].name,id:q.id,your:ans[q.id]||null,correct:q.ans,ok:(ans[q.id]||"")===q.ans,kind:"match",prompt:q.prompt||q.q}); } }); }
+ }); }); }); if(flow.includes("writing")) ACTIVE.writing.parts.forEach(part=>reviewItems.push({sec:"Writing",kind:"open",id:"Task "+part.n,prompt:part.prompt,resp:ans[part.kind==="task1"?"w1":"w2"],guide:part.guide}));
+ if(flow.includes("speaking")) ACTIVE.speaking.parts.forEach(part=>reviewItems.push({sec:"Speaking",kind:"open",id:(part.context.split(" - ")[0]),prompt:part.cue||(part.questions||[]).join("   |   "),guide:part.guide||["Speak in full sentences","Develop your answers with reasons and examples"]}));
  if(!reviewItems.length){alert("Nothing to review.");return;} reviewIdx=0; renderReview(); }
 function renderReview(){ window.scrollTo(0,0); mode="review"; setFab(false); const it=reviewItems[reviewIdx];
  const status= it.kind==="open"?'<div class="statusbar st-none">Open response - self-assess with the guide below</div>':(it.your==null?'<div class="statusbar st-none">Not answered</div>':(it.ok?'<div class="statusbar st-ok">Correct</div>':'<div class="statusbar st-bad">Incorrect</div>'));
