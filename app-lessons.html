@@ -299,108 +299,36 @@ const CONTENT={
       "Right — grabbing an umbrella implies expected rain.","Look at the clue: why grab an umbrella?")
    ],move:"You finished the Reading trail — review any node you found tricky."}
  ]},
- ielts:{name:"IELTS",eyebrow:"IELTS · Academic",nodes:[
-  {id:"ie-tfng",title:"True / False / Not Given",icon:"⚖️",
-   intro:["TRUE = the text agrees with the statement. FALSE = the text contradicts it. NOT GIVEN = the text simply doesn't say.",
-          "Most lost marks come from confusing FALSE with NOT GIVEN. FALSE needs a contradiction in the text; NOT GIVEN means the info is genuinely absent."],
-   drills:[
-    D("Text says nothing about a topic in the statement. The answer is:",
-      ["False","Not Given","True"],1,
-      "Right — no information means Not Given.","If the text neither confirms nor contradicts it, it's Not Given, not False."),
-    D("Statement: 'All staff were trained.' Text: 'Most staff were trained.' Answer:",
-      ["True","False","Not Given"],1,
-      "Correct — 'all' vs 'most' is a contradiction → False.","Watch quantity words: 'all' contradicts 'most', so it's False.")
-   ],move:"Find a news claim and decide: does the article confirm, contradict, or not mention it?"},
-  {id:"ie-head",title:"Matching headings",icon:"🏷️",
-   intro:["You choose the best heading for each paragraph. The heading matches the paragraph's <b>main idea</b> — not one detail in it.",
-          "Read the paragraph, ask 'what is this mostly about?', then pick the heading that fits. Cross off used headings."],
-   drills:[
-    D("A heading should capture the paragraph's:",
-      ["first sentence only","main idea","longest example"],1,
-      "Yes — the overall main idea.","A striking detail is the classic trap. Match the main idea.")
-   ],move:"Give a one-line heading to each paragraph of any short article."},
-  {id:"ie-task1",title:"Writing Task 1 (graphs)",icon:"📊",
-   intro:["Academic Task 1 asks you to describe a chart, graph, map or process — <b>no opinions</b>. Start with an overview of the main trend, then report key figures and comparisons.",
-          "Aim for 150+ words in about 20 minutes. The overview sentence is the most important line."],
-   drills:[
-    D("In Academic Task 1 you should NOT:",
-      ["describe the main trend","give your personal opinion","compare figures"],1,
-      "Right — Task 1 is description, not opinion.","Save opinions for Task 2. Task 1 is pure description."),
-    D("The most important sentence in Task 1 is:",
-      ["the overview of the main trend","the title","the last number"],0,
-      "Yes — the overview frames everything.","Examiners look for a clear overview of the main trend.")
-   ],move:"Describe the main trend of any chart you can find in one sentence."},
-  {id:"ie-soon",title:"More IELTS soon",icon:"🔒",type:"lock-final"}
+ ielts:{ name:"IELTS",eyebrow:"IELTS · Academic",nodes:[
+  {id:"ie-tfng",title:"True / False / Not Given",icon:"⚖️",intro:["TRUE = the text agrees with the statement. FALSE = the text contradicts it. NOT GIVEN = the text simply does not say.","Most marks are lost confusing FALSE with NOT GIVEN: FALSE needs a clear contradiction in the text; NOT GIVEN means the information is genuinely absent."],drills:[D("The text says nothing about the topic in the statement. The answer is:",["False","Not Given","True"],1,"Right — no information means Not Given.","If the text neither confirms nor contradicts it, it is Not Given, not False."),D("Statement: every staff member was trained. Text: most staff were trained. Answer:",["True","False","Not Given"],1,"Correct — all vs most is a contradiction, so False.","Watch quantity words: all contradicts most, so it is False.")],move:"Find a news claim and decide: does the article confirm, contradict, or not mention it?"},
+  {id:"ie-head",title:"Matching headings",icon:"🏷️",intro:["You match the best heading to each paragraph. The heading captures the paragraph main idea, not one small detail in it.","Read the paragraph, ask what is this mostly about, then choose. Cross off headings as you use them and do the easy paragraphs first."],drills:[D("A heading should capture the paragraph:",["first sentence only","main idea","longest example"],1,"Yes — the overall main idea.","A striking detail is the classic trap. Match the main idea."),D("If two headings seem to fit, choose the one that:",["matches one keyword","covers the whole paragraph","is shortest"],1,"Right — it must cover the whole paragraph.","One matching keyword is a trap; pick the heading that fits the whole paragraph.")],move:"Give a one-line heading to each paragraph of any short article."},
+  {id:"ie-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"ie-complete",title:"Sentence & summary completion",icon:"✏️",intro:["You complete sentences, a summary or notes using words from the passage. Obey the word limit exactly, for example NO MORE THAN TWO WORDS.","Answers usually appear in the same order as the questions. Copy the words straight from the text and check they fit grammatically."],drills:[D("Instruction: NO MORE THAN TWO WORDS. Which answer is allowed?",["a busy market street","ancient bridge","the old stone bridge"],1,"Right — ancient bridge is two words.","Count the words — the limit is two, and articles count."),D("Completion answers are usually found:",["in random order","in the same order as the questions","only in the last paragraph"],1,"Yes — they follow the passage order.","They normally appear in passage order — use that to locate them.")],move:"Summarise a paragraph in one sentence using only words taken from it."},
+  {id:"ie-match",title:"Matching information",icon:"🔗",intro:["You match statements to the paragraph they belong to. The same idea may be reworded, so match meaning, not exact words.","Scan for the idea, not a keyword — IELTS deliberately paraphrases. Some paragraphs may be used more than once or not at all."],drills:[D("In matching tasks, the text usually expresses the idea by:",["using the exact same words","paraphrasing it","never mentioning it"],1,"Right — match the meaning, not the words.","IELTS paraphrases; match the idea, not identical words."),D("A paragraph in a matching task can be:",["used at most once","used more than once or not at all","always used exactly once"],1,"Yes — read the instructions for this.","Often a paragraph may be used more than once or not at all.")],move:"Reword one sentence from an article so it keeps the meaning but shares no key words."},
+  {id:"ie-task1",title:"Writing Task 1 (graphs)",icon:"📊",intro:["Academic Task 1 asks you to describe a chart, graph, map or process — no opinions. Open with an overview of the main trend, then report key figures and comparisons.","Aim for 150+ words in about 20 minutes. The overview sentence carries the most weight."],drills:[D("In Academic Task 1 you should NOT:",["describe the main trend","give your personal opinion","compare figures"],1,"Right — Task 1 is description, not opinion.","Save opinions for Task 2. Task 1 is pure description."),D("The most important sentence in Task 1 is:",["the overview of the main trend","the title","the final number"],0,"Yes — the overview frames everything.","Examiners look for a clear overview of the main trend.")],move:"Describe the main trend of any chart you can find in one sentence."},
+  {id:"ie-task2",title:"Writing Task 2 (essay)",icon:"🖊️",intro:["Task 2 is a 250+ word essay worth more marks than Task 1. State a clear position in the introduction, develop two or three body paragraphs with reasons and examples, and end with a short conclusion.","Answer the exact question asked (agree or disagree, discuss both views, problem and solution). Stay on topic and use linking words to guide the reader."],drills:[D("If you are short on time, you should protect:",["Task 1","Task 2","neither"],1,"Right — Task 2 is worth more marks.","Task 2 carries more weight — protect it if time is short."),D("A good Task 2 introduction:",["lists every idea","states a clear position","gives the conclusion only"],1,"Yes — make your position clear up front.","State a clear position in the intro; develop it in the body.")],move:"Write a one-sentence thesis that clearly agrees or disagrees with: homework should be banned."},
+  {id:"ie-boss",title:"IELTS Reading: mastery test",icon:"👑",type:"boss",intro:["Prove your Reading skills — a quick mix of True/False/Not Given, headings and completion."],drills:[D("Statement: the festival is held every year. Text: the festival is held each summer. Answer:",["True","False","Not Given"],0,"Right — each summer confirms it is yearly.","Each summer means every year, so it is True."),D("Statement: the author enjoyed the festival. The text describes the festival but never the author feelings. Answer:",["True","False","Not Given"],2,"Correct — feelings are not stated, so Not Given.","The text never states the author feelings, so Not Given."),D("A heading matches a paragraph:",["main idea","first word","longest sentence"],0,"Yes — the main idea.","Headings match the main idea of the paragraph.")],move:"You finished the IELTS Reading trail — revisit any node that felt shaky."}
  ]},
- duolingo:{name:"Duolingo",eyebrow:"Duolingo English Test",nodes:[
-  {id:"de-select",title:"Read & Select",icon:"✅",
-   intro:["You see a list of words and tap only the <b>real</b> English words. Fake words are designed to look real, so only tap a word if you're sure.",
-          "Wrong taps cost you, so when in doubt, leave it out."],
-   drills:[
-    D("Which is a real English word?",
-      ["brillig","balance","frumble"],1,
-      "Yes — 'balance' is real.","Only 'balance' is a real word; the others are invented."),
-    D("If you're unsure whether a word is real, you should:",
-      ["tap it anyway","leave it untapped","tap all of them"],1,
-      "Right — wrong taps cost you.","Guessing hurts your score. When unsure, don't tap.")
-   ],move:"Open a dictionary at random and check: did you already know that word?"},
-  {id:"de-complete",title:"Read & Complete",icon:"🧩",
-   intro:["A passage has words with missing letters. Use the meaning and grammar of the sentence to fill them in — then check your spelling.",
-          "Read the whole sentence first; the surrounding words tell you the missing one."],
-   drills:[
-    D("\"She op___ the door and walked in.\" The missing word is:",
-      ["opens","opened","opening"],1,
-      "Right — past tense to match 'walked'.","Match the tense: 'walked' is past, so 'opened'."),
-    D("In Read & Complete, spelling errors are:",
-      ["ignored","counted as wrong","bonus points"],1,
-      "Yes — spelling counts.","A correct word spelled wrong is still wrong here.")
-   ],move:"Cover the endings of 5 words in a paragraph and complete them from memory."},
-  {id:"de-write",title:"Writing sample",icon:"✍️",
-   intro:["For the writing tasks, stay on topic, write full sentences, and show a range of accurate grammar and vocabulary. Develop a couple of clear ideas well.",
-          "Length helps only if quality stays high — don't pad with filler."],
-   drills:[
-    D("A strong writing sample has:",
-      ["many shallow points","two well-developed ideas","one short sentence"],1,
-      "Right — depth beats breadth.","Develop a few ideas fully rather than listing many shallow ones.")
-   ],move:"Write 3 sentences about your day using a different connector in each (because, although, so)."},
-  {id:"de-soon",title:"More Duolingo soon",icon:"🔒",type:"lock-final"}
+ duolingo:{ name:"Duolingo",eyebrow:"Duolingo English Test",nodes:[
+  {id:"de-select",title:"Read & Select",icon:"✅",intro:["You see a list of words and tap only the real English words. Fake words are built to look real, so only tap one you are sure of.","Wrong taps cost you, so when in doubt, leave it out."],drills:[D("Which is a real English word?",["brillig","balance","frumble"],1,"Yes — balance is real.","Only balance is real; the others are invented."),D("If unsure whether a word is real, you should:",["tap it anyway","leave it untapped","tap all of them"],1,"Right — wrong taps cost you.","Guessing hurts your score. When unsure, do not tap.")],move:"Open a dictionary at random — did you already know that word?"},
+  {id:"de-complete",title:"Read & Complete",icon:"🧩",intro:["A passage has words with missing letters. Use the meaning and grammar of the sentence to fill them, then check spelling.","Read the whole sentence first; the surrounding words point to the missing one."],drills:[D("She op___ the door and walked in. The missing word is:",["opens","opened","opening"],1,"Right — past tense to match walked.","Match the tense: walked is past, so opened."),D("In Read & Complete, spelling errors are:",["ignored","counted as wrong","bonus points"],1,"Yes — spelling counts.","A correct word spelled wrong is still wrong here.")],move:"Cover the endings of 5 words in a paragraph and complete them from memory."},
+  {id:"de-chest",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"de-iread",title:"Interactive Reading",icon:"📑",intro:["A passage builds up through several short tasks — choosing words, completing sentences and answering questions about meaning.","Keep the whole passage in mind; later questions often depend on understanding the earlier part."],drills:[D("Interactive Reading tests whether you can:",["memorise the text","understand it as it builds","type quickly"],1,"Right — it is about understanding the passage.","It checks understanding as the passage develops, not memorising."),D("For a best word to complete the sentence task, choose the word that:",["is longest","fits the meaning and grammar","you saw first"],1,"Yes — meaning and grammar decide.","Pick the word that fits the sentence meaning and grammar.")],move:"Read a short paragraph and predict the next sentence before reading it."},
+  {id:"de-vocab",title:"Word choice",icon:"📖",intro:["Many DET tasks reward a precise, wide vocabulary. The right word fits the exact meaning the sentence needs.","When two words are close, pick the one that matches the tone and context, not just the rough meaning."],drills:[D("The scientist made an important ___ about the data.",["guess","observation","noise"],1,"Right — observation fits a scientist and data.","Context points to observation — precise and on topic."),D("Choosing precise words mainly improves your:",["Conversation only","Literacy and Production","streak"],1,"Yes — vocabulary lifts Literacy and Production.","Precise vocabulary raises the Literacy and Production subscores.")],move:"Replace a vague word like good with a more precise one in a sentence you write."},
+  {id:"de-write",title:"Writing sample",icon:"✍️",intro:["For the writing tasks, stay on topic, write full sentences, and show a range of accurate grammar and vocabulary. Develop a couple of clear ideas well.","Length helps only if quality stays high — do not pad with filler."],drills:[D("A strong writing sample has:",["many shallow points","two well-developed ideas","one short sentence"],1,"Right — depth beats breadth.","Develop a few ideas fully rather than listing many shallow ones."),D("Off-topic writing will:",["score higher","lower your score","be ignored"],1,"Yes — staying on topic matters.","Going off topic lowers the score; answer the prompt.")],move:"Write three sentences on one topic, each adding a new detail."},
+  {id:"de-boss",title:"DET: mastery test",icon:"👑",type:"boss",intro:["Prove it — a quick mix of word skills, completion and writing judgement."],drills:[D("Which is a real English word?",["splendid","glorptin","trundlick"],0,"Right — splendid is real.","Only splendid is a real word."),D("They tr___ to finish before dark. Best completion:",["tries","tried","trying"],1,"Yes — past tense tried.","Match the sentence: past tense tried."),D("Best writing strategy:",["pad with filler","develop clear ideas","write one line"],1,"Right — develop clear ideas.","Quality and development beat filler.")],move:"You finished the Duolingo trail — revisit any node that felt shaky."}
  ]},
- ged:{name:"GED",eyebrow:"GED · all subjects",nodes:[
-  {id:"gd-rla",title:"RLA: the essay",icon:"📝",
-   intro:["The Extended Response asks you to read two sources and argue which side is better supported — <b>by evidence</b>, not just your opinion.",
-          "State a clear claim, back it with specific evidence from both texts, address the other side, and organise into paragraphs."],
-   drills:[
-    D("Your GED essay should be based on:",
-      ["only your personal opinion","evidence from the sources","memorised facts"],1,
-      "Right — argue from the sources' evidence.","It's about which argument the evidence supports, not just your opinion."),
-    D("A strong essay also:",
-      ["ignores the other side","addresses the opposing view","has no paragraphs"],1,
-      "Yes — addressing the other side strengthens your case.","Acknowledge the opposing view, then show why your side is stronger.")
-   ],move:"Pick any debate and write one claim sentence + one piece of evidence."},
-  {id:"gd-math",title:"Math reasoning",icon:"🔢",
-   intro:["GED math gives you a calculator and a formula sheet, so you don't need to memorise everything. Read carefully and note exactly what's asked.",
-          "Watch wording ('reduced by' vs 'reduced to') and units (cm vs cm²)."],
-   drills:[
-    D("A $80 jacket is reduced by 25%. Sale price?",
-      ["$60","$55","$20"],0,
-      "Right — 25% of 80 = 20, so 80−20 = $60.","25% of 80 is 20; the sale price is 80−20 = $60."),
-    D("'Reduced by 25%' means the price...",
-      ["becomes 25% of the original","drops by 25%","rises 25%"],1,
-      "Yes — it drops by 25%.","'By 25%' means it falls 25%, not down to 25%.")
-   ],move:"Calculate a 15% tip on a $40 bill using the percent method."},
-  {id:"gd-sci",title:"Science & Social Studies",icon:"🔬",
-   intro:["Both are reasoning tests: you get a passage, chart or experiment and draw conclusions from the <b>evidence in front of you</b>.",
-          "Read the source first, then find the exact row, point or line the question refers to. You rarely need outside knowledge."],
-   drills:[
-    D("To answer a GED science data question, you mostly need to:",
-      ["recall facts from memory","read the chart provided","guess"],1,
-      "Right — the answer is in the stimulus.","Most answers come from reading the chart or passage given."),
-    D("If a graph shows sales rising every year, you can conclude:",
-      ["sales increased over time","sales fell","nothing"],0,
-      "Yes — the evidence shows an increase.","Read the trend: rising every year means sales increased.")
-   ],move:"Find any chart and state one conclusion it clearly supports."},
-  {id:"gd-soon",title:"More GED soon",icon:"🔒",type:"lock-final"}
+ ged:{ name:"GED",eyebrow:"GED · all subjects",nodes:[
+  {id:"gd-read",title:"RLA: reading & evidence",icon:"📚",intro:["RLA reading asks you to understand a passage and find evidence for your answers. The correct option is supported by the text, not by what you already believe.","Read the question, then locate the line in the passage that proves the answer."],drills:[D("The best answer to a reading question is:",["your opinion","supported by the text","the longest option"],1,"Right — find support in the text.","Answer from the passage evidence, not opinion."),D("If a detail is not in the passage, you should:",["assume it","not choose it","always pick it"],1,"Yes — stick to what the text supports.","Do not choose options the passage does not support.")],move:"Read a short article and underline the line that proves its main point."},
+  {id:"gd-essay",title:"RLA: the extended response",icon:"📝",intro:["The Extended Response asks you to read two sources and argue which side is better supported — by evidence, not just your opinion.","State a clear claim, back it with specific evidence from both texts, address the other side, then organise into paragraphs."],drills:[D("Your GED essay should be based on:",["only your personal opinion","evidence from the sources","memorised facts"],1,"Right — argue from the sources evidence.","It is about which argument the evidence supports."),D("A strong essay also:",["ignores the other side","addresses the opposing view","has no paragraphs"],1,"Yes — addressing the other side strengthens it.","Acknowledge the opposing view, then show why your side is stronger.")],move:"Pick any debate and write one claim sentence plus one piece of evidence."},
+  {id:"gd-chest",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"gd-math",title:"Math reasoning",icon:"🔢",intro:["GED math gives you a calculator and a formula sheet, so you do not need to memorise everything. Read carefully and note exactly what is asked.","Watch wording (reduced by vs reduced to) and units (cm vs square cm)."],drills:[D("A 80 dollar jacket is reduced by 25%. Sale price?",["60 dollars","55 dollars","20 dollars"],0,"Right — 25% of 80 is 20, so 80 minus 20 is 60.","25% of 80 is 20; the sale price is 60 dollars."),D("Reduced by 25% means the price:",["becomes 25% of the original","drops by 25%","rises 25%"],1,"Yes — it drops by 25%.","By 25% means it falls 25%, not down to 25%.")],move:"Work out a 15% tip on a 40 dollar bill."},
+  {id:"gd-algebra",title:"Math: algebra & graphs",icon:"📈",intro:["You will solve for unknowns and read graphs. Do the same operation to both sides of an equation to keep it balanced.","On a graph, find the exact point the question asks about before reading its value."],drills:[D("Solve: x plus 7 equals 12. x = ?",["5","19","7"],0,"Right — subtract 7 from both sides: x = 5.","Subtract 7 from both sides: x = 5."),D("To keep an equation balanced you must:",["change one side","do the same to both sides","ignore the equals sign"],1,"Yes — do the same to both sides.","Whatever you do to one side, do to the other.")],move:"Solve 2x = 10 in your head, then check by substituting back."},
+  {id:"gd-sci",title:"Science reasoning",icon:"🔬",intro:["Science is a reasoning test: you get a passage, chart or experiment and draw conclusions from the evidence given.","Read the source first, then find the exact row, point or line the question refers to. You rarely need outside knowledge."],drills:[D("To answer a GED science data question, you mostly need to:",["recall facts from memory","read the chart provided","guess"],1,"Right — the answer is in the stimulus.","Most answers come from the chart or passage given."),D("If a graph shows sales rising every year, you can conclude:",["sales increased over time","sales fell","nothing"],0,"Yes — the evidence shows an increase.","Rising every year means sales increased.")],move:"Find any chart and state one conclusion it clearly supports."},
+  {id:"gd-social",title:"Social studies",icon:"🗺️",intro:["Social Studies gives you maps, documents and data about history, civics and economics — and asks you to reason from them.","Read the source carefully; the answer is usually found in the document or chart, not from prior knowledge."],drills:[D("Most Social Studies answers come from:",["memorised dates","the source provided","personal opinion"],1,"Right — read the source.","The stimulus holds the answer; read it closely."),D("A bar chart of votes is best used to:",["compare quantities","write an essay","measure time"],0,"Yes — bar charts compare quantities.","Bar charts are for comparing amounts.")],move:"Find a simple chart in the news and state one fact it proves."},
+  {id:"gd-boss",title:"GED: mastery test",icon:"👑",type:"boss",intro:["Prove it — a quick mix across reading, math and reasoning."],drills:[D("Solve: 3x = 15. x = ?",["5","45","12"],0,"Right — divide both sides by 3: x = 5.","Divide both sides by 3: x = 5."),D("Reduced by 10% on a 50 dollar item gives:",["45 dollars","40 dollars","5 dollars"],0,"Yes — 10% of 50 is 5, so 45 dollars.","10% of 50 is 5; the price is 45 dollars."),D("The best reading answer is:",["your opinion","supported by the text","the longest"],1,"Right — supported by the text.","Answer from the passage evidence.")],move:"You finished the GED trail — revisit any subject that felt shaky."}
  ]}
+
 };
 
 /* ---------- state ---------- */
@@ -522,7 +450,7 @@ function badgeList(){
   {e:"📚",n:"5 lessons",on:totalDone>=5},
   {e:"👑",n:"Boss slayer",on:!!S.done["tf-boss"]},
   {e:"💯",n:"50 XP day",on:S.dayXp>=50},
-  {e:"🦉",n:"All trails",on:false}
+  {e:"🦉",n:"All trails",on:!!(S.done["tf-boss"]&&S.done["ie-boss"]&&S.done["de-boss"]&&S.done["gd-boss"])}
  ];
 }
 function renderBadges(){
