@@ -124,6 +124,9 @@ textarea:focus{border-color:var(--teal)}
 .homestat b{color:var(--ink)}
 .scard .desc{font-size:11px;color:var(--mut);line-height:1.35;min-height:30px}
 @media(max-width:760px){.center-wrap{padding:24px 15px 60px}.h1{font-size:23px}.cards{grid-template-columns:1fr 1fr;gap:10px}.scard{padding:16px 10px}.scard .desc{min-height:0}.thead{flex-wrap:wrap;padding:14px 15px 6px;gap:8px}.thead .sec{font-size:20px}.thead .right{gap:14px;font-size:13px}.ibanner{font-size:14px;padding:11px}.tbody{padding:16px 14px 26px}.split{grid-template-columns:1fr;gap:18px}.passcol{max-height:none}.cloze-card,.center-card{padding:18px 15px}.cloze{font-size:16px;line-height:2.05}.qtext{font-size:16px}.email{max-width:100%}.navin{padding:12px 14px;gap:8px}.navmid{font-size:12px}.btn{padding:10px 18px}.btn.prev{padding:9px 16px}.bigtimer{font-size:42px}.avs{gap:12px}.av{width:84px;height:116px;font-size:46px}.spanel{min-height:220px}textarea{min-height:220px}.scoregrid{grid-template-columns:1fr}.navgrid{grid-template-columns:repeat(auto-fill,minmax(40px,1fr))}.fab{right:12px;bottom:12px;padding:9px 13px}.notespanel{width:calc(100vw - 24px);right:12px}.homestat{gap:12px;font-size:12px}.agtab td{font-size:13px;padding:7px 8px}.agtab td:first-child{width:80px}}
+.tasktimer{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:18px;color:var(--teal);font-variant-numeric:tabular-nums;background:#eef6f6;border:1px solid #cfe6e6;border-radius:20px;padding:6px 14px;margin-bottom:12px}
+.tasktimer.low{color:#c2410c;background:#fff3e9;border-color:#f3cba3}
+.tasktimer.up{color:#a32d2d;background:#fbe3e3;border-color:#eebcbc}
 </style>
 </head>
 <body>
@@ -275,7 +278,7 @@ function showTips(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="t
    <div style="text-align:center;margin-top:20px"><button class="btn teal" onclick="showHome()">Back to start</button></div></div>`;
 }
 
-function begin(f){flow=f;secIdx=0;ans={};flags={};bsPick={};testStartedAt=Date.now();directions();}
+function begin(f){flow=f;secIdx=0;ans={};flags={};bsPick={};taskTimeLeft={};testStartedAt=Date.now();directions();}
 function directions(){
  const sec=DATA[flow[secIdx]];
  homeEl().style.display="none"; testEl().classList.add("on");
@@ -321,6 +324,8 @@ function render(){
   </div></div>`;
  if(sc.task.type==="build") renderBuild();
  if(["lchoose","lconv","lannounce","ltalk"].includes(sc.task.type)) setTimeout(()=>playListen(sc),350);
+ clearTaskTimer();
+ if(sc.task.type==="email_write"||sc.task.type==="discussion") startTaskTimer(sc);
 }
 function toggleFlag(){flags[si]=!flags[si];document.querySelector(".flag").classList.toggle("on");}
 function toggleHide(){hideTime=!hideTime;render();}
@@ -381,8 +386,19 @@ function renderBuild(){ const sc=screens[si]; const it=sc.task.items[sc.qi]; con
 function bsAdd(ii,wd){bsPick[ii]=bsPick[ii]||[];if(!bsPick[ii].includes(wd))bsPick[ii].push(wd);renderBuild();}
 function bsClear(ii){bsPick[ii]=[];renderBuild();}
 
-function emailWriteBody(t){ return `<div class="split"><div class="passcol"><p style="font-weight:700">${esc(t.prompt)}</p><ul>${t.bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul><p class="lead">${esc(t.close)}</p></div><div class="qcol"><div class="tofrom"><b>To:</b> ${esc(t.to)}</div><div class="tofrom" style="margin-bottom:8px"><b>Subject:</b> ${esc(t.subject)}</div><div class="toolbar"><span class="tb">Cut</span><span class="tb">Paste</span><span class="tb">Undo</span><span class="tb">Redo</span><span class="wc" id="wc1">0 words</span></div><textarea id="wbox" placeholder="Write your email…" oninput="ans['w-email']=this.value;wcount('wbox','wc1')">${ans['w-email']?esc(ans['w-email']):""}</textarea></div></div>`; }
-function discussionBody(t){ return `<div class="split"><div class="passcol"><p style="font-weight:700">${esc(t.professor)}</p>${t.posts.map(p=>`<div class="post"><b>${esc(p.who)}</b><div>${esc(p.text)}</div></div>`).join("")}<p class="lead">${esc(t.close)}</p></div><div class="qcol"><div class="toolbar"><span class="tb">Cut</span><span class="tb">Paste</span><span class="tb">Undo</span><span class="tb">Redo</span><span class="wc" id="wc2">0 words</span></div><textarea id="dbox" placeholder="Write your response…" oninput="ans['w-disc']=this.value;wcount('dbox','wc2')">${ans['w-disc']?esc(ans['w-disc']):""}</textarea></div></div>`; }
+let taskTimeLeft={}, taskTimerInt=null;
+function clearTaskTimer(){ if(taskTimerInt){clearInterval(taskTimerInt);taskTimerInt=null;} }
+function startTaskTimer(sc){ clearTaskTimer(); const t=sc.task; const key=flow[secIdx]+"-"+sc.ti;
+  if(taskTimeLeft[key]==null) taskTimeLeft[key]=(t.minutes||5)*60;
+  const el=document.getElementById("ttimer"); const box=document.getElementById(t.type==="email_write"?"wbox":"dbox");
+  function paint(){ if(!el)return; const x=Math.max(0,taskTimeLeft[key]); el.innerHTML="&#9201; "+fmt(x)+" left"; el.className="tasktimer"+(x<=60?" low":""); }
+  paint();
+  taskTimerInt=setInterval(()=>{ taskTimeLeft[key]--; paint();
+    if(taskTimeLeft[key]<=0){ clearTaskTimer(); if(el){el.innerHTML="&#9201; Time\u2019s up \u2014 review or move on"; el.className="tasktimer up";}
+      if(box){ box.setAttribute("readonly","readonly"); box.style.opacity=".65"; } } },1000);
+}
+function emailWriteBody(t){ return `<div class="split"><div class="passcol"><p style="font-weight:700">${esc(t.prompt)}</p><ul>${t.bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul><p class="lead">${esc(t.close)}</p></div><div class="qcol"><div class="tasktimer" id="ttimer"></div><div class="tofrom"><b>To:</b> ${esc(t.to)}</div><div class="tofrom" style="margin-bottom:8px"><b>Subject:</b> ${esc(t.subject)}</div><div class="toolbar"><span class="tb">Cut</span><span class="tb">Paste</span><span class="tb">Undo</span><span class="tb">Redo</span><span class="wc" id="wc1">0 words</span></div><textarea id="wbox" placeholder="Write your email…" oninput="ans['w-email']=this.value;wcount('wbox','wc1')">${ans['w-email']?esc(ans['w-email']):""}</textarea></div></div>`; }
+function discussionBody(t){ return `<div class="split"><div class="passcol"><p style="font-weight:700">${esc(t.professor)}</p>${t.posts.map(p=>`<div class="post"><b>${esc(p.who)}</b><div>${esc(p.text)}</div></div>`).join("")}<p class="lead">${esc(t.close)}</p></div><div class="qcol"><div class="tasktimer" id="ttimer"></div><div class="toolbar"><span class="tb">Cut</span><span class="tb">Paste</span><span class="tb">Undo</span><span class="tb">Redo</span><span class="wc" id="wc2">0 words</span></div><textarea id="dbox" placeholder="Write your response…" oninput="ans['w-disc']=this.value;wcount('dbox','wc2')">${ans['w-disc']?esc(ans['w-disc']):""}</textarea></div></div>`; }
 function wcount(id,out){const b=document.getElementById(id);if(!b)return;const n=b.value.trim().split(/\s+/).filter(Boolean).length;const o=document.getElementById(out);if(o)o.textContent=n+" words";}
 
 function spk(av,timerId,labelId,labelText,btnId,onclick){ return `<div class="split"><div><div class="spanel"><div class="sprow"><span>Volume &#128266;</span><span class="link">Trouble hearing/recording?</span></div><div class="avs"><div class="av">${av}</div></div><div class="audiostate" id="sstate">Ready</div></div></div><div class="qcol"><p style="font-weight:700">${labelText}</p><div style="text-align:center;padding:12px 0"><div class="bigtimer" id="${timerId}">--</div><div class="lead" id="${labelId}"></div></div><div style="text-align:center"><button class="btn teal" id="${btnId}" onclick="${onclick}">Begin</button></div></div></div>`; }
@@ -391,11 +407,11 @@ function interviewBody(t){ return spk("&#128105;","iclk","ilbl",esc(t.scenario),
 let rIdx=0;
 function speakSeq(items,total,clkId,lblId,labelWord,recSec,btn,prefix){ let i=0; const clk=document.getElementById(clkId),lbl=document.getElementById(lblId);
  function go(){ const ss=document.getElementById("sstate"); if(!ss)return; lbl.textContent=`${labelWord} ${i+1} of ${total}`; ss.textContent="Audio Is Playing"; clk.textContent="--";
-   function rec(){ const s2=document.getElementById("sstate"); if(s2)s2.innerHTML="&#128308; Recording…"; let left=recSec; clk.textContent=left; const iv=setInterval(()=>{left--;clk.textContent=Math.max(0,left); if(left<=0){clearInterval(iv); i++; if(i<total) go(); else {const s3=document.getElementById("sstate"); if(s3)s3.textContent="Done"; clk.textContent="\u2713"; btn.disabled=false; btn.textContent="Finished";}}},1000); }
+   function rec(){ const s2=document.getElementById("sstate"); if(s2)s2.innerHTML="&#128308; Recording…"; let left=(typeof recSec==="function"?recSec(items[i]):recSec); clk.textContent=left; const iv=setInterval(()=>{left--;clk.textContent=Math.max(0,left); if(left<=0){clearInterval(iv); i++; if(i<total) go(); else {const s3=document.getElementById("sstate"); if(s3)s3.textContent="Done"; clk.textContent="\u2713"; btn.disabled=false; btn.textContent="Finished";}}},1000); }
    playFileOrTTS(AUDIO_BASE+prefix+(i+1)+".mp3", items[i], ()=>{const s4=document.getElementById("sstate");if(s4)s4.textContent="Audio Is Playing";}, rec);
  } go();
 }
-function repeatRun(){ const t=screens[si].task; const btn=document.getElementById("rbtn"); btn.disabled=true; speakSeq(t.statements,t.statements.length,"rclk","rlbl","Statement",10,btn,"speak-repeat-"); }
+function repeatRun(){ const t=screens[si].task; const btn=document.getElementById("rbtn"); btn.disabled=true; speakSeq(t.statements,t.statements.length,"rclk","rlbl","Statement",function(s){return Math.max(8,Math.min(22,Math.round(s.split(/\s+/).length*0.8)));},btn,"speak-repeat-"); }
 let iIdx=0;
 function intRun(){ const t=screens[si].task; const btn=document.getElementById("ibtn"); btn.disabled=true; speakSeq(t.qs,t.qs.length,"iclk","ilbl","Question",45,btn,"speak-interview-"); }
 
@@ -403,7 +419,7 @@ function intRun(){ const t=screens[si].task; const btn=document.getElementById("
 function prev(){ if(si>0){si--;render();} }
 function next(){ if(window.speechSynthesis)speechSynthesis.cancel(); rIdx=0; iIdx=0;
  if(si<screens.length-1){si++;render();} else finishSection(); }
-function finishSection(){ if(timerInt)clearInterval(timerInt); if(secIdx<flow.length-1){secIdx++;directions();} else results(); }
+function finishSection(){ clearTaskTimer(); if(timerInt)clearInterval(timerInt); if(secIdx<flow.length-1){secIdx++;directions();} else results(); }
 
 /* ---------- results ---------- */
 function band(p){return (1+p*5).toFixed(1);}
