@@ -33,7 +33,7 @@ export async function onRequestPost(context) {
     const codes = [];
     for (let i = 0; i < count; i++) {
       const code = genCode();
-      await kv.put("code:" + code, JSON.stringify({ test, kind, active: true, note: body.note || "", createdAt: Date.now() }));
+      await kv.put("code:" + code, JSON.stringify({ test, kind, active: true, tier: (body.tier === "premium" ? "premium" : "free"), note: body.note || "", createdAt: Date.now() }));
       codes.push(code);
     }
     return J({ ok: true, kind, test, codes });

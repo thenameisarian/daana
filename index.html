@@ -154,6 +154,12 @@ body{
 .app .nm{display:none}
 .wrap,.ticket{margin-top:0}
 }
+.orsep{display:flex;align-items:center;gap:12px;margin:18px 0 14px;color:var(--mut);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.14em}
+.orsep::before,.orsep::after{content:"";flex:1;height:1px;background:var(--line)}
+.premium{text-align:center}
+.prem-h{font-weight:800;font-size:15px;color:var(--txt)}
+.prem-d{font-size:12.5px;color:var(--mut);margin:5px 0 11px}
+.sbtn.prem{justify-content:center;background:linear-gradient(135deg,#f0a829,#e07b1a);box-shadow:0 8px 20px -8px #e07b1a}
 </style>
 </head>
 <body>
@@ -192,8 +198,8 @@ body{
     <div class="term"><span class="pr">daana@gate:~$</span> <span id="termtxt"></span><span class="cursor"></span></div>
 
     <div class="steps">
-      <div class="step"><div class="snum">1</div><div><div class="st">Join the WhatsApp channel</div><div class="sd">The current access code is posted there — check the latest (pinned) message.</div></div></div>
-      <div class="step"><div class="snum">2</div><div><div class="st">Enter the code below</div><div class="sd">It unlocks the full TOEFL test for 7 days on this device.</div></div></div>
+      <div class="step"><div class="snum">1</div><div><div class="st">Free for followers</div><div class="sd">Join the WhatsApp channel and grab the current access code (in the pinned message).</div></div></div>
+      <div class="step"><div class="snum">2</div><div><div class="st">Enter the code below</div><div class="sd">It unlocks all the practice tests for 7 days on this device.</div></div></div>
     </div>
 
     <div class="social">
@@ -212,6 +218,12 @@ body{
       </div>
       <div class="msg" id="msg"></div>
     </form>
+    <div class="orsep"><span>or</span></div>
+    <div class="premium">
+      <div class="prem-h">No code? Get instant access</div>
+      <div class="prem-d">Skip the follow and unlock Premium &mdash; every test, plus AI feedback on your Writing &amp; Speaking.</div>
+      <a class="sbtn prem" id="premLink" href="#" target="_blank" rel="noopener">&#9733; Get Premium Access</a>
+    </div>
   </div>
 
   <div class="barcode"></div>
@@ -228,6 +240,7 @@ const CONFIG = {
   instagram: "https://www.instagram.com/arianismyname/",
   whatsapp:  "https://whatsapp.com/channel/0029VbCe7n22v1J00hGDUW2J",
   threads:   "https://www.threads.net/@arianismyname",
+  premiumUrl: "https://YOUR-PAYMENT-LINK-HERE",
   extraLinks: []
 };
 /* ============================ */
@@ -301,6 +314,7 @@ var APPS = [
 
 
 document.getElementById("waLink").href = CONFIG.whatsapp;
+var _pl=document.getElementById("premLink"); if(_pl)_pl.href=CONFIG.premiumUrl||"#";
 if (CONFIG.extraLinks && CONFIG.extraLinks.length) {
   document.getElementById("extra").innerHTML = "Also: " + CONFIG.extraLinks
     .map(function(l){ return '<a href="'+l.url+'" target="_blank" rel="noopener">'+l.label+'</a>'; }).join(" &middot; ");

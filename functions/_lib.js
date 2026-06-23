@@ -62,13 +62,14 @@ export async function verifyCode(env, request, code, opts = {}) {
     return { status: 403, body: { ok: false, error: "invalid_code", message: "That code isn't valid." } };
   }
   const test = codeRec.test || "toefl";
+  const tier = codeRec.tier || "free";
   const now = nowMs();
 
   const grantKey = `grant:${test}:${ipHash}`;
   let grant = await kvGetJson(kv, grantKey);
   if (grant && grant.expiresAt > now) {
     // Already inside the 7-day window for this test+IP: issue a fresh session, don't burn a code.
-    return await issueSession(kv, test, ipHash, grant.expiresAt, now);
+    return await issueSession(kv, test, ipHash, grant.expiresAt, now, grant.tier || tier);
   }
 
   // No live grant -> the code must be usable.
@@ -87,18 +88,18 @@ export async function verifyCode(env, request, code, opts = {}) {
   }
 
   const expiresAt = now + WEEK * 1000;
-  grant = { createdAt: now, expiresAt, code: c, ipHash };
+  grant = { createdAt: now, expiresAt, code: c, ipHash, tier };
   await kv.put(grantKey, JSON.stringify(grant), { expirationTtl: WEEK });
 
-  return await issueSession(kv, test, ipHash, expiresAt, now);
+  return await issueSession(kv, test, ipHash, expiresAt, now, tier);
 }
 
-async function issueSession(kv, test, ipHash, expiresAt, now) {
+async function issueSession(kv, test, ipHash, expiresAt, now, tier) {
   const token = randToken();
   const ttl = Math.max(60, Math.ceil((expiresAt - now) / 1000));
-  await kv.put("sess:" + token, JSON.stringify({ test, ipHash, expiresAt }), { expirationTtl: ttl });
+  await kv.put("sess:" + token, JSON.stringify({ test, ipHash, expiresAt, tier: tier || "free" }), { expirationTtl: ttl });
   const cookie = `daana_sess=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${ttl}`;
-  return { status: 200, body: { ok: true, test, expiresAt }, setCookie: cookie };
+  return { status: 200, body: { ok: true, test, tier: tier || "free", expiresAt }, setCookie: cookie };
 }
 
 // Session check for middleware. Returns { ok, reason }
@@ -114,5 +115,14 @@ export async function checkSession(env, request, requiredTest) {
     const ipHash = await sha256hex(clientIp(request) + "|" + (env.IP_SALT || "daana"));
     if (ipHash !== sess.ipHash) return { ok: false, reason: "ip_changed" };
   }
-  return { ok: true, test: sess.test };
+  return { ok: true, test: sess.test, tier: sess.tier || "free" };
+}
+
+export async function getSession(env, request) {
+  const kv = env.DAANA_KV;
+  const token = parseCookies(request)["daana_sess"];
+  if (!token) return null;
+  const sess = await kvGetJson(kv, "sess:" + token);
+  if (!sess || sess.expiresAt <= nowMs()) return null;
+  return { test: sess.test, tier: sess.tier || "free", expiresAt: sess.expiresAt };
 }
