@@ -291,7 +291,160 @@ const TEST2 = {
      close:"An effective response will contain at least 100 words." }
   ]}
 };
-const TESTS=[TEST1,TEST2,null,null,null];
+const TEST3 = {
+ reading:{ name:"Reading", minutes:27, instrDir:"Reading has three task types: Complete the Words, Read in Daily Life, and Read an Academic Text. This section is adaptive. You may use Next and Previous within the section; your notes are not scored.",
+  tasks:[
+   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[ CL("Honeybees play a vital role in nature. As they move from flower to flower, they carry poll"),BK("poll","en"),CL(" on their bodies. This helps plants produce seeds and fr"),BK("fr","uit"),CL(", a process known as pollin"),BK("pollin","ation"),CL(". Without bees, many crops would prod"),BK("prod","uce"),CL(" far less food. Bees also make ho"),BK("ho","ney"),CL(", which they store to sur"),BK("sur","vive"),CL(" the winter.") ]},
+   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[ CL("Paper was first made in China about two thousand years ago. Before paper, people wrote on materials such as silk or bam"),BK("bam","boo"),CL(", which were costly or heavy. The new material was light, cheap, and easy to prod"),BK("prod","uce"),CL(". Knowledge of papermaking slowly spr"),BK("spr","ead"),CL(" west along trade rou"),BK("rou","tes"),CL(". By the Middle Ages it had reached Eur"),BK("Eur","ope"),CL(", where it replaced animal sk"),BK("sk","in"),CL(" for most writing.") ]},
+   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Class schedule update", body:["Dear member,","Please note that the Monday evening yoga class will now start at 7 p.m. instead of 6 p.m., beginning next week.","All other classes remain at their usual times. We apologise for any inconvenience.","Kind regards,","FitLife Gym"]},
+     qs:[ {q:"What change is described in the email?",opts:["A class has been cancelled","A class will start one hour later","A new class has been added","The gym will close earlier"],a:1,exp:"The yoga class moves from 6 p.m. to 7 p.m., one hour later, so B."},
+          {q:"When does the change begin?",opts:["Today","Next week","Next month","Immediately"],a:1,exp:"The email says the change begins next week, so B."} ]},
+   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Interview invitation", body:["Dear Ms. Chen,","Thank you for applying for the marketing assistant position. We would like to invite you to an interview on Tuesday at 10 a.m. at our main office.","Please bring a copy of your CV and arrive ten minutes early. Let us know if the time does not suit you.","Best regards,","Hiring Team"]},
+     qs:[ {q:"What is the purpose of the email?",opts:["To offer a job","To invite someone to an interview","To reject an application","To change a salary"],a:1,exp:"The email invites Ms. Chen to an interview, so B."},
+          {q:"What should Ms. Chen bring?",opts:["A passport","A copy of her CV","A laptop","A reference letter"],a:1,exp:"She is asked to bring a copy of her CV, so B."},
+          {q:"What can Ms. Chen do if the time does not suit her?",opts:["Ignore the email","Let the team know","Come a day later","Cancel the application"],a:1,exp:"The email invites her to let them know if the time does not suit, so B."} ]},
+   {type:"agenda", instr:"Choose the option that best answers the question.", source:{title:"Annual Conference", rows:[["9:00 a.m.","Registration"],["9:30 a.m.","Opening Speech"],["10:30 a.m.","Marketing Trends"],["12:00 p.m.","Lunch"],["2:00 p.m.","Workshops"]]},
+     qs:[ {q:"What happens at 10:30 a.m.?",opts:["Registration","Opening Speech","Marketing Trends","Lunch"],a:2,exp:"The 10:30 a.m. item is Marketing Trends, so C."},
+          {q:"What is scheduled immediately before lunch?",opts:["Registration","Marketing Trends","Workshops","Opening Speech"],a:1,exp:"Lunch is at 12:00 p.m.; the item before it is Marketing Trends, so B."} ]},
+   {type:"chat", instr:"Choose the option that best answers the question.", msgs:[ {who:"Sam",time:"7:01 P.M.",text:"Who is free for a weekend trip to the lake?"},{who:"Mia",time:"7:03 P.M.",text:"I am in. I can drive if we share the fuel cost."},{who:"Tom",time:"7:05 P.M.",text:"Count me in too. I will book the cabin."},{who:"Sam",time:"7:06 P.M.",text:"Perfect. I will bring the food and plan the route."} ],
+     qs:[ {q:"What are they planning?",opts:["A weekend trip","A birthday party","A study session","A business meeting"],a:0,exp:"They discuss a weekend trip to the lake, so A."},
+          {q:"What does Mia offer to do?",opts:["Book the cabin","Drive and share the fuel cost","Bring the food","Plan the route"],a:1,exp:"Mia offers to drive if they share the fuel cost, so B."},
+          {q:"What will Tom do?",opts:["Drive","Book the cabin","Bring food","Nothing"],a:1,exp:"Tom says he will book the cabin, so B."} ]},
+   {type:"passage", instr:"Choose the option that best answers the question.", source:{title:"Why Leaves Change Colour", paras:[
+     "In summer, the leaves of many trees are green because they are full of a substance called chlorophyll, which the tree uses to capture sunlight and make food.",
+     "As autumn arrives and the days grow shorter, there is less sunlight, and the tree slows its food-making. The green chlorophyll then breaks down and disappears.",
+     "Once the green fades, other colours that were always present in the leaf, such as yellow and orange, can finally be seen. In some trees, sugars trapped in the leaves also create bright reds.",
+     "Finally, a special layer forms where the leaf joins the branch. This layer cuts off water and nutrients, the leaf dies, and it falls to the ground, ready for the cycle to begin again in spring." ]},
+     qs:[ {q:"Why are leaves green in summer?",opts:["Because of cold weather","Because of chlorophyll","Because of rain","Because of insects"],a:1,exp:"Paragraph 1 says leaves are green because of chlorophyll, so B."},
+          {q:"What happens to chlorophyll in autumn?",opts:["It increases","It breaks down and disappears","It turns red","It moves to the roots"],a:1,exp:"Paragraph 2 says the chlorophyll breaks down and disappears, so B."},
+          {q:"Why can yellow and orange be seen in autumn?",opts:["They are newly made","They were always present but hidden by the green","They come from the soil","They are added by the tree"],a:1,exp:"Paragraph 3 says these colours were always present but become visible once the green fades, so B."},
+          {q:"What makes some leaves turn red?",opts:["Extra water","Sugars trapped in the leaves","Colder air alone","Falling to the ground"],a:1,exp:"Paragraph 3 says trapped sugars create reds, so B."},
+          {kind:"insert", sentence:"The exact mix of colours can vary from year to year.", q:"There are four places [▪] where the sentence could be added. Where does it best fit?", opts:["[▪] (A)","[▪] (B)","[▪] (C)","[▪] (D)"], a:2, exp:"It best follows the explanation of how the colours appear, slot C."} ]}
+  ]},
+ writing:{ name:"Writing", minutes:23, instrDir:"Writing has three tasks: Build a Sentence, Write an Email, and Write for an Academic Discussion. Responses are scored by AI on the 1-6 band.",
+  tasks:[
+   {type:"build", instr:"Put the words in the correct order to form a sentence.", items:[
+     {words:["will open","The library","at eight","on weekdays"],answer:"The library will open at eight on weekdays"},
+     {words:["enjoys","She","learning","new languages"],answer:"She enjoys learning new languages"},
+     {words:["although","We went out","was raining","it"],answer:"We went out although it was raining"},
+     {words:["described","The author","in detail","the journey"],answer:"The author described the journey in detail"},
+     {words:["leaves","The last train","at midnight","the station"],answer:"The last train leaves the station at midnight"},
+     {words:["has studied","She","for three years","French"],answer:"She has studied French for three years"},
+     {words:["repaired","The mechanic","quickly","the engine"],answer:"The mechanic repaired the engine quickly"},
+     {words:["measured","The scientists","carefully","the temperature"],answer:"The scientists measured the temperature carefully"},
+     {words:["must reduce","Factories","they release","the waste"],answer:"Factories must reduce the waste they release"},
+     {words:["will help","The new bridge","the traffic","reduce"],answer:"The new bridge will help reduce the traffic"} ]},
+   {type:"email_write", instr:"Read the situation and write an email.", minutes:7, to:"manager@grandhotel.com", subject:"Problem with my room",
+     prompt:"You recently stayed at a hotel, but your room was not properly cleaned. Write an email to the hotel manager. In your email, do the following:",
+     bullets:["Say when you stayed and which room you had.","Describe the problem with the room.","Say what you would like the hotel to do."], close:"Write as much as you can in complete sentences." },
+   {type:"discussion", instr:"Write a post responding to the discussion.", minutes:10,
+     professor:"Dr. Patel: This week we are discussing social media. Some people believe it brings us closer together, while others say it makes us more distant. In your view, does social media help or harm our relationships? Why?",
+     posts:[ {who:"Noor",text:"Social media helps us stay in touch with friends and family who live far away."},{who:"Jack",text:"I think it can harm relationships, because people often spend more time on their phones than with the people around them."} ], close:"An effective response will contain at least 100 words." }
+  ]}
+};
+const TEST4 = {
+ reading:{ name:"Reading", minutes:27, instrDir:"Reading has three task types: Complete the Words, Read in Daily Life, and Read an Academic Text. This section is adaptive. You may use Next and Previous within the section; your notes are not scored.",
+  tasks:[
+   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[ CL("A volcano is an opening in the Earth's crust through which hot, melted rock can esc"),BK("esc","ape"),CL(". Deep underground, this molten rock is called mag"),BK("mag","ma"),CL(". When it reaches the surface, it is known as la"),BK("la","va"),CL(". As the lava cools, it hard"),BK("hard","ens"),CL(" into new rock. Over many erup"),BK("erup","tions"),CL(", a tall mountain can be bu"),BK("bu","ilt"),CL(" up around the opening.") ]},
+   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[ CL("In 1876, Alexander Graham Bell patented the telephone, a device that could send the human vo"),BK("vo","ice"),CL(" along a wire. Earlier machines could send only simple sig"),BK("sig","nals"),CL(", such as the dots and dashes of the telegraph. Bell's invention let people speak over long dist"),BK("dist","ances"),CL(". At first only a few weal"),BK("weal","thy"),CL(" homes had a phone, but within decades they became com"),BK("com","mon"),CL(" around the wor"),BK("wor","ld"),CL(".") ]},
+   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Science Fair", body:["Dear parents,","Our annual Science Fair will take place next Friday in the school hall from 2 p.m. to 4 p.m. Students will present the projects they have worked on this term.","Everyone is welcome, and there is no charge to attend. We hope to see you there.","Kind regards,","The Science Department"]},
+     qs:[ {q:"Where will the Science Fair be held?",opts:["The playground","The school hall","The library","A local museum"],a:1,exp:"The email says it will take place in the school hall, so B."},
+          {q:"What will students do at the fair?",opts:["Take an exam","Present their projects","Watch a film","Clean the hall"],a:1,exp:"Students will present the projects they worked on, so B."} ]},
+   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Important: product recall", body:["Dear customer,","We have discovered a fault in the batteries of our model X200 torch, which may overheat during use. Please stop using the product immediately.","Return the torch to any store for a full refund or a free replacement. We are sorry for the inconvenience.","Customer Care"]},
+     qs:[ {q:"Why is the company recalling the torch?",opts:["It is too expensive","Its battery may overheat","It is out of stock","The colour is wrong"],a:1,exp:"The battery may overheat, so B."},
+          {q:"What should customers do first?",opts:["Keep using it carefully","Stop using it immediately","Throw it away","Buy a new one"],a:1,exp:"The email says to stop using it immediately, so B."},
+          {q:"What can customers get if they return the torch?",opts:["A discount voucher","A refund or a free replacement","Nothing","A repair only"],a:1,exp:"They can get a full refund or a free replacement, so B."} ]},
+   {type:"agenda", instr:"Choose the option that best answers the question.", source:{title:"Photography Workshop", rows:[["10:00 a.m.","Introduction"],["10:30 a.m.","Camera Basics"],["12:00 p.m.","Break"],["12:30 p.m.","Outdoor Practice"],["2:30 p.m.","Review of Photos"]]},
+     qs:[ {q:"What is the first session?",opts:["Camera Basics","Introduction","Outdoor Practice","Review of Photos"],a:1,exp:"The 10:00 a.m. item is the Introduction, so B."},
+          {q:"At what time is the Outdoor Practice?",opts:["10:00 a.m.","10:30 a.m.","12:30 p.m.","2:30 p.m."],a:2,exp:"Outdoor Practice is at 12:30 p.m., so C."} ]},
+   {type:"chat", instr:"Choose the option that best answers the question.", msgs:[ {who:"Ana",time:"5:10 P.M.",text:"Our exam is on Monday. Shall we study together this weekend?"},{who:"Ben",time:"5:12 P.M.",text:"Yes! I can share my notes from the last chapter."},{who:"Cara",time:"5:14 P.M.",text:"I will book a room in the library for Saturday."},{who:"Ana",time:"5:15 P.M.",text:"Great. I will prepare some practice questions for us."} ],
+     qs:[ {q:"What are the students arranging?",opts:["A party","A weekend study session","A holiday","A club meeting"],a:1,exp:"They plan to study together this weekend, so B."},
+          {q:"What does Ben offer to do?",opts:["Book a room","Share his notes","Prepare questions","Bring snacks"],a:1,exp:"Ben offers to share his notes, so B."},
+          {q:"What will Cara do?",opts:["Share notes","Book a library room","Prepare questions","Nothing"],a:1,exp:"Cara will book a room in the library, so B."} ]},
+   {type:"passage", instr:"Choose the option that best answers the question.", source:{title:"How Vaccines Work", paras:[
+     "A vaccine teaches the body's defence system, called the immune system, how to fight a particular disease before the person ever meets it.",
+     "Most vaccines contain a weakened or harmless part of a germ. This part cannot make the person ill, but the immune system still treats it as a threat and learns to recognise it.",
+     "In response, the body makes special proteins called antibodies, which can attack that germ. It also remembers how to make them again quickly.",
+     "If the real germ ever enters the body later, the immune system recognises it at once and destroys it before the disease can take hold. This is why vaccinated people are far less likely to become seriously ill." ]},
+     qs:[ {q:"What does a vaccine teach the body to do?",opts:["Produce more germs","Fight a disease before meeting it","Grow faster","Feel no pain"],a:1,exp:"A vaccine teaches the immune system to fight a disease in advance, so B."},
+          {q:"Why does the weakened germ not make a person ill?",opts:["It is too small","It is harmless or weakened","It is frozen","It is removed quickly"],a:1,exp:"The part of the germ is weakened or harmless, so B."},
+          {q:"What are antibodies?",opts:["A type of germ","Special proteins that attack germs","A kind of food","A type of vaccine"],a:1,exp:"Paragraph 3 says antibodies are special proteins that attack the germ, so B."},
+          {q:"Why are vaccinated people less likely to become seriously ill?",opts:["They never meet germs","Their immune system recognises and destroys the germ quickly","They take medicine daily","They are naturally stronger"],a:1,exp:"The immune system recognises and destroys the germ at once, so B."},
+          {kind:"insert", sentence:"In this way, the body is prepared long before any danger arrives.", q:"There are four places [▪] where the sentence could be added. Where does it best fit?", opts:["[▪] (A)","[▪] (B)","[▪] (C)","[▪] (D)"], a:2, exp:"It best follows the idea that the body remembers how to make antibodies, slot C."} ]}
+  ]},
+ writing:{ name:"Writing", minutes:23, instrDir:"Writing has three tasks: Build a Sentence, Write an Email, and Write for an Academic Discussion. Responses are scored by AI on the 1-6 band.",
+  tasks:[
+   {type:"build", instr:"Put the words in the correct order to form a sentence.", items:[
+     {words:["will begin","The concert","at seven","this evening"],answer:"The concert will begin at seven this evening"},
+     {words:["enjoys","She","learning","new languages"],answer:"She enjoys learning new languages"},
+     {words:["since","He has lived","2010","in Tokyo"],answer:"He has lived in Tokyo since 2010"},
+     {words:["answered","The teacher","patiently","every question"],answer:"The teacher answered every question patiently"},
+     {words:["arrives","The bus","at the corner","every hour"],answer:"The bus arrives at the corner every hour"},
+     {words:["have visited","They","many times","this museum"],answer:"They have visited this museum many times"},
+     {words:["completed","He","on time","the project"],answer:"He completed the project on time"},
+     {words:["recorded","The team","the results","carefully"],answer:"The team recorded the results carefully"},
+     {words:["should protect","Everyone","we share","the environment"],answer:"Everyone should protect the environment we share"},
+     {words:["will affect","The decision","the whole town"],answer:"The decision will affect the whole town"} ]},
+   {type:"email_write", instr:"Read the situation and write an email.", minutes:7, to:"landlord@cityrentals.com", subject:"Heating not working",
+     prompt:"The heating in your rented flat has stopped working. Write an email to your landlord. In your email, do the following:",
+     bullets:["Explain what the problem is.","Say how it is affecting you.","Ask the landlord to arrange a repair soon."], close:"Write as much as you can in complete sentences." },
+   {type:"discussion", instr:"Write a post responding to the discussion.", minutes:10,
+     professor:"Dr. Reed: This week we are discussing city transport. Some people argue that large cities should ban private cars from their centres. Do you agree or disagree, and why?",
+     posts:[ {who:"Hana",text:"Banning cars would reduce pollution and make city centres safer for people who are walking."},{who:"Marco",text:"I disagree. Many people, especially the elderly, depend on their cars and would find it hard to get around."} ], close:"An effective response will contain at least 100 words." }
+  ]}
+};
+const TEST5 = {
+ reading:{ name:"Reading", minutes:27, instrDir:"Reading has three task types: Complete the Words, Read in Daily Life, and Read an Academic Text. This section is adaptive. You may use Next and Previous within the section; your notes are not scored.",
+  tasks:[
+   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[ CL("A desert is a region that receives very little ra"),BK("ra","in"),CL(". Despite the dry conditions, many plants and animals have learned to surv"),BK("surv","ive"),CL(" there. Cacti, for example, store water in their thick st"),BK("st","ems"),CL(". Many desert animals stay underground during the day to avoid the he"),BK("he","at"),CL(" and come out at ni"),BK("ni","ght"),CL(" when it is coo"),BK("coo","ler"),CL(".") ]},
+   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[ CL("The modern Olympic Games began in 1896 in Athens, inspired by an ancient festival held in Greece thousands of years ear"),BK("ear","lier"),CL(". Athletes from many coun"),BK("coun","tries"),CL(" now gather every four ye"),BK("ye","ars"),CL(" to compete in dozens of spo"),BK("spo","rts"),CL(". Winning a gold med"),BK("med","al"),CL(" is one of the greatest hon"),BK("hon","ours"),CL(" in sport.") ]},
+   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Overdue book", body:["Dear reader,","Our records show that the book City Gardens is now two weeks overdue. A fine of 50 cents per day has been added to your account.","Please return the book as soon as possible to avoid further charges. If you have already returned it, please contact us.","City Library"]},
+     qs:[ {q:"Why did the library send this email?",opts:["To advertise a book","Because a book is overdue","To offer a discount","To close the account"],a:1,exp:"The email is about an overdue book, so B."},
+          {q:"What should the reader do if they have already returned the book?",opts:["Pay the fine","Contact the library","Ignore the email","Borrow another book"],a:1,exp:"The email asks them to contact the library, so B."} ]},
+   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Event cancelled", body:["Dear guests,","Due to a weather warning, the outdoor film night planned for Friday has been cancelled. Tickets will be refunded automatically within five days.","We hope to reschedule the event for later this month and will email you with a new date.","The Events Team"]},
+     qs:[ {q:"Why was the event cancelled?",opts:["Low ticket sales","A weather warning","A venue problem","Staff illness"],a:1,exp:"It was cancelled due to a weather warning, so B."},
+          {q:"What will happen to the ticket money?",opts:["It is lost","It will be refunded automatically","It becomes a donation","It can be exchanged for food"],a:1,exp:"Tickets will be refunded automatically, so B."},
+          {q:"What does the team hope to do?",opts:["Cancel permanently","Reschedule the event","Change the venue only","Refund half"],a:1,exp:"They hope to reschedule the event, so B."} ]},
+   {type:"agenda", instr:"Choose the option that best answers the question.", source:{title:"Community Festival", rows:[["11:00 a.m.","Opening Parade"],["12:00 p.m.","Food Stalls Open"],["2:00 p.m.","Live Music"],["4:00 p.m.","Children's Games"],["6:00 p.m.","Closing Fireworks"]]},
+     qs:[ {q:"What begins at 11:00 a.m.?",opts:["Food Stalls","Opening Parade","Live Music","Fireworks"],a:1,exp:"The 11:00 a.m. item is the Opening Parade, so B."},
+          {q:"What is the final event?",opts:["Children's Games","Live Music","Closing Fireworks","Opening Parade"],a:2,exp:"The last item, at 6:00 p.m., is the Closing Fireworks, so C."} ]},
+   {type:"chat", instr:"Choose the option that best answers the question.", msgs:[ {who:"Eli",time:"6:20 P.M.",text:"Let us have dinner together on Saturday to celebrate the end of exams."},{who:"Zoe",time:"6:22 P.M.",text:"Love it. I can reserve a table at the Italian place."},{who:"Ravi",time:"6:24 P.M.",text:"I will pick up Grandma on the way so she can join us."},{who:"Eli",time:"6:25 P.M.",text:"Wonderful. I will make a small cake for dessert."} ],
+     qs:[ {q:"What is the group celebrating?",opts:["A birthday","The end of exams","A wedding","A new job"],a:1,exp:"They are celebrating the end of exams, so B."},
+          {q:"What does Zoe offer to do?",opts:["Make a cake","Reserve a table","Pick up Grandma","Choose the food"],a:1,exp:"Zoe offers to reserve a table, so B."},
+          {q:"What will Ravi do?",opts:["Reserve a table","Make a cake","Pick up Grandma","Nothing"],a:2,exp:"Ravi will pick up Grandma, so C."} ]},
+   {type:"passage", instr:"Choose the option that best answers the question.", source:{title:"How Bridges Stay Up", paras:[
+     "Every bridge has to deal with two main forces. The weight of the bridge and the traffic on it pushes down, a force engineers call compression. At the same time, parts of the bridge are stretched, a force called tension.",
+     "A simple beam bridge is just a flat surface resting on supports. It works well over short distances, but a long beam will sag or break in the middle under heavy weight.",
+     "To cross wider gaps, engineers use shapes that spread the forces out. An arch, for example, carries the weight outward and down into the ground at each end, which is why stone arches have lasted for centuries.",
+     "A suspension bridge hangs its road from strong cables held up by tall towers. The cables carry the weight to the towers and down to the ground, allowing these bridges to cross very long distances." ]},
+     qs:[ {q:"What are the two main forces on a bridge?",opts:["Heat and cold","Compression and tension","Wind and rain","Light and sound"],a:1,exp:"The passage names compression and tension, so B."},
+          {q:"What is the weakness of a simple beam bridge?",opts:["It is too short","A long beam will sag or break in the middle","It cannot hold cars","It rusts quickly"],a:1,exp:"A long beam sags or breaks in the middle, so B."},
+          {q:"How does an arch support weight?",opts:["By bending in the middle","By carrying the weight outward and down into the ground","By floating","By using cables"],a:1,exp:"An arch carries weight outward and down into the ground, so B."},
+          {q:"What holds up the road of a suspension bridge?",opts:["Stone arches","Cables held by tall towers","Wooden beams","The water below"],a:1,exp:"The road hangs from cables held up by tall towers, so B."},
+          {kind:"insert", sentence:"For this reason, the longest bridges in the world are usually of this type.", q:"There are four places [▪] where the sentence could be added. Where does it best fit?", opts:["[▪] (A)","[▪] (B)","[▪] (C)","[▪] (D)"], a:3, exp:"It follows the suspension-bridge paragraph about long distances, slot D."} ]}
+  ]},
+ writing:{ name:"Writing", minutes:23, instrDir:"Writing has three tasks: Build a Sentence, Write an Email, and Write for an Academic Discussion. Responses are scored by AI on the 1-6 band.",
+  tasks:[
+   {type:"build", instr:"Put the words in the correct order to form a sentence.", items:[
+     {words:["will close","The museum","early","on Sundays"],answer:"The museum will close early on Sundays"},
+     {words:["loves","My father","cooking","traditional meals"],answer:"My father loves cooking traditional meals"},
+     {words:["unless","We cannot start","arrives","everyone"],answer:"We cannot start unless everyone arrives"},
+     {words:["presented","The manager","clearly","the new plan"],answer:"The manager presented the new plan clearly"},
+     {words:["opens","The bakery","at six","every morning"],answer:"The bakery opens at six every morning"},
+     {words:["has taught","She","for ten years","mathematics"],answer:"She has taught mathematics for ten years"},
+     {words:["delivered","The driver","on time","the parcels"],answer:"The driver delivered the parcels on time"},
+     {words:["analysed","The researchers","carefully","the data"],answer:"The researchers analysed the data carefully"},
+     {words:["must save","Cities","they use","the water"],answer:"Cities must save the water they use"},
+     {words:["will improve","The new policy","public health"],answer:"The new policy will improve public health"} ]},
+   {type:"email_write", instr:"Read the situation and write an email.", minutes:7, to:"support@quicktickets.com", subject:"Refund for a cancelled concert",
+     prompt:"You bought a ticket for a concert online, but the concert was cancelled and you have not received a refund. Write an email to the ticket company. In your email, do the following:",
+     bullets:["Give details of the ticket and the concert.","Explain that you have not been refunded.","Ask the company to return your money."], close:"Write as much as you can in complete sentences." },
+   {type:"discussion", instr:"Write a post responding to the discussion.", minutes:10,
+     professor:"Dr. Lin: This week we are discussing how people shop. Some prefer buying online, while others prefer visiting shops in person. Which do you think is better, and why?",
+     posts:[ {who:"Tara",text:"Online shopping is convenient because you can buy almost anything at any time without leaving home."},{who:"Sven",text:"I prefer real shops because you can see and try products before you buy them."} ], close:"An effective response will contain at least 100 words." }
+  ]}
+};
+const TESTS=[TEST1,TEST2,TEST3,TEST4,TEST5];
 const TESTNAMES=["Test 1","Test 2","Test 3","Test 4","Test 5"];
 let activeTest=0;
 let DATA=TESTS[0];
