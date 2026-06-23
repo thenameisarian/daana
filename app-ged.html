@@ -52,6 +52,20 @@ select.msel{border:1px solid var(--ged);border-radius:7px;padding:5px 7px;font-s
 .statusbar{padding:10px 14px;border-radius:8px;font-weight:700;margin-bottom:12px}.st-ok{background:#dff3e6;color:#1a7a4f}.st-bad{background:#fbe3e3;color:#a32d2d}.st-none{background:#f3e6c6;color:#7a5b16}
 .expcard{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:8px}.expcard .h{font-weight:800;color:var(--ged);margin-bottom:6px}
 @media(max-width:760px){.center-wrap,.tbody{padding:18px 14px}.cards{grid-template-columns:1fr}.split{grid-template-columns:1fr;gap:16px}.stim{max-height:none}.thead .sec{font-size:13px}}
+
+.hspot{fill:#fff;stroke:var(--ged);stroke-width:2.5;cursor:pointer}.hspot:hover{fill:#cfe0f5}.hspot.sel{fill:var(--ged)}
+.ddslots{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.ddslot{min-width:130px;min-height:44px;border:2px dashed var(--line);border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px}
+.ddslot.filled{border-style:solid;border-color:var(--ged);background:#eaf2fb;font-weight:600}
+.ddn{display:inline-flex;flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:var(--ged);color:#fff;font-size:11px;align-items:center;justify-content:center}
+.ddhint{color:var(--mut)}.ddpool{display:flex;flex-wrap:wrap;gap:8px}
+.ddtoken{border:1.5px solid var(--ged);border-radius:10px;padding:8px 12px;background:#fff;cursor:pointer;font-weight:600;font-size:14px}.ddtoken:hover{background:#eaf2fb}
+.calcfab{position:fixed;right:16px;bottom:16px;z-index:40;background:var(--ged);color:#fff;border:none;border-radius:24px;padding:10px 16px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.calcpanel{position:fixed;right:16px;bottom:62px;z-index:41;width:236px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);padding:12px;display:none}
+.calcpanel.on{display:block}
+#calcdisp{width:100%;font-size:20px;text-align:right;border:1px solid var(--line);border-radius:8px;padding:8px;margin-bottom:8px;font-family:ui-monospace,monospace}
+.calcgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.calcgrid button{padding:12px 0;border:1px solid var(--line);border-radius:8px;background:#f7f9fb;font-size:16px;font-weight:700}.calcgrid button:hover{background:#eaf2fb}
 </style>
 </head>
 <body>
@@ -95,7 +109,9 @@ const GED = { subjects:[
          { type:"fillin", instr:"Type your answer (a number) for each question.", questions:[
            {id:"m6", q:"The test scores are 70, 85, 90, and 95. What is the mean (average) score?", ans:["85"]},
            {id:"m7", q:"A line passes through (1, 2) and (3, 8). What is its slope?", ans:["3"]},
-           {id:"m8", q:"A circle has a radius of 10. Using pi = 3.14, what is its area? (number only)", ans:["314"]} ] }
+           {id:"m8", q:"A circle has a radius of 10. Using pi = 3.14, what is its area? (number only)", ans:["314"]} ] },
+         { type:"hotspot", instr:"Click the correct point on the coordinate grid.", questions:[ { id:"m9", q:"On the grid, click the point located at (2, 3).", vb:"0 0 200 200", bg:"<rect width='200' height='200' fill='#fff'/><g stroke='#e7ebee'><line x1='58' y1='20' x2='58' y2='170'/><line x1='86' y1='20' x2='86' y2='170'/><line x1='114' y1='20' x2='114' y2='170'/><line x1='142' y1='20' x2='142' y2='170'/><line x1='170' y1='20' x2='170' y2='170'/><line x1='30' y1='142' x2='185' y2='142'/><line x1='30' y1='114' x2='185' y2='114'/><line x1='30' y1='86' x2='185' y2='86'/><line x1='30' y1='58' x2='185' y2='58'/><line x1='30' y1='30' x2='185' y2='30'/></g><line x1='30' y1='170' x2='185' y2='170' stroke='#9aa6ad' stroke-width='1.5'/><line x1='30' y1='170' x2='30' y2='15' stroke='#9aa6ad' stroke-width='1.5'/><g font-size='9' fill='#6b7785'><text x='27' y='184'>0</text><text x='55' y='184'>1</text><text x='83' y='184'>2</text><text x='111' y='184'>3</text><text x='139' y='184'>4</text><text x='167' y='184'>5</text><text x='17' y='173'>0</text><text x='17' y='145'>1</text><text x='17' y='117'>2</text><text x='17' y='89'>3</text><text x='17' y='61'>4</text><text x='17' y='33'>5</text></g>", spots:[{id:"p23",x:86,y:86},{id:"p32",x:114,y:114},{id:"p13",x:58,y:86},{id:"p22",x:86,y:114}], ans:"p23" } ] },
+         { type:"dragdrop", instr:"Tap a value to place it in the next slot; tap a filled slot to remove it.", questions:[ { id:"m10", q:"Order these values from LEAST to GREATEST.", tokens:["0.3","1/4","75%","1/2"], answer:["1/4","0.3","1/2","75%"] } ] }
        ] }
    ] },
  { key:"science", name:"Science", short:"Science", minutes:45, desc:"Life, physical, and earth/space science, plus scientific reasoning.",
@@ -110,6 +126,7 @@ const GED = { subjects:[
          {id:"s4", q:"The passage says the two processes form a cycle because", opts:["both need sunlight","the products of one are the raw materials of the other","they happen at the same time","neither produces waste"], ans:1},
          {id:"s5", q:"Glucose is best described as a molecule that", opts:["stores chemical energy","contains no carbon","is a type of gas","blocks sunlight"], ans:0},
          {id:"s6", q:"Which is a WASTE product of cellular respiration?", opts:["glucose","oxygen","carbon dioxide","sunlight"], ans:2} ] },
+         { type:"hotspot", instr:"Click the correct part of the diagram.", questions:[ { id:"s7", q:"Click the part of the plant where most photosynthesis takes place.", vb:"0 0 200 200", bg:"<rect width='200' height='200' fill='#eef7ef'/><rect x='0' y='160' width='200' height='40' fill='#caa472'/><rect x='96' y='58' width='8' height='104' fill='#3a8a3a'/><ellipse cx='64' cy='96' rx='28' ry='13' fill='#4caf50'/><ellipse cx='136' cy='112' rx='28' ry='13' fill='#4caf50'/><circle cx='100' cy='46' r='13' fill='#f4b400'/><circle cx='100' cy='46' r='6' fill='#d9534f'/><line x1='100' y1='162' x2='80' y2='192' stroke='#8a5a2b' stroke-width='2'/><line x1='100' y1='162' x2='100' y2='195' stroke='#8a5a2b' stroke-width='2'/><line x1='100' y1='162' x2='120' y2='192' stroke='#8a5a2b' stroke-width='2'/>", spots:[{id:"leaf",x:64,y:96},{id:"flower",x:100,y:46},{id:"stem",x:100,y:120},{id:"roots",x:100,y:182}], ans:"leaf" } ] },
          { type:"extended", instr:"Short answer: In two or three sentences, explain how photosynthesis and cellular respiration depend on each other. (Self-review.)",
            guide:["State what each process takes in and gives out","Show how one provides what the other needs","Use accurate science vocabulary"] }] }
    ] },
@@ -124,7 +141,7 @@ const GED = { subjects:[
          {id:"c3", q:"What can the President do to a bill passed by Congress?", opts:["ignore it forever","veto it","rewrite it alone","declare it a law of the courts"], ans:1},
          {id:"c4", q:"Congress can override a presidential veto with", opts:["a simple majority","a two-thirds vote","approval from the courts","a national vote"], ans:1},
          {id:"c5", q:"Which branch decides whether a law follows the Constitution?", opts:["executive","legislative","judicial","none of them"], ans:2},
-         {id:"c6", q:"The system that lets each branch limit the others is called", opts:["federalism","checks and balances","separation of states","the Bill of Rights"], ans:1} ] }] }
+         {id:"c6", q:"The system that lets each branch limit the others is called", opts:["federalism","checks and balances","separation of states","the Bill of Rights"], ans:1} ] }, { type:"dragdrop", instr:"Tap a step to place it in the next slot; tap a filled slot to remove it.", questions:[ { id:"c7", q:"Put these steps of how a federal bill becomes a law in the correct order, from first to last.", tokens:["The President signs the bill into law","A member introduces the bill in Congress","Both the House and the Senate vote to pass it","The bill is sent to the President"], answer:["A member introduces the bill in Congress","Both the House and the Senate vote to pass it","The bill is sent to the President","The President signs the bill into law"] } ] }] }
    ] }
 ]};
 
@@ -167,6 +184,7 @@ function render(){ window.scrollTo(0,0); mode="run"; const part=parts[pi]; const
  testEl().innerHTML=`<div class="thead"><div class="sec">${esc(subj.name)} · part ${pi+1} of ${parts.length}</div><div class="clock">&#9201; <span id="clk">${fmt(Math.max(0,secTimer))}</span></div></div>
    <div class="progress"><i style="width:${Math.round((pi+1)/parts.length*100)}%"></i></div>
    <div class="tbody">${body}</div>
+   ${subj.key==="math"?calcHTML():""}
    <div class="navbar"><div class="navin"><div class="palette">${qs.map(q=>`<div class="pcell ${q.pidx===pi?'cur':''} ${(ans[q.id]!=null&&ans[q.id]!=='')?'done':''}" onclick="jump(${q.pidx})">${q.id.replace(/[a-z]+\d*_?/,'')||'•'}</div>`).join("")}</div><div style="display:flex;gap:8px"><button class="btn prev" onclick="prev()" ${pi===0?"disabled":""}>Previous</button><button class="btn ${isLast?'teal':''}" onclick="nextp()">${isLast?"Submit":"Next"}</button></div></div></div>`;
  afterRender(part);
 }
@@ -175,11 +193,25 @@ function renderGroup(g){ const instr=`<div class="qinstr">${esc(g.instr)}</div>`
  if(g.type==="fillin") return `<div>${instr}${g.questions.map(q=>`<div class="fillq"><div class="qt"><span class="qnum">${q.id.replace(/\D/g,'')}</span>${esc(q.q)}</div><input class="fillin" id="${q.id}" value="${ans[q.id]?esc(ans[q.id]):''}" oninput="ans['${q.id}']=this.value"></div>`).join("")}</div>`;
  if(g.type==="edit"){ let bi=0; return `<div>${instr}<div class="editbox">${g.parts.map(p=>{ if(p.sel){const id="ed"+pi+"_"+(bi++);return `<select class="msel" onchange="ans['${id}']=this.value"><option value="">—</option>${p.sel.map((o,j)=>`<option value="${j}" ${ans[id]==String(j)?'selected':''}>${esc(o)}</option>`).join("")}</select>`;} return esc(p.t); }).join("")}</div></div>`; }
  if(g.type==="extended") return `<div>${instr}<textarea class="ta" id="ext${pi}" placeholder="Write your response here..." oninput="ans['ext${pi}']=this.value;wcount()">${ans['ext'+pi]?esc(ans['ext'+pi]):''}</textarea><div class="wc" id="wc">0 words</div><div class="expcard"><div class="h">What a strong response includes</div><ul style="margin:0;padding-left:18px">${(g.guide||[]).map(x=>`<li style="margin-bottom:5px">${esc(x)}</li>`).join("")}</ul></div></div>`;
+ if(g.type==="hotspot") return `<div>${instr}${g.questions.map(q=>`<div class="mcq"><div class="qt"><span class="qnum">${q.id.replace(/\D/g,'')}</span>${esc(q.q)}</div><div style="text-align:center"><svg viewBox="${q.vb}" style="max-width:260px;border:1px solid var(--line);border-radius:10px">${q.bg}${q.spots.map(sp=>`<circle class="hspot ${ans[q.id]===sp.id?'sel':''}" cx="${sp.x}" cy="${sp.y}" r="11" id="hs${q.id}_${sp.id}" onclick="hsPick('${q.id}','${sp.id}')"/>`).join("")}</svg></div></div>`).join("")}</div>`;
+ if(g.type==="dragdrop") return `<div>${instr}${g.questions.map(q=>`<div class="mcq"><div class="qt"><span class="qnum">${q.id.replace(/\D/g,'')}</span>${esc(q.q)}</div><div id="dd_${q.id}"></div></div>`).join("")}</div>`;
  return "";
 }
+function hsPick(qid,sp){ ans[qid]=sp; const part=parts[pi]; part.groups.forEach(g=>{if(g.type==="hotspot"){const q=g.questions.find(x=>x.id===qid); if(q)q.spots.forEach(s=>{const e=document.getElementById("hs"+qid+"_"+s.id); if(e)e.classList.toggle("sel",s.id===sp);});}}); }
+function ddFind(qid){ let q=null; parts[pi].groups.forEach(g=>{if(g.type==="dragdrop"){const x=g.questions.find(z=>z.id===qid);if(x)q=x;}}); return q; }
+function ddRender(qid){ const wrap=document.getElementById("dd_"+qid); const q=ddFind(qid); if(!wrap||!q)return; let placed=ans[qid]; if(!placed){placed=new Array(q.answer.length).fill(null);ans[qid]=placed;}
+ const pool=q.tokens.filter(tk=>!placed.includes(tk));
+ const slots=placed.map((tk,i)=>`<div class="ddslot ${tk?'filled':''}" onclick="${tk?`ddRemove('${qid}',${i})`:''}"><span class="ddn">${i+1}</span>${tk?esc(tk):'<span class="ddhint">tap a word below</span>'}</div>`).join("");
+ const toks=pool.map(tk=>`<div class="ddtoken" onclick="ddPlace('${qid}',${q.tokens.indexOf(tk)})">${esc(tk)}</div>`).join("");
+ wrap.innerHTML=`<div class="ddslots">${slots}</div><div class="ddpool">${toks}</div>`; }
+function ddPlace(qid,idx){ const q=ddFind(qid); const placed=ans[qid]; const i=placed.indexOf(null); if(i>=0){placed[i]=q.tokens[idx]; ddRender(qid);} }
+function ddRemove(qid,i){ const placed=ans[qid]; if(placed){placed[i]=null; ddRender(qid);} }
+function calcHTML(){ const ks=["7","8","9","/","4","5","6","*","1","2","3","-","0",".","=","+"]; return `<button class="calcfab" onclick="calcToggle()">&#129518; Calculator</button><div class="calcpanel" id="calcpanel"><input id="calcdisp" readonly><div class="calcgrid">${ks.map(k=>`<button onclick="calcPress('${k}')">${k}</button>`).join("")}<button onclick="calcPress('C')">C</button><button onclick="calcPress('back')">&#9003;</button></div></div>`; }
+function calcToggle(){ const p=document.getElementById("calcpanel"); if(p)p.classList.toggle("on"); }
+function calcPress(k){ const d=document.getElementById("calcdisp"); if(!d)return; if(k==="C"){d.value="";return;} if(k==="back"){d.value=d.value.slice(0,-1);return;} if(k==="="){ try{const e=d.value.replace(/[^0-9.+\-*/() ]/g,""); d.value=String(Function("return ("+e+")")());}catch(_){d.value="Error";} return;} d.value+=k; }
 function mcqHTML(q){ return `<div class="mcq"><div class="qt"><span class="qnum">${q.id.replace(/\D/g,'')}</span>${esc(q.q)}</div>${q.opts.map((o,j)=>`<label class="opt ${ans[q.id]===j?'sel':''}" id="op${q.id}_${j}" onclick="pick('${q.id}',${j})">${String.fromCharCode(65+j)}. ${esc(o)}</label>`).join("")}</div>`; }
 function pick(id,j){ ans[id]=j; const part=parts[pi]; part.groups.forEach(g=>{ if(g.questions){const q=g.questions.find(x=>x.id===id); if(q)q.opts.forEach((o,k)=>{const e=document.getElementById("op"+id+"_"+k);if(e)e.classList.toggle("sel",k===j);});} }); }
-function afterRender(part){ if(part.groups.some(g=>g.type==="extended")) setTimeout(wcount,40); }
+function afterRender(part){ if(part.groups.some(g=>g.type==="extended")) setTimeout(wcount,40); part.groups.forEach(g=>{ if(g.type==="dragdrop")g.questions.forEach(q=>ddRender(q.id)); }); }
 function wcount(){ const b=document.querySelector(".ta"); if(!b)return; const n=b.value.trim().split(/\s+/).filter(Boolean).length; const o=document.getElementById("wc"); if(o)o.textContent=n+" words"; }
 function jump(idx){ if(idx!==pi){pi=idx;render();} }
 function prev(){ if(pi>0){pi--;render();} }
@@ -190,6 +222,8 @@ function scoreSubject(s){ let c=0,t=0; s.parts.forEach((part,pidx)=>part.groups.
    if(g.type==="mcq"){g.questions.forEach(q=>{t++;if(ans[q.id]===q.ans)c++;});}
    else if(g.type==="fillin"){g.questions.forEach(q=>{t++;if(q.ans.some(a=>norm(a)===norm(ans[q.id])))c++;});}
    else if(g.type==="edit"){let bi=0;g.parts.forEach(p=>{if(p.sel){t++;if(ans["ed"+pidx+"_"+bi]==String(p.ans))c++;bi++;}});}
+   else if(g.type==="hotspot"){g.questions.forEach(q=>{t++;if(ans[q.id]===q.ans)c++;});}
+   else if(g.type==="dragdrop"){g.questions.forEach(q=>{t++;const pl=ans[q.id]||[];if(pl.length===q.answer.length&&pl.every((x,i)=>x===q.answer[i]))c++;});}
  })); return {c,t}; }
 function finish(){ if(timerInt)clearInterval(timerInt); mode="result";
  const s=scoreSubject(subj); const pct=s.t?s.c/s.t:0; const score=gedScore(pct); const band=gedBand(score);
@@ -207,6 +241,8 @@ function startReview(){ rItems=[]; subj.parts.forEach((part,pidx)=>part.groups.f
    if(g.type==="mcq")g.questions.forEach(q=>rItems.push({kind:"mcq",q,your:ans[q.id]}));
    else if(g.type==="fillin")g.questions.forEach(q=>rItems.push({kind:"fill",q,your:ans[q.id],ok:q.ans.some(a=>norm(a)===norm(ans[q.id])),correct:q.ans.join(" / ")}));
    else if(g.type==="edit"){let bi=0;g.parts.forEach(p=>{if(p.sel){const id="ed"+pidx+"_"+bi;rItems.push({kind:"edit",prompt:"Blank: choose the correct option",your:(ans[id]!=null&&ans[id]!=="")?p.sel[+ans[id]]:"(blank)",correct:p.sel[p.ans],ok:ans[id]==String(p.ans)});bi++;}});}
+   else if(g.type==="hotspot")g.questions.forEach(q=>rItems.push({kind:"fill",q:{q:q.q},your:ans[q.id]||"(none)",correct:q.ans,ok:ans[q.id]===q.ans}));
+   else if(g.type==="dragdrop")g.questions.forEach(q=>{const pl=ans[q.id]||[];const ok=pl.length===q.answer.length&&pl.every((x,i)=>x===q.answer[i]);rItems.push({kind:"fill",q:{q:q.q},your:(pl.filter(Boolean).join("  >  ")||"(none)"),correct:q.answer.join("  >  "),ok});});
    else if(g.type==="extended")rItems.push({kind:"open",prompt:g.instr,resp:ans["ext"+pidx],guide:g.guide});
  })); rIdx=0; renderReview(); }
 function renderReview(){ window.scrollTo(0,0); mode="review"; const it=rItems[rIdx]; let body="";
