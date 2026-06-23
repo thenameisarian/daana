@@ -137,7 +137,98 @@ const IELTS = {
          keys:{ "31":["cities","city"], "32":["honey"], "33":["gardens","garden"], "34":["pesticides","pesticide"], "35":["roof"], "36":["water"], "37":["5","five"], "38":["50","fifty"], "39":["queen"], "40":["dance"] } }
      ] }
   ] },
- reading:{ name:"Reading", minutes:60, dir:"Three passages, 40 questions, 60 minutes. No extra transfer time. (Content being added.)", parts:[] },
+ reading:{ name:"Reading", minutes:60,
+  dir:"You will read three passages and answer 40 questions in 60 minutes. There is no extra time to transfer answers. A range of question types is used; read each instruction carefully.",
+  parts:[
+   { n:1, context:"Reading Passage 1 - Questions 1 to 13. Read the passage about crows and answer the questions.",
+     passage:{ title:"The Hidden Intelligence of Crows", paras:[
+       "Crows, along with ravens, magpies and jays, belong to the corvid family, a group of birds with a reputation for remarkable intelligence. For centuries people dismissed birds as simple creatures driven by instinct, yet decades of research now place corvids among the cleverest animals on the planet, able to rival great apes on some tests.",
+       "Perhaps the most famous example is tool use. New Caledonian crows are one of the few non-human species that not only use tools but also make them, trimming twigs and leaves into hooks to pull insects from holes. In laboratories, crows have been filmed bending a straight piece of wire into a hook to lift a small bucket of food, a feat that requires planning rather than lucky accident.",
+       "Crows are also unusually good at recognising individual human faces, and they remember them for years. In one study, researchers wearing a particular mask trapped and released wild crows; long afterwards the birds scolded anyone wearing that mask, although they had seen it only once. Strikingly, crows that had never been trapped reacted too, which means the warning had been passed on to other birds, including their own young.",
+       "Their problem-solving extends to multi-step puzzles. In a modern version of one of Aesop fables, crows dropped stones into a tube of water to raise the level until a floating treat came within reach, choosing heavy objects over light ones. Some birds have worked through sequences of up to eight separate steps to reach a reward.",
+       "Corvids appear to have a rich social life as well. Crows gather around a dead member of their species in what scientists informally call a funeral. Rather than mourning, the birds seem to be gathering information, learning what killed the individual so they can avoid the same danger in future.",
+       "How can a brain the size of a walnut achieve all this? The answer lies not in size but in density. Although corvid brains are far smaller than human brains, they pack their neurons together far more tightly, giving them a count comparable to some monkeys. It is this dense wiring, researchers believe, that powers their surprising intelligence." ] },
+     groups:[
+       { type:"tfng", instr:"Do the following statements agree with the information in the passage? Choose TRUE, FALSE or NOT GIVEN for questions 1 to 7.",
+         questions:[
+           {id:"1", prompt:"Ravens are members of the corvid family.", ans:"TRUE"},
+           {id:"2", prompt:"New Caledonian crows are the only animals that make tools.", ans:"FALSE"},
+           {id:"3", prompt:"All the crows that reacted to the mask had been trapped before.", ans:"FALSE"},
+           {id:"4", prompt:"Crows can remember a human face for years.", ans:"TRUE"},
+           {id:"5", prompt:"In the water task, crows preferred heavy objects to light ones.", ans:"TRUE"},
+           {id:"6", prompt:"Crow funerals are mainly a way of mourning the dead.", ans:"FALSE"},
+           {id:"7", prompt:"A corvid brain contains more neurons than a human brain.", ans:"FALSE"} ] },
+       { type:"fill", layout:"lines", instr:"Complete the sentences below. Write ONE WORD ONLY from the passage for each answer.",
+         lines:[
+           "On some intelligence tests, corvids can rival great {8}.",
+           "Crows make hooks by trimming twigs and {9}.",
+           "In the lab, crows bent a piece of {10} to form a hook.",
+           "A {11} about the dangerous mask was passed to other birds.",
+           "In the water task, crows dropped {12} into a tube.",
+           "A corvid brain works well because its neurons have a high {13}." ],
+         keys:{ "8":["apes"], "9":["leaves"], "10":["wire"], "11":["warning"], "12":["stones"], "13":["density"] } }
+     ] },
+   { n:2, context:"Reading Passage 2 - Questions 14 to 26. The passage has seven paragraphs, A to G.",
+     passage:{ title:"The Return of the Tram", paras:[
+       "In the early twentieth century, electric trams rattled through the streets of almost every major city. Then, from the 1930s onwards, most were torn up and replaced by buses and private cars, which were seen as the modern future. Today, in a striking reversal, cities from Manchester to Sydney are laying tracks once again and welcoming the tram back.",
+       "Several pressures lie behind this revival. Traffic congestion has reached crisis point in many urban centres, while concern about air pollution and the health problems it causes has grown sharply. Planners began searching for a form of transport that could move large numbers of people without adding to either the jams or the smog.",
+       "Trams answer that need. Because they run on electricity, they produce no exhaust fumes at street level, and a single tram can carry far more passengers than a bus while using less energy per person. In cities that draw their power from renewable sources, tram travel can be almost entirely free of carbon emissions.",
+       "The benefits are not only environmental. Studies repeatedly show that property values rise along new tram routes, and shops and offices cluster around the stops. Several rundown districts have been regenerated after a line opened, attracting businesses that had previously stayed away.",
+       "None of this comes cheaply. Building a tram network is far more expensive than launching a bus route, since it involves laying track, installing overhead wires and rebuilding roads. Construction can also disrupt city life for months, and a few schemes have run badly over budget, drawing fierce criticism.",
+       "Yet supporters argue that this very permanence is an advantage. Unlike a bus route, which can be cancelled overnight, a tram line is fixed in place, and that certainty reassures investors. Businesses are far more willing to commit money to an area when they can see that good transport will still be there in twenty years.",
+       "The future may be brighter still. Engineers are testing driverless trams and systems that link smoothly with trains, bikes and buses on a single ticket. If these ideas succeed, the humble tram could become the backbone of the clean, connected city of tomorrow." ] },
+     groups:[
+       { type:"headings", instr:"Choose the correct heading for each paragraph A to G from the list of headings. Write the correct number, i to x, for questions 14 to 20.",
+         options:[ ["i","The high price of building tram systems"],["ii","How trams vanished and returned"],["iii","Cleaner travel for crowded cities"],["iv","Why investors prefer rails to roads"],["v","Lifting the local economy"],["vi","The pressures that revived the tram"],["vii","What lies ahead for the tram"],["viii","The dangers of tram travel"],["ix","Trams across the ancient world"],["x","How to buy a tram ticket"] ],
+         questions:[
+           {id:"14", prompt:"Paragraph A", ans:"ii"},
+           {id:"15", prompt:"Paragraph B", ans:"vi"},
+           {id:"16", prompt:"Paragraph C", ans:"iii"},
+           {id:"17", prompt:"Paragraph D", ans:"v"},
+           {id:"18", prompt:"Paragraph E", ans:"i"},
+           {id:"19", prompt:"Paragraph F", ans:"iv"},
+           {id:"20", prompt:"Paragraph G", ans:"vii"} ] },
+       { type:"tfng", instr:"Do the following statements agree with the information in the passage? Choose TRUE, FALSE or NOT GIVEN for questions 21 to 26.",
+         questions:[
+           {id:"21", prompt:"Trams were removed from many cities to make way for cars and buses.", ans:"TRUE"},
+           {id:"22", prompt:"Modern trams release more emissions than buses.", ans:"FALSE"},
+           {id:"23", prompt:"Property values often rise near new tram lines.", ans:"TRUE"},
+           {id:"24", prompt:"Tram systems are cheaper to build than bus routes.", ans:"FALSE"},
+           {id:"25", prompt:"Passengers prefer trams because they are faster than trains.", ans:"NOT GIVEN"},
+           {id:"26", prompt:"The fixed nature of tram lines makes investors more confident.", ans:"TRUE"} ] }
+     ] },
+   { n:3, context:"Reading Passage 3 - Questions 27 to 40. Read the passage about online reviews.",
+     passage:{ title:"Can We Trust Online Reviews?", paras:[
+       "Before booking a hotel, buying a gadget or choosing a restaurant, most of us now read online reviews. Billions are posted every year, and surveys suggest that the majority of shoppers trust them almost as much as a personal recommendation. Reviews have become one of the most powerful forces in modern commerce.",
+       "But that power has a dark side. A significant number of reviews are fake. Some businesses pay people to post glowing praise, while others plant negative reviews to damage a rival. For an ordinary shopper, these fakes can be very hard to spot.",
+       "Platforms are fighting back. Most large sites now use AI to scan for suspicious patterns, such as dozens of five-star reviews appearing within a single hour. The technology catches a great deal, but it is far from perfect, and determined fraudsters keep finding new ways around it.",
+       "Even genuine reviews can mislead. People rarely write a review when an experience is simply average; they are far more likely to reach for the keyboard when they are delighted or furious. As a result, the loudest voices online tend to hold extreme opinions, and the quiet majority goes unheard.",
+       "So should we ignore reviews altogether? The writer of this article thinks not. Read critically, reviews remain genuinely useful. The trick is to look at the overall pattern rather than any single comment, to favour detailed reviews over one-line bursts of emotion, and to be suspicious of products with only a handful of ratings.",
+       "In the end, an online review is a tool, not a verdict. Used wisely, alongside your own judgement, it can guide a good decision. Treated as the final word, it can just as easily lead you astray." ] },
+     groups:[
+       { type:"ynng", instr:"Do the following statements agree with the views of the writer? Choose YES, NO or NOT GIVEN for questions 27 to 32.",
+         questions:[
+           {id:"27", prompt:"Fake reviews are a serious problem for ordinary shoppers.", ans:"YES"},
+           {id:"28", prompt:"Automated systems can now remove every fake review.", ans:"NO"},
+           {id:"29", prompt:"People with moderate opinions are the most likely to post reviews.", ans:"NO"},
+           {id:"30", prompt:"Looking at the overall pattern is more reliable than reading one comment.", ans:"YES"},
+           {id:"31", prompt:"Detailed reviews are generally more trustworthy than very short ones.", ans:"YES"},
+           {id:"32", prompt:"An online review should be the final word on a purchase.", ans:"NO"} ] },
+       { type:"fill", layout:"lines", instr:"Complete the summary below. Write ONE WORD ONLY from the passage for each answer.",
+         lines:[
+           "Online reviews can guide the {33} that millions of shoppers make.",
+           "However, some are {34}, posted by people who have been paid.",
+           "Websites use {35} to spot suspicious patterns, but it cannot catch everything.",
+           "Reviews also tend to attract people who hold {36} opinions.",
+           "The writer concludes that a review is a {37}, not a final judgement." ],
+         keys:{ "33":["decision","decisions"], "34":["fake"], "35":["AI"], "36":["extreme"], "37":["tool"] } },
+       { type:"mcq", instr:"Choose the correct letter, A, B or C, for questions 38 to 40.",
+         questions:[
+           {id:"38", q:"According to the writer, the main weakness of online reviews is that", opts:["they are always too short","they can be faked and biased","they are written only by experts"], ans:1},
+           {id:"39", q:"The writer suggests that a sign of a more trustworthy review is", opts:["a five-star rating","plenty of detail","a very recent date"], ans:1},
+           {id:"40", q:"The writer's overall attitude to online reviews is", opts:["completely distrustful","cautiously positive","totally indifferent"], ans:1} ] }
+     ] },
+  ] },
  writing:{ name:"Writing", minutes:60, dir:"Two tasks: Task 1 (describe visual data, ~150 words, 20 min) and Task 2 (essay, ~250 words, 40 min). (Content being added.)", parts:[] },
  speaking:{ name:"Speaking", minutes:14, dir:"Three parts: interview, cue-card long turn (1 min prep + up to 2 min), and discussion. (Content being added.)", parts:[] }
 };
@@ -159,7 +250,7 @@ function toggleNotes(){document.getElementById("npanel").classList.toggle("on");
 
 /* collect every question id in a section (for palette + scoring) */
 function sectionQuestions(secKey){ const out=[]; (IELTS[secKey].parts||[]).forEach((part,partIdx)=>{ (part.groups||[]).forEach(g=>{ collectGroupIds(g).forEach(id=>out.push({id,partIdx,type:g.type})); }); }); return out; }
-function collectGroupIds(g){ if(g.type==="fill"){ return Object.keys(g.keys); } if(g.type==="mcq"||g.type==="matching"||g.type==="map"){ return g.questions.map(q=>q.id); } return []; }
+function collectGroupIds(g){ if(g.keys) return Object.keys(g.keys); if(g.questions) return g.questions.map(q=>q.id); return []; }
 
 function tts(text){ if("speechSynthesis"in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=0.95;u.lang="en-GB";window.speechSynthesis.speak(u);} }
 
@@ -193,7 +284,7 @@ function render(){ window.scrollTo(0,0); mode="run"; setFab(true);
  const qs=sectionQuestions(secKey); const answered=qs.filter(q=>ans[q.id]!=null&&ans[q.id]!=="").length;
  const isLast = pi===parts.length-1;
  const audioBlock = secKey==="listening" ? `<div class="spanel" style="margin-bottom:16px"><div class="av">&#127911;</div><div class="audiostate" id="astate">Loading audio…</div></div>` : "";
- const passageBlock = secKey==="reading" && part.passage ? `<div class="passcol"><div class="passage-title">${esc(part.passage.title)}</div><div class="passage-text">${part.passage.paras.map(p=>`<p>${esc(p)}</p>`).join("")}</div></div>` : "";
+ const passageBlock = secKey==="reading" && part.passage ? `<div class="passcol"><div class="passage-title">${esc(part.passage.title)}</div><div class="passage-text">${part.passage.paras.map((p,i)=>`<p><b>${String.fromCharCode(65+i)}</b>&nbsp; ${esc(p)}</p>`).join("")}</div></div>` : "";
  const groupsHTML = (part.groups||[]).map(g=>renderGroup(g)).join("");
  const rightCol = `<div class="qcol">${groupsHTML}</div>`;
  const body = (secKey==="reading") ? `<div class="split">${passageBlock}${rightCol}</div>` : `${audioBlock}${rightCol}`;
@@ -220,6 +311,9 @@ function renderGroup(g){
  if(g.type==="mcq") return `<div class="qgroup">${instr}${g.questions.map(mcqHTML).join("")}</div>`;
  if(g.type==="matching") return `<div class="qgroup">${instr}${optboxHTML(g.options)}${g.questions.map(q=>matchRow(q,g.options)).join("")}</div>`;
  if(g.type==="map") return `<div class="qgroup">${instr}${g.image?`<div style="text-align:center;margin:8px 0">${g.image}</div>`:""}${optboxHTML(g.options)}${g.questions.map(q=>matchRow(q,g.options)).join("")}</div>`;
+ if(g.type==="tfng") return `<div class="qgroup">${instr}${g.questions.map(q=>judgeRow(q,["TRUE","FALSE","NOT GIVEN"])).join("")}</div>`;
+ if(g.type==="ynng") return `<div class="qgroup">${instr}${g.questions.map(q=>judgeRow(q,["YES","NO","NOT GIVEN"])).join("")}</div>`;
+ if(g.type==="headings") return `<div class="qgroup">${instr}${optboxHTML(g.options)}${g.questions.map(q=>matchRow(q,g.options)).join("")}</div>`;
  return "";
 }
 function gapInput(id){ return `<span class="gap"><span class="qnum">${id}</span><input id="q${id}" oninput="ans['${id}']=this.value.trim()" autocomplete="off"></span>`; }
@@ -232,7 +326,8 @@ function mcqHTML(q){ return `<div class="mcq"><div class="qt"><span class="qnum"
 function pickMcq(id,j){ ans[id]=j; document.querySelectorAll(`input[name="m${id}"]`).forEach((r,i)=>r.checked=(i===j)); markPalette(id); }
 function optboxHTML(options){ return `<div class="optbox">${options.map(o=>`<div><b>${o[0]}</b> &nbsp;${esc(o[1])}</div>`).join("")}</div>`; }
 function matchRow(q,options){ return `<div class="matchrow"><span class="qnum">${q.id}</span><span class="lbl">${esc(q.prompt)}</span><select class="msel" onchange="ans['${q.id}']=this.value;markPalette('${q.id}')"><option value="">—</option>${options.map(o=>`<option value="${o[0]}" ${ans[q.id]===o[0]?"selected":""}>${o[0]}</option>`).join("")}</select></div>`; }
-function markPalette(id){ const cells=document.querySelectorAll(".pcell"); /* simple: re-render palette state */ }
+function judgeRow(q,opts){ return `<div class="matchrow"><span class="qnum">${q.id}</span><span class="lbl">${esc(q.prompt)}</span><select class="msel" onchange="ans['${q.id}']=this.value;markPalette('${q.id}')"><option value="">—</option>${opts.map(o=>`<option value="${o}" ${ans[q.id]===o?"selected":""}>${o}</option>`).join("")}</select></div>`; }
+function markPalette(id){ const cells=document.querySelectorAll(".pcell"); }
 
 /* ====== audio ====== */
 const AUDIO_BASE="audio/ielts/";
@@ -250,9 +345,8 @@ function finishSection(){ if(timerInt)clearInterval(timerInt); if(secIdx<flow.le
 /* ====== scoring / results ====== */
 function gradeFill(val,accepted){ const v=(val||"").trim().toLowerCase().replace(/\s+/g," "); return accepted.some(a=>a.toLowerCase()===v); }
 function scoreSection(secKey){ let correct=0,total=0; (IELTS[secKey].parts||[]).forEach(part=>{ (part.groups||[]).forEach(g=>{
-   if(g.type==="fill"){ Object.keys(g.keys).forEach(id=>{ total++; if(gradeFill(ans[id],g.keys[id]))correct++; }); }
-   else if(g.type==="mcq"){ g.questions.forEach(q=>{ total++; if(ans[q.id]===q.ans)correct++; }); }
-   else if(g.type==="matching"||g.type==="map"){ g.questions.forEach(q=>{ total++; if((ans[q.id]||"")===q.ans)correct++; }); }
+   if(g.keys){ Object.keys(g.keys).forEach(id=>{ total++; if(gradeFill(ans[id],g.keys[id]))correct++; }); }
+   else if(g.questions){ g.questions.forEach(q=>{ total++; if(typeof q.ans==="number"){ if(ans[q.id]===q.ans)correct++; } else { if((ans[q.id]||"")===q.ans)correct++; } }); }
  }); }); return {correct,total}; }
 function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="result"; setFab(false);
  const bands=[]; let cells="";
@@ -273,9 +367,8 @@ function scellHTML(name,band,sub){ return `<div class="scell"><div class="lead">
 /* ====== review ====== */
 let reviewItems=[],reviewIdx=0;
 function startReview(){ reviewItems=[]; ["listening","reading"].forEach(secKey=>{ if(!flow.includes(secKey))return; (IELTS[secKey].parts||[]).forEach(part=>{ (part.groups||[]).forEach(g=>{
-   if(g.type==="fill"){ Object.keys(g.keys).forEach(id=>reviewItems.push({sec:IELTS[secKey].name,id,your:ans[id],correct:g.keys[id].join(" / "),ok:gradeFill(ans[id],g.keys[id]),kind:"text"})); }
-   else if(g.type==="mcq"){ g.questions.forEach(q=>reviewItems.push({sec:IELTS[secKey].name,id:q.id,your:ans[q.id]!=null?String.fromCharCode(65+ans[q.id]):null,correct:String.fromCharCode(65+q.ans),ok:ans[q.id]===q.ans,kind:"mcq",q})); }
-   else if(g.type==="matching"||g.type==="map"){ g.questions.forEach(q=>reviewItems.push({sec:IELTS[secKey].name,id:q.id,your:ans[q.id]||null,correct:q.ans,ok:(ans[q.id]||"")===q.ans,kind:"match",prompt:q.prompt})); }
+   if(g.keys){ Object.keys(g.keys).forEach(id=>reviewItems.push({sec:IELTS[secKey].name,id,your:ans[id],correct:g.keys[id].join(" / "),ok:gradeFill(ans[id],g.keys[id]),kind:"text"})); }
+   else if(g.questions){ g.questions.forEach(q=>{ if(typeof q.ans==="number"){ reviewItems.push({sec:IELTS[secKey].name,id:q.id,your:ans[q.id]!=null?String.fromCharCode(65+ans[q.id]):null,correct:String.fromCharCode(65+q.ans),ok:ans[q.id]===q.ans,kind:"mcq",q}); } else { reviewItems.push({sec:IELTS[secKey].name,id:q.id,your:ans[q.id]||null,correct:q.ans,ok:(ans[q.id]||"")===q.ans,kind:"match",prompt:q.prompt||q.q}); } }); }
  }); }); }); if(!reviewItems.length){alert("Nothing to review.");return;} reviewIdx=0; renderReview(); }
 function renderReview(){ window.scrollTo(0,0); mode="review"; setFab(false); const it=reviewItems[reviewIdx];
  const status= it.your==null?'<div class="statusbar st-none">Not answered</div>':(it.ok?'<div class="statusbar st-ok">Correct</div>':'<div class="statusbar st-bad">Incorrect</div>');
