@@ -138,7 +138,7 @@ textarea:focus{border-color:var(--teal)}
 /* ---------- DATA (original; 2026 task types, layout per Magoosh/TestReady) ---------- */
 const CL = (s)=>({t:s}); const BK=(pre,ans)=>({pre,ans});
 const DATA = {
- reading:{ name:"Reading", minutes:35, instrDir:"In this section you will read passages and answer questions. Move with Next; return with Previous. Your notes are not scored.",
+ reading:{ name:"Reading", minutes:27, instrDir:"Reading has three task types: Complete the Words, Read in Daily Life, and Read an Academic Text. This section is adaptive - how you do in the first module sets the difficulty of the second. You may use Next and Previous within the section; your notes are not scored.",
   tasks:[
    {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[
      CL("On a summer night, a city can be several degrees war"),BK("war","mer"),CL(" than the farmland around it. Scientists call this the urban heat is"),BK("is","land"),CL(" effect. Hard surfaces like asphalt and con"),BK("con","crete"),CL(" absorb heat in the day and rele"),BK("rele","ase"),CL(" it slowly at ni"),BK("ni","ght"),CL(". Planting trees and painting roofs white can red"),BK("red","uce"),CL(" the warmth and make cities more liv"),BK("liv","able"),CL(".") ]},
@@ -174,7 +174,7 @@ const DATA = {
           {q:"Why is bioluminescence hard to study?",opts:["the animals glow too brightly","the animals are fragile and the pressure is crushing","it only happens at the surface","there are too few animals"],a:1,exp:"The last paragraph says the animals are fragile and the pressure is crushing, so B. They are not too bright or too few, and it does not only happen at the surface."},
           {kind:"insert", sentence:"Some believe bioluminescence could be used to monitor water pollution or the health of crops.", q:"There are four places [▪] where the sentence could be added. Where does it best fit?", opts:["[▪] (A)","[▪] (B)","[▪] (C)","[▪] (D)"], a:3,exp:"The new sentence introduces future, applied uses such as monitoring pollution or crop health, so it fits best at the end, slot D, after the discussion of why the topic matters, not in the middle of explaining how or why animals glow."} ]}
   ]},
- listening:{ name:"Listening", minutes:18, instrDir:"You will hear short statements, conversations, announcements, and academic talks, then answer. Three task types: Listen and Choose a Response, Conversations, and Announcements & Academic Talks. You cannot return to previous questions.",
+ listening:{ name:"Listening", minutes:27, instrDir:"Listening has four task types: Listen and Choose a Response, Listen to a Conversation, Listen to an Announcement, and Listen to an Academic Talk. This section is adaptive across two modules. You hear each audio once and cannot return to a previous question.",
   tasks:[
    {type:"lchoose", instr:"Choose the option that best answers the question.", audio:"How often do you exercise?", opts:["Walking is good for your health.","I ride my bike daily.","About three times a week.","I always count my steps."], a:2,exp:"How often asks for frequency, so the direct reply is about three times a week (C). The other options give a benefit, a single activity, or a habit rather than answering how often."},
    {type:"lchoose", instr:"Choose the option that best answers the question.", audio:"Could you tell me where the lecture is being held?", opts:["At 10:00 a.m.","Two mornings a week.","In Smith Hall.","Research methods."], a:2,exp:"Where asks for a place, and the only location offered is In Smith Hall (C). The others give a time, a frequency, and a course topic."},
@@ -191,7 +191,7 @@ const DATA = {
           {q:"How do birds use the sun?",opts:["they wait for noon","with an internal clock, as a compass","they ignore it","only at sunset"],a:1,exp:"The talk says birds use the sun together with an internal clock, as a compass (B)."},
           {q:"When do birds rely on the magnetic sense?",opts:["never","when clouds cover the sky","only in daylight","only near the coast"],a:1,exp:"The talk says birds rely on the magnetic sense when clouds cover the sky (B)."} ]}
   ]},
- writing:{ name:"Writing", minutes:23, instrDir:"You will complete three writing tasks: Build a Sentence, Write an Email, and Write for an Academic Discussion.",
+ writing:{ name:"Writing", minutes:23, instrDir:"Writing has three tasks: Build a Sentence, Write an Email, and Write for an Academic Discussion. The email and discussion are timed separately. Responses are scored by AI on the 1-6 band.",
   tasks:[
    {type:"build", instr:"Put the words in the correct order to form a sentence.", items:[
      {words:["will","The committee","the results","announce","next week"],answer:"The committee will announce the results next week"},
@@ -213,7 +213,7 @@ const DATA = {
              {who:"Tomas",text:"I’m not sure. Devices are a big distraction, and not every family has reliable internet at home."} ],
      close:"An effective response will contain at least 100 words." }
   ]},
- speaking:{ name:"Speaking", minutes:8, instrDir:"You will complete two speaking tasks: Listen and Repeat, and Take an Interview. Speak clearly into your microphone. You cannot return to previous questions.",
+ speaking:{ name:"Speaking", minutes:8, instrDir:"Speaking has two task types: Listen and Repeat (seven sentences) and Take an Interview (four questions, 45 seconds each, with no preparation time). You hear each prompt once and cannot return to a previous question.",
   tasks:[
    {type:"repeat", instr:"Listen and repeat only once.", scenario:"You are welcoming new employees to the office kitchen. Listen to the speaker and repeat what they say. You will hear each statement once.", statements:[
      "Welcome to the office.",
@@ -255,7 +255,7 @@ function showHome(){
    </div>
    <h1 class="h1" style="margin-top:14px">TOEFL iBT® Full Practice Test — 2026</h1>
    <p class="lead">All four sections in the real 2026 format, with instant scoring and answer explanations. Original practice material. <span style="opacity:.7">More exams — IELTS, GRE, Duolingo — are on the way.</span></p>
-   <div class="homestat"><span><b>4</b> sections</span><span><b>~90</b> min</span><span>band <b>1.0–6.0</b></span><span><b>Auto-scored</b> Reading &amp; Listening</span></div>
+   <div class="homestat"><span><b>4</b> sections</span><span><b>~85</b> min</span><span>band <b>1.0–6.0</b></span><span><b>Auto-scored</b> Reading &amp; Listening</span></div>
    <div style="margin-top:6px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="begin(['reading','listening','writing','speaking'])">Start Full Practice Test</button><button class="btn ghost" onclick="showTips()">Tips &amp; Strategy</button></div>
    <p class="lead" style="margin-top:24px">Or practice one section:</p>
    <div class="cards">
@@ -264,7 +264,7 @@ function showHome(){
 }
 const ICON={reading:"&#128214;",listening:"&#127911;",speaking:"&#127908;",writing:"&#9999;&#65039;"};
 const TIPS=[
- {h:"How the 2026 test works",items:["The test is about 90 minutes: Reading, Listening, Writing, then Speaking.","Reading and Listening are adaptive — they get harder or easier based on how you do.","Scores use a 1.0–6.0 band (with a 0–120 estimate). In Listening you cannot return to earlier questions.","Keep moving — the clock does not stop. If unsure, eliminate two wrong options, then choose."]},
+ {h:"How the 2026 test works",items:["The test is about 85 minutes: Reading, Listening, Writing, then Speaking.","Reading and Listening are adaptive — they get harder or easier based on how you do.","Scores use a 1.0–6.0 band (with a 0–120 estimate). In Listening you cannot return to earlier questions.","Keep moving — the clock does not stop. If unsure, eliminate two wrong options, then choose."]},
  {h:"Reading",items:["Complete the Words: read the whole sentence first; use grammar (plural, tense) and the letters shown. The blank length hints the word length.","Daily Life (email, agenda, text chain): scan for the exact detail asked — watch dates, times, and names. \"Infer\" questions need reading between the lines.","Academic Passage: get the main idea first. For vocabulary, use the surrounding context. For EXCEPT questions, cross off what IS stated. For insert-text, match linking words (this, however, for example) to the slot."]},
  {h:"Listening",items:["Take notes as you listen — who is speaking, the problem, and the decision or main point.","Listen and Choose a Response: notice the function (a question? a complaint? an offer?) and pick the natural reply.","Conversations: note the problem and the solution the speakers agree on.","Talks: catch the topic, the structure (first… second… third…), and any examples."]},
  {h:"Writing",items:["Build a Sentence: find the subject and verb first; put time and place phrases near the end; read it back in your head.","Write an Email: answer every bullet, use a greeting and a sign-off, write 100–150 words in complete sentences.","Academic Discussion: state a clear opinion, give one reason and one example, and react to a classmate's point. Aim for 100–130 words."]},
@@ -306,7 +306,7 @@ function buildScreens(sec){
 function render(){
  window.scrollTo(0,0); mode="run"; setFab(true);
  const sc=screens[si]; const sec=sc.sec;
- const flagged=flags[si]?"on":"";
+ const flagged=flags[si]?"on":""; const noBack=(flow[secIdx]==="listening"||flow[secIdx]==="speaking");
  testEl().innerHTML=`
   <div class="thead"><div><div class="sec">${sec.name}</div><div class="sub">Arian Academy · practice question</div></div>
    <div class="right">
@@ -319,7 +319,7 @@ function render(){
   <div class="navbar"><div class="navin">
      <button class="btn ghost" onclick="reviewSection()">Review Section</button>
      <div class="navmid">${sc.label}</div>
-     <div class="nav-r"><button class="btn prev" onclick="prev()" ${si===0?"disabled":""}>Previous</button>
+     <div class="nav-r"><button class="btn prev" onclick="prev()" ${(si===0||noBack)?"disabled":""}>Previous</button>
        <button class="btn ${(si===screens.length-1 && secIdx!==flow.length-1)?'end':''}" onclick="next()">${si!==screens.length-1?"Next":(secIdx===flow.length-1?"Submit":"End Section")}</button></div>
   </div></div>`;
  if(sc.task.type==="build") renderBuild();
@@ -422,14 +422,14 @@ function next(){ if(window.speechSynthesis)speechSynthesis.cancel(); rIdx=0; iId
 function finishSection(){ clearTaskTimer(); if(timerInt)clearInterval(timerInt); if(secIdx<flow.length-1){secIdx++;directions();} else results(); }
 
 /* ---------- results ---------- */
-function band(p){return (1+p*5).toFixed(1);}
+function band(p){return (Math.round((1+p*5)*2)/2).toFixed(1);}
 function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="result"; setFab(false);
  const did=k=>flow.includes(k);
  let rC=0,rT=0,lC=0,lT=0;
  if(did("reading")) DATA.reading.tasks.forEach((t,ti)=>{ if(t.type==="cloze"){let bi=0;t.parts.forEach(p=>{if(p.ans){const id="reading-"+ti+"-b"+(bi++);rT++;if((ans[id]||"").trim().toLowerCase()===p.ans.toLowerCase())rC++;}});} else if(t.qs){t.qs.forEach((q,qi)=>{rT++;if(ans["reading-"+ti+"-"+qi]===q.a)rC++;});} });
  if(did("listening")) DATA.listening.tasks.forEach((t,ti)=>{ if(t.type==="lchoose"){lT++;if(ans["listening-"+ti+"-0"]===t.a)lC++;} else if(t.qs){t.qs.forEach((q,qi)=>{lT++;if(ans["listening-"+ti+"-"+qi]===q.a)lC++;});} });
  const rP=rT?rC/rT:0,lP=lT?lC/lT:0; const bands=[]; if(did("reading"))bands.push(+band(rP)); if(did("listening"))bands.push(+band(lP));
- const overall=bands.length?(bands.reduce((a,b)=>a+b,0)/bands.length).toFixed(1):null;
+ const overall=bands.length?(Math.round(bands.reduce((a,b)=>a+b,0)/bands.length*2)/2).toFixed(1):null;
  let cells="";
  if(did("reading"))cells+=`<div class="scell"><div class="lead">Reading</div><div class="n">${band(rP)}</div><div class="sbar"><i style="width:${Math.round(rP*100)}%"></i></div><div class="lead" style="font-size:12px;margin-top:4px">${rC}/${rT} · ~${Math.round(rP*30)}/30</div></div>`;
  if(did("listening"))cells+=`<div class="scell"><div class="lead">Listening</div><div class="n">${band(lP)}</div><div class="sbar"><i style="width:${Math.round(lP*100)}%"></i></div><div class="lead" style="font-size:12px;margin-top:4px">${lC}/${lT} · ~${Math.round(lP*30)}/30</div></div>`;
@@ -437,7 +437,7 @@ function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="re
  if(did("speaking"))cells+=`<div class="scell"><div class="lead">Speaking</div><div class="n">&#127908;</div><div class="lead" style="font-size:12px">completed · review</div></div>`;
  testEl().innerHTML=`<div class="center-wrap"><div class="brand"><span class="mk">A</span><span>Arian Academy</span></div>
    <h1 class="h1" style="margin-top:16px">Your result</h1>
-   ${overall?`<div style="text-align:center"><div class="bigtimer" style="font-size:56px">${overall}<span style="font-size:20px;color:#6b7785"> / 6.0</span></div><div class="lead">estimated band · CEFR ${cefr(overall)}</div><div class="gauge"><div class="mk" style="left:${Math.round((overall-1)/5*100)}%"></div></div></div>`:""}
+   ${overall?`<div style="text-align:center"><div class="bigtimer" style="font-size:56px">${overall}<span style="font-size:20px;color:#6b7785"> / 6.0</span></div><div class="lead">estimated band · CEFR ${cefr(overall)} · ~${Math.round((overall-1)/5*120)}/120</div><div class="gauge"><div class="mk" style="left:${Math.round((overall-1)/5*100)}%"></div></div></div>`:""}
    <div class="homestat"><span>Time: <b>${testStartedAt?fmt(Math.round((Date.now()-testStartedAt)/1000)):"—"}</b></span><span>Sections: <b>${flow.length}</b></span></div>
    <div class="scoregrid">${cells}</div>
    <p class="lead" style="margin-top:16px">Reading & Listening are auto-scored to the 2026 band (with a 0–120 estimate). Writing & Speaking need a teacher to rate — use the review to self-assess.</p>
