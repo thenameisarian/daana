@@ -60,41 +60,76 @@ button{font-family:inherit;cursor:pointer}.hidden{display:none!important}
 <div id="home"></div>
 <div id="test"></div>
 <script>
-/* ========= DET content (original practice items) ========= */
+/* ===== DET content (original practice items) ===== */
 const SCENE_PARK="<svg width='100%' viewBox='0 0 400 200' style='max-width:420px' xmlns='http://www.w3.org/2000/svg'><rect width='400' height='200' fill='#bfe8ff'/><rect y='140' width='400' height='60' fill='#9fdc7a'/><circle cx='340' cy='45' r='26' fill='#ffd84d'/><rect x='70' y='95' width='12' height='55' fill='#8a5a2b'/><circle cx='76' cy='85' r='34' fill='#4caf50'/><rect x='150' y='150' width='90' height='10' rx='3' fill='#8a5a2b'/><rect x='158' y='160' width='8' height='18' fill='#8a5a2b'/><rect x='224' y='160' width='8' height='18' fill='#8a5a2b'/><circle cx='290' cy='130' r='9' fill='#e8a06b'/><rect x='284' y='139' width='12' height='26' rx='4' fill='#d9534f'/></svg>";
 const SCENE_KITCHEN="<svg width='100%' viewBox='0 0 400 200' style='max-width:420px' xmlns='http://www.w3.org/2000/svg'><rect width='400' height='200' fill='#fdf3e0'/><rect y='150' width='400' height='50' fill='#caa472'/><rect x='40' y='110' width='140' height='40' fill='#e9ddc7' stroke='#caa472'/><circle cx='75' cy='100' r='10' fill='#d9534f'/><circle cx='100' cy='100' r='10' fill='#f0ad4e'/><circle cx='125' cy='100' r='10' fill='#5cb85c'/><rect x='250' y='70' width='90' height='80' fill='#dfe6ea' stroke='#9aa6ad'/><rect x='258' y='80' width='74' height='30' fill='#bcd3e0'/><circle cx='295' cy='130' r='6' fill='#6b7785'/></svg>";
 
-const DET = { name:"Duolingo English Test", tasks:[
- { type:"wordbank", minutes:1, instr:"Select the REAL English words. Tap a word to select it; tap again to unselect.",
-   words:[{w:"garden",real:true},{w:"flomp",real:false},{w:"honest",real:true},{w:"snark",real:false},{w:"deliver",real:true},{w:"gondle",real:false},{w:"cushion",real:true},{w:"plimber",real:false},{w:"glacier",real:true},{w:"queltz",real:false},{w:"prudent",real:true},{w:"tovish",real:false},{w:"observe",real:true},{w:"brindle",real:false}] },
- { type:"readcomplete", minutes:3, instr:"Type the missing letters to complete the text.",
-   parts:[{t:"The city museum "},{pre:"op",ans:"ens"},{t:" at nine in the morning and "},{pre:"clo",ans:"ses"},{t:" at five. "},{pre:"Visit",ans:"ors"},{t:" can buy "},{pre:"tick",ans:"ets"},{t:" at the desk or "},{pre:"onl",ans:"ine"},{t:". Children under six "},{pre:"en",ans:"ter"},{t:" for free."}] },
- { type:"dictation", minutes:1, instr:"Listen and type the sentence you hear. You can replay it once.",
-   audio:"Most students prefer to study in the morning when the library is quiet.", answer:"Most students prefer to study in the morning when the library is quiet." },
- { type:"dictation", minutes:1, instr:"Listen and type the sentence you hear. You can replay it once.",
-   audio:"The train to the airport leaves every twenty minutes from platform four.", answer:"The train to the airport leaves every twenty minutes from platform four." },
- { type:"ireading", minutes:5, instr:"Read the passage and answer the questions.",
-   passage:{ title:"Working from Home", paras:[
-     "When the option to work from home first appeared, many managers feared that staff would be less productive without an office to keep them focused. In practice, research has often found the opposite. Freed from long commutes and constant interruptions, many employees report getting more done in less time.",
-     "Yet remote work is not perfect. Some people struggle to separate their job from their home life, answering emails late into the night. Others miss the friendships and quick conversations that an office naturally provides. The most successful companies, experts say, are those that mix the two, allowing staff to choose the balance that suits them." ] },
-   questions:[
-     {id:"r1", q:"What did some managers worry about at first?", opts:["that staff would work too many hours","that staff would be less productive","that offices would close"], ans:1},
-     {id:"r2", q:"According to the passage, one benefit of remote work is", opts:["avoiding long commutes","earning more money","working fewer days"], ans:0},
-     {id:"r3", q:"One problem mentioned with remote work is", opts:["slower internet","difficulty separating work and home life","higher costs"], ans:1},
-     {id:"r4", q:"Experts suggest the best approach is to", opts:["return fully to the office","ban emails at night","mix office and home work"], ans:2} ] },
- { type:"writephoto", minutes:1, instr:"Write one or more sentences that describe the image.", image:SCENE_PARK,
-   guide:["Describe what you see (people, place, objects)","Use complete sentences","Aim for accurate grammar and useful vocabulary"] },
- { type:"readwrite", minutes:5, instr:"Write at least 50 words on the topic below.",
-   prompt:"Some people enjoy living in a big city, while others prefer a small town. Which do you prefer, and why?",
-   guide:["State your preference clearly","Give at least two reasons with examples","Organise your ideas; check grammar and spelling"] },
- { type:"readaloud", minutes:1, instr:"Read the sentence aloud clearly. (Speaking - self-review.)",
-   text:"The committee will announce its final decision after reviewing all of the applications.",
-   guide:["Speak clearly at a natural pace","Pronounce each word fully","Use natural sentence stress and intonation"] },
- { type:"speakphoto", minutes:2, instr:"Speak about the image for up to 90 seconds. (Speaking - self-review.)", image:SCENE_KITCHEN,
-   guide:["Describe the scene in detail","Say what is happening and where","Keep speaking for the full time; develop your ideas"] }
+const DET = { name:"Duolingo English Test", sections:[
+ { phase:"setup", title:"Quick Setup", graded:false,
+   desc:"A short warm-up so you get used to the question types. These questions are NOT scored.",
+   tasks:[
+     { type:"readcomplete", minutes:2, instr:"Warm-up: type the missing letters to complete the text.",
+       parts:[{t:"Welcome to the practice test. This warm-up is not "},{pre:"sco",ans:"red"},{t:". Read each text and fill in the "},{pre:"miss",ans:"ing"},{t:" letters before you "},{pre:"beg",ans:"in"},{t:" the real tasks."}] }
+   ] },
+ { phase:"graded", title:"Adaptive Test", graded:true,
+   desc:"These tasks are scored on the 10-160 scale. In the real test the difficulty adapts to your performance; here the set is fixed. You cannot return to a previous task.",
+   tasks:[
+     { type:"wordbank", minutes:1, instr:"Select the REAL English words. Tap a word to select it; tap again to unselect.",
+       words:[{w:"garden",real:true},{w:"flomp",real:false},{w:"honest",real:true},{w:"snark",real:false},{w:"deliver",real:true},{w:"gondle",real:false},{w:"cushion",real:true},{w:"plimber",real:false},{w:"glacier",real:true},{w:"queltz",real:false},{w:"prudent",real:true},{w:"tovish",real:false},{w:"observe",real:true},{w:"brindle",real:false}] },
+     { type:"readcomplete", minutes:3, instr:"Type the missing letters to complete the text.",
+       parts:[{t:"The city museum "},{pre:"op",ans:"ens"},{t:" at nine and "},{pre:"clo",ans:"ses"},{t:" at five. "},{pre:"Visit",ans:"ors"},{t:" can buy "},{pre:"tick",ans:"ets"},{t:" at the desk or "},{pre:"onl",ans:"ine"},{t:". Children under six "},{pre:"en",ans:"ter"},{t:" for free."}] },
+     { type:"fillblanks", minutes:3, instr:"Choose the correct word for each blank.",
+       parts:[{t:"Yesterday I tried the new restaurant near the station. The food was "},{sel:["delicious","delicate","delicately"],ans:0},{t:" and the staff were very "},{sel:["friend","friendly","friends"],ans:1},{t:". I will definitely "},{sel:["recommend","recommends","recommending"],ans:0},{t:" it, and I "},{sel:["am going","will went","go will"],ans:0},{t:" back next week."}] },
+     { type:"dictation", minutes:1, instr:"Listen and type the sentence you hear. You can replay it once.",
+       audio:"Most students prefer to study in the morning when the library is quiet.", answer:"Most students prefer to study in the morning when the library is quiet." },
+     { type:"dictation", minutes:1, instr:"Listen and type the sentence you hear. You can replay it once.",
+       audio:"The train to the airport leaves every twenty minutes from platform four.", answer:"The train to the airport leaves every twenty minutes from platform four." },
+     { type:"ireading", minutes:5, instr:"Read the passage and answer the questions.",
+       passage:{ title:"Working from Home", paras:[
+         "When the option to work from home first appeared, many managers feared that staff would be less productive without an office to keep them focused. In practice, research has often found the opposite. Freed from long commutes and constant interruptions, many employees report getting more done in less time.",
+         "Yet remote work is not perfect. Some people struggle to separate their job from their home life, answering emails late into the night. Others miss the friendships and quick conversations that an office naturally provides. The most successful companies mix the two, letting staff choose the balance that suits them." ] },
+       questions:[
+         {id:"ir1", q:"What did some managers worry about at first?", opts:["that staff would work too many hours","that staff would be less productive","that offices would close"], ans:1},
+         {id:"ir2", q:"One benefit of remote work mentioned is", opts:["avoiding long commutes","earning more money","working fewer days"], ans:0},
+         {id:"ir3", q:"One problem with remote work is", opts:["slower internet","difficulty separating work and home life","higher costs"], ans:1},
+         {id:"ir4", q:"Experts suggest the best approach is to", opts:["return fully to the office","ban emails at night","mix office and home work"], ans:2} ] },
+     { type:"ilisten", minutes:4, instr:"Listen to the conversation, then answer. You can replay it once.",
+       audio:"Woman: Hi Tom, are you coming to the study group tonight? Man: I want to, but I have to finish my chemistry report first. Woman: It is due Friday, right? You have time. Man: True. What time does the group start? Woman: Seven, in the library. Bring your biology notes if you can. Man: Sure. I will be there at seven, and I will bring the notes.",
+       questions:[
+         {id:"il1", q:"Why is Tom unsure about coming?", opts:["he has to finish a report","he has no transport","he is not interested"], ans:0},
+         {id:"il2", q:"When does the study group start?", opts:["six","seven","eight"], ans:1},
+         {id:"il3", q:"What does the woman ask Tom to bring?", opts:["his laptop","his biology notes","some food"], ans:1} ],
+       summaryGuide:["Summarise who is speaking and what they decide","Mention the time and place","Use your own words; 1-2 sentences"] },
+     { type:"writephoto", minutes:1, instr:"Write one or more sentences that describe the image.", image:SCENE_PARK,
+       guide:["Describe what you see (people, place, objects)","Use complete sentences","Aim for accurate grammar and useful vocabulary"] },
+     { type:"readwrite", minutes:5, instr:"Write at least 50 words on the topic below.",
+       prompt:"Some people enjoy living in a big city, while others prefer a small town. Which do you prefer, and why?",
+       guide:["State your preference clearly","Give at least two reasons with examples","Organise your ideas; check grammar and spelling"] },
+     { type:"readspeak", minutes:2, instr:"Read the question, then speak your answer aloud. (Speaking - self-review.)",
+       text:"Describe a place you enjoy visiting in your free time, and explain why you like it.",
+       guide:["Give a clear, direct answer first","Add details and one or two reasons","Keep speaking for the full time"] },
+     { type:"listenspeak", minutes:2, instr:"Listen to the question, then speak your answer aloud. (Speaking - self-review.) Replay once if needed.",
+       audio:"What is something new you would like to learn, and how would you go about learning it?",
+       guide:["Answer the question directly","Explain your reasons with an example","Use linking words to organise your ideas"] },
+     { type:"readaloud", minutes:1, instr:"Read the sentence aloud clearly. (Speaking - self-review.)",
+       text:"The committee will announce its final decision after reviewing all of the applications.",
+       guide:["Speak clearly at a natural pace","Pronounce each word fully","Use natural stress and intonation"] },
+     { type:"speakphoto", minutes:2, instr:"Speak about the image for up to 90 seconds. (Speaking - self-review.)", image:SCENE_KITCHEN,
+       guide:["Describe the scene in detail","Say what is happening and where","Keep speaking for the full time"] }
+   ] },
+ { phase:"interview", title:"Video Interview", graded:false,
+   desc:"Your Writing Sample and Speaking Sample. In the real test these are recorded and sent to institutions, but they are NOT given a score.",
+   tasks:[
+     { type:"writesample", minutes:5, instr:"Writing Sample. Choose ONE topic and write for 3-5 minutes (at least 60 words).",
+       prompt:"Choose ONE:\n1) Describe a person who has had a positive influence on your life.\n2) Do you agree that technology has made people less social? Why or why not?",
+       guide:["Pick one topic and stay on it","Develop your ideas with examples","Aim for clear, varied, accurate language"] },
+     { type:"speaksample", minutes:2, instr:"Speaking Sample. Speak for 1-2 minutes on the topic. (Self-review.)",
+       text:"Talk about a goal you hope to achieve in the next five years, and the steps you will take to reach it.",
+       guide:["Give a clear topic sentence","Explain your plan in steps","Keep talking smoothly for the full time"] }
+   ] }
 ]};
 
-/* ========= state ========= */
+/* ===== state ===== */
 let tasks=[], ti=0, ans={}, timerInt=null, taskTimer=0, mode="home", startedAt=0, replayed={};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt=s=>{const m=Math.floor(s/60),x=s%60;return m+":"+String(x).padStart(2,"0");};
@@ -102,72 +137,79 @@ const round5=x=>Math.max(10,Math.min(160,Math.round(x/5)*5));
 function homeEl(){return document.getElementById("home");}
 function testEl(){return document.getElementById("test");}
 function det(text){ if("speechSynthesis"in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=0.95;u.lang="en-US";window.speechSynthesis.speak(u);} }
-const TYPELABEL={wordbank:"Read and Select",readcomplete:"Read and Complete",dictation:"Listen and Type",ireading:"Interactive Reading",writephoto:"Write About the Photo",readwrite:"Read, Then Write",readaloud:"Read Aloud",speakphoto:"Speak About the Photo"};
+const TYPELABEL={readcomplete:"Read and Complete",wordbank:"Read and Select",fillblanks:"Fill in the Blanks",dictation:"Listen and Type",ireading:"Interactive Reading",ilisten:"Interactive Listening",writephoto:"Write About the Photo",readwrite:"Read, Then Write",readspeak:"Read, Then Speak",listenspeak:"Listen, Then Speak",readaloud:"Read Aloud",speakphoto:"Speak About the Photo",writesample:"Writing Sample",speaksample:"Speaking Sample"};
+const AUTO=["wordbank","readcomplete","fillblanks","dictation","ireading","ilisten"];
 
-/* ========= home ========= */
+function buildTasks(){ const out=[]; DET.sections.forEach(sec=>{ out.push({type:"phaseintro",title:sec.title,desc:sec.desc,graded:sec.graded}); sec.tasks.forEach(t=>out.push(Object.assign({},t,{graded:sec.graded,phaseTitle:sec.title}))); }); return out; }
+
+/* ===== home ===== */
 function showHome(){ if(timerInt)clearInterval(timerInt); if(window.speechSynthesis)speechSynthesis.cancel(); mode="home";
  testEl().classList.remove("on"); testEl().innerHTML=""; homeEl().style.display="block";
+ const allTypes=[...new Set(DET.sections.flatMap(s=>s.tasks.map(t=>TYPELABEL[t.type])))];
+ const nTasks=DET.sections.reduce((a,s)=>a+s.tasks.length,0);
  homeEl().innerHTML=`<div class="center-wrap"><div class="brand"><span class="mk">D</span><span>Daana</span></div>
    <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-top:4px">Duolingo English Test · practice · by Arian Academy</div>
    <h1 class="h1" style="margin-top:12px">Duolingo English Test — Practice</h1>
-   <p class="lead">A short adaptive-style practice across the main DET question types. Scored on the 10–160 scale with four subscores (Literacy, Comprehension, Conversation, Production). Reading &amp; Listening tasks are auto-scored; Writing &amp; Speaking use guided self-review. Original practice material.</p>
-   <div style="margin-top:14px"><button class="btn" onclick="begin()">Start Practice (${DET.tasks.length} tasks)</button></div>
-   <p class="lead" style="margin-top:18px">Question types included: ${[...new Set(DET.tasks.map(t=>TYPELABEL[t.type]))].join(" · ")}</p></div>`;
+   <p class="lead">Three phases like the real test: Quick Setup, the graded Adaptive Test, and the Video Interview. Scored 10–160 with four subscores (Literacy, Comprehension, Conversation, Production). Reading &amp; Listening are auto-scored; Writing &amp; Speaking use guided self-review. Original practice material.</p>
+   <div style="margin-top:14px"><button class="btn" onclick="begin()">Start Practice (${nTasks} tasks)</button></div>
+   <p class="lead" style="margin-top:18px">Question types: ${allTypes.join(" · ")}</p></div>`;
 }
-function begin(){ tasks=DET.tasks; ti=0; ans={}; replayed={}; startedAt=Date.now(); render(); }
+function begin(){ tasks=buildTasks(); ti=0; ans={}; replayed={}; startedAt=Date.now(); render(); }
 
-/* ========= per-task timer ========= */
-function startTaskTimer(secs){ if(timerInt)clearInterval(timerInt); taskTimer=secs; paintClock();
- timerInt=setInterval(()=>{ taskTimer--; paintClock(); if(taskTimer<=0){clearInterval(timerInt); next();} },1000); }
+/* ===== timer ===== */
+function startTaskTimer(secs){ if(timerInt)clearInterval(timerInt); taskTimer=secs; paintClock(); timerInt=setInterval(()=>{ taskTimer--; paintClock(); if(taskTimer<=0){clearInterval(timerInt); next();} },1000); }
 function paintClock(){ const c=document.getElementById("clk"); if(c)c.textContent=fmt(Math.max(0,taskTimer)); }
 
-/* ========= render ========= */
+/* ===== render ===== */
 function render(){ window.scrollTo(0,0); mode="run"; const t=tasks[ti]; testEl().classList.add("on"); homeEl().style.display="none";
+ if(t.type==="phaseintro"){ if(timerInt)clearInterval(timerInt);
+   testEl().innerHTML=`<div class="center-wrap"><div class="brand"><span class="mk">D</span><span>Daana</span></div><div class="dir-card"><div class="dir-head">${esc(t.title)}</div><div class="dir-body"><p>${esc(t.desc)}</p></div></div><div style="text-align:center;margin-top:20px"><button class="btn" onclick="next()">Begin ${esc(t.title)}</button></div></div>`; return; }
  const isLast=ti===tasks.length-1;
- testEl().innerHTML=`<div class="thead"><div class="sec">Task ${ti+1} of ${tasks.length}</div><div class="clock">&#9201; <span id="clk">--</span></div></div>
+ testEl().innerHTML=`<div class="thead"><div class="sec">${esc(t.phaseTitle||"")} · ${TYPELABEL[t.type]||""}</div><div class="clock">&#9201; <span id="clk">--</span></div></div>
    <div class="progress"><i style="width:${Math.round((ti+1)/tasks.length*100)}%"></i></div>
-   <div class="tbody"><div class="tasktype">${TYPELABEL[t.type]||""}</div><div class="instr">${esc(t.instr)}</div>${bodyFor(t)}</div>
+   <div class="tbody"><div class="tasktype">${TYPELABEL[t.type]||""}${t.graded?"":" · not scored"}</div><div class="instr">${esc(t.instr)}</div>${bodyFor(t)}</div>
    <div class="navbar"><div class="navin"><button class="btn" onclick="next()">${isLast?"Finish":"Next"}</button></div></div>`;
- afterRender(t);
- startTaskTimer((t.minutes||1)*60);
+ afterRender(t); startTaskTimer((t.minutes||1)*60);
 }
 function bodyFor(t){
  if(t.type==="wordbank") return `<div class="wbgrid">${t.words.map((w,i)=>`<div class="wbtn ${(ans.wb||[]).includes(i)?'sel':''}" id="wb${i}" onclick="wbToggle(${i})">${esc(w.w)}</div>`).join("")}</div>`;
- if(t.type==="readcomplete"){ let bi=0; return `<div class="rcbox">${t.parts.map(p=>{ if(p.ans!=null){const id="rc"+(bi++);return `<span class="rcblank"><span class="pre">${esc(p.pre)}</span><input id="${id}" oninput="ans['${id}']=this.value" value="${ans['rc'+(bi-1)]?esc(ans['rc'+(bi-1)]):''}"></span>`;} return esc(p.t); }).join("")}</div>`; }
- if(t.type==="dictation") return `<div class="player"><button class="playbtn" onclick="dictPlay(${ti})">&#9654;</button><div class="lead" id="dstate">Tap play to listen (once + one replay)</div></div><textarea class="ta" id="dbox" placeholder="Type what you hear..." oninput="ans['d${ti}']=this.value">${ans['d'+ti]?esc(ans['d'+ti]):''}</textarea>`;
- if(t.type==="ireading") return `<div class="passage"><b>${esc(t.passage.title)}</b>${t.passage.paras.map(p=>`<p>${esc(p)}</p>`).join("")}</div>${t.questions.map(q=>mcqHTML(q)).join("")}`;
- if(t.type==="writephoto"||t.type==="speakphoto"){ const img=`<div class="scene">${t.image}</div>`; if(t.type==="speakphoto") return `${img}<div style="text-align:center"><div class="bigtimer" id="sclk">--</div><button class="btn teal" id="sbtn" onclick="speakRun(${(t.minutes||1)*60})">Start speaking</button></div>${guideHTML(t.guide)}<textarea class="ta" placeholder="Notes (not scored)..." style="margin-top:12px"></textarea>`;
+ if(t.type==="readcomplete"){ let bi=0; return `<div class="rcbox">${t.parts.map(p=>{ if(p.ans!=null){const id="rc"+ti+"_"+(bi++);return `<span class="rcblank"><span class="pre">${esc(p.pre||"")}</span><input id="${id}" oninput="ans['${id}']=this.value" value="${ans[id]?esc(ans[id]):''}"></span>`;} return esc(p.t); }).join("")}</div>`; }
+ if(t.type==="fillblanks"){ let bi=0; return `<div class="rcbox">${t.parts.map(p=>{ if(p.sel){const id="fb"+ti+"_"+(bi++);return `<select class="msel" style="margin:0 3px" onchange="ans['${id}']=this.value"><option value="">—</option>${p.sel.map((o,j)=>`<option value="${j}" ${ans[id]==String(j)?'selected':''}>${esc(o)}</option>`).join("")}</select>`;} return esc(p.t); }).join("")}</div>`; }
+ if(t.type==="dictation") return `<div class="player"><button class="playbtn" onclick="dictPlay(${ti})">&#9654;</button><div class="lead" id="dstate">Tap play to listen (plus one replay)</div></div><textarea class="ta" id="dbox" placeholder="Type what you hear..." oninput="ans['d${ti}']=this.value">${ans['d'+ti]?esc(ans['d'+ti]):''}</textarea>`;
+ if(t.type==="ireading") return `<div class="passage"><b>${esc(t.passage.title)}</b>${t.passage.paras.map(p=>`<p>${esc(p)}</p>`).join("")}</div>${t.questions.map(mcqHTML).join("")}`;
+ if(t.type==="ilisten") return `<div class="player"><button class="playbtn" onclick="dictPlay(${ti})">&#9654;</button><div class="lead" id="dstate">Tap play to listen (plus one replay)</div></div>${t.questions.map(mcqHTML).join("")}<div style="font-weight:700;margin:10px 0 4px">Summarise the conversation (self-review):</div><textarea class="ta" id="wbox" placeholder="Write a short summary..." oninput="ans['w${ti}']=this.value">${ans['w'+ti]?esc(ans['w'+ti]):''}</textarea>${guideHTML(t.summaryGuide)}`;
+ if(t.type==="writephoto"||t.type==="speakphoto"){ const img=`<div class="scene">${t.image}</div>`; if(t.type==="speakphoto") return `${img}<div style="text-align:center"><div class="bigtimer" id="sclk">--</div><button class="btn teal" id="sbtn" onclick="speakRun(${(t.minutes||1)*60})">Start speaking</button></div>${guideHTML(t.guide)}`;
    return `${img}<textarea class="ta" id="wbox" placeholder="Write about the image..." oninput="ans['w${ti}']=this.value;wcount()">${ans['w'+ti]?esc(ans['w'+ti]):''}</textarea><div class="wc" id="wc">0 words</div>${guideHTML(t.guide)}`; }
- if(t.type==="readwrite") return `<div class="passage"><b>Topic</b><p>${esc(t.prompt)}</p></div><textarea class="ta" id="wbox" placeholder="Write your response (50+ words)..." oninput="ans['w${ti}']=this.value;wcount()">${ans['w'+ti]?esc(ans['w'+ti]):''}</textarea><div class="wc" id="wc">0 words</div>${guideHTML(t.guide)}`;
- if(t.type==="readaloud") return `<div class="rcbox" style="line-height:1.7;font-weight:600">${esc(t.text)}</div><div style="text-align:center;margin-top:12px"><div class="bigtimer" id="sclk">--</div><button class="btn teal" id="sbtn" onclick="speakRun(${(t.minutes||1)*60})">Start reading aloud</button></div>${guideHTML(t.guide)}`;
+ if(t.type==="readwrite"||t.type==="writesample") return `<div class="passage"><b>Topic</b><p style="white-space:pre-line">${esc(t.prompt)}</p></div><textarea class="ta" id="wbox" placeholder="Write your response..." oninput="ans['w${ti}']=this.value;wcount()">${ans['w'+ti]?esc(ans['w'+ti]):''}</textarea><div class="wc" id="wc">0 words</div>${guideHTML(t.guide)}`;
+ if(t.type==="readspeak"||t.type==="readaloud"||t.type==="speaksample") return `<div class="rcbox" style="line-height:1.7;font-weight:600">${esc(t.text)}</div><div style="text-align:center;margin-top:12px"><div class="bigtimer" id="sclk">--</div><button class="btn teal" id="sbtn" onclick="speakRun(${(t.minutes||1)*60})">Start speaking</button></div>${guideHTML(t.guide)}`;
+ if(t.type==="listenspeak") return `<div class="player"><button class="playbtn" onclick="dictPlay(${ti})">&#9654;</button><div class="lead" id="dstate">Tap play to hear the question</div></div><div style="text-align:center"><div class="bigtimer" id="sclk">--</div><button class="btn teal" id="sbtn" onclick="speakRun(${(t.minutes||1)*60})">Start speaking</button></div>${guideHTML(t.guide)}`;
  return "";
 }
 function guideHTML(g){ return g?`<div class="expcard"><div class="h">What a strong answer includes</div><ul style="margin:0;padding-left:18px">${g.map(x=>`<li style="margin-bottom:5px">${esc(x)}</li>`).join("")}</ul></div>`:""; }
 function mcqHTML(q){ return `<div class="mcq"><div class="qt">${esc(q.q)}</div>${q.opts.map((o,j)=>`<label class="opt ${ans[q.id]===j?'sel':''}" id="op${q.id}_${j}" onclick="pickMcq('${q.id}',${j})">${String.fromCharCode(65+j)}. ${esc(o)}</label>`).join("")}</div>`; }
-function afterRender(t){ if(t.type==="writephoto"||t.type==="readwrite") setTimeout(wcount,40); }
+function afterRender(t){ if(["writephoto","readwrite","writesample"].includes(t.type)) setTimeout(wcount,40); }
 function wbToggle(i){ ans.wb=ans.wb||[]; const k=ans.wb.indexOf(i); if(k>=0)ans.wb.splice(k,1); else ans.wb.push(i); document.getElementById("wb"+i).classList.toggle("sel"); }
-function pickMcq(id,j){ ans[id]=j; const t=tasks[ti]; const q=t.questions.find(x=>x.id===id); q.opts.forEach((o,k)=>{const e=document.getElementById("op"+id+"_"+k); if(e)e.classList.toggle("sel",k===j);}); }
+function pickMcq(id,j){ ans[id]=j; const t=tasks[ti]; const q=(t.questions||[]).find(x=>x.id===id); if(q)q.opts.forEach((o,k)=>{const e=document.getElementById("op"+id+"_"+k); if(e)e.classList.toggle("sel",k===j);}); }
 function wcount(){ const b=document.getElementById("wbox"); if(!b)return; const n=b.value.trim().split(/\s+/).filter(Boolean).length; const o=document.getElementById("wc"); if(o)o.textContent=n+" words"; }
 function dictPlay(idx){ const t=tasks[idx]; replayed[idx]=(replayed[idx]||0); if(replayed[idx]>=2){const s=document.getElementById("dstate");if(s)s.textContent="No more replays";return;} replayed[idx]++; det(t.audio); const s=document.getElementById("dstate"); if(s)s.textContent=replayed[idx]>=2?"Playing (last replay)":"Playing..."; }
 function speakRun(secs){ const btn=document.getElementById("sbtn"),clk=document.getElementById("sclk"); btn.disabled=true; let left=secs; clk.textContent=fmt(left); const iv=setInterval(()=>{left--;clk.textContent=fmt(Math.max(0,left)); if(left<=0){clearInterval(iv);btn.textContent="Done";btn.disabled=false;}},1000); }
-
-/* ========= nav (forward only) ========= */
 function next(){ if(window.speechSynthesis)speechSynthesis.cancel(); if(ti<tasks.length-1){ti++;render();} else results(); }
 
-/* ========= scoring 10-160 ========= */
+/* ===== scoring 10-160 (graded auto tasks only) ===== */
 function norm(v){ return (v||"").trim().toLowerCase().replace(/[.,!?;:'"]/g,"").replace(/\s+/g," "); }
 function taskScore(t,idx){
  if(t.type==="wordbank"){ const sel=ans.wb||[]; let ok=0; t.words.forEach((w,i)=>{ if(sel.includes(i)===w.real)ok++; }); return ok/t.words.length; }
- if(t.type==="readcomplete"){ let bi=0,ok=0,tot=0; t.parts.forEach(p=>{ if(p.ans!=null){tot++; if(norm(ans["rc"+bi])===norm(p.ans))ok++; bi++;} }); return tot?ok/tot:0; }
- if(t.type==="dictation"){ const tgt=norm(t.answer).split(" "); const got=norm(ans["d"+idx]).split(" "); const g=new Set(got); let m=0; tgt.forEach(w=>{if(g.has(w))m++;}); return tgt.length?m/tgt.length:0; }
- if(t.type==="ireading"){ let ok=0; t.questions.forEach(q=>{if(ans[q.id]===q.ans)ok++;}); return t.questions.length?ok/t.questions.length:0; }
- return null; // productive = self-review
+ if(t.type==="readcomplete"){ let bi=0,ok=0,tot=0; t.parts.forEach(p=>{ if(p.ans!=null){tot++; if(norm(ans["rc"+idx+"_"+bi])===norm(p.ans))ok++; bi++;} }); return tot?ok/tot:0; }
+ if(t.type==="fillblanks"){ let bi=0,ok=0,tot=0; t.parts.forEach(p=>{ if(p.sel){tot++; if(ans["fb"+idx+"_"+bi]==String(p.ans))ok++; bi++;} }); return tot?ok/tot:0; }
+ if(t.type==="dictation"){ const tgt=norm(t.answer).split(" "); const g=new Set(norm(ans["d"+idx]).split(" ")); let m=0; tgt.forEach(w=>{if(g.has(w))m++;}); return tgt.length?m/tgt.length:0; }
+ if(t.type==="ireading"||t.type==="ilisten"){ let ok=0; t.questions.forEach(q=>{if(ans[q.id]===q.ans)ok++;}); return t.questions.length?ok/t.questions.length:0; }
+ return null;
 }
 function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="result";
  const cat={literacy:[],comprehension:[],conversation:[],production:[]};
- const map={wordbank:["literacy","comprehension"],readcomplete:["literacy"],dictation:["comprehension","conversation"],ireading:["comprehension","literacy"]};
+ const map={wordbank:["literacy","comprehension"],readcomplete:["literacy"],fillblanks:["literacy","comprehension"],dictation:["comprehension","conversation"],ireading:["comprehension","literacy"],ilisten:["comprehension","conversation"]};
  let all=[];
- tasks.forEach((t,idx)=>{ const sc=taskScore(t,idx); if(sc!=null){ all.push(sc); (map[t.type]||[]).forEach(c=>cat[c].push(sc)); } });
+ tasks.forEach((t,idx)=>{ if(!t.graded)return; const sc=taskScore(t,idx); if(sc!=null){ all.push(sc); (map[t.type]||[]).forEach(c=>cat[c].push(sc)); } });
  const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
  const toScore=p=>p==null?null:round5(10+p*150);
  const overall=toScore(avg(all));
@@ -176,20 +218,21 @@ function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="re
  testEl().innerHTML=`<div class="center-wrap"><div class="brand"><span class="mk">A</span><span>Arian Academy</span></div>
    <h1 class="h1" style="margin-top:14px">Your practice result</h1>
    <div class="bigscore">${overall!=null?overall:"&mdash;"}<span style="font-size:22px;color:#6b7785"> / 160</span></div>
-   <p class="lead" style="text-align:center">estimated overall (auto-scored tasks)</p>
+   <p class="lead" style="text-align:center">estimated overall (graded, auto-scored tasks)</p>
    <div class="scoregrid">${cells}</div>
-   <p class="lead" style="margin-top:14px">This estimate is based on the auto-scored Reading &amp; Listening tasks. Speaking &amp; Writing (Production) need a teacher to rate - use the review to self-assess. The real DET is adaptive, so live scores will differ.</p>
+   <p class="lead" style="margin-top:14px">Based on the auto-scored Reading &amp; Listening tasks. Speaking &amp; Writing (Production) need a teacher or AI to rate - use the review to self-assess. The real DET is adaptive, so live scores will differ.</p>
    <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="startReview()">Review answers</button><button class="btn" onclick="begin()">Retake</button><button class="btn ghost" onclick="showHome()">Home</button></div></div>`;
 }
 
-/* ========= review ========= */
+/* ===== review ===== */
 let rItems=[],rIdx=0;
-function startReview(){ rItems=[]; tasks.forEach((t,idx)=>{
+function startReview(){ rItems=[]; tasks.forEach((t,idx)=>{ if(t.type==="phaseintro")return;
    if(t.type==="wordbank"){ const sel=ans.wb||[]; let ok=0; t.words.forEach((w,i)=>{if(sel.includes(i)===w.real)ok++;}); rItems.push({title:"Read and Select",kind:"info",ok:ok+"/"+t.words.length,detail:"Real words: "+t.words.filter(w=>w.real).map(w=>w.w).join(", ")}); }
-   else if(t.type==="readcomplete"){ let bi=0,rows=[]; t.parts.forEach(p=>{ if(p.ans!=null){const your=ans["rc"+bi]||""; const good=norm(your)===norm(p.ans); rows.push((p.pre+p.ans)+" - you wrote: "+(your||"(blank)")+(good?" ✓":" ✗")); bi++;} }); rItems.push({title:"Read and Complete",kind:"list",rows}); }
+   else if(t.type==="readcomplete"){ let bi=0,rows=[]; t.parts.forEach(p=>{ if(p.ans!=null){const your=ans["rc"+idx+"_"+bi]||""; const good=norm(your)===norm(p.ans); rows.push((p.pre||"")+p.ans+" - you wrote: "+(your||"(blank)")+(good?" ✓":" ✗")); bi++;} }); rItems.push({title:"Read and Complete",kind:"list",rows}); }
+   else if(t.type==="fillblanks"){ let bi=0,rows=[]; t.parts.forEach(p=>{ if(p.sel){const yourIdx=ans["fb"+idx+"_"+bi]; const your=yourIdx!=null&&yourIdx!==""?p.sel[+yourIdx]:"(blank)"; const good=yourIdx==String(p.ans); rows.push("Correct: "+p.sel[p.ans]+" - you chose: "+your+(good?" ✓":" ✗")); bi++;} }); rItems.push({title:"Fill in the Blanks",kind:"list",rows}); }
    else if(t.type==="dictation"){ rItems.push({title:"Listen and Type",kind:"text",your:ans["d"+idx]||"(blank)",correct:t.answer}); }
-   else if(t.type==="ireading"){ t.questions.forEach(q=>rItems.push({title:"Interactive Reading",kind:"mcq",q,your:ans[q.id]})); }
-   else { rItems.push({title:TYPELABEL[t.type],kind:"open",prompt:t.prompt||t.text||"(image task)",resp:ans["w"+idx],guide:t.guide}); }
+   else if(t.type==="ireading"||t.type==="ilisten"){ t.questions.forEach(q=>rItems.push({title:TYPELABEL[t.type],kind:"mcq",q,your:ans[q.id]})); }
+   else { rItems.push({title:TYPELABEL[t.type],kind:"open",prompt:t.prompt||t.text||"(image task)",resp:ans["w"+idx],guide:t.guide||t.summaryGuide}); }
  }); rIdx=0; renderReview(); }
 function renderReview(){ window.scrollTo(0,0); mode="review"; const it=rItems[rIdx]; let body="";
  if(it.kind==="mcq"){ const st=it.your==null?'<div class="statusbar st-none">Not answered</div>':(it.your===it.q.ans?'<div class="statusbar st-ok">Correct</div>':'<div class="statusbar st-bad">Incorrect</div>'); body=st+`<div class="expcard"><p style="font-weight:600">${esc(it.q.q)}</p>${it.q.opts.map((o,j)=>`<div class="opt ${j===it.q.ans?'sel':''}">${String.fromCharCode(65+j)}. ${esc(o)} ${j===it.q.ans?'&#10003;':''}</div>`).join("")}</div>`; }
