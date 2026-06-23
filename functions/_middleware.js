@@ -1,7 +1,8 @@
 import { checkSession } from "./_lib.js";
 
 // Map protected static paths -> required test id.
-const PROTECTED = { "/app.html": "toefl", "/app": "toefl", "/app-ielts.html": "ielts", "/app-ielts": "ielts", "/app-duolingo.html": "duolingo", "/app-duolingo": "duolingo", "/app-ged.html": "ged", "/app-ged": "ged", "/hub.html": "all", "/hub": "all" };
+// Value "*" means: any valid session (any test, free or premium).
+const PROTECTED = { "/app.html": "toefl", "/app": "toefl", "/app-ielts.html": "ielts", "/app-ielts": "ielts", "/app-duolingo.html": "duolingo", "/app-duolingo": "duolingo", "/app-ged.html": "ged", "/app-ged": "ged", "/hub.html": "all", "/hub": "all", "/app-lessons.html": "*", "/app-lessons": "*", "/lessons": "*" };
 
 export async function onRequest(context) {
   const { request, next } = context;
@@ -11,7 +12,7 @@ export async function onRequest(context) {
 
   let reason = "1";
   try {
-    const res = await checkSession(context.env, request, requiredTest);
+    const res = await checkSession(context.env, request, requiredTest === "*" ? null : requiredTest);
     if (res.ok) return next();
     reason = (res.reason === "expired" || res.reason === "ip_changed") ? "expired" : "1";
   } catch (_) {

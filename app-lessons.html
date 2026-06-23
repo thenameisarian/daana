@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Daana — Lessons</title>
+<style>
+:root{
+ --ink:#28323b;--mut:#6b7785;--line:#e2e6ea;--line2:#eef1f3;
+ --teal:#1a8f93;--teald:#137074;--teal2:#22b3a6;--tealsoft:#e3f6f3;--tealshadow:#0e5a5e;
+ --panel:#f5f7f8;--white:#fff;
+ --gem:#1aa6c4;--heart:#e2574c;--fire:#f5872b;--violet:#7c5cff;--green:#16a06a;--gold:#e3a531;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:radial-gradient(1000px 460px at 50% -8%,#eafbf8,#fff 62%);color:var(--ink);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
+.wrap{max-width:540px;margin:0 auto;padding:0 15px 80px}
+.hidden{display:none!important}
+button{font-family:inherit;cursor:pointer}
+/* ===== HUD ===== */
+.hud{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);
+ border-bottom:1px solid var(--line);margin:0 -15px;padding:9px 15px;display:flex;align-items:center;gap:11px}
+.lv{position:relative;width:42px;height:42px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.lv b{position:relative;z-index:1;font-size:13px;font-weight:800;color:var(--teald)}
+.lv small{position:absolute;top:5px;left:0;right:0;text-align:center;font-size:6.5px;color:var(--mut);letter-spacing:.12em;z-index:1}
+.xpwrap{flex:1;min-width:0}
+.xprow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+.xprow b{font-size:12.5px;font-weight:800}.xprow span{font-size:10px;color:var(--mut)}
+.xpbar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--teal2));border-radius:99px;transition:width .5s}
+.stat{display:flex;align-items:center;gap:3px;font-weight:800;font-size:13.5px;flex:none}
+.stat .e{font-size:15px}
+/* ===== sections ===== */
+.sec{margin-top:17px}
+.sech{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.sech .e{font-size:16px}.sech b{font-size:14.5px;font-weight:800}
+.sech .more{margin-left:auto;font-size:11px;color:var(--mut)}
+/* chips */
+.chips{display:flex;gap:8px;overflow:auto;padding-bottom:3px}
+.chip{flex:none;border:1px solid var(--line);background:var(--white);color:var(--mut);border-radius:999px;
+ padding:7px 15px;font-size:12.5px;font-weight:700}
+.chip.on{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 4px 14px rgba(26,143,147,.3)}
+/* quests */
+.quest{display:flex;align-items:center;gap:11px;background:var(--white);border:1px solid var(--line);border-radius:13px;padding:10px 12px;margin-bottom:8px}
+.quest .qi{width:33px;height:33px;border-radius:9px;background:var(--panel);display:flex;align-items:center;justify-content:center;font-size:17px;flex:none}
+.quest .qm{flex:1;min-width:0}.quest .qt{font-size:12.5px;font-weight:700}
+.miniq{height:6px;border-radius:99px;background:var(--line);margin-top:6px;overflow:hidden}
+.miniq i{display:block;height:100%;background:var(--teal)}
+.qrew{font-size:11px;font-weight:800;color:var(--teal);flex:none}
+.quest.done{border-color:#bfe6db;background:#f3fbf8}
+.claim{flex:none;border:none;background:var(--teal);color:#fff;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:7px 12px;border-radius:9px;animation:bob 1.1s ease-in-out infinite;box-shadow:0 4px 14px rgba(26,143,147,.35)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+/* banner */
+.banner{text-align:center;margin:15px 0 2px}
+.banner .eyebrow{font-size:9.5px;color:var(--teald);letter-spacing:.16em;text-transform:uppercase;font-weight:800}
+.banner h2{font-weight:800;font-size:21px;margin:3px 0 0}
+/* ===== map ===== */
+.map{position:relative;margin:8px auto 0;width:330px}
+.map svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.node{position:absolute;transform:translate(-50%,-50%);text-align:center;width:130px}
+.dot{width:58px;height:58px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;position:relative;animation:float 3.4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.lbl{font-size:12px;margin-top:9px;line-height:1.22;font-weight:700}
+.n-done .dot{width:50px;height:50px;background:linear-gradient(180deg,var(--teal2),var(--teald));box-shadow:0 5px 0 var(--tealshadow);color:#fff;font-size:23px}
+.n-done .lbl{color:var(--ink)}
+.n-done .check{position:absolute;top:-4px;right:-4px;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.n-go .dot{background:#fff;border:3px solid var(--teal);box-shadow:0 0 0 6px var(--tealsoft),0 8px 20px rgba(26,143,147,.3);color:var(--teal);cursor:pointer}
+.n-go .ring{position:absolute;inset:-7px;border-radius:50%;border:2px solid var(--teal);animation:ping 1.7s ease-out infinite}
+@keyframes ping{0%{transform:scale(.9);opacity:.6}100%{transform:scale(1.55);opacity:0}}
+.n-go .lbl{color:var(--teald);font-weight:800}
+.startpill{display:inline-block;margin-top:8px;background:var(--teal);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:5px 13px;border-radius:99px;box-shadow:0 4px 14px rgba(26,143,147,.4);animation:bob 1.1s ease-in-out infinite}
+.n-lock .dot{width:46px;height:46px;background:var(--panel);border:1.5px solid var(--line);color:#aeb6bf;opacity:.9;animation:none}
+.n-lock .lbl{color:#9aa3ac}
+.n-chest .dot{width:54px;height:54px;background:#f2eefe;border:2px solid var(--violet);box-shadow:0 0 0 6px #f7f4ff;cursor:pointer;animation:shake 2.8s ease-in-out infinite}
+@keyframes shake{0%,92%,100%{transform:rotate(0)}94%{transform:rotate(-7deg)}96%{transform:rotate(7deg)}98%{transform:rotate(-4deg)}}
+.n-boss .dot{width:66px;height:66px;background:linear-gradient(180deg,#fff,#eafaf7);border:2px solid var(--teal);box-shadow:0 0 0 6px var(--tealsoft);font-size:28px;animation:bosspulse 1.7s ease-in-out infinite}
+@keyframes bosspulse{0%,100%{box-shadow:0 0 0 5px var(--tealsoft)}50%{box-shadow:0 0 0 11px #d4f1ec}}
+.n-boss .lbl{color:var(--teald);font-weight:800}
+.mascot{position:absolute;font-size:32px;transform:translate(-50%,-50%);filter:drop-shadow(0 4px 5px rgba(0,0,0,.15));animation:float 3s ease-in-out infinite}
+.flag{position:absolute;transform:translate(-50%,-50%);background:var(--violet);color:#fff;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:5px 13px;border-radius:99px;white-space:nowrap;box-shadow:0 4px 14px rgba(124,92,255,.3)}
+/* badges */
+.badrow{display:flex;gap:11px;overflow:auto;padding:3px 0 7px}
+.badge{flex:none;width:76px;text-align:center}
+.bcirc{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:25px;margin:0 auto 6px;background:var(--white);border:1px solid var(--line)}
+.badge.earned .bcirc{background:linear-gradient(180deg,#fff,var(--tealsoft));border-color:var(--teal);box-shadow:0 4px 14px rgba(26,143,147,.18)}
+.badge.earned .bn{color:var(--teald)}
+.bn{font-size:10px;color:var(--mut);font-weight:700;line-height:1.2}
+.badge.lock .bcirc{filter:grayscale(1);opacity:.45}
+/* league */
+.league{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:6px 14px}
+.lrow{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--line2)}
+.lrow:last-child{border:none}
+.lrank{width:22px;text-align:center;font-weight:800;color:var(--mut);font-size:13px}
+.lav{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex:none;color:#fff}
+.lname{flex:1;font-size:13px;font-weight:700}.lxp{font-size:12px;color:var(--teald);font-weight:800}
+.lrow.me{margin:0 -14px;padding:9px 14px;background:var(--tealsoft);border-radius:9px}
+.lrow.me .lname{color:var(--teald)}
+.promo{font-size:10px;color:var(--green);font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.foot{text-align:center;color:var(--mut);font-size:11px;margin-top:24px;line-height:1.6}
+.foot a{color:var(--teald);text-decoration:none;font-weight:700}
+/* ===== modal ===== */
+.ov{position:fixed;inset:0;background:rgba(20,40,44,.5);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;z-index:60;overflow:auto;padding:18px 13px}
+.ov.show{display:flex}
+.sheet{width:100%;max-width:480px;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(20,50,55,.25)}
+.shead{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line2)}
+.shead .x{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--mut);font-size:15px;flex:none}
+.hp3{display:flex;gap:2px;font-size:14px}.hp3 .d{filter:grayscale(1);opacity:.35}
+.combo{margin-left:auto;font-size:12.5px;font-weight:800;color:var(--fire)}
+.seg{display:flex;gap:4px;flex:1;max-width:150px}
+.seg i{height:6px;flex:1;border-radius:3px;background:var(--line)}.seg i.f{background:var(--teal)}
+.sbody{padding:18px}
+.lead2{font-size:9.5px;color:var(--teald);letter-spacing:.15em;text-transform:uppercase;font-weight:800}
+.h3{font-weight:800;font-size:19px;margin:5px 0 11px}
+.p{font-size:14.5px;color:#3a4751;line-height:1.62;margin:0 0 13px}
+.p b{color:var(--ink)}
+.ex{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px;margin:0 0 15px}
+.bub{max-width:82%;padding:9px 12px;font-size:13px;margin-bottom:8px;line-height:1.4}
+.bme{margin-left:auto;background:var(--teal);color:#fff;border-radius:12px 12px 3px 12px}
+.bot{background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:12px 12px 12px 3px}
+.q{font-weight:800;font-size:16px;margin:0 0 12px;line-height:1.4}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:9px;transition:border-color .15s,transform .08s}
+.opt:hover{border-color:var(--teal)}.opt:active{transform:scale(.99)}
+.opt.right{border-color:var(--green);background:#eefaf4}
+.opt.wrong{border-color:var(--heart);background:#fdeeec;animation:nudge .3s}
+@keyframes nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.fb{font-size:13px;margin-top:5px;min-height:18px}.fb.ok{color:var(--green)}.fb.no{color:var(--heart)}
+.move textarea{width:100%;margin-top:8px;background:#fff;border:1px solid var(--line);border-radius:9px;color:var(--ink);font-family:inherit;font-size:13.5px;padding:9px;resize:vertical;min-height:60px}
+.sfoot{display:flex;align-items:center;gap:11px;padding:12px 15px;border-top:1px solid var(--line2)}
+.rah{width:38px;height:38px;border-radius:50%;background:var(--tealsoft);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+.rmsg{font-size:11.5px;color:var(--mut)}
+.cta{margin-left:auto;background:var(--teal);color:#fff;border:none;font-weight:800;font-size:13px;letter-spacing:.03em;padding:11px 20px;border-radius:11px;box-shadow:0 6px 16px rgba(26,143,147,.32)}
+.cta.dim{background:var(--panel);color:var(--mut);box-shadow:none}
+/* reward */
+.reward{text-align:center;padding:26px 20px 6px}
+.chestbig{font-size:70px;animation:pop .55s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.18)}100%{transform:scale(1)}}
+.reward h3{font-size:23px;margin:6px 0 2px;font-weight:800}
+.reward p{color:var(--mut);font-size:13px;margin:0 0 16px}
+.loot{display:flex;justify-content:center;gap:11px;margin-bottom:6px;flex-wrap:wrap}
+.loot div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 15px;min-width:80px}
+.loot .v{font-size:18px;font-weight:900}.loot .k{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
+/* xp pop */
+.pop{position:fixed;z-index:80;font-weight:900;font-size:19px;color:var(--teald);pointer-events:none;text-shadow:0 1px 6px rgba(255,255,255,.8);animation:rise 1s ease-out forwards}
+@keyframes rise{0%{transform:translateY(0) scale(.8);opacity:0}20%{opacity:1;transform:translateY(-6px) scale(1.1)}100%{transform:translateY(-44px) scale(1);opacity:0}}
+canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
+.premchip{flex:none;display:flex;align-items:center;gap:4px;text-decoration:none;background:#fff3e0;color:#b26a00;border:1px solid #f0d3a0;border-radius:99px;padding:5px 10px;font-size:11px;font-weight:800}
+.hinf{color:var(--teald)!important}
+.htimer{font-size:10px;color:var(--mut);margin-left:3px;font-weight:700}
+.upsell{margin-top:14px;background:linear-gradient(180deg,#fff,#eafaf7);border:1px solid #bfe6db;border-radius:14px;padding:13px 15px;display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit}
+.upsell .ut{font-weight:800;font-size:14px}.upsell .us{font-size:12px;color:var(--mut);margin-top:2px}
+.upsell .ub{margin-left:auto;flex:none;background:var(--teal);color:#fff;font-weight:800;font-size:12px;padding:9px 14px;border-radius:10px}
+.wallrow{display:flex;flex-direction:column;gap:9px;margin:10px auto 0;max-width:330px;text-align:left}
+.wbtn{display:flex;align-items:center;gap:11px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;font-size:13.5px;font-weight:800;text-decoration:none;color:var(--ink);width:100%}
+.wbtn .we{font-size:20px;flex:none}.wbtn small{display:block;font-size:11px;color:var(--mut);font-weight:600}
+.wbtn.prem{background:var(--teal);color:#fff;border-color:var(--teal)}.wbtn.prem small{color:#d7eeee}
+.wbtn:disabled{opacity:.45}
+.brand{display:flex;align-items:center;gap:8px;justify-content:center;padding-top:14px}
+.mk{width:26px;height:26px;border:1.5px solid var(--teal);border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--teal);font-weight:800;font-size:15px}
+.bw{font-weight:800;font-size:15px}
+</style>
+</head>
+<body>
+<canvas id="cf"></canvas>
+<div class="wrap">
+  <div class="brand"><span class="mk">د</span><span class="bw">Daana · Lessons</span></div>
+
+  <div class="hud">
+    <div class="lv"><svg width="42" height="42" style="position:absolute;inset:0"><circle cx="21" cy="21" r="18" fill="none" stroke="#e2e6ea" stroke-width="4"/><circle id="lvring" cx="21" cy="21" r="18" fill="none" stroke="#1a8f93" stroke-width="4" stroke-linecap="round" transform="rotate(-90 21 21)" stroke-dasharray="113" stroke-dashoffset="20"/></svg><small>LVL</small><b id="lvNum">1</b></div>
+    <div class="xpwrap">
+      <div class="xprow"><b id="lvLabel">Level 1</b><span id="xpText">0 / 100 XP</span></div>
+      <div class="xpbar"><i id="xpFill" style="width:0%"></i></div>
+    </div>
+    <div class="stat" style="color:var(--gem)"><span class="e">💎</span><span id="gemN">0</span></div>
+    <div class="stat" id="hpStat" style="color:var(--heart)"><span class="e">❤️</span><span id="hpN">5</span><span class="htimer" id="hpTimer"></span></div>
+    <div class="stat" style="color:var(--fire)"><span class="e">🔥</span><span id="stN">0</span></div>
+    <a class="premchip hidden" id="premChip" href="/hub">⭐ Premium</a>
+  </div>
+
+  <div class="sec">
+    <div class="sech"><span class="e">🎯</span><b>Daily quests</b><span class="more" id="qreset">resets daily</span></div>
+    <div id="quests"></div>
+  </div>
+
+  <div class="sec">
+    <div class="chips" id="examChips"></div>
+  </div>
+
+  <div class="banner">
+    <div class="eyebrow" id="trailEye">TOEFL</div>
+    <h2 id="trailName">The Trail</h2>
+  </div>
+  <div class="map" id="map"></div>
+
+  <div class="sec">
+    <div class="sech"><span class="e">🏅</span><b>Your honours</b><span class="more" id="badgeCount"></span></div>
+    <div class="badrow" id="badges"></div>
+  </div>
+
+  <div class="sec">
+    <div class="sech"><span class="e">🏆</span><b>Teal league</b><span class="more promo">top 3 promote</span></div>
+    <div class="league" id="league"></div>
+  </div>
+
+  <a class="upsell" id="upsell" href="/hub"><span style="font-size:25px">⭐</span><div><div class="ut">Go Premium — unlimited hearts</div><div class="us">Never wait for hearts. Monthly access across all four exams.</div></div><span class="ub">Upgrade</span></a>
+  <div class="foot">Progress saves on this device. <a href="/hub">← Back to your tests</a></div>
+</div>
+
+<div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
+
+<script>
+/* ============================================================
+   DAANA LESSONS — gamified engine (localStorage progress) · v1
+   ============================================================ */
+const LV_STEP=100; /* XP per level (level n needs n*100 cumulative-ish; simple) */
+
+/* ---------- content ---------- */
+const D=(q,opts,a,ok,no)=>({q,opts,a,ok,no});
+const CONTENT={
+ toefl:{name:"TOEFL",eyebrow:"TOEFL · Reading & Writing",nodes:[
+  {id:"tf-main",title:"Main idea & purpose",icon:"🧭",
+   intro:["Every TOEFL passage is <b>about</b> one big thing. Main-idea questions ask for that whole point — not a small detail hiding in one line.",
+          "Read the first and last sentences of each paragraph first: writers put the main idea there. The right answer covers the <b>whole</b> passage, not just part of it."],
+   drills:[
+    D("A passage describes how bees find flowers, communicate by dancing, and warn the hive of danger. The main idea is:",
+      ["A bee's dance is a figure-eight.","How bees behave and communicate.","Bees can be dangerous."],1,
+      "Yes — it covers the whole passage, not one detail.","That's a single detail. The main idea must cover the whole passage."),
+    D("The best main-idea answer usually...",
+      ["repeats one sentence exactly","covers the entire passage","is the longest option"],1,
+      "Right — it sums up everything.","Length and exact repetition are traps. Pick the option that covers it all.")
+   ],move:"In one sentence, state the main idea of the last article you read."},
+  {id:"tf-detail",title:"Reading for detail",icon:"🔍",
+   intro:["Detail questions ask for a specific fact: a date, a name, a number, a reason. The answer <b>is</b> in the text — your job is to find it fast.",
+          "Scan for the keyword from the question (a name, a year) rather than re-reading everything. Then read that one sentence carefully."],
+   drills:[
+    D("Text: \"The bridge, finished in 1937, took four years to build.\" When did construction begin?",
+      ["1937","1933","1941"],1,"Correct — 1937 minus 4 years = 1933.","Read carefully: it finished in 1937 after 4 years, so it began in 1933."),
+    D("Fastest way to answer a detail question:",
+      ["reread the whole passage","scan for the keyword","guess from memory"],1,
+      "Exactly — scan for the keyword, then read closely.","That's slow. Scan for the keyword first.")
+   ],move:"Find one specific number in any news article in under 10 seconds by scanning."},
+  {id:"tf-scan",title:"Scan & skim",icon:"⚡",
+   intro:["<b>Skimming</b> = reading fast for the gist. <b>Scanning</b> = hunting for one specific thing. Strong test-takers do both, switching as needed.",
+          "Skim first to get the shape of the passage, then scan back for each question's answer. Don't read every word twice."],
+   drills:[
+    D("You need the year a company was founded. You should:",
+      ["skim the whole text","scan for a number/date","read every paragraph"],1,
+      "Right — scanning for the date is fastest.","For one fact, scan. Skimming is for the gist."),
+    D("Skimming is best for...",
+      ["finding one exact figure","getting the general idea","memorising the text"],1,
+      "Yes — skim for the overall gist.","Skimming gives the gist, not exact figures.")
+   ],move:"Skim a page in 30 seconds, then say its topic in one phrase."},
+  {id:"tf-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"tf-infer",title:"Inference",icon:"💡",
+   intro:["An <b>inference</b> is what the text suggests but never says outright. The answer must be <i>supported</i> by clues — yet if an option copies the passage word-for-word, be suspicious.",
+          "Ask: what must be true, given these clues? That's your inference."],
+   example:{other:"\"Maria checked the sky, sighed, and put the picnic basket back in the cupboard.\"",me:"Nothing says 'rain' — but the clues imply she called off the picnic."},
+   drills:[
+    D("From the sentence above, you can infer that:",
+      ["Maria dislikes picnics.","Maria decided not to go on the picnic.","Maria owns a cupboard."],1,
+      "Exactly — the clues imply she called it off.","That's stated or unrelated, not inferred. Look at what the clues imply."),
+    D("A good inference answer is...",
+      ["copied straight from the text","supported by clues but not stated","your personal opinion"],1,
+      "Right — supported, but not stated.","Inference lives between the lines — supported by clues, never copied or invented.")
+   ],move:"Write one sentence that implies someone is nervous, without using the word 'nervous'."},
+  {id:"tf-vocab",title:"Vocabulary in context",icon:"📖",
+   intro:["These questions give a word and ask its meaning <b>in this passage</b>. The same word can mean different things — context decides.",
+          "Replace the word with each option in the sentence. The one that keeps the meaning is your answer."],
+   drills:[
+    D("\"The plan was sound, so we approved it.\" Here, 'sound' means:",
+      ["a noise","sensible / solid","deep"],1,
+      "Yes — 'sound' = sensible here.","Context decides: a plan that gets approved is a sensible one."),
+    D("Best method for vocab-in-context:",
+      ["use the dictionary meaning only","substitute each option in the sentence","pick the hardest word"],1,
+      "Right — substitute and test the meaning.","The dictionary's first meaning is often a trap. Test each option in context.")
+   ],move:"Find a word with two meanings and use it in two different sentences."},
+  {id:"tf-write",title:"Write an email",icon:"✉️",
+   intro:["The TOEFL email task gives you a situation and bullet points. Answer <b>every</b> bullet, use a greeting and sign-off, and write full sentences (about 100–150 words).",
+          "Keep the tone polite and clear. Organisation and completeness matter more than fancy words."],
+   drills:[
+    D("Your email must always:",
+      ["address every bullet point","be exactly 300 words","use rare vocabulary"],0,
+      "Right — cover every bullet, or you lose points.","Completeness comes first: answer every bullet point."),
+    D("A good email opening is:",
+      ["'Hey what's up'","'Dear Professor Lee,'","no greeting at all"],1,
+      "Yes — polite and appropriate.","Match the tone to the reader; a polite greeting is expected.")
+   ],move:"Write a 2-sentence polite email asking a teacher to reschedule a meeting."},
+  {id:"tf-boss",title:"Reading: mastery test",icon:"👑",type:"boss",
+   intro:["Time to prove it. A quick mix of everything on the Reading trail — main idea, detail, inference, vocabulary."],
+   drills:[
+    D("A passage covers a city's history, climate, and economy. Main idea?",
+      ["The city's rainfall.","An overview of the city.","The city's main export."],1,
+      "Yes — it covers the whole passage.","That's one detail. The main idea covers it all."),
+    D("\"Profits fell sharply.\" 'Sharply' here means:",
+      ["with a knife","by a large amount","slowly"],1,
+      "Correct — 'sharply' = by a lot.","Context: profits fell by a large amount."),
+    D("\"He grabbed an umbrella before leaving.\" You can infer:",
+      ["He expected rain.","He hates umbrellas.","He was late."],0,
+      "Right — grabbing an umbrella implies expected rain.","Look at the clue: why grab an umbrella?")
+   ],move:"You finished the Reading trail — review any node you found tricky."}
+ ]},
+ ielts:{name:"IELTS",eyebrow:"IELTS · Academic",nodes:[
+  {id:"ie-tfng",title:"True / False / Not Given",icon:"⚖️",
+   intro:["TRUE = the text agrees with the statement. FALSE = the text contradicts it. NOT GIVEN = the text simply doesn't say.",
+          "Most lost marks come from confusing FALSE with NOT GIVEN. FALSE needs a contradiction in the text; NOT GIVEN means the info is genuinely absent."],
+   drills:[
+    D("Text says nothing about a topic in the statement. The answer is:",
+      ["False","Not Given","True"],1,
+      "Right — no information means Not Given.","If the text neither confirms nor contradicts it, it's Not Given, not False."),
+    D("Statement: 'All staff were trained.' Text: 'Most staff were trained.' Answer:",
+      ["True","False","Not Given"],1,
+      "Correct — 'all' vs 'most' is a contradiction → False.","Watch quantity words: 'all' contradicts 'most', so it's False.")
+   ],move:"Find a news claim and decide: does the article confirm, contradict, or not mention it?"},
+  {id:"ie-head",title:"Matching headings",icon:"🏷️",
+   intro:["You choose the best heading for each paragraph. The heading matches the paragraph's <b>main idea</b> — not one detail in it.",
+          "Read the paragraph, ask 'what is this mostly about?', then pick the heading that fits. Cross off used headings."],
+   drills:[
+    D("A heading should capture the paragraph's:",
+      ["first sentence only","main idea","longest example"],1,
+      "Yes — the overall main idea.","A striking detail is the classic trap. Match the main idea.")
+   ],move:"Give a one-line heading to each paragraph of any short article."},
+  {id:"ie-task1",title:"Writing Task 1 (graphs)",icon:"📊",
+   intro:["Academic Task 1 asks you to describe a chart, graph, map or process — <b>no opinions</b>. Start with an overview of the main trend, then report key figures and comparisons.",
+          "Aim for 150+ words in about 20 minutes. The overview sentence is the most important line."],
+   drills:[
+    D("In Academic Task 1 you should NOT:",
+      ["describe the main trend","give your personal opinion","compare figures"],1,
+      "Right — Task 1 is description, not opinion.","Save opinions for Task 2. Task 1 is pure description."),
+    D("The most important sentence in Task 1 is:",
+      ["the overview of the main trend","the title","the last number"],0,
+      "Yes — the overview frames everything.","Examiners look for a clear overview of the main trend.")
+   ],move:"Describe the main trend of any chart you can find in one sentence."},
+  {id:"ie-soon",title:"More IELTS soon",icon:"🔒",type:"lock-final"}
+ ]},
+ duolingo:{name:"Duolingo",eyebrow:"Duolingo English Test",nodes:[
+  {id:"de-select",title:"Read & Select",icon:"✅",
+   intro:["You see a list of words and tap only the <b>real</b> English words. Fake words are designed to look real, so only tap a word if you're sure.",
+          "Wrong taps cost you, so when in doubt, leave it out."],
+   drills:[
+    D("Which is a real English word?",
+      ["brillig","balance","frumble"],1,
+      "Yes — 'balance' is real.","Only 'balance' is a real word; the others are invented."),
+    D("If you're unsure whether a word is real, you should:",
+      ["tap it anyway","leave it untapped","tap all of them"],1,
+      "Right — wrong taps cost you.","Guessing hurts your score. When unsure, don't tap.")
+   ],move:"Open a dictionary at random and check: did you already know that word?"},
+  {id:"de-complete",title:"Read & Complete",icon:"🧩",
+   intro:["A passage has words with missing letters. Use the meaning and grammar of the sentence to fill them in — then check your spelling.",
+          "Read the whole sentence first; the surrounding words tell you the missing one."],
+   drills:[
+    D("\"She op___ the door and walked in.\" The missing word is:",
+      ["opens","opened","opening"],1,
+      "Right — past tense to match 'walked'.","Match the tense: 'walked' is past, so 'opened'."),
+    D("In Read & Complete, spelling errors are:",
+      ["ignored","counted as wrong","bonus points"],1,
+      "Yes — spelling counts.","A correct word spelled wrong is still wrong here.")
+   ],move:"Cover the endings of 5 words in a paragraph and complete them from memory."},
+  {id:"de-write",title:"Writing sample",icon:"✍️",
+   intro:["For the writing tasks, stay on topic, write full sentences, and show a range of accurate grammar and vocabulary. Develop a couple of clear ideas well.",
+          "Length helps only if quality stays high — don't pad with filler."],
+   drills:[
+    D("A strong writing sample has:",
+      ["many shallow points","two well-developed ideas","one short sentence"],1,
+      "Right — depth beats breadth.","Develop a few ideas fully rather than listing many shallow ones.")
+   ],move:"Write 3 sentences about your day using a different connector in each (because, although, so)."},
+  {id:"de-soon",title:"More Duolingo soon",icon:"🔒",type:"lock-final"}
+ ]},
+ ged:{name:"GED",eyebrow:"GED · all subjects",nodes:[
+  {id:"gd-rla",title:"RLA: the essay",icon:"📝",
+   intro:["The Extended Response asks you to read two sources and argue which side is better supported — <b>by evidence</b>, not just your opinion.",
+          "State a clear claim, back it with specific evidence from both texts, address the other side, and organise into paragraphs."],
+   drills:[
+    D("Your GED essay should be based on:",
+      ["only your personal opinion","evidence from the sources","memorised facts"],1,
+      "Right — argue from the sources' evidence.","It's about which argument the evidence supports, not just your opinion."),
+    D("A strong essay also:",
+      ["ignores the other side","addresses the opposing view","has no paragraphs"],1,
+      "Yes — addressing the other side strengthens your case.","Acknowledge the opposing view, then show why your side is stronger.")
+   ],move:"Pick any debate and write one claim sentence + one piece of evidence."},
+  {id:"gd-math",title:"Math reasoning",icon:"🔢",
+   intro:["GED math gives you a calculator and a formula sheet, so you don't need to memorise everything. Read carefully and note exactly what's asked.",
+          "Watch wording ('reduced by' vs 'reduced to') and units (cm vs cm²)."],
+   drills:[
+    D("A $80 jacket is reduced by 25%. Sale price?",
+      ["$60","$55","$20"],0,
+      "Right — 25% of 80 = 20, so 80−20 = $60.","25% of 80 is 20; the sale price is 80−20 = $60."),
+    D("'Reduced by 25%' means the price...",
+      ["becomes 25% of the original","drops by 25%","rises 25%"],1,
+      "Yes — it drops by 25%.","'By 25%' means it falls 25%, not down to 25%.")
+   ],move:"Calculate a 15% tip on a $40 bill using the percent method."},
+  {id:"gd-sci",title:"Science & Social Studies",icon:"🔬",
+   intro:["Both are reasoning tests: you get a passage, chart or experiment and draw conclusions from the <b>evidence in front of you</b>.",
+          "Read the source first, then find the exact row, point or line the question refers to. You rarely need outside knowledge."],
+   drills:[
+    D("To answer a GED science data question, you mostly need to:",
+      ["recall facts from memory","read the chart provided","guess"],1,
+      "Right — the answer is in the stimulus.","Most answers come from reading the chart or passage given."),
+    D("If a graph shows sales rising every year, you can conclude:",
+      ["sales increased over time","sales fell","nothing"],0,
+      "Yes — the evidence shows an increase.","Read the trend: rising every year means sales increased.")
+   ],move:"Find any chart and state one conclusion it clearly supports."},
+  {id:"gd-soon",title:"More GED soon",icon:"🔒",type:"lock-final"}
+ ]}
+};
+
+/* ---------- state ---------- */
+const KEY="daana_lessons_v1";
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let S=load();
+S.xp=S.xp||0; S.gems=S.gems||0; S.hearts=(S.hearts==null?5:S.hearts); S.streak=S.streak||0;
+S.done=S.done||{}; S.claimed=S.claimed||{}; S.lastDay=S.lastDay||null; S.dayXp=S.dayXp||0; S.dayDone=S.dayDone||0;
+(function rollDay(){const t=new Date().toDateString();if(S.lastDay!==t){
+  if(S.lastDay){const y=new Date();y.setDate(y.getDate()-1);S.streak=(S.lastDay===y.toDateString()&&S.dayXp>0)?S.streak:(S.dayXp>0?S.streak:0);}
+  S.dayXp=0;S.dayDone=0;S.lastDay=t;save();}})();
+function levelFor(xp){return Math.floor(xp/LV_STEP)+1}
+let exam="toefl";
+/* ---- hearts & premium ---- */
+const HMAX=5, REFILL_MS=5*3600*1000, GEM_REFILL=30;
+let PREMIUM=false;
+S.heartTs=S.heartTs||null;
+function regenHearts(){if(PREMIUM||S.hearts>=HMAX)return;if(!S.heartTs){S.heartTs=Date.now();save();return;}const g=Math.floor((Date.now()-S.heartTs)/REFILL_MS);if(g>0){S.hearts=Math.min(HMAX,S.hearts+g);S.heartTs=S.hearts>=HMAX?null:S.heartTs+g*REFILL_MS;save();}}
+function loseHeart(){if(PREMIUM)return;if(S.hearts>=HMAX)S.heartTs=Date.now();S.hearts=Math.max(0,S.hearts-1);save();}
+function nextHeartMs(){if(PREMIUM||S.hearts>=HMAX||!S.heartTs)return 0;return Math.max(0,S.heartTs+REFILL_MS-Date.now());}
+function fmtMs(ms){const m=Math.ceil(ms/60000),h=Math.floor(m/60);return h>0?(h+"h "+(m%60)+"m"):(m+"m");}
+function checkPremium(){try{if(typeof fetch!=="function")return;fetch("/api/me",{credentials:"include"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&(d.tier==="premium"||d.test==="all")){PREMIUM=true;syncHud();}}).catch(()=>{});}catch(e){}}
+function renderHudHearts(){const hp=document.getElementById("hp");if(hp)hp.innerHTML=PREMIUM?"∞":heartStr(S.hearts);}
+
+/* ---------- HUD ---------- */
+function syncHud(){
+ const lv=levelFor(S.xp), into=S.xp%LV_STEP, pct=into/LV_STEP;
+ document.getElementById("lvNum").textContent=lv;
+ document.getElementById("lvLabel").textContent="Level "+lv;
+ document.getElementById("xpText").textContent=into+" / "+LV_STEP+" XP";
+ document.getElementById("xpFill").style.width=Math.round(pct*100)+"%";
+ const r=18,c=2*Math.PI*r;document.getElementById("lvring").setAttribute("stroke-dasharray",c);
+ document.getElementById("lvring").setAttribute("stroke-dashoffset",c*(1-pct));
+ document.getElementById("gemN").textContent=S.gems;
+ regenHearts();
+ var hpN=document.getElementById("hpN"),tmr=document.getElementById("hpTimer"),pc=document.getElementById("premChip"),up=document.getElementById("upsell");
+ if(PREMIUM){hpN.textContent="∞";hpN.classList.add("hinf");tmr.textContent="";pc.className="premchip";pc.textContent="⭐ Premium · unlimited";pc.removeAttribute("href");if(up)up.style.display="none";}
+ else{hpN.textContent=S.hearts;hpN.classList.remove("hinf");var ms=nextHeartMs();tmr.textContent=ms?("+1 in "+fmtMs(ms)):"";pc.className="premchip";pc.setAttribute("href","/hub");pc.textContent="⭐ Premium";if(up)up.style.display="flex";}
+ document.getElementById("stN").textContent=S.streak;
+}
+/* ---------- quests ---------- */
+const QUESTS=[
+ {id:"xp40",t:"Earn 40 XP today",icon:"⚡",goal:40,get:()=>S.dayXp,rew:{gems:10},rewT:"+10 💎"},
+ {id:"do2",t:"Finish 2 lessons today",icon:"📚",goal:2,get:()=>S.dayDone,rew:{gems:15},rewT:"+15 💎"},
+ {id:"streak",t:"Keep your streak alive",icon:"🔥",goal:1,get:()=>S.dayXp>0?1:0,rew:{xp:20},rewT:"+20 XP"}
+];
+function renderQuests(){
+ const w=document.getElementById("quests");w.innerHTML="";
+ QUESTS.forEach(q=>{
+  const cur=Math.min(q.get(),q.goal),pct=Math.round(cur/q.goal*100),full=cur>=q.goal,claimed=S.claimed[q.id];
+  const row=document.createElement("div");row.className="quest"+(full?" done":"");
+  let right=claimed?'<div class="qrew" style="color:var(--green)">✓ done</div>':
+    (full?'<button class="claim" onclick="claim(\''+q.id+'\')">Claim</button>':'<div class="qrew">'+q.rewT+'</div>');
+  row.innerHTML='<div class="qi">'+q.icon+'</div><div class="qm"><div class="qt">'+q.t+'</div>'+
+   '<div class="miniq"><i style="width:'+pct+'%"></i></div></div>'+right;
+  w.appendChild(row);
+ });
+}
+function claim(id){const q=QUESTS.find(x=>x.id===id);if(!q||S.claimed[id])return;
+ if(q.rew.gems)S.gems+=q.rew.gems; if(q.rew.xp)addXp(q.rew.xp);
+ S.claimed[id]=true;save();burst(innerWidth/2,160,40);syncHud();renderQuests();}
+
+/* ---------- exam chips ---------- */
+function renderChips(){
+ const w=document.getElementById("examChips");w.innerHTML="";
+ Object.keys(CONTENT).forEach(k=>{
+  const b=document.createElement("div");b.className="chip"+(k===exam?" on":"");
+  b.textContent=CONTENT[k].name;b.onclick=()=>{exam=k;renderAll()};w.appendChild(b);
+ });
+}
+/* ---------- map ---------- */
+function nodeState(ex,i){const nodes=CONTENT[ex].nodes;const n=nodes[i];
+ if(n.type==="chest")return S.claimed["chest-"+n.id]?"done":"chest";
+ if(n.type==="lock-final")return "lock";
+ if(S.done[n.id])return "done";
+ /* unlocked if first, or previous node done/chest-claimed */
+ if(i===0)return n.type==="boss"?"lock":"go";
+ const prev=nodes[i-1];const prevDone=prev.type==="chest"?S.claimed["chest-"+prev.id]:S.done[prev.id];
+ if(prevDone)return n.type==="boss"?"boss":(n.type==="chest"?"chest":"go");
+ return "lock";
+}
+function renderMap(){
+ const C=CONTENT[exam];document.getElementById("trailEye").textContent=C.eyebrow;
+ document.getElementById("trailName").textContent="The "+C.name+" Trail";
+ const nodes=C.nodes,map=document.getElementById("map");
+ const W=330,GAP=116,PAD=66,H=PAD*2+GAP*(nodes.length-1);map.style.height=H+"px";
+ const pts=nodes.map((n,i)=>({x:165+98*Math.sin(0.78*i),y:PAD+GAP*i}));
+ let doneCount=0;nodes.forEach((n,i)=>{if(nodeState(exam,i)==="done")doneCount=i+1;});
+ let s='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">';
+ let d='';pts.forEach((p,i)=>d+=(i?'L':'M')+p.x+' '+p.y+' ');
+ s+='<path d="'+d+'" fill="none" stroke="#dfe6ea" stroke-width="7" stroke-dasharray="0.5 16" stroke-linecap="round"/>';
+ if(doneCount>0){let dd='';pts.slice(0,doneCount+1).forEach((p,i)=>dd+=(i?'L':'M')+p.x+' '+p.y+' ');
+  s+='<path d="'+dd+'" fill="none" stroke="#1a8f93" stroke-width="6" stroke-linecap="round"/>';}
+ s+='</svg>';map.innerHTML=s;
+ let goIdx=-1;
+ nodes.forEach((n,i)=>{
+  const st=nodeState(exam,i),p=pts[i],el=document.createElement("div");
+  el.className="node n-"+(st==="chest"?"chest":st==="boss"?"boss":st);
+  el.style.left=(p.x/W*100)+"%";el.style.top=p.y+"px";
+  let inner="";
+  if(st==="done")inner='<div class="dot">'+(n.type==="boss"?"👑":"✓")+'<span class="check">✓</span></div><div class="lbl">'+n.title+'</div>';
+  else if(st==="chest"){inner='<div class="dot" onclick="openChest(\''+n.id+'\',event)">🎁</div><div class="lbl" style="color:var(--violet)">Treasure</div>';}
+  else if(st==="go"){goIdx=i;inner='<div class="dot" onclick="openNode('+i+')">'+n.icon+'</div><div class="lbl">'+n.title+'</div><span class="startpill" onclick="openNode('+i+')">Start ▶</span>';}
+  else if(st==="boss"){goIdx=i;inner='<div class="dot" onclick="openNode('+i+')">👑</div><div class="lbl">'+n.title+'</div><span class="startpill" onclick="openNode('+i+')">Boss ▶</span>';}
+  else inner='<div class="dot">🔒</div><div class="lbl">'+n.title+'</div>';
+  el.innerHTML=inner;map.appendChild(el);
+ });
+ if(goIdx>=0){const p=pts[goIdx];const m=document.createElement("div");m.className="mascot";m.textContent="🦉";
+  m.style.left=((p.x-60)/W*100)+"%";m.style.top=(p.y-4)+"px";map.appendChild(m);}
+}
+/* ---------- badges ---------- */
+function badgeList(){
+ const lv=levelFor(S.xp);const totalDone=Object.keys(S.done).length;
+ return [
+  {e:"🔥",n:"3-day streak",on:S.streak>=3},
+  {e:"🎯",n:"First lesson",on:totalDone>=1},
+  {e:"⚡",n:"Level 3",on:lv>=3},
+  {e:"📚",n:"5 lessons",on:totalDone>=5},
+  {e:"👑",n:"Boss slayer",on:!!S.done["tf-boss"]},
+  {e:"💯",n:"50 XP day",on:S.dayXp>=50},
+  {e:"🦉",n:"All trails",on:false}
+ ];
+}
+function renderBadges(){
+ const list=badgeList(),w=document.getElementById("badges");w.innerHTML="";
+ document.getElementById("badgeCount").textContent=list.filter(b=>b.on).length+" of "+list.length;
+ list.forEach(b=>{const d=document.createElement("div");d.className="badge "+(b.on?"earned":"lock");
+  d.innerHTML='<div class="bcirc">'+b.e+'</div><div class="bn">'+b.n+'</div>';w.appendChild(d);});
+}
+/* ---------- league (cosmetic) ---------- */
+function renderLeague(){
+ const me=S.xp;const rivals=[{n:"Sara A.",x:Math.max(me+340,420),c:"#e3a531"},{n:"Rahim H.",x:Math.max(me+120,260),c:"#1aa6c4"},
+  {n:"You",x:me,me:true},{n:"Maryam K.",x:Math.max(me-60,0),c:"#7c5cff"},{n:"Omid S.",x:Math.max(me-150,0),c:"#16a06a"}];
+ rivals.sort((a,b)=>b.x-a.x);
+ const w=document.getElementById("league");w.innerHTML="";
+ rivals.forEach((r,i)=>{const row=document.createElement("div");row.className="lrow"+(r.me?" me":"");
+  const init=r.me?"YOU":r.n.split(" ").map(s=>s[0]).join("");
+  row.innerHTML='<div class="lrank">'+(i+1)+'</div><div class="lav" style="background:'+(r.me?"var(--teal)":r.c)+'">'+init+'</div>'+
+   '<div class="lname">'+r.n+'</div><div class="lxp">'+r.x+'</div>';w.appendChild(row);});
+}
+/* ---------- XP / awards ---------- */
+function addXp(n){const before=levelFor(S.xp);S.xp+=n;S.dayXp+=n;const after=levelFor(S.xp);save();return after>before;}
+
+/* ---------- lesson flow ---------- */
+const ov=document.getElementById("ov"),sheet=document.getElementById("sheet");
+let FL=null;
+function closeOv(){ov.classList.remove("show");renderAll();}
+function openNode(i){
+ if(!PREMIUM&&S.hearts<=0){ov.classList.add("show");showWall();return;}
+ const n=CONTENT[exam].nodes[i];
+ FL={node:n,idx:i,step:0,correct:0,combo:0,firstTry:true,drillTotal:n.drills?n.drills.length:0};
+ ov.classList.add("show");renderStep();
+}
+function totalSteps(){return 1+FL.drillTotal+1;} /* intro + drills + move */
+function segBar(){let s='<div class="seg">';const t=totalSteps();for(let k=0;k<t;k++)s+='<i class="'+(k<FL.step?"f":"")+'"></i>';return s+'</div>';}
+function head(){return '<div class="shead"><button class="x" onclick="closeOv()">✕</button>'+
+  '<div class="hp3" id="hp">'+(PREMIUM?"∞":heartStr(S.hearts))+'</div>'+
+  '<div class="combo" id="cb">🔥 x'+FL.combo+'</div>'+segBar()+'</div>';}
+function heartStr(h){let s="";for(let k=0;k<5;k++)s+=k<h?"❤️":'<span class="d">❤️</span>';return s;}
+function renderStep(){
+ const n=FL.node;
+ if(FL.step===0){ /* intro */
+  let ex=n.example?'<div class="ex"><div class="bub bot">'+n.example.other+'</div><div class="bub bme">'+n.example.me+'</div></div>':"";
+  sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">'+(n.type==="boss"?"Mastery test":"Lesson")+' · '+CONTENT[exam].name+'</div>'+
+   '<div class="h3">'+n.title+'</div>'+(n.intro||[]).map(p=>'<p class="p">'+p+'</p>').join("")+ex+'</div>'+
+   '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Dana: "Read it, then prove it."</div>'+
+   '<button class="cta" onclick="nextStep()">'+(FL.drillTotal?"Start drill ▶":"Continue →")+'</button></div>';
+  return;
+ }
+ const di=FL.step-1;
+ if(di<FL.drillTotal){ /* a drill */
+  const q=n.drills[di];FL.firstTry=true;
+  let opts=q.opts.map((o,k)=>'<button class="opt" onclick="pick(this,'+k+','+di+',event)">'+o+'</button>').join("");
+  sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">Question '+(di+1)+' of '+FL.drillTotal+'</div>'+
+   '<div class="q">'+q.q+'</div>'+opts+'<div class="fb" id="fb"></div></div>'+
+   '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg" id="rm">Pick the best answer.</div>'+
+   '<button class="cta dim" id="nx" disabled onclick="nextStep()">Continue →</button></div>';
+  return;
+ }
+ /* move step */
+ sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">Your move — now, do it</div>'+
+  '<div class="h3" style="font-size:17px">Put it into practice</div><p class="p">'+(n.move||"Try this skill in the wild today.")+'</p>'+
+  '<div class="move"><textarea placeholder="Write your answer (optional)…"></textarea></div></div>'+
+  '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Practice makes it stick.</div>'+
+  '<button class="cta" onclick="finishNode()">Finish ✓</button></div>';
+}
+function pick(b,k,di,ev){
+ if(b.disabled)return;
+ const q=FL.node.drills[di];
+ const fb=document.getElementById("fb"),nx=document.getElementById("nx");
+ if(k===q.a){
+  document.querySelectorAll(".opt").forEach(o=>o.disabled=true);
+  b.classList.add("right");fb.className="fb ok";fb.textContent=q.ok+(FL.firstTry?"  +15 XP":"");
+  if(FL.firstTry){FL.correct++;addXp(15);}
+  FL.combo++;document.getElementById("cb").textContent="🔥 x"+FL.combo;
+  const r=b.getBoundingClientRect();burst(r.left+r.width/2,r.top,34);if(FL.firstTry)xpPop(r.right-50,r.top,"+15");
+  nx.classList.remove("dim");nx.disabled=false;syncHud();
+ }else{
+  b.classList.add("wrong");b.disabled=true;
+  fb.className="fb no";fb.textContent=q.no+" — try again.";
+  FL.firstTry=false;FL.combo=0;document.getElementById("cb").textContent="🔥 x0";
+  loseHeart();renderHudHearts();syncHud();
+  if(!PREMIUM&&S.hearts<=0)setTimeout(showWall,500);
+ }
+}
+function nextStep(){FL.step++;renderStep();}
+function finishNode(){
+ const n=FL.node;const already=!!S.done[n.id];
+ const acc=FL.drillTotal?FL.correct/FL.drillTotal:1;
+ const xp=(n.type==="boss"?40:20);
+ const gems=n.type==="boss"?20:8;
+ const shownXp=already?0:xp+FL.correct*15;
+ if(!already){S.done[n.id]=Math.round(acc*100);S.dayDone++;S.gems+=gems;}
+ if(S.dayXp>0&&S.streak===0)S.streak=1;
+ const lvUp=already?false:addXp(xp);
+ save();
+ sheet.innerHTML='<div class="reward"><div class="chestbig">'+(n.type==="boss"?"👑":"🎉")+'</div>'+
+  '<h3>'+(already?"Reviewed!":(n.type==="boss"?"Trail mastered!":"Lesson cleared!"))+'</h3>'+
+  '<p>'+n.title+' · '+Math.round(acc*100)+'% accuracy'+(lvUp?' · Level up! 🎉':'')+'</p>'+
+  '<div class="loot">'+
+   '<div><div class="v" style="color:var(--teald)">'+(already?"+0":"+"+shownXp)+'</div><div class="k">XP</div></div>'+
+   '<div><div class="v" style="color:var(--gem)">'+(already?"+0":"+"+gems+" 💎")+'</div><div class="k">gems</div></div>'+
+   '<div><div class="v" style="color:var(--fire)">🔥 '+S.streak+'</div><div class="k">streak</div></div>'+
+  '</div></div>'+
+  '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">'+(n.type==="boss"?"You conquered the trail. ":"Next node unlocked. ")+'Keep going.</div>'+
+  '<button class="cta" onclick="closeOv()">Continue →</button></div>';
+ burst(innerWidth/2,innerHeight*0.32,110);
+ if(lvUp)setTimeout(()=>burst(innerWidth/2,innerHeight*0.3,90),350);
+}
+function openChest(id,ev){
+ const r=ev&&ev.target?ev.target.getBoundingClientRect():{left:innerWidth/2,top:200,width:0};
+ burst(r.left+(r.width||0)/2,r.top,80);
+ S.claimed["chest-"+id]=true;S.gems+=40;if(S.hearts<5)S.hearts++;save();
+ sheet.innerHTML='<div class="reward"><div class="chestbig">🎁</div><h3>Treasure!</h3><p>Trail chest unlocked</p>'+
+  '<div class="loot"><div><div class="v" style="color:var(--gem)">+40 💎</div><div class="k">gems</div></div>'+
+  '<div><div class="v" style="color:var(--heart)">+1 ❤️</div><div class="k">heart</div></div></div></div>'+
+  '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Spend gems on streak-freezes & hints (soon).</div>'+
+  '<button class="cta" onclick="closeOv()">Collect →</button></div>';
+ ov.classList.add("show");
+}
+/* ---------- hearts wall + practice ---------- */
+let PRAC=null;
+function gemRefill(){if(S.gems<GEM_REFILL)return;S.gems-=GEM_REFILL;S.hearts=HMAX;S.heartTs=null;save();burst(innerWidth/2,160,50);syncHud();closeOv();}
+function showWall(){var ms=nextHeartMs();sheet.innerHTML='<div class="reward" style="padding-top:24px"><div class="chestbig" style="font-size:54px">💔</div><h3>Out of hearts</h3><p>'+(ms?("Next heart in "+fmtMs(ms)+". "):"")+'Hearts keep practice focused — earn one back by reviewing what tripped you up.</p><div class="wallrow"><button class="wbtn" onclick="practiceToEarn()"><span class="we">🧠</span><div>Practice to earn a heart<small>Review 3 questions correctly, gain ❤️</small></div></button><button class="wbtn" '+(S.gems>=GEM_REFILL?"":"disabled")+' onclick="gemRefill()"><span class="we">💎</span><div>Refill hearts — '+GEM_REFILL+' gems<small>You have '+S.gems+' 💎</small></div></button><a class="wbtn prem" href="/hub"><span class="we">⭐</span><div>Go Premium — unlimited<small>Monthly · never wait again</small></div></a></div></div><div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Dana: a wrong answer is a lesson, not a loss.</div><button class="cta dim" onclick="closeOv()">Later →</button></div>';ov.classList.add("show");}
+function practiceToEarn(){var pool=[];CONTENT[exam].nodes.forEach(function(nd){if(nd.drills)nd.drills.forEach(function(d){pool.push(d);});});var q=pool.sort(function(){return Math.random()-0.5;}).slice(0,3);PRAC={qs:q,i:0};renderPrac();}
+function renderPrac(){var d=PRAC.qs[PRAC.i];var opts=d.opts.map(function(o,k){return '<button class="opt" onclick="pracPick("+k+")">'+o+'</button>';}).join("");sheet.innerHTML='<div class="shead"><button class="x" onclick="closeOv()">✕</button><div class="lead2" style="margin-left:6px">Practice · earn a heart</div><div class="seg" style="margin-left:auto">'+PRAC.qs.map(function(_,k){return '<i class="'+(k<PRAC.i?"f":"")+'"></i>';}).join("")+'</div></div><div class="sbody"><div class="q">'+d.q+'</div>'+opts+'<div class="fb" id="pfb"></div></div><div class="sfoot"><div class="rah">🧠</div><div class="rmsg">Get all 3 right to earn a heart.</div></div>';ov.classList.add("show");}
+function pracPick(k){var d=PRAC.qs[PRAC.i],fb=document.getElementById("pfb");document.querySelectorAll(".opt").forEach(function(o){o.disabled=true;});if(k===d.a){fb.className="fb ok";fb.textContent="Correct!";setTimeout(function(){PRAC.i++;if(PRAC.i>=PRAC.qs.length)pracDone();else renderPrac();},650);}else{fb.className="fb no";fb.textContent="Not quite — "+d.no+" Practice resets.";setTimeout(function(){PRAC=null;showWall();},1400);}}
+function pracDone(){if(S.hearts<HMAX)S.hearts++;S.heartTs=S.hearts>=HMAX?null:Date.now();save();burst(innerWidth/2,innerHeight*0.3,80);sheet.innerHTML='<div class="reward"><div class="chestbig">❤️</div><h3>Heart earned!</h3><p>Good reviewing — a heart is back. Keep going.</p></div><div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Back to learning.</div><button class="cta" onclick="closeOv()">Continue →</button></div>';ov.classList.add("show");}
+/* ---------- confetti ---------- */
+const cv=document.getElementById("cf"),cx=cv.getContext("2d");let parts=[],raf;
+function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener("resize",size);
+const COL=["#1a8f93","#22b3a6","#16a06a","#7c5cff","#1aa6c4","#e3a531"];
+function burst(x,y,n){if(!cx)return;for(let i=0;i<n;i++)parts.push({x,y,vx:(Math.random()-.5)*9,vy:Math.random()*-10-3,g:.4,r:Math.random()*5+3,c:COL[i%COL.length],a:1,rot:Math.random()*6});if(!raf)loop()}
+function loop(){cx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.a-=.012;p.rot+=.2;cx.save();cx.globalAlpha=Math.max(0,p.a);cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.c;cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);cx.restore()});parts=parts.filter(p=>p.a>0&&p.y<cv.height+40);if(parts.length)raf=requestAnimationFrame(loop);else{raf=null;cx.clearRect(0,0,cv.width,cv.height)}}
+function xpPop(x,y,txt){const e=document.createElement("div");e.className="pop";e.textContent=txt;e.style.left=x+"px";e.style.top=y+"px";document.body.appendChild(e);setTimeout(()=>e.remove(),1000)}
+
+/* ---------- boot ---------- */
+function renderAll(){syncHud();renderQuests();renderChips();renderMap();renderBadges();renderLeague();}
+checkPremium();
+renderAll();
+setInterval(function(){if(!PREMIUM&&S.hearts<HMAX)syncHud();},60000);
+</script>
+</body>
+</html>
