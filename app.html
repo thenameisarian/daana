@@ -137,7 +137,7 @@ textarea:focus{border-color:var(--teal)}
 <script>
 /* ---------- DATA (original; 2026 task types, layout per Magoosh/TestReady) ---------- */
 const CL = (s)=>({t:s}); const BK=(pre,ans)=>({pre,ans});
-const DATA = {
+const TEST1 = {
  reading:{ name:"Reading", minutes:27, instrDir:"Reading has three task types: Complete the Words, Read in Daily Life, and Read an Academic Text. This section is adaptive - how you do in the first module sets the difficulty of the second. You may use Next and Previous within the section; your notes are not scored.",
   tasks:[
    {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[
@@ -231,6 +231,72 @@ const DATA = {
   ]}
 };
 
+/* ===== multi-test system ===== */
+const TEST2 = {
+ reading:{ name:"Reading", minutes:27, instrDir:"Reading has three task types: Complete the Words, Read in Daily Life, and Read an Academic Text. This section is adaptive - how you do in the first module sets the difficulty of the second. You may use Next and Previous within the section; your notes are not scored.",
+  tasks:[
+   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[
+     CL("Water is always moving in a cycle. The sun heats the ocean and causes water to evap"),BK("evap","orate"),CL(". The vapour rises and co"),BK("co","ols"),CL(", forming clouds in a process called cond"),BK("cond","ensation"),CL(". When the drops grow heavy, they fall as precip"),BK("precip","itation"),CL(", such as rain or snow. Some water soaks into the gro"),BK("gro","und"),CL(", while the rest flows back to the sea in riv"),BK("riv","ers"),CL(".") ]},
+   {type:"cloze", instr:"Fill in the missing letters in the paragraph.", parts:[
+     CL("In the 1400s, Johannes Gutenberg built a printing press that used movable met"),BK("met","al"),CL(" type. Before this, books were copied by hand, which was slow and expen"),BK("expen","sive"),CL(". The new press could produce pages quic"),BK("quic","kly"),CL(" and in large num"),BK("num","bers"),CL(". As books became cheaper, more people learned to re"),BK("re","ad"),CL(", and new ideas spread across Eur"),BK("Eur","ope"),CL(" far faster than be"),BK("be","fore"),CL(".") ]},
+   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Book club this month", body:["Dear members,","Our reading group will meet on the last Thursday of the month at 6 p.m. in the Reading Room. This month's book is a short novel about a family that moves to a new city.","Please read at least the first half before we meet. Tea and biscuits will be provided.","Best wishes,","The Library Team"]},
+     qs:[ {q:"When does the book club meet?",opts:["The first Monday","The last Thursday","Every Friday","The last Sunday"],a:1,exp:"The email says the group meets on the last Thursday of the month, so B. The other days are never mentioned."},
+          {q:"What are members asked to do before the meeting?",opts:["Buy the book","Read at least the first half","Bring food","Write a review"],a:1,exp:"Members are asked to read at least the first half of the book, so B. Tea and biscuits are provided, so they need not bring food."} ]},
+   {type:"email", instr:"Choose the option that best answers the question.", source:{subject:"Scheduled maintenance", body:["Dear user,","Our app will be unavailable on Saturday from 1 a.m. to 3 a.m. while we install an update that improves loading speed and fixes several bugs.","During this time you will not be able to log in. We recommend saving any work before the maintenance begins.","Thank you for your patience.","Support Team"]},
+     qs:[ {q:"What is the main purpose of the maintenance?",opts:["To add new colours","To improve speed and fix bugs","To change the price","To delete old accounts"],a:1,exp:"The email says the update improves loading speed and fixes bugs, so B."},
+          {q:"What will users be unable to do during the maintenance?",opts:["Save their work","Log in","Read the email","Contact support"],a:1,exp:"The email states that users will not be able to log in during the maintenance, so B."},
+          {q:"What does the email advise users to do?",opts:["Save their work first","Buy a new app","Wait until Sunday","Telephone the office"],a:0,exp:"It recommends saving any work before the maintenance begins, so A."} ]},
+   {type:"agenda", instr:"Choose the option that best answers the question.", source:{title:"Staff Training Day", rows:[["9:00 a.m.","Welcome"],["9:30 a.m.","Customer Service Workshop"],["11:00 a.m.","Health and Safety"],["1:00 p.m.","Team Activity"],["3:00 p.m.","Feedback and Close"]]},
+     qs:[ {q:"At what time is the Health and Safety session?",opts:["9:00 a.m.","9:30 a.m.","11:00 a.m.","1:00 p.m."],a:2,exp:"Scan the agenda: Health and Safety is listed at 11:00 a.m., so C."},
+          {q:"What is the final item of the day?",opts:["Welcome","Team Activity","Feedback and Close","Customer Service Workshop"],a:2,exp:"The last row, at 3:00 p.m., is Feedback and Close, so C."} ]},
+   {type:"chat", instr:"Choose the option that best answers the question.", msgs:[
+     {who:"Lena",time:"4:02 P.M.",text:"Hi team, our presentation is next week. Shall we split the parts?"},
+     {who:"Omar",time:"4:05 P.M.",text:"Good idea. I can research the history section."},
+     {who:"Priya",time:"4:07 P.M.",text:"I will make the slides if someone sends me the notes."},
+     {who:"Lena",time:"4:09 P.M.",text:"Great. I will handle the introduction and email the professor to book a room."} ],
+     qs:[ {q:"What is the conversation mainly about?",opts:["Choosing a topic","Dividing the presentation tasks","Cancelling a meeting","A history exam"],a:1,exp:"The students agree to split the parts of the presentation, so B."},
+          {q:"What does Priya offer to do?",opts:["Research the history","Make the slides","Book a room","Write the introduction"],a:1,exp:"Priya says she will make the slides, so B."},
+          {q:"What does Lena say she will do?",opts:["Make the slides","Research the history","Handle the introduction and book a room","Nothing"],a:2,exp:"Lena will handle the introduction and email the professor to book a room, so C."} ]},
+   {type:"passage", instr:"Choose the option that best answers the question.", source:{title:"How Coral Reefs Form", paras:[
+     "Coral reefs are built by tiny animals called coral polyps. Although a single polyp is no bigger than a grain of rice, millions of them living together can create reefs that stretch for hundreds of kilometres.",
+     "Each polyp takes calcium from the seawater and uses it to build a hard, cup-shaped skeleton around its soft body. When a polyp dies, its skeleton remains, and new polyps grow on top. Over thousands of years, these layers build up into a reef.",
+     "Most reef-building corals depend on a partnership with tiny algae that live inside them. The algae use sunlight to make food, which they share with the coral; in return, the coral gives the algae a safe home. This is why healthy reefs are found in clear, shallow water where sunlight can reach.",
+     "Reefs are sometimes called the rainforests of the sea because so many species depend on them. Yet they are fragile. When the water grows too warm, the algae leave, the coral loses its colour and its main food source, and it may die. Scientists call this bleaching." ]},
+     qs:[ {q:"What builds coral reefs?",opts:["Fish","Coral polyps","Algae alone","Ocean currents"],a:1,exp:"Paragraph 1 says reefs are built by tiny animals called coral polyps, so B."},
+          {q:"How does a polyp make its skeleton?",opts:["From sand","By taking calcium from seawater","From dead fish","From sunlight"],a:1,exp:"Paragraph 2 says each polyp takes calcium from the seawater to build its skeleton, so B."},
+          {q:"Why are healthy reefs found in clear, shallow water?",opts:["To stay cool","So sunlight can reach the algae inside the coral","To avoid fish","To grow taller"],a:1,exp:"The algae need sunlight to make food, so reefs grow where light can reach, so B."},
+          {q:"Reefs are called the rainforests of the sea because",opts:["they are green","many species depend on them","they are very old","they float on the surface"],a:1,exp:"Paragraph 4 says so many species depend on reefs, so B."},
+          {kind:"insert", sentence:"If the warming continues, entire reefs can be lost.", q:"There are four places [▪] where the sentence could be added. Where does it best fit?", opts:["[▪] (A)","[▪] (B)","[▪] (C)","[▪] (D)"], a:3, exp:"The sentence extends the discussion of warming, bleaching and coral death, so it fits best at the end, slot D."} ]}
+  ]},
+ writing:{ name:"Writing", minutes:23, instrDir:"Writing has three tasks: Build a Sentence, Write an Email, and Write for an Academic Discussion. The email and discussion are timed separately. Responses are scored by AI on the 1-6 band.",
+  tasks:[
+   {type:"build", instr:"Put the words in the correct order to form a sentence.", items:[
+     {words:["will start","The meeting","at nine","tomorrow"],answer:"The meeting will start at nine tomorrow"},
+     {words:["enjoy","Many tourists","the old city","visiting"],answer:"Many tourists enjoy visiting the old city"},
+     {words:["because","He was late","missed the bus","he"],answer:"He was late because he missed the bus"},
+     {words:["explained","The guide","very clearly","the rules"],answer:"The guide explained the rules very clearly"},
+     {words:["closes","The shop","at eight","every evening"],answer:"The shop closes at eight every evening"},
+     {words:["have worked","They","for five years","here"],answer:"They have worked here for five years"},
+     {words:["finished","She","before lunch","the report"],answer:"She finished the report before lunch"},
+     {words:["collected","The students","samples","from the river"],answer:"The students collected samples from the river"},
+     {words:["should save","We","we earn","some of the money"],answer:"We should save some of the money we earn"},
+     {words:["will change","The new rule","every office"],answer:"The new rule will change every office"} ]},
+   {type:"email_write", instr:"Read the situation and write an email.", minutes:7, to:"manager@brightmart.com", subject:"Problem with an online order",
+     prompt:"You ordered a pair of headphones from an online shop, but the package arrived with the wrong item inside. Write an email to the shop's manager. In your email, do the following:",
+     bullets:["Say what you ordered and when.","Explain what was wrong with the delivery.","Ask what the shop will do to fix the problem."], close:"Write as much as you can in complete sentences." },
+   {type:"discussion", instr:"Write a post responding to the discussion.", minutes:10,
+     professor:"Dr. Ortega: This week we are discussing remote work. Some companies now let employees work from home most of the time. Do the benefits of working from home outweigh the drawbacks? Why or why not?",
+     posts:[ {who:"Sara",text:"Working from home saves commuting time and helps people focus, which can make them more productive."},
+             {who:"Liam",text:"I am not sure. People can feel isolated at home, and it is harder for a team to share ideas quickly."} ],
+     close:"An effective response will contain at least 100 words." }
+  ]}
+};
+const TESTS=[TEST1,TEST2,null,null,null];
+const TESTNAMES=["Test 1","Test 2","Test 3","Test 4","Test 5"];
+let activeTest=0;
+let DATA=TESTS[0];
+function setTest(i){ if(!TESTS[i]){ alert(TESTNAMES[i]+" is coming soon. Reading & Writing are being added; Listening & Speaking arrive with the audio phase."); return; } activeTest=i; DATA=TESTS[i]; showHome(); }
+
 /* ---------- state + helpers ---------- */
 let flow=[], secIdx=0, screens=[], si=0, ans={}, flags={}, timerInt=null, secTimer=0, hideTime=false, mode="home", testStartedAt=0;
 const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
@@ -244,6 +310,10 @@ function showHome(){
  testEl().classList.remove("on"); testEl().innerHTML="";
  homeEl().style.display="block";
  const desc={reading:"Complete the Words, daily-life texts, and academic passages.",listening:"Short responses, conversations, announcements, and academic talks.",speaking:"Listen and repeat, then a short interview.",writing:"Build a sentence, write an email, join a discussion."};
+ const order=["reading","listening","speaking","writing"];
+ const avail=order.filter(k=>DATA[k]);
+ const fullOrder=["reading","listening","writing","speaking"].filter(k=>DATA[k]);
+ const picker=TESTNAMES.map((nm,i)=>`<button class="btn ${i===activeTest?'teal':'ghost'}" style="padding:7px 14px;${TESTS[i]?'':'opacity:.55'}" onclick="setTest(${i})">${nm}${TESTS[i]?'':' · soon'}</button>`).join("");
  homeEl().innerHTML=`<div class="center-wrap">
    <div class="brand"><span class="mk">D</span><span>Daana</span></div>
    <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-top:4px">Study smart · by Arian Academy</div>
@@ -253,13 +323,14 @@ function showHome(){
      <span style="font-size:12px;font-weight:600;padding:5px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.16);color:#9aa3a0">GRE · soon</span>
      <span style="font-size:12px;font-weight:600;padding:5px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.16);color:#9aa3a0">Duolingo · soon</span>
    </div>
-   <h1 class="h1" style="margin-top:14px">TOEFL iBT® Full Practice Test — 2026</h1>
+   <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px">${picker}</div>
+   <h1 class="h1" style="margin-top:14px">TOEFL iBT® 2026 — ${TESTNAMES[activeTest]}</h1>
    <p class="lead">All four sections in the real 2026 format, with instant scoring and answer explanations. Original practice material. <span style="opacity:.7">More exams — IELTS, GRE, Duolingo — are on the way.</span></p>
-   <div class="homestat"><span><b>4</b> sections</span><span><b>~85</b> min</span><span>band <b>1.0–6.0</b></span><span><b>Auto-scored</b> Reading &amp; Listening</span></div>
-   <div style="margin-top:6px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="begin(['reading','listening','writing','speaking'])">Start Full Practice Test</button><button class="btn ghost" onclick="showTips()">Tips &amp; Strategy</button></div>
+   <div class="homestat"><span><b>${avail.length}</b> sections available</span><span>band <b>1.0–6.0</b></span><span><b>Auto-scored</b> Reading &amp; Listening</span></div>
+   <div style="margin-top:6px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick='begin(${JSON.stringify(fullOrder)})'>Start Full Test</button><button class="btn ghost" onclick="showTips()">Tips &amp; Strategy</button></div>
    <p class="lead" style="margin-top:24px">Or practice one section:</p>
    <div class="cards">
-     ${["reading","listening","speaking","writing"].map(k=>`<div class="scard"><div class="ic">${ICON[k]}</div><div class="nm">${DATA[k].name}</div><div class="mt">${DATA[k].tasks.length} tasks · ${DATA[k].minutes} min</div><div class="desc">${desc[k]}</div><button class="btn" style="margin-top:8px;padding:8px 20px" onclick="begin(['${k}'])">Start</button></div>`).join("")}
+     ${avail.map(k=>`<div class="scard"><div class="ic">${ICON[k]}</div><div class="nm">${DATA[k].name}</div><div class="mt">${DATA[k].tasks.length} tasks · ${DATA[k].minutes} min</div><div class="desc">${desc[k]}</div><button class="btn" style="margin-top:8px;padding:8px 20px" onclick="begin(['${k}'])">Start</button></div>`).join("")}
    </div></div>`;
 }
 const ICON={reading:"&#128214;",listening:"&#127911;",speaking:"&#127908;",writing:"&#9999;&#65039;"};
