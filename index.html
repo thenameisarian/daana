@@ -159,7 +159,17 @@ body{
 .premium{text-align:center}
 .prem-h{font-weight:800;font-size:15px;color:var(--txt)}
 .prem-d{font-size:12.5px;color:var(--mut);margin:5px 0 11px}
-.sbtn.prem{justify-content:center;background:linear-gradient(135deg,#f0a829,#e07b1a);box-shadow:0 8px 20px -8px #e07b1a}
+.sbtn.prem{justify-content:center;background:linear-gradient(135deg,#f0a829,#e07b1a);box-shadow:0 8px 20px -8px #e07b1a;width:100%;border:none;cursor:pointer}
+.paypanel{display:none;margin-top:14px;text-align:left;background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:14px;padding:14px}
+.paypanel.on{display:block}
+.payprice{font-weight:800;font-size:13.5px;color:var(--txt);margin-bottom:10px;text-align:center}
+.paynets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.netbtn{flex:1;min-width:118px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);border-radius:9px;padding:8px;font-size:12px;font-weight:700;cursor:pointer}
+.netbtn.on{border-color:var(--teal);background:rgba(31,182,166,.18)}
+.payaddr{display:flex;gap:8px;align-items:center;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:9px;padding:8px 10px;margin-bottom:10px}
+.payaddr code{flex:1;font-family:ui-monospace,monospace;font-size:12px;color:#9af0e0;word-break:break-all}
+.copybtn{background:var(--teal);color:#03201c;border:none;border-radius:8px;padding:6px 12px;font-weight:800;font-size:12px;cursor:pointer}
+.paysteps{margin:0 0 12px;padding-left:18px;color:var(--mut);font-size:12.5px}.paysteps li{margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -220,9 +230,16 @@ body{
     </form>
     <div class="orsep"><span>or</span></div>
     <div class="premium">
-      <div class="prem-h">No code? Get instant access</div>
-      <div class="prem-d">Skip the follow and unlock Premium &mdash; every test, plus AI feedback on your Writing &amp; Speaking.</div>
-      <a class="sbtn prem" id="premLink" href="#" target="_blank" rel="noopener">&#9733; Get Premium Access</a>
+      <div class="prem-h">No code? Get Premium with crypto</div>
+      <div class="prem-d">All tests + AI feedback, paid in USDT. You receive an all-access code.</div>
+      <button class="sbtn prem" type="button" onclick="togglePay()">&#9733; Get Premium Access</button>
+      <div class="paypanel" id="paypanel">
+        <div class="payprice" id="payprice"></div>
+        <div class="paynets" id="paynets"></div>
+        <div class="payaddr"><code id="payaddr">&mdash;</code><button type="button" class="copybtn" onclick="copyAddr(event)">Copy</button></div>
+        <ol class="paysteps"><li>Send the amount in <b>USDT</b> to the address above.</li><li>Send a screenshot of the transfer to our WhatsApp.</li><li>We send your premium code (usually within a few hours).</li></ol>
+        <a class="sbtn wa" id="payWa" href="#" target="_blank" rel="noopener" style="justify-content:center">Send proof on WhatsApp</a>
+      </div>
     </div>
   </div>
 
@@ -240,7 +257,15 @@ const CONFIG = {
   instagram: "https://www.instagram.com/arianismyname/",
   whatsapp:  "https://whatsapp.com/channel/0029VbCe7n22v1J00hGDUW2J",
   threads:   "https://www.threads.net/@arianismyname",
-  premiumUrl: "https://YOUR-PAYMENT-LINK-HERE",
+  pay: {
+    priceUsd: "15",
+    proofWhatsapp: "https://whatsapp.com/channel/0029VbCe7n22v1J00hGDUW2J",
+    wallets: [
+      { label: "USDT \u00b7 TRON (TRC20)", addr: "YOUR-TRC20-USDT-ADDRESS" },
+      { label: "USDT \u00b7 TON", addr: "YOUR-TON-USDT-ADDRESS" },
+      { label: "USDT \u00b7 BSC (BEP20)", addr: "YOUR-BEP20-USDT-ADDRESS" }
+    ]
+  },
   extraLinks: []
 };
 /* ============================ */
@@ -314,7 +339,10 @@ var APPS = [
 
 
 document.getElementById("waLink").href = CONFIG.whatsapp;
-var _pl=document.getElementById("premLink"); if(_pl)_pl.href=CONFIG.premiumUrl||"#";
+(function(){ var pay=CONFIG.pay||{}, wallets=pay.wallets||[]; var pp=document.getElementById("payprice"); if(pp)pp.textContent=pay.priceUsd?("Premium \u00b7 all tests + AI feedback \u00b7 $"+pay.priceUsd+" in USDT"):"Premium \u00b7 all tests + AI feedback"; var nets=document.getElementById("paynets"), addrEl=document.getElementById("payaddr"); if(nets&&wallets.length){ nets.innerHTML=wallets.map(function(w,i){return '<button type="button" class="netbtn'+(i===0?" on":"")+'" onclick="selectNet('+i+')">'+w.label+'</button>';}).join(""); if(addrEl)addrEl.textContent=wallets[0].addr; } var wa=document.getElementById("payWa"); if(wa)wa.href=pay.proofWhatsapp||CONFIG.whatsapp||"#"; })();
+function togglePay(){ var p=document.getElementById("paypanel"); if(p)p.classList.toggle("on"); }
+function selectNet(i){ var w=(CONFIG.pay.wallets||[])[i]; if(!w)return; document.getElementById("payaddr").textContent=w.addr; document.querySelectorAll(".netbtn").forEach(function(b,j){b.classList.toggle("on",j===i);}); }
+function copyAddr(e){ var t=document.getElementById("payaddr").textContent; if(navigator.clipboard)navigator.clipboard.writeText(t); var b=e.target,o=b.textContent; b.textContent="Copied!"; setTimeout(function(){b.textContent=o;},1200); }
 if (CONFIG.extraLinks && CONFIG.extraLinks.length) {
   document.getElementById("extra").innerHTML = "Also: " + CONFIG.extraLinks
     .map(function(l){ return '<a href="'+l.url+'" target="_blank" rel="noopener">'+l.label+'</a>'; }).join(" &middot; ");

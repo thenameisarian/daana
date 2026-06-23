@@ -110,7 +110,7 @@ export async function checkSession(env, request, requiredTest) {
   const sess = await kvGetJson(kv, "sess:" + token);
   if (!sess) return { ok: false, reason: "no_session" };
   if (sess.expiresAt <= nowMs()) return { ok: false, reason: "expired" };
-  if (requiredTest && sess.test !== requiredTest) return { ok: false, reason: "wrong_test" };
+  if (requiredTest && sess.test !== requiredTest && sess.test !== "all") return { ok: false, reason: "wrong_test" };
   if (String(env.IP_STRICT) === "true") {
     const ipHash = await sha256hex(clientIp(request) + "|" + (env.IP_SALT || "daana"));
     if (ipHash !== sess.ipHash) return { ok: false, reason: "ip_changed" };
@@ -125,4 +125,11 @@ export async function getSession(env, request) {
   const sess = await kvGetJson(kv, "sess:" + token);
   if (!sess || sess.expiresAt <= nowMs()) return null;
   return { test: sess.test, tier: sess.tier || "free", expiresAt: sess.expiresAt };
+}
+
+// Mint a single code (used by admin and the payment webhook).
+export async function mintCode(kv, { test = "toefl", kind = "rotating", tier = "free", note = "" } = {}) {
+  const code = genCode();
+  await kv.put("code:" + code, JSON.stringify({ test, kind, active: true, tier, note, createdAt: Date.now() }));
+  return code;
 }
