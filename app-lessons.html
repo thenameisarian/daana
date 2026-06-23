@@ -202,15 +202,15 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
     <div class="league" id="league"></div>
   </div>
 
-  <a class="upsell" id="upsell" href="/hub"><span style="font-size:25px">⭐</span><div><div class="ut">Go Premium — unlimited hearts</div><div class="us">Never wait for hearts. Monthly access across all four exams.</div></div><span class="ub">Upgrade</span></a>
-  <div class="foot">Progress saves on this device. <a href="/hub">← Back to your tests</a></div>
+  <a class="upsell" id="upsell" href="/?upgrade=1"><span style="font-size:25px">⭐</span><div><div class="ut">Go Premium — unlimited hearts</div><div class="us">Never wait for hearts. Monthly access across all four exams.</div></div><span class="ub">Upgrade</span></a>
+  <div class="foot">Progress saved to your account. <a id="backLink" href="/hub">← Your tests</a> · <a href="#" onclick="doSignOut(event)">Sign out</a></div>
 </div>
 
 <div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
 
 <script>
 /* ============================================================
-   DAANA LESSONS — gamified engine (localStorage progress) · v1
+   DAANA LESSONS — gamified engine (server-backed progress) · v2
    ============================================================ */
 const LV_STEP=100; /* XP per level (level n needs n*100 cumulative-ish; simple) */
 
@@ -332,26 +332,18 @@ const CONTENT={
 };
 
 /* ---------- state ---------- */
-const KEY="daana_lessons_v1";
-function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-let S=load();
-S.xp=S.xp||0; S.gems=S.gems||0; S.hearts=(S.hearts==null?5:S.hearts); S.streak=S.streak||0;
-S.done=S.done||{}; S.claimed=S.claimed||{}; S.lastDay=S.lastDay||null; S.dayXp=S.dayXp||0; S.dayDone=S.dayDone||0;
-(function rollDay(){const t=new Date().toDateString();if(S.lastDay!==t){
-  if(S.lastDay){const y=new Date();y.setDate(y.getDate()-1);S.streak=(S.lastDay===y.toDateString()&&S.dayXp>0)?S.streak:(S.dayXp>0?S.streak:0);}
-  S.dayXp=0;S.dayDone=0;S.lastDay=t;save();}})();
+/* server-backed progress */
+let S={xp:0,gems:0,hearts:5,heartTs:null,nextHeartMs:0,streak:0,lastDay:null,dayXp:0,dayDone:0,done:{},claimed:{}};
+let PREMIUM=false, ACCESS=null;
+const HMAX=5, GEM_REFILL=30;
+function save(){}
 function levelFor(xp){return Math.floor(xp/LV_STEP)+1}
 let exam="toefl";
-/* ---- hearts & premium ---- */
-const HMAX=5, REFILL_MS=5*3600*1000, GEM_REFILL=30;
-let PREMIUM=false;
-S.heartTs=S.heartTs||null;
-function regenHearts(){if(PREMIUM||S.hearts>=HMAX)return;if(!S.heartTs){S.heartTs=Date.now();save();return;}const g=Math.floor((Date.now()-S.heartTs)/REFILL_MS);if(g>0){S.hearts=Math.min(HMAX,S.hearts+g);S.heartTs=S.hearts>=HMAX?null:S.heartTs+g*REFILL_MS;save();}}
-function loseHeart(){if(PREMIUM)return;if(S.hearts>=HMAX)S.heartTs=Date.now();S.hearts=Math.max(0,S.hearts-1);save();}
-function nextHeartMs(){if(PREMIUM||S.hearts>=HMAX||!S.heartTs)return 0;return Math.max(0,S.heartTs+REFILL_MS-Date.now());}
+function applyProgress(p){if(!p)return;S.xp=p.xp;S.gems=p.gems;S.hearts=p.hearts;S.heartTs=p.heartTs;S.nextHeartMs=p.nextHeartMs||0;S.streak=p.streak;S.lastDay=p.lastDay||null;S.done=p.done||{};S.claimed=p.claimed||{};S.dayXp=p.dayXp||0;S.dayDone=p.dayDone||0;PREMIUM=!!p.premium;ACCESS=p.access||null;}
+async function apiP(path,opts){try{const r=await fetch(path,Object.assign({headers:{"content-type":"application/json"},credentials:"include"},opts||{}));return await r.json();}catch(e){return null;}}
+async function gev(type,extra){const j=await apiP("/api/progress",{method:"POST",body:JSON.stringify(Object.assign({type:type},extra||{}))});if(j&&j.ok)applyProgress(j.progress);return j;}
+function nextHeartMs(){return PREMIUM?0:(S.nextHeartMs||0);}
 function fmtMs(ms){const m=Math.ceil(ms/60000),h=Math.floor(m/60);return h>0?(h+"h "+(m%60)+"m"):(m+"m");}
-function checkPremium(){try{if(typeof fetch!=="function")return;fetch("/api/me",{credentials:"include"}).then(r=>r.ok?r.json():null).then(d=>{if(d&&(d.tier==="premium"||d.test==="all")){PREMIUM=true;syncHud();}}).catch(()=>{});}catch(e){}}
 function renderHudHearts(){const hp=document.getElementById("hp");if(hp)hp.innerHTML=PREMIUM?"∞":heartStr(S.hearts);}
 
 /* ---------- HUD ---------- */
@@ -364,10 +356,9 @@ function syncHud(){
  const r=18,c=2*Math.PI*r;document.getElementById("lvring").setAttribute("stroke-dasharray",c);
  document.getElementById("lvring").setAttribute("stroke-dashoffset",c*(1-pct));
  document.getElementById("gemN").textContent=S.gems;
- regenHearts();
  var hpN=document.getElementById("hpN"),tmr=document.getElementById("hpTimer"),pc=document.getElementById("premChip"),up=document.getElementById("upsell");
  if(PREMIUM){hpN.textContent="∞";hpN.classList.add("hinf");tmr.textContent="";pc.className="premchip";pc.textContent="⭐ Premium · unlimited";pc.removeAttribute("href");if(up)up.style.display="none";}
- else{hpN.textContent=S.hearts;hpN.classList.remove("hinf");var ms=nextHeartMs();tmr.textContent=ms?("+1 in "+fmtMs(ms)):"";pc.className="premchip";pc.setAttribute("href","/hub");pc.textContent="⭐ Premium";if(up)up.style.display="flex";}
+ else{hpN.textContent=S.hearts;hpN.classList.remove("hinf");var ms=nextHeartMs();tmr.textContent=ms?("+1 in "+fmtMs(ms)):"";pc.className="premchip";pc.setAttribute("href","/?upgrade=1");pc.textContent="⭐ Premium";if(up)up.style.display="flex";}
  document.getElementById("stN").textContent=S.streak;
 }
 /* ---------- quests ---------- */
@@ -379,7 +370,7 @@ const QUESTS=[
 function renderQuests(){
  const w=document.getElementById("quests");w.innerHTML="";
  QUESTS.forEach(q=>{
-  const cur=Math.min(q.get(),q.goal),pct=Math.round(cur/q.goal*100),full=cur>=q.goal,claimed=S.claimed[q.id];
+  const cur=Math.min(q.get(),q.goal),pct=Math.round(cur/q.goal*100),full=cur>=q.goal,claimed=S.claimed["q:"+q.id+":"+S.lastDay];
   const row=document.createElement("div");row.className="quest"+(full?" done":"");
   let right=claimed?'<div class="qrew" style="color:var(--green)">✓ done</div>':
     (full?'<button class="claim" onclick="claim(\''+q.id+'\')">Claim</button>':'<div class="qrew">'+q.rewT+'</div>');
@@ -388,9 +379,7 @@ function renderQuests(){
   w.appendChild(row);
  });
 }
-function claim(id){const q=QUESTS.find(x=>x.id===id);if(!q||S.claimed[id])return;
- if(q.rew.gems)S.gems+=q.rew.gems; if(q.rew.xp)addXp(q.rew.xp);
- S.claimed[id]=true;save();burst(innerWidth/2,160,40);syncHud();renderQuests();}
+function claim(id){const q=QUESTS.find(x=>x.id===id);if(!q)return;gev("quest",{id:id}).then(function(){burst(innerWidth/2,160,40);syncHud();renderQuests();});}
 
 /* ---------- exam chips ---------- */
 function renderChips(){
@@ -402,12 +391,12 @@ function renderChips(){
 }
 /* ---------- map ---------- */
 function nodeState(ex,i){const nodes=CONTENT[ex].nodes;const n=nodes[i];
- if(n.type==="chest")return S.claimed["chest-"+n.id]?"done":"chest";
+ if(n.type==="chest")return S.claimed["chest:"+n.id]?"done":"chest";
  if(n.type==="lock-final")return "lock";
  if(S.done[n.id])return "done";
  /* unlocked if first, or previous node done/chest-claimed */
  if(i===0)return n.type==="boss"?"lock":"go";
- const prev=nodes[i-1];const prevDone=prev.type==="chest"?S.claimed["chest-"+prev.id]:S.done[prev.id];
+ const prev=nodes[i-1];const prevDone=prev.type==="chest"?S.claimed["chest:"+prev.id]:S.done[prev.id];
  if(prevDone)return n.type==="boss"?"boss":(n.type==="chest"?"chest":"go");
  return "lock";
 }
@@ -523,7 +512,7 @@ function pick(b,k,di,ev){
  if(k===q.a){
   document.querySelectorAll(".opt").forEach(o=>o.disabled=true);
   b.classList.add("right");fb.className="fb ok";fb.textContent=q.ok+(FL.firstTry?"  +15 XP":"");
-  if(FL.firstTry){FL.correct++;addXp(15);}
+  if(FL.firstTry){FL.correct++;}
   FL.combo++;document.getElementById("cb").textContent="🔥 x"+FL.combo;
   const r=b.getBoundingClientRect();burst(r.left+r.width/2,r.top,34);if(FL.firstTry)xpPop(r.right-50,r.top,"+15");
   nx.classList.remove("dim");nx.disabled=false;syncHud();
@@ -531,21 +520,19 @@ function pick(b,k,di,ev){
   b.classList.add("wrong");b.disabled=true;
   fb.className="fb no";fb.textContent=q.no+" — try again.";
   FL.firstTry=false;FL.combo=0;document.getElementById("cb").textContent="🔥 x0";
-  loseHeart();renderHudHearts();syncHud();
-  if(!PREMIUM&&S.hearts<=0)setTimeout(showWall,500);
+  gev("lose").then(function(){renderHudHearts();syncHud();if(!PREMIUM&&S.hearts<=0)setTimeout(showWall,500);});
  }
 }
 function nextStep(){FL.step++;renderStep();}
 function finishNode(){
  const n=FL.node;const already=!!S.done[n.id];
  const acc=FL.drillTotal?FL.correct/FL.drillTotal:1;
- const xp=(n.type==="boss"?40:20);
- const gems=n.type==="boss"?20:8;
- const shownXp=already?0:xp+FL.correct*15;
- if(!already){S.done[n.id]=Math.round(acc*100);S.dayDone++;S.gems+=gems;}
- if(S.dayXp>0&&S.streak===0)S.streak=1;
- const lvUp=already?false:addXp(xp);
- save();
+ const isBoss=n.type==="boss";
+ const beforeXp=S.xp, beforeLv=levelFor(S.xp);
+ gev("complete",{nodeId:n.id,isBoss:isBoss,acc:Math.round(acc*100)}).then(function(){
+ const shownXp=Math.max(0,S.xp-beforeXp);
+ const gems=isBoss?20:8;
+ const lvUp=levelFor(S.xp)>beforeLv;
  sheet.innerHTML='<div class="reward"><div class="chestbig">'+(n.type==="boss"?"👑":"🎉")+'</div>'+
   '<h3>'+(already?"Reviewed!":(n.type==="boss"?"Trail mastered!":"Lesson cleared!"))+'</h3>'+
   '<p>'+n.title+' · '+Math.round(acc*100)+'% accuracy'+(lvUp?' · Level up! 🎉':'')+'</p>'+
@@ -558,11 +545,12 @@ function finishNode(){
   '<button class="cta" onclick="closeOv()">Continue →</button></div>';
  burst(innerWidth/2,innerHeight*0.32,110);
  if(lvUp)setTimeout(()=>burst(innerWidth/2,innerHeight*0.3,90),350);
+ });
 }
 function openChest(id,ev){
  const r=ev&&ev.target?ev.target.getBoundingClientRect():{left:innerWidth/2,top:200,width:0};
  burst(r.left+(r.width||0)/2,r.top,80);
- S.claimed["chest-"+id]=true;S.gems+=40;if(S.hearts<5)S.hearts++;save();
+ gev("chest",{id:id}).then(function(){syncHud();renderMap();});
  sheet.innerHTML='<div class="reward"><div class="chestbig">🎁</div><h3>Treasure!</h3><p>Trail chest unlocked</p>'+
   '<div class="loot"><div><div class="v" style="color:var(--gem)">+40 💎</div><div class="k">gems</div></div>'+
   '<div><div class="v" style="color:var(--heart)">+1 ❤️</div><div class="k">heart</div></div></div></div>'+
@@ -572,12 +560,12 @@ function openChest(id,ev){
 }
 /* ---------- hearts wall + practice ---------- */
 let PRAC=null;
-function gemRefill(){if(S.gems<GEM_REFILL)return;S.gems-=GEM_REFILL;S.hearts=HMAX;S.heartTs=null;save();burst(innerWidth/2,160,50);syncHud();closeOv();}
-function showWall(){var ms=nextHeartMs();sheet.innerHTML='<div class="reward" style="padding-top:24px"><div class="chestbig" style="font-size:54px">💔</div><h3>Out of hearts</h3><p>'+(ms?("Next heart in "+fmtMs(ms)+". "):"")+'Hearts keep practice focused — earn one back by reviewing what tripped you up.</p><div class="wallrow"><button class="wbtn" onclick="practiceToEarn()"><span class="we">🧠</span><div>Practice to earn a heart<small>Review 3 questions correctly, gain ❤️</small></div></button><button class="wbtn" '+(S.gems>=GEM_REFILL?"":"disabled")+' onclick="gemRefill()"><span class="we">💎</span><div>Refill hearts — '+GEM_REFILL+' gems<small>You have '+S.gems+' 💎</small></div></button><a class="wbtn prem" href="/hub"><span class="we">⭐</span><div>Go Premium — unlimited<small>Monthly · never wait again</small></div></a></div></div><div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Dana: a wrong answer is a lesson, not a loss.</div><button class="cta dim" onclick="closeOv()">Later →</button></div>';ov.classList.add("show");}
+function gemRefill(){if(S.gems<GEM_REFILL)return;gev("gem").then(function(){burst(innerWidth/2,160,50);syncHud();closeOv();});}
+function showWall(){var ms=nextHeartMs();sheet.innerHTML='<div class="reward" style="padding-top:24px"><div class="chestbig" style="font-size:54px">💔</div><h3>Out of hearts</h3><p>'+(ms?("Next heart in "+fmtMs(ms)+". "):"")+'Hearts keep practice focused — earn one back by reviewing what tripped you up.</p><div class="wallrow"><button class="wbtn" onclick="practiceToEarn()"><span class="we">🧠</span><div>Practice to earn a heart<small>Review 3 questions correctly, gain ❤️</small></div></button><button class="wbtn" '+(S.gems>=GEM_REFILL?"":"disabled")+' onclick="gemRefill()"><span class="we">💎</span><div>Refill hearts — '+GEM_REFILL+' gems<small>You have '+S.gems+' 💎</small></div></button><a class="wbtn prem" href="/?upgrade=1"><span class="we">⭐</span><div>Go Premium — unlimited<small>Monthly · never wait again</small></div></a></div></div><div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Dana: a wrong answer is a lesson, not a loss.</div><button class="cta dim" onclick="closeOv()">Later →</button></div>';ov.classList.add("show");}
 function practiceToEarn(){var pool=[];CONTENT[exam].nodes.forEach(function(nd){if(nd.drills)nd.drills.forEach(function(d){pool.push(d);});});var q=pool.sort(function(){return Math.random()-0.5;}).slice(0,3);PRAC={qs:q,i:0};renderPrac();}
 function renderPrac(){var d=PRAC.qs[PRAC.i];var opts=d.opts.map(function(o,k){return '<button class="opt" onclick="pracPick("+k+")">'+o+'</button>';}).join("");sheet.innerHTML='<div class="shead"><button class="x" onclick="closeOv()">✕</button><div class="lead2" style="margin-left:6px">Practice · earn a heart</div><div class="seg" style="margin-left:auto">'+PRAC.qs.map(function(_,k){return '<i class="'+(k<PRAC.i?"f":"")+'"></i>';}).join("")+'</div></div><div class="sbody"><div class="q">'+d.q+'</div>'+opts+'<div class="fb" id="pfb"></div></div><div class="sfoot"><div class="rah">🧠</div><div class="rmsg">Get all 3 right to earn a heart.</div></div>';ov.classList.add("show");}
 function pracPick(k){var d=PRAC.qs[PRAC.i],fb=document.getElementById("pfb");document.querySelectorAll(".opt").forEach(function(o){o.disabled=true;});if(k===d.a){fb.className="fb ok";fb.textContent="Correct!";setTimeout(function(){PRAC.i++;if(PRAC.i>=PRAC.qs.length)pracDone();else renderPrac();},650);}else{fb.className="fb no";fb.textContent="Not quite — "+d.no+" Practice resets.";setTimeout(function(){PRAC=null;showWall();},1400);}}
-function pracDone(){if(S.hearts<HMAX)S.hearts++;S.heartTs=S.hearts>=HMAX?null:Date.now();save();burst(innerWidth/2,innerHeight*0.3,80);sheet.innerHTML='<div class="reward"><div class="chestbig">❤️</div><h3>Heart earned!</h3><p>Good reviewing — a heart is back. Keep going.</p></div><div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Back to learning.</div><button class="cta" onclick="closeOv()">Continue →</button></div>';ov.classList.add("show");}
+function pracDone(){gev("practice").then(function(){syncHud();});burst(innerWidth/2,innerHeight*0.3,80);sheet.innerHTML='<div class="reward"><div class="chestbig">❤️</div><h3>Heart earned!</h3><p>Good reviewing — a heart is back. Keep going.</p></div><div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Back to learning.</div><button class="cta" onclick="closeOv()">Continue →</button></div>';ov.classList.add("show");}
 /* ---------- confetti ---------- */
 const cv=document.getElementById("cf"),cx=cv.getContext("2d");let parts=[],raf;
 function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener("resize",size);
@@ -588,9 +576,20 @@ function xpPop(x,y,txt){const e=document.createElement("div");e.className="pop";
 
 /* ---------- boot ---------- */
 function renderAll(){syncHud();renderQuests();renderChips();renderMap();renderBadges();renderLeague();}
-checkPremium();
-renderAll();
-setInterval(function(){if(!PREMIUM&&S.hearts<HMAX)syncHud();},60000);
+async function init(){
+ const acc=await apiP("/api/account");
+ if(!acc||!acc.authed){location.href="/";return;}
+ const pr=await apiP("/api/progress");
+ if(pr&&pr.ok)applyProgress(pr.progress);
+ setNav();
+ renderAll();
+ setInterval(refreshProg,60000);
+}
+const TESTROUTE={toefl:"/app",ielts:"/app-ielts",duolingo:"/app-duolingo",ged:"/app-ged",all:"/hub"};
+function setNav(){const b=document.getElementById("backLink");if(b)b.setAttribute("href",PREMIUM?"/hub":(TESTROUTE[ACCESS]||"/"));}
+async function doSignOut(e){if(e&&e.preventDefault)e.preventDefault();await apiP("/api/auth/logout",{method:"POST"});location.href="/";}
+async function refreshProg(){const pr=await apiP("/api/progress");if(pr&&pr.ok){applyProgress(pr.progress);syncHud();renderQuests();}}
+init();
 </script>
 </body>
 </html>

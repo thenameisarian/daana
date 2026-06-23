@@ -1,25 +1,43 @@
-import { checkSession } from "./_lib.js";
+import { getAuthedUser } from "./_auth.js";
 
-// Map protected static paths -> required test id.
-// Value "*" means: any valid session (any test, free or premium).
-const PROTECTED = { "/app.html": "toefl", "/app": "toefl", "/app-ielts.html": "ielts", "/app-ielts": "ielts", "/app-duolingo.html": "duolingo", "/app-duolingo": "duolingo", "/app-ged.html": "ged", "/app-ged": "ged", "/hub.html": "all", "/hub": "all", "/app-lessons.html": "*", "/app-lessons": "*", "/lessons": "*" };
+// Required access per protected path.
+//  "<test>" -> needs account access to that test (or premium/all)
+//  "all"    -> premium only (hub)
+//  "*"      -> any access (free code or premium) — e.g. lessons
+const PROTECTED = {
+  "/app.html": "toefl", "/app": "toefl",
+  "/app-ielts.html": "ielts", "/app-ielts": "ielts",
+  "/app-duolingo.html": "duolingo", "/app-duolingo": "duolingo",
+  "/app-ged.html": "ged", "/app-ged": "ged",
+  "/hub.html": "all", "/hub": "all",
+  "/app-lessons.html": "*", "/app-lessons": "*", "/lessons": "*"
+};
 
-export async function onRequest(context) {
-  const { request, next } = context;
+export async function onRequest(context){
+  const { request, next, env } = context;
   const url = new URL(request.url);
-  const requiredTest = PROTECTED[url.pathname];
-  if (!requiredTest) return next();
+  const required = PROTECTED[url.pathname];
+  if (!required) return next();
 
-  let reason = "1";
-  try {
-    const res = await checkSession(context.env, request, requiredTest === "*" ? null : requiredTest);
-    if (res.ok) return next();
-    reason = (res.reason === "expired" || res.reason === "ip_changed") ? "expired" : "1";
-  } catch (_) {
-    // Fail closed: any error (e.g. KV unavailable) must NOT expose protected content.
-    reason = "err";
+  let a = null;
+  try { a = await getAuthedUser(env, request); } catch (_) { a = null; } // fail closed
+
+  if (!a){
+    const to = new URL("/", url);
+    to.searchParams.set("need", "login");
+    return Response.redirect(to.toString(), 302);
   }
+
+  const access = a.user.access || null;
+  const premium = a.user.tier === "premium" || access === "all";
+  let ok = false;
+  if (required === "*") ok = !!access;
+  else if (required === "all") ok = premium;
+  else ok = (access === required || access === "all");
+
+  if (ok) return next();
+
   const to = new URL("/", url);
-  to.searchParams.set("locked", reason);
+  to.searchParams.set("need", premium ? "access" : (access ? "wrong" : "access"));
   return Response.redirect(to.toString(), 302);
 }
