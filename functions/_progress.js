@@ -8,7 +8,7 @@ export const GEM_REFILL = 30;
 function todayStr(){ return new Date().toISOString().slice(0, 10); } // UTC day
 
 export function defaultProgress(){
-  return { xp: 0, gems: 0, hearts: HMAX, heartTs: null, streak: 0, lastDay: null, dayXp: 0, dayDone: 0, done: {}, claimed: {} };
+  return { xp: 0, gems: 0, hearts: HMAX, heartTs: null, streak: 0, bestStreak: 0, lastActiveDay: null, lastDay: null, dayXp: 0, dayDone: 0, done: {}, claimed: {} };
 }
 
 function rollDay(p){ const t = todayStr(); if (p.lastDay !== t){ p.dayXp = 0; p.dayDone = 0; p.lastDay = t; } }
@@ -31,7 +31,14 @@ export async function getProgress(kv, email){
 }
 export async function saveProgress(kv, email, p){ await kv.put("progress:" + email, JSON.stringify(p)); }
 
-function bumpStreak(p){ if (p.dayXp > 0 && p.streak === 0) p.streak = 1; }
+function touchStreak(p){
+  const t = todayStr();
+  if (p.lastActiveDay === t) return;
+  const y = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+  p.streak = (p.lastActiveDay === y) ? (p.streak || 0) + 1 : 1;
+  p.lastActiveDay = t;
+  if (!p.bestStreak || p.streak > p.bestStreak) p.bestStreak = p.streak;
+}
 
 export function loseHeart(p, premium){ if (premium) return; regen(p); if (p.hearts >= HMAX) p.heartTs = nowMs(); p.hearts = Math.max(0, p.hearts - 1); }
 export function gemRefill(p){ if (p.gems < GEM_REFILL) return false; p.gems -= GEM_REFILL; p.hearts = HMAX; p.heartTs = null; return true; }
@@ -44,7 +51,7 @@ export function completeNode(p, nodeId, isBoss, accPct){
   p.done[nodeId] = Math.round(accPct);
   p.xp += gain; p.dayXp += gain; p.dayDone += 1;
   p.gems += isBoss ? 20 : 8;
-  bumpStreak(p);
+  touchStreak(p);
   return true;
 }
 

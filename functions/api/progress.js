@@ -2,7 +2,7 @@ import { getAuthedUser } from "../_auth.js";
 import * as PR from "../_progress.js";
 function json(o, s = 200){ return new Response(JSON.stringify(o), { status: s, headers: { "content-type": "application/json" } }); }
 function isPremium(u){ return u.tier === "premium" || u.access === "all"; }
-function pub(p, u){ const prem = isPremium(u); return { xp: p.xp, gems: p.gems, hearts: prem ? 9999 : p.hearts, heartTs: p.heartTs, nextHeartMs: prem ? 0 : PR.nextHeartMs(p), streak: p.streak, lastDay: p.lastDay, dayXp: p.dayXp, dayDone: p.dayDone, done: p.done, claimed: p.claimed, premium: prem, tier: u.tier || "none", access: u.access || null }; }
+function pub(p, u){ const prem = isPremium(u); return { xp: p.xp, gems: p.gems, hearts: prem ? 9999 : p.hearts, heartTs: p.heartTs, nextHeartMs: prem ? 0 : PR.nextHeartMs(p), streak: p.streak, bestStreak: p.bestStreak || 0, lastDay: p.lastDay, dayXp: p.dayXp, dayDone: p.dayDone, done: p.done, claimed: p.claimed, premium: prem, tier: u.tier || "none", access: u.access || null }; }
 export async function onRequestGet(context){
   const a = await getAuthedUser(context.env, context.request); if (!a) return json({ ok: false, error: "unauth" }, 401);
   const kv = context.env.DAANA_KV; const p = await PR.getProgress(kv, a.user.email);

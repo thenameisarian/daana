@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <title>Daana — Lessons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
- --ink:#28323b;--mut:#6b7785;--line:#e2e6ea;--line2:#eef1f3;
+ --ink:#28323b;--mut:#6b7785;--mut2:#9aa6b0;--line:#e2e6ea;--line2:#eef1f3;--gemsoft:#e6f6fb;--heartsoft:#fdeeec;--firesoft:#fff1e6;
  --teal:#1a8f93;--teald:#137074;--teal2:#22b3a6;--tealsoft:#e3f6f3;--tealshadow:#0e5a5e;
  --panel:#f5f7f8;--white:#fff;
  --gem:#1aa6c4;--heart:#e2574c;--fire:#f5872b;--violet:#7c5cff;--green:#16a06a;--gold:#e3a531;
@@ -158,38 +159,100 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
 .brand{display:flex;align-items:center;gap:8px;justify-content:center;padding-top:14px}
 .mk{width:26px;height:26px;border:1.5px solid var(--teal);border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--teal);font-weight:800;font-size:15px}
 .bw{font-weight:800;font-size:15px}
+.serif{font-family:"Lora",Georgia,serif}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--teald);opacity:.85}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin:0 -15px;padding:9px 15px}
+.backbtn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 13px;font-weight:700;font-size:13px;color:var(--ink);display:flex;align-items:center;gap:5px;cursor:pointer}
+.backbtn:hover{border-color:var(--teal);color:var(--teald)}
+.tbrand{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14px}
+.sech2{display:flex;align-items:baseline;gap:10px;margin:18px 2px 11px}
+.sech2 h2{font-size:19px;font-weight:800;margin:0}
+.sech2 .more{margin-left:auto;font-size:11.5px;color:var(--mut2);font-weight:600}
+.hero{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:0 10px 30px rgba(20,70,70,.05)}
+.hero-top{display:flex;align-items:center;gap:14px}
+.ring{position:relative;width:62px;height:62px;flex:none}
+.lvc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.lvc b{font-size:18px;font-weight:800;color:var(--teald);line-height:1}
+.lvc span{font-size:8px;letter-spacing:.13em;color:var(--mut2);font-weight:700;text-transform:uppercase;margin-top:1px}
+.hero-info{flex:1;min-width:0}.hero-info .nm{font-weight:800;font-size:15.5px}.hero-info .sub{font-size:12px;color:var(--mut)}
+.streakchip{flex:none;display:flex;align-items:center;gap:7px;background:var(--firesoft);border:1px solid #f6d6b8;border-radius:12px;padding:7px 11px}
+.streakchip .fl{font-size:17px}.streakchip b{font-size:15px;font-weight:800;color:#c2611a;line-height:1}
+.streakchip span{display:block;font-size:8.5px;letter-spacing:.07em;text-transform:uppercase;color:#cf8c52;font-weight:700}
+.xpwrap2{margin-top:15px}
+.xprow2{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.xprow2 .l{font-size:12px;font-weight:700;color:var(--mut)}.xprow2 .r{font-size:12px;color:var(--mut2)}
+.bar2{height:9px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar2 i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--teal2));transition:width .5s}
+.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;margin-top:11px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px 12px}
+.tile .ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:9px}
+.tile .v{font-size:20px;font-weight:800;line-height:1}
+.tile .k{font-size:11px;color:var(--mut);font-weight:600;margin-top:3px}
+.tile .x{font-size:10px;color:var(--mut2);margin-top:5px;min-height:12px}
+.ic.gem{background:var(--gemsoft);color:var(--gem)}.ic.heart{background:var(--heartsoft);color:var(--heart)}.ic.fire{background:var(--firesoft);color:var(--fire)}
+.streakcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:0 10px 30px rgba(20,70,70,.05)}
+.stop{display:flex;align-items:center;gap:13px}
+.bigflame{width:54px;height:54px;border-radius:15px;background:var(--firesoft);display:flex;align-items:center;justify-content:center;font-size:27px;flex:none}
+.sbig{font-size:27px;font-weight:800;line-height:1}.sbig small{font-size:13px;color:var(--mut);font-weight:700}
+.snote{font-size:12.5px;color:var(--mut);margin-top:3px}
+.week{display:flex;justify-content:space-between;gap:6px;margin-top:15px}
+.day{flex:1;text-align:center}
+.day .dot{width:30px;height:30px;border-radius:50%;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--panel);border:1px solid var(--line);color:var(--mut2)}
+.day.on .dot{background:linear-gradient(180deg,#ffb765,#f5872b);border-color:#f5872b;color:#fff;box-shadow:0 3px 0 #d56e14}
+.day.today .dot{border:2px dashed var(--fire);background:var(--firesoft);color:var(--fire)}
+.day .dl{font-size:10px;color:var(--mut2);font-weight:700}
+.sfootr{margin-top:14px;padding-top:13px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
+.sfootr b{color:var(--ink)}
+.qcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:6px 15px;box-shadow:0 10px 30px rgba(20,70,70,.05)}
+.qcard .quest{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line2);background:none;border-radius:0;margin:0}
+.qcard .quest:last-child{border-bottom:none}
+.qcard .qi{width:36px;height:36px;border-radius:11px;background:var(--tealsoft);color:var(--teald);display:flex;align-items:center;justify-content:center;font-size:17px;flex:none}
+.qcard .qm{flex:1;min-width:0}.qcard .qt{font-size:13.5px;font-weight:700}
+.qcard .qsub{font-size:11px;color:var(--mut2);margin-top:1px}
+.qcard .qbar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:7px}
+.qcard .qbar i{display:block;height:100%;background:var(--teal)}
+.qcard .qrew{flex:none;font-size:11.5px;font-weight:800;color:var(--mut);text-align:right}
 </style>
 </head>
 <body>
 <canvas id="cf"></canvas>
 <div class="wrap">
-  <div class="brand"><span class="mk">د</span><span class="bw">Daana · Lessons</span></div>
+  <div class="topbar">
+    <button class="backbtn" onclick="doBack()">← Back</button>
+    <div class="tbrand"><span class="mk">د</span><span>Daana · Lessons</span></div>
+    <span style="width:62px"></span>
+  </div>
 
-  <div class="hud">
-    <div class="lv"><svg width="42" height="42" style="position:absolute;inset:0"><circle cx="21" cy="21" r="18" fill="none" stroke="#e2e6ea" stroke-width="4"/><circle id="lvring" cx="21" cy="21" r="18" fill="none" stroke="#1a8f93" stroke-width="4" stroke-linecap="round" transform="rotate(-90 21 21)" stroke-dasharray="113" stroke-dashoffset="20"/></svg><small>LVL</small><b id="lvNum">1</b></div>
-    <div class="xpwrap">
-      <div class="xprow"><b id="lvLabel">Level 1</b><span id="xpText">0 / 100 XP</span></div>
-      <div class="xpbar"><i id="xpFill" style="width:0%"></i></div>
+  <div class="chips" id="examChips" style="margin-top:14px"></div>
+
+  <div class="eyebrow" id="trailEye" style="margin-top:16px">TOEFL</div>
+  <div class="sech2"><h2 id="trailName" class="serif">The Trail</h2><span class="more" id="trailPct"></span></div>
+
+  <div class="hero">
+    <div class="hero-top">
+      <div class="ring"><svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="27" fill="none" stroke="#e7ebee" stroke-width="5"/><circle id="lvring" cx="31" cy="31" r="27" fill="none" stroke="#1a8f93" stroke-width="5" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="40" transform="rotate(-90 31 31)"/></svg><div class="lvc"><b id="lvNum">1</b><span>Level</span></div></div>
+      <div class="hero-info"><div class="nm" id="rankName">Learner</div><div class="sub" id="trailSub">&nbsp;</div></div>
+      <div class="streakchip"><span class="fl">🔥</span><div><b id="stN">0</b><span>day streak</span></div></div>
     </div>
-    <div class="stat" style="color:var(--gem)"><span class="e">💎</span><span id="gemN">0</span></div>
-    <div class="stat" id="hpStat" style="color:var(--heart)"><span class="e">❤️</span><span id="hpN">5</span><span class="htimer" id="hpTimer"></span></div>
-    <div class="stat" style="color:var(--fire)"><span class="e">🔥</span><span id="stN">0</span></div>
-    <a class="premchip hidden" id="premChip" href="/hub">⭐ Premium</a>
+    <div class="xpwrap2"><div class="xprow2"><span class="l">Experience</span><span class="r" id="xpText">0 / 100 XP</span></div><div class="bar2"><i id="xpFill" style="width:0%"></i></div></div>
   </div>
 
-  <div class="sec">
-    <div class="sech"><span class="e">🎯</span><b>Daily quests</b><span class="more" id="qreset">resets daily</span></div>
-    <div id="quests"></div>
+  <div class="tiles">
+    <div class="tile"><div class="ic fire">🔥</div><div class="v" id="tStreak">0</div><div class="k">Day streak</div><div class="x" id="tStreakX">Best: 0 d</div></div>
+    <div class="tile"><div class="ic gem">💎</div><div class="v" id="gemN">0</div><div class="k">Gems</div><div class="x">spend on refills</div></div>
+    <div class="tile"><div class="ic heart">❤️</div><div class="v" id="hpN">5</div><div class="k">Hearts</div><div class="x" id="hpTimer">&nbsp;</div></div>
   </div>
 
-  <div class="sec">
-    <div class="chips" id="examChips"></div>
+  <div class="sech2"><div class="eyebrow">Streak</div><span class="more">this week</span></div>
+  <div class="streakcard">
+    <div class="stop"><div class="bigflame">🔥</div><div><div class="sbig"><span id="sBig">0</span> <small>days</small></div><div class="snote" id="sNote">Practice today to start your streak.</div></div></div>
+    <div class="week" id="weekStrip"></div>
+    <div class="sfootr"><span>Best <b id="sBest">0 days</b></span><span id="sHearts">❤️ 5/5</span></div>
   </div>
 
-  <div class="banner">
-    <div class="eyebrow" id="trailEye">TOEFL</div>
-    <h2 id="trailName">The Trail</h2>
-  </div>
+  <div class="sech2"><div class="eyebrow">Daily quests</div><span class="more" id="qreset">resets daily</span></div>
+  <div class="qcard" id="quests"></div>
+
   <div class="map" id="map"></div>
 
   <div class="sec">
@@ -339,7 +402,7 @@ const HMAX=5, GEM_REFILL=30;
 function save(){}
 function levelFor(xp){return Math.floor(xp/LV_STEP)+1}
 let exam="toefl";
-function applyProgress(p){if(!p)return;S.xp=p.xp;S.gems=p.gems;S.hearts=p.hearts;S.heartTs=p.heartTs;S.nextHeartMs=p.nextHeartMs||0;S.streak=p.streak;S.lastDay=p.lastDay||null;S.done=p.done||{};S.claimed=p.claimed||{};S.dayXp=p.dayXp||0;S.dayDone=p.dayDone||0;PREMIUM=!!p.premium;ACCESS=p.access||null;}
+function applyProgress(p){if(!p)return;S.xp=p.xp;S.gems=p.gems;S.hearts=p.hearts;S.heartTs=p.heartTs;S.nextHeartMs=p.nextHeartMs||0;S.streak=p.streak;S.bestStreak=p.bestStreak||0;S.lastDay=p.lastDay||null;S.done=p.done||{};S.claimed=p.claimed||{};S.dayXp=p.dayXp||0;S.dayDone=p.dayDone||0;PREMIUM=!!p.premium;ACCESS=p.access||null;}
 async function apiP(path,opts){try{const r=await fetch(path,Object.assign({headers:{"content-type":"application/json"},credentials:"include"},opts||{}));return await r.json();}catch(e){return null;}}
 async function gev(type,extra){const j=await apiP("/api/progress",{method:"POST",body:JSON.stringify(Object.assign({type:type},extra||{}))});if(j&&j.ok)applyProgress(j.progress);return j;}
 function nextHeartMs(){return PREMIUM?0:(S.nextHeartMs||0);}
@@ -347,19 +410,19 @@ function fmtMs(ms){const m=Math.ceil(ms/60000),h=Math.floor(m/60);return h>0?(h+
 function renderHudHearts(){const hp=document.getElementById("hp");if(hp)hp.innerHTML=PREMIUM?"∞":heartStr(S.hearts);}
 
 /* ---------- HUD ---------- */
+function setT(id,v){ var e=document.getElementById(id); if(e)e.textContent=v; }
 function syncHud(){
- const lv=levelFor(S.xp), into=S.xp%LV_STEP, pct=into/LV_STEP;
- document.getElementById("lvNum").textContent=lv;
- document.getElementById("lvLabel").textContent="Level "+lv;
- document.getElementById("xpText").textContent=into+" / "+LV_STEP+" XP";
- document.getElementById("xpFill").style.width=Math.round(pct*100)+"%";
- const r=18,c=2*Math.PI*r;document.getElementById("lvring").setAttribute("stroke-dasharray",c);
- document.getElementById("lvring").setAttribute("stroke-dashoffset",c*(1-pct));
- document.getElementById("gemN").textContent=S.gems;
- var hpN=document.getElementById("hpN"),tmr=document.getElementById("hpTimer"),pc=document.getElementById("premChip"),up=document.getElementById("upsell");
- if(PREMIUM){hpN.textContent="∞";hpN.classList.add("hinf");tmr.textContent="";pc.className="premchip";pc.textContent="⭐ Premium · unlimited";pc.removeAttribute("href");if(up)up.style.display="none";}
- else{hpN.textContent=S.hearts;hpN.classList.remove("hinf");var ms=nextHeartMs();tmr.textContent=ms?("+1 in "+fmtMs(ms)):"";pc.className="premchip";pc.setAttribute("href","/?upgrade=1");pc.textContent="⭐ Premium";if(up)up.style.display="flex";}
- document.getElementById("stN").textContent=S.streak;
+ var lv=levelFor(S.xp), into=S.xp%LV_STEP, pct=into/LV_STEP;
+ setT("lvNum",lv); setT("rankName","Level "+lv+" learner");
+ setT("xpText",into+" / "+LV_STEP+" XP");
+ var xf=document.getElementById("xpFill"); if(xf)xf.style.width=Math.round(pct*100)+"%";
+ var ring=document.getElementById("lvring"); if(ring){ var c=2*Math.PI*27; ring.setAttribute("stroke-dasharray",c.toFixed(1)); ring.setAttribute("stroke-dashoffset",(c*(1-pct)).toFixed(1)); }
+ setT("gemN",S.gems); setT("stN",S.streak); setT("tStreak",S.streak);
+ setT("tStreakX","Best: "+(S.bestStreak||S.streak||0)+" d");
+ var up=document.getElementById("upsell");
+ if(PREMIUM){ setT("hpN","∞"); setT("hpTimer","unlimited"); if(up)up.style.display="none"; }
+ else { setT("hpN",S.hearts); var ms=nextHeartMs(); setT("hpTimer", ms?("+1 in "+fmtMs(ms)):(S.hearts>=HMAX?"full hearts":"")); if(up)up.style.display="flex"; }
+ renderStreak();
 }
 /* ---------- quests ---------- */
 const QUESTS=[
@@ -368,14 +431,13 @@ const QUESTS=[
  {id:"streak",t:"Keep your streak alive",icon:"🔥",goal:1,get:()=>S.dayXp>0?1:0,rew:{xp:20},rewT:"+20 XP"}
 ];
 function renderQuests(){
- const w=document.getElementById("quests");w.innerHTML="";
- QUESTS.forEach(q=>{
-  const cur=Math.min(q.get(),q.goal),pct=Math.round(cur/q.goal*100),full=cur>=q.goal,claimed=S.claimed["q:"+q.id+":"+S.lastDay];
-  const row=document.createElement("div");row.className="quest"+(full?" done":"");
-  let right=claimed?'<div class="qrew" style="color:var(--green)">✓ done</div>':
-    (full?'<button class="claim" onclick="claim(\''+q.id+'\')">Claim</button>':'<div class="qrew">'+q.rewT+'</div>');
-  row.innerHTML='<div class="qi">'+q.icon+'</div><div class="qm"><div class="qt">'+q.t+'</div>'+
-   '<div class="miniq"><i style="width:'+pct+'%"></i></div></div>'+right;
+ var w=document.getElementById("quests");if(!w)return;w.innerHTML="";
+ QUESTS.forEach(function(q){
+  var cur=Math.min(q.get(),q.goal),pct=Math.round(cur/q.goal*100),full=cur>=q.goal,claimed=S.claimed["q:"+q.id+":"+S.lastDay];
+  var sub=claimed?"claimed ✓":(full?"ready to claim":(cur+" / "+q.goal));
+  var right=claimed?'<div class="qrew" style="color:var(--green)">✓</div>':(full?'<button class="claim" onclick="claim(\''+q.id+'\')">Claim</button>':'<div class="qrew">'+q.rewT+'</div>');
+  var row=document.createElement("div");row.className="quest";
+  row.innerHTML='<div class="qi">'+q.icon+'</div><div class="qm"><div class="qt">'+q.t+'</div><div class="qsub">'+sub+'</div><div class="qbar"><i style="width:'+pct+'%"></i></div></div>'+right;
   w.appendChild(row);
  });
 }
@@ -406,7 +468,7 @@ function renderMap(){
  const nodes=C.nodes,map=document.getElementById("map");
  const W=330,GAP=116,PAD=66,H=PAD*2+GAP*(nodes.length-1);map.style.height=H+"px";
  const pts=nodes.map((n,i)=>({x:165+98*Math.sin(0.78*i),y:PAD+GAP*i}));
- let doneCount=0;nodes.forEach((n,i)=>{if(nodeState(exam,i)==="done")doneCount=i+1;});
+ let doneCount=0;nodes.forEach((n,i)=>{if(nodeState(exam,i)==="done")doneCount=i+1;});var _ts=document.getElementById("trailSub");if(_ts)_ts.textContent=doneCount+" of "+nodes.length+" lessons done";var _tp=document.getElementById("trailPct");if(_tp)_tp.textContent=Math.round(doneCount/nodes.length*100)+"% complete";
  let s='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">';
  let d='';pts.forEach((p,i)=>d+=(i?'L':'M')+p.x+' '+p.y+' ');
  s+='<path d="'+d+'" fill="none" stroke="#dfe6ea" stroke-width="7" stroke-dasharray="0.5 16" stroke-linecap="round"/>';
@@ -575,6 +637,20 @@ function loop(){cx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.vy+=p.g
 function xpPop(x,y,txt){const e=document.createElement("div");e.className="pop";e.textContent=txt;e.style.left=x+"px";e.style.top=y+"px";document.body.appendChild(e);setTimeout(()=>e.remove(),1000)}
 
 /* ---------- boot ---------- */
+function renderStreak(){
+ setT("sBig",S.streak||0); setT("sBest",(S.bestStreak||S.streak||0)+" days");
+ var sh=document.getElementById("sHearts"); if(sh)sh.textContent=PREMIUM?"❤️ unlimited":("❤️ "+S.hearts+"/"+HMAX);
+ setT("sNote", S.dayXp>0 ? "You practiced today — streak safe. See you tomorrow!" : (S.streak>0 ? ("Practice today to keep your "+S.streak+"-day streak.") : "Practice today to start your streak."));
+ var strip=document.getElementById("weekStrip"); if(!strip)return;
+ var labels=["M","T","W","T","F","S","S"], now=new Date(), wd=(now.getDay()+6)%7, todayActive=S.dayXp>0;
+ var pastCovered=Math.max(0,(S.streak||0)-(todayActive?1:0)), html="";
+ for(var i=0;i<7;i++){ var cls="day", inner="";
+  if(i===wd){ cls+= todayActive?" on":" today"; inner= todayActive?"🔥":"★"; }
+  else if(i<wd && (wd-i)<=pastCovered){ cls+=" on"; inner="🔥"; }
+  html+='<div class="'+cls+'"><div class="dot">'+inner+'</div><div class="dl">'+labels[i]+'</div></div>'; }
+ strip.innerHTML=html;
+}
+function doBack(){ try{ if(document.referrer && document.referrer.indexOf(location.origin)===0){ history.back(); return; } }catch(e){} location.href = PREMIUM?"/hub":((typeof TESTROUTE!=="undefined"&&TESTROUTE[ACCESS])||"/"); }
 function renderAll(){syncHud();renderQuests();renderChips();renderMap();renderBadges();renderLeague();}
 async function init(){
  const acc=await apiP("/api/account");
