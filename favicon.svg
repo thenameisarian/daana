@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#04201d"/><g transform="translate(36,139) scale(0.29)"><path transform="translate(-25,800) scale(1,-1)" d="M65 0Q65 0 55.0 0.5Q45 1 35.0 6.0Q25 11 25 23V772L152 800V127H245V0ZM308 452Q284 452 267.0 469.0Q250 486 250 510Q250 534 267.0 551.0Q284 568 308 568Q332 568 349.0 551.0Q366 534 366 510Q366 486 349.0 469.0Q332 452 308 452ZM205 0V127H298V299L425 327V23Q425 11 415.0 6.0Q405 1 395.0 0.5Q385 0 385 0ZM697 58Q691 36 666.5 20.0Q642 4 609.5 -2.0Q577 -8 546.5 -1.0Q516 6 495.5 28.5Q475 51 475 93V772L602 800V93Q602 71 613.0 60.5Q624 50 640.0 48.5Q656 47 672.0 50.5Q688 54 697 58ZM722 0 798 127H1415Q1416 159 1398.5 179.5Q1381 200 1325 200H832L980 447L990 440L938 327H1325Q1395 327 1437.5 307.0Q1480 287 1502.5 254.0Q1525 221 1533.0 181.0Q1541 141 1541.5 100.0Q1542 59 1542 23Q1542 11 1532.0 6.0Q1522 1 1512.0 0.5Q1502 0 1502 0Z" fill="#7fe9d6"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#9af6e4"/><stop offset=".55" stop-color="#2fcdb8"/><stop offset="1" stop-color="#16a06a"/>
+  </linearGradient></defs>
+  <rect width="512" height="512" rx="120" fill="#04201d"/>
+  <text x="256" y="256" dy=".34em" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="340" fill="url(#g)">D</text>
+</svg>
