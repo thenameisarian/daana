@@ -206,6 +206,9 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:80}
  .step-grid,.bento,.tcards{grid-template-columns:1fr}.cell.wide{grid-column:span 1}
  .price-grid{grid-template-columns:1fr}.sec-head h2{font-size:29px}
 }
+.fchip .ci{width:17px;height:17px;flex:none}
+.tdot svg{width:21px;height:21px}
+.dc-chip svg{width:15px;height:15px;flex:none}
 </style>
 </head>
 <body>
@@ -240,10 +243,10 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:80}
         <span class="mini">Free for followers · no card needed</span>
       </div>
       <div class="floats">
-        <div class="fchip"><span class="e">🔥</span> Streaks</div>
-        <div class="fchip"><span class="e">⚡</span> XP &amp; levels</div>
-        <div class="fchip"><span class="e">❤️</span> Hearts</div>
-        <div class="fchip"><span class="e">🦉</span> Owl mentor</div>
+        <div class="fchip" style="color:#ff9a4d"><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.786 3 -2.791 3 -4 2z"/></svg><span style="color:var(--ink)">Streaks</span></div>
+        <div class="fchip" style="color:#f2b53b"><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3v7h6l-8 11v-7H5z"/></svg><span style="color:var(--ink)">XP &amp; levels</span></div>
+        <div class="fchip" style="color:#ff6f61"><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12.6l-7.5 7.4l-7.5 -7.4a5 5 0 1 1 7.5 -6.6a5 5 0 1 1 7.5 6.6"/></svg><span style="color:var(--ink)">Hearts</span></div>
+        <div class="fchip" style="color:#2fcdb8"><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9.5a7 7 0 0 1 14 0v3a7 7 0 0 1 -14 0z"/><circle cx="9.2" cy="10" r="1.3"/><circle cx="14.8" cy="10" r="1.3"/><path d="M9.5 4.5l-1.5 -2M14.5 4.5l1.5 -2M10.5 14.5l1.5 1.5l1.5 -1.5"/></svg><span style="color:var(--ink)">Owl mentor</span></div>
       </div>
     </div>
     <div class="demo-card reveal in">
@@ -251,14 +254,14 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:80}
       <div class="dc-top">
         <div class="dc-ring"><b>7</b></div>
         <div><div class="nm">TOEFL · Reading</div><div class="sub">Level 7 · 38% of the trail</div></div>
-        <div class="dc-chip">🔥 5</div>
+        <div class="dc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.786 3 -2.791 3 -4 2z"/></svg>5</div>
       </div>
       <div class="dc-bar"><i></i></div>
       <div class="trail">
-        <div class="tnode"><div class="tdot done">✓</div><div class="lbl">Main idea &amp; purpose<small>cleared · 100%</small></div></div>
-        <div class="tnode"><div class="tdot done">✓</div><div class="lbl">Reading for detail<small>cleared · 90%</small></div></div>
-        <div class="tnode"><div class="tdot go">💡</div><div class="lbl" style="color:var(--mintl)">Inference<small style="color:#7fc7bd">start now →</small></div></div>
-        <div class="tnode"><div class="tdot lock">🔒</div><div class="lbl" style="color:var(--mut)">Vocabulary in context</div></div>
+        <div class="tnode"><div class="tdot done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l9 -10"/></svg></div><div class="lbl">Main idea &amp; purpose<small>cleared · 100%</small></div></div>
+        <div class="tnode"><div class="tdot done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l9 -10"/></svg></div><div class="lbl">Reading for detail<small>cleared · 90%</small></div></div>
+        <div class="tnode"><div class="tdot go"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11 -7z"/></svg></div><div class="lbl" style="color:var(--mintl)">Inference<small style="color:#7fc7bd">start now →</small></div></div>
+        <div class="tnode"><div class="tdot lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div class="lbl" style="color:var(--mut)">Vocabulary in context</div></div>
       </div>
     </div>
   </div>
