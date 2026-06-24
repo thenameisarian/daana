@@ -23,7 +23,7 @@ export async function onRequest(context){
   try { a = await getAuthedUser(env, request); } catch (_) { a = null; } // fail closed
 
   if (!a){
-    const to = new URL("/", url);
+    const to = new URL("/login", url);
     to.searchParams.set("need", "login");
     return Response.redirect(to.toString(), 302);
   }
@@ -37,7 +37,7 @@ export async function onRequest(context){
 
   if (ok) return next();
 
-  const to = new URL("/", url);
+  const to = new URL("/login", url);
   to.searchParams.set("need", premium ? "access" : (access ? "wrong" : "access"));
   return Response.redirect(to.toString(), 302);
 }
