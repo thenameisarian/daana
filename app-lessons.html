@@ -643,7 +643,7 @@ function finishNode(){
    '<div><div class="v" style="color:var(--teald)">'+(already?"+0":"+"+shownXp)+'</div><div class="k">XP</div></div>'+
    '<div><div class="v" style="color:var(--gem)">'+(already?"+0":"+"+gems+" 💎")+'</div><div class="k">gems</div></div>'+
    '<div><div class="v" style="color:var(--fire)">🔥 '+S.streak+'</div><div class="k">streak</div></div>'+
-  '</div></div>'+
+  '</div>'+(n.type==="boss"?'<div style="margin-top:16px"><a class="cta" style="text-decoration:none;display:inline-block" href="'+(TESTROUTE[exam]||"/")+'">Take the real '+CONTENT[exam].name+' test →</a></div>':'')+'</div>'+
   '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">'+(n.type==="boss"?"You conquered the trail. ":"Next node unlocked. ")+'Keep going.</div>'+
   '<button class="cta" onclick="closeOv()">Continue →</button></div>';
  burst(innerWidth/2,innerHeight*0.32,110);

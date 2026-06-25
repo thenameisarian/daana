@@ -714,7 +714,7 @@ function renderReview(){ window.scrollTo(0,0); mode="review"; setFab(false); con
    status = your==null?'<div class="statusbar st-none">You did not answer this question</div>':(your===a?'<div class="statusbar st-ok">Correct</div>':'<div class="statusbar st-bad">Incorrect</div>');
    const opts=q.opts.map((o,j)=>{let cls="opt";if(j===a)cls+=" rev-correct";if(your===j&&j!==a)cls+=" rev-wrong";const mk=j===a?' <b style="color:var(--green)">&#10003;</b>':((your===j&&j!==a)?' <b style="color:#c0392b">&#10007;</b>':'');return `<div class="${cls}">${esc(o)}${mk}</div>`;}).join("");
    const exp=q.exp||`The correct answer is "${esc(q.opts[a])}." A full explanation will be added as each test's content is built out.`;
-   main=`<div class="qtext">${esc(q.q)}</div>${opts}<div class="expcard"><div class="h">Text explanation</div><p>${exp}</p></div>`;
+   main=`<div class="qtext">${esc(q.q)}</div>${opts}<div class="expcard"><div class="h">Text explanation</div><p>${exp}</p><a style="display:inline-block;margin-top:8px;color:#1a8f93;font-weight:700;text-decoration:none;font-size:13px" href="/app-lessons?exam=toefl&node=${skillOf(q,null)}">Practice this skill →</a></div>`;
  } else if(it.kind==="build"){ const your=(bsPick[it.qi]||[]).join(" ").trim(); const ok=your.toLowerCase()===it.answer.toLowerCase();
    status = !your?'<div class="statusbar st-none">Not attempted</div>':(ok?'<div class="statusbar st-ok">Correct</div>':'<div class="statusbar st-bad">Incorrect</div>');
    main=`<div class="qtext">Build a Sentence</div><div class="expcard"><div class="h">Your answer</div><p>${your?esc(your):"(not attempted)"}</p><div class="h">Correct sentence</div><p>${esc(it.answer)}</p></div>`;
