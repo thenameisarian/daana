@@ -209,6 +209,18 @@ function taskScore(t,idx){
  if(t.type==="ireading"||t.type==="ilisten"){ let ok=0; t.questions.forEach(q=>{if(ans[q.id]===q.ans)ok++;}); return t.questions.length?ok/t.questions.length:0; }
  return null;
 }
+let PREM=false;
+(function(){try{if(typeof fetch==="function")fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all"));}).catch(function(){});}catch(e){}})();
+var DET_SKILL={wordbank:"de-select",readcomplete:"de-complete",fillblanks:"de-complete",ireading:"de-iread"};
+var DET_TITLE={"de-select":"Read & Select","de-complete":"Read & Complete","de-iread":"Interactive Reading"};
+function focusAreas(){ var agg={};
+ tasks.forEach(function(t,idx){ if(!t.graded)return; var sk=DET_SKILL[t.type]; if(!sk)return; var sc=taskScore(t,idx); if(sc==null)return; if(!agg[sk])agg[sk]={sum:0,n:0,weak:0}; agg[sk].sum+=sc; agg[sk].n++; if(sc<0.7)agg[sk].weak++; });
+ var arr=Object.keys(agg).filter(function(k){return agg[k].weak>0;}).map(function(k){return {skill:k,title:DET_TITLE[k]||k,score:agg[k].sum/agg[k].n};}); arr.sort(function(a,b){return a.score-b.score;}); return arr.slice(0,3);
+}
+function focusHTML(){ var fa=focusAreas(); if(!fa.length)return "";
+ var rows=fa.map(function(f){ var cta=PREM?('<a class="btn teal" style="text-decoration:none;padding:7px 14px;font-size:13px" href="/app-lessons?exam=duolingo&node='+f.skill+'">Practice &rarr;</a>'):('<a class="btn ghost" style="text-decoration:none;padding:7px 14px;font-size:13px" href="/login?upgrade=1">Unlock in Premium</a>'); return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #e2e6ea"><div style="flex:1"><b>'+f.title+'</b></div>'+cta+'</div>'; }).join("");
+ return '<div style="margin-top:16px;text-align:left;border:1px solid #e2e6ea;border-radius:12px;padding:14px 16px"><div style="font-weight:800;color:#1a8f93;margin-bottom:6px">Focus areas \u2014 sharpen these in the Lessons course</div>'+rows+'</div>';
+}
 function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="result";
  const cat={literacy:[],comprehension:[],conversation:[],production:[]};
  const map={wordbank:["literacy","comprehension"],readcomplete:["literacy"],fillblanks:["literacy","comprehension"],dictation:["comprehension","conversation"],ireading:["comprehension","literacy"],ilisten:["comprehension","conversation"]};
@@ -223,7 +235,7 @@ function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="re
    <h1 class="h1" style="margin-top:14px">Your practice result</h1>
    <div class="bigscore">${overall!=null?overall:"&mdash;"}<span style="font-size:22px;color:#6b7785"> / 160</span></div>
    <p class="lead" style="text-align:center">estimated overall (graded, auto-scored tasks)</p>
-   <div class="scoregrid">${cells}</div>
+   <div class="scoregrid">${cells}</div>${focusHTML()}
    <p class="lead" style="margin-top:14px">Based on the auto-scored Reading &amp; Listening tasks. Speaking &amp; Writing (Production) need a teacher or AI to rate - use the review to self-assess. The real DET is adaptive, so live scores will differ.</p>
    <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="startReview()">Review answers</button><button class="btn" onclick="begin()">Retake</button><button class="btn ghost" onclick="showHome()">Home</button></div></div>`;
 }
