@@ -467,6 +467,19 @@ function showHome(){
  if(timerInt)clearInterval(timerInt); if(window.speechSynthesis)speechSynthesis.cancel(); mode="home"; setFab(false);
  testEl().classList.remove("on"); testEl().innerHTML="";
  homeEl().style.display="block";
+ if(SCOPE==="reading"){ activeTest=0; DATA=TESTS[0];
+   homeEl().innerHTML=`<div class="center-wrap">
+     <div class="brand"><span class="mk">D</span><span>Daana</span></div>
+     <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-top:4px">Free sample · by Arian Academy</div>
+     <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px"><span style="font-size:12px;font-weight:800;letter-spacing:.03em;padding:5px 13px;border-radius:999px;background:#1f9c8e;color:#eafff9">TOEFL iBT · Reading sample</span></div>
+     <h1 class="h1" style="margin-top:14px">TOEFL Reading — free sample</h1>
+     <p class="lead">Take a full TOEFL Reading section in the real 2026 format with instant scoring. This is a free taste — unlock all four sections and 5 full tests when you're ready.</p>
+     <div class="homestat"><span><b>${DATA.reading.tasks.length}</b> reading tasks</span><span>~<b>${DATA.reading.minutes} min</b></span><span><b>Auto-scored</b></span></div>
+     <div class="cards"><div class="scard"><div class="ic">${ICON.reading}</div><div class="nm">${DATA.reading.name}</div><div class="mt">${DATA.reading.tasks.length} tasks · ${DATA.reading.minutes} min</div><div class="desc">Complete the Words, daily-life texts, and academic passages.</div><button class="btn teal" style="margin-top:8px;padding:8px 20px" onclick="begin(['reading'])">Start Reading</button></div></div>
+     <div style="margin-top:22px;padding:16px;border:1px solid rgba(47,205,184,.4);border-radius:14px;background:rgba(47,205,184,.08)"><div style="font-weight:800;color:#baf3e8">Want the full thing?</div><p class="lead" style="margin:6px 0 12px">All four sections, 5 full practice tests, per-question explanations, strategy tips and the gamified lessons course.</p><a class="btn teal" style="text-decoration:none" href="/login?upgrade=course">Unlock the full course</a></div>
+   </div>`;
+   return;
+ }
  const desc={reading:"Complete the Words, daily-life texts, and academic passages.",listening:"Short responses, conversations, announcements, and academic talks.",speaking:"Listen and repeat, then a short interview.",writing:"Build a sentence, write an email, join a discussion."};
  const order=["reading","listening","speaking","writing"];
  const avail=order.filter(k=>DATA[k]);
@@ -499,8 +512,8 @@ const TIPS=[
  {h:"Writing",items:["Build a Sentence: find the subject and verb first; put time and place phrases near the end; read it back in your head.","Write an Email: answer every bullet, use a greeting and a sign-off, write 100–150 words in complete sentences.","Academic Discussion: state a clear opinion, give one reason and one example, and react to a classmate's point. Aim for 100–130 words."]},
  {h:"Speaking",items:["Listen and Repeat: listen to the whole statement, then repeat it naturally and in one go — you get one chance.","Take an Interview: there is no prep time. Start with a direct answer, then a reason, then an example. Keep talking for the full 45 seconds.","A simple structure works: Point → because → for example."]}
 ];
-let PREM=false;
-(function(){try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tips));}).catch(function(){});}catch(e){}})();
+let PREM=false, SCOPE=null;
+(function(){try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tips));SCOPE=(d&&d.user&&d.user.scope)||null;if(mode==="home")showHome();}).catch(function(){});}catch(e){}})();
 function premWall(title){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="prem"; setFab(false); homeEl().style.display="none"; testEl().classList.add("on");
  testEl().innerHTML='<div class="center-wrap"><div class="brand"><span class="mk">D</span><span>Daana</span></div>'
   +'<h1 class="h1" style="margin-top:16px">'+title+' &middot; Premium</h1>'
@@ -696,6 +709,7 @@ function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="re
    <div class="homestat"><span>Time: <b>${testStartedAt?fmt(Math.round((Date.now()-testStartedAt)/1000)):"—"}</b></span><span>Sections: <b>${flow.length}</b></span></div>
    <div class="scoregrid">${cells}</div>${focusHTML()}
    <p class="lead" style="margin-top:16px">Reading & Listening are auto-scored to the 2026 band (with a 0–120 estimate). Writing & Speaking need a teacher to rate — use the review to self-assess.</p>
+   ${SCOPE==="reading"?`<div style="margin-top:18px;padding:16px;border:1px solid rgba(47,205,184,.4);border-radius:14px;background:rgba(47,205,184,.08);text-align:center"><div style="font-weight:800;color:#baf3e8">That's your free Reading sample done</div><p class="lead" style="margin:6px 0 12px">Unlock all four sections, 5 full tests, per-question explanations and the lessons course.</p><a class="btn teal" style="text-decoration:none" href="/login?upgrade=course">Unlock the full course</a></div>`:""}
    <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="startReview()">Review answers &amp; explanations</button><button class="btn ghost" onclick="showTips()">Tips</button><button class="btn ghost" onclick="begin(flow)">Retake</button><button class="btn ghost" onclick="showHome()">Home</button></div></div>`;
 }
 let reviewItems=[], reviewIdx=0;

@@ -77,7 +77,7 @@ export function hasTips(user){ return !!(user && ((user.products && (user.produc
 export function hasCourse(user){ return !!(user && ((user.products && user.products.course) || user.tier === "premium")); }
 export async function grantProduct(kv, user, product){ user.products = user.products || {}; if (product === "course") user.products.course = true; else user.products.tips = true; user.access = "all"; await saveUser(kv, user); return user; }
 export function userPublic(user){
-  return { email: user.email, tier: user.tier || "none", access: user.access || null, products: user.products || {}, tips: hasTips(user), course: hasCourse(user) };
+  return { email: user.email, tier: user.tier || "none", access: user.access || null, scope: user.scope || null, products: user.products || {}, tips: hasTips(user), course: hasCourse(user) };
 }
 
 // Redeem an access code onto an account. Mutates+saves the user. Returns { ok, error?, user? }.
@@ -94,12 +94,13 @@ export async function redeemCodeForUser(env, user, codeRaw){
   if (rec.product === "course" || rec.product === "tips") {
     user.products = user.products || {};
     if (rec.product === "course") user.products.course = true; else user.products.tips = true;
-    user.access = "all"; user.codeRedeemed = c;
+    user.access = "all"; user.scope = null; user.codeRedeemed = c;
     await saveUser(kv, user);
     return { ok: true, user };
   }
   user.access = rec.test || "toefl";
   user.tier = rec.tier === "premium" ? "premium" : "free";
+  user.scope = rec.scope || null;
   user.codeRedeemed = c;
   await saveUser(kv, user);
   return { ok: true, user };

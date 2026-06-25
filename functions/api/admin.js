@@ -43,8 +43,8 @@ export async function onRequestPost(context) {
     }
     const codes = [];
     for (let i = 0; i < count; i++) {
-      const code = genCode();
-      await kv.put("code:" + code, JSON.stringify({ test, kind, active: true, tier: (body.tier === "premium" ? "premium" : "free"), product: (body.product === "course" || body.product === "tips") ? body.product : undefined, note: body.note || "", createdAt: Date.now() }));
+      const code = (kind !== "rotating" && body.code && count === 1) ? String(body.code).trim().toUpperCase().replace(/[^A-Z0-9-]/g, "") : genCode();
+      await kv.put("code:" + code, JSON.stringify({ test, kind, active: true, tier: (body.tier === "premium" ? "premium" : "free"), product: (body.product === "course" || body.product === "tips") ? body.product : undefined, scope: (body.scope === "reading") ? "reading" : undefined, note: body.note || "", createdAt: Date.now() }));
       codes.push(code);
     }
     return J({ ok: true, kind, test, codes });
