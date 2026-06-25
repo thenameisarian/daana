@@ -10,7 +10,7 @@ const PROTECTED = {
   "/app-duolingo.html": "duolingo", "/app-duolingo": "duolingo",
   "/app-ged.html": "ged", "/app-ged": "ged",
   "/hub.html": "all", "/hub": "all",
-  "/app-lessons.html": "all", "/app-lessons": "all", "/lessons": "all"
+  "/app-lessons.html": "course", "/app-lessons": "course", "/lessons": "course"
 };
 
 export async function onRequest(context){
@@ -29,15 +29,17 @@ export async function onRequest(context){
   }
 
   const access = a.user.access || null;
-  const premium = a.user.tier === "premium" || access === "all";
+  const hasCourse = (a.user.products && a.user.products.course) || a.user.tier === "premium";
+  const allAccess = access === "all" || a.user.tier === "premium";
   let ok = false;
   if (required === "*") ok = !!access;
-  else if (required === "all") ok = premium;
+  else if (required === "course") ok = hasCourse;
+  else if (required === "all") ok = allAccess;
   else ok = (access === required || access === "all");
 
   if (ok) return next();
 
   const to = new URL("/login", url);
-  to.searchParams.set("need", premium ? "access" : (access ? "wrong" : "access"));
+  to.searchParams.set("need", required === "course" ? "course" : "access");
   return Response.redirect(to.toString(), 302);
 }

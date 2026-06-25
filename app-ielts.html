@@ -492,7 +492,7 @@ function scoreSection(secKey){ let correct=0,total=0; (ACTIVE[secKey].parts||[])
    else if(g.questions){ g.questions.forEach(q=>{ total++; if(typeof q.ans==="number"){ if(ans[q.id]===q.ans)correct++; } else { if((ans[q.id]||"")===q.ans)correct++; } }); }
  }); }); return {correct,total}; }
 let PREM=false;
-(function(){try{if(typeof fetch==="function")fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all"));}).catch(function(){});}catch(e){}})();
+(function(){try{if(typeof fetch==="function")fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tips));}).catch(function(){});}catch(e){}})();
 var IE_SKILL={tfng:"ie-tfng",ynng:"ie-tfng",headings:"ie-head",matching:"ie-match",fill:"ie-complete",map:"ie-complete"};
 var IE_TITLE={"ie-tfng":"True / False / Not Given","ie-head":"Matching headings","ie-match":"Matching information","ie-complete":"Sentence & summary completion"};
 function focusAreas(){ var miss={};
@@ -554,6 +554,6 @@ function reviewNav(d){ if(d>0&&reviewIdx===reviewItems.length-1){results();retur
 
 showHome();
 </script>
-<script>(function(){var b=document.getElementById("premBar");if(!b)return;try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){if(!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all")))b.style.display="flex";}).catch(function(){});}catch(e){}})();</script>
+<script>(function(){var b=document.getElementById("premBar");if(!b)return;try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){if(!(d&&d.user&&(d.user.tips)))b.style.display="flex";}).catch(function(){});}catch(e){}})();</script>
 </body>
 </html>

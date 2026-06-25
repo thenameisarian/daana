@@ -210,7 +210,7 @@ function taskScore(t,idx){
  return null;
 }
 let PREM=false;
-(function(){try{if(typeof fetch==="function")fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all"));}).catch(function(){});}catch(e){}})();
+(function(){try{if(typeof fetch==="function")fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tips));}).catch(function(){});}catch(e){}})();
 var DET_SKILL={wordbank:"de-select",readcomplete:"de-complete",fillblanks:"de-complete",ireading:"de-iread",writesample:"de-write",writephoto:"de-write",readwrite:"de-write"};
 var DET_EXP={wordbank:"Tap only words you are sure are real \u2014 fake words are built to look real, so when unsure, leave it out.",readcomplete:"Use the sentence meaning and grammar to fill the missing letters, then check your spelling.",fillblanks:"Choose the word that fits the sentence meaning and grammar, not just one you recognise.",ireading:"Read the passage as it builds \u2014 later questions depend on understanding the earlier part.",dictation:"Type exactly what you hear; spelling counts.",writesample:"Stay on topic, write full sentences, and develop a couple of clear ideas.",writephoto:"Describe what you see in full, accurate sentences \u2014 develop your ideas.",readwrite:"Answer the prompt directly and develop two clear ideas with accurate grammar."};
 var DET_TITLE={"de-select":"Read & Select","de-complete":"Read & Complete","de-iread":"Interactive Reading"};
@@ -265,6 +265,6 @@ function rNav(d){ if(d>0&&rIdx===rItems.length-1){results();return;} rIdx=Math.m
 
 showHome();
 </script>
-<script>(function(){var b=document.getElementById("premBar");if(!b)return;try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){if(!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all")))b.style.display="flex";}).catch(function(){});}catch(e){}})();</script>
+<script>(function(){var b=document.getElementById("premBar");if(!b)return;try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){if(!(d&&d.user&&(d.user.tips)))b.style.display="flex";}).catch(function(){});}catch(e){}})();</script>
 </body>
 </html>

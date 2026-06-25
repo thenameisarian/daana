@@ -230,7 +230,7 @@ function scoreSubject(s){ let c=0,t=0; s.parts.forEach((part,pidx)=>part.groups.
    else if(g.type==="dragdrop"){g.questions.forEach(q=>{t++;const pl=ans[q.id]||[];if(pl.length===q.answer.length&&pl.every((x,i)=>x===q.answer[i]))c++;});}
  })); return {c,t}; }
 let PREM=false;
-(function(){try{if(typeof fetch==="function")fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all"));}).catch(function(){});}catch(e){}})();
+(function(){try{if(typeof fetch==="function")fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tips));}).catch(function(){});}catch(e){}})();
 var GED_LESSONS={ rla:[["gd-read","Reading & evidence"],["gd-essay","The extended response"]], math:[["gd-math","Math reasoning"],["gd-algebra","Algebra & graphs"]], science:[["gd-sci","Science reasoning"]], social:[["gd-social","Social studies"]] };
 var GED_EXP={ rla:"Answer from the passage evidence, not your opinion \u2014 find the line that proves the answer.", math:"Read carefully, note exactly what is asked, and use the calculator and formula sheet; watch wording and units.", science:"A reasoning test \u2014 draw your answer from the data, chart or passage given, not from memory.", social:"Reason from the source provided (document, map or chart), not from prior knowledge." };
 function focusHTML(subj,pct){ var ls=GED_LESSONS[subj.key]||[]; if(!ls.length||pct>=0.85)return "";
@@ -269,6 +269,6 @@ function rNav(d){ if(d>0&&rIdx===rItems.length-1){finish();return;} rIdx=Math.ma
 
 showHome();
 </script>
-<script>(function(){var b=document.getElementById("premBar");if(!b)return;try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){if(!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all")))b.style.display="flex";}).catch(function(){});}catch(e){}})();</script>
+<script>(function(){var b=document.getElementById("premBar");if(!b)return;try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){if(!(d&&d.user&&(d.user.tips)))b.style.display="flex";}).catch(function(){});}catch(e){}})();</script>
 </body>
 </html>

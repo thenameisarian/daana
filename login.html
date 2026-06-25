@@ -162,6 +162,18 @@ body{
 .sbtn.prem{justify-content:center;background:linear-gradient(135deg,#f0a829,#e07b1a);box-shadow:0 8px 20px -8px #e07b1a;width:100%;border:none;cursor:pointer}
 .paypanel{display:none;margin-top:14px;text-align:left;background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:14px;padding:14px}
 .paypanel.on{display:block}
+.plans{display:grid;gap:9px;margin-bottom:2px}
+.plan{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:13px;padding:11px 13px;text-align:left}
+.plan.sel{border-color:#2fcdb8;box-shadow:0 0 0 1px rgba(47,205,184,.4) inset}
+.plan .pn{font-weight:800;font-size:13.5px;color:var(--txt)}
+.plan .pd{font-size:11px;color:#9fb4b0;margin-top:2px;max-width:215px;line-height:1.45}
+.plan .pp{font-weight:800;font-size:13px;color:#9af0e0;white-space:nowrap}
+.plan .choose{margin-top:6px;border:1px solid #2fcdb8;background:rgba(47,205,184,.12);color:#baf3e8;border-radius:9px;padding:7px 11px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap}
+.payways{display:flex;gap:8px;margin:4px 0 10px;flex-wrap:wrap}
+.payway{flex:1;min-width:120px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:var(--txt);border-radius:11px;padding:10px;font-weight:800;font-size:12.5px;cursor:pointer;line-height:1.4}
+.payway small{font-weight:600;color:#9fb4b0}
+.payway:hover{border-color:#2fcdb8}
+.paymeta{font-size:11px;color:#9fb4b0;margin-bottom:8px;line-height:1.5}
 .payprice{font-weight:800;font-size:13.5px;color:var(--txt);margin-bottom:10px;text-align:center}
 .paynets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .netbtn{flex:1;min-width:118px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);border-radius:9px;padding:8px;font-size:12px;font-weight:700;cursor:pointer}
@@ -237,17 +249,11 @@ body{
       <div class="msg" id="msg"></div>
     </form>
     <div class="orsep"><span>or</span></div>
-    <div class="premium">
-      <div class="prem-h">No code? Get Premium with crypto</div>
-      <div class="prem-d">All tests + AI feedback, paid in USDT. You receive an all-access code.</div>
-      <button class="sbtn prem" type="button" onclick="togglePay()">&#9733; Get Premium Access</button>
-      <div class="paypanel" id="paypanel">
-        <div class="payprice" id="payprice"></div>
-        <div class="paynets" id="paynets"></div>
-        <div class="payaddr"><code id="payaddr">&mdash;</code><button type="button" class="copybtn" onclick="copyAddr(event)">Copy</button></div>
-        <ol class="paysteps"><li>Send the amount in <b>USDT</b> to the address above.</li><li>Send a screenshot of the transfer to our WhatsApp.</li><li>We send your premium code (usually within a few hours).</li></ol>
-        <a class="sbtn wa" id="payWa" href="#" target="_blank" rel="noopener" style="justify-content:center">Send proof on WhatsApp</a>
-      </div>
+    <div class="premium" id="buybox">
+      <div class="prem-h">No code? Get instant access</div>
+      <div class="prem-d">Choose a plan, pay once, and it unlocks on your account.</div>
+      <div class="plans" id="plans"></div>
+      <div class="paypanel" id="paypanel"></div>
     </div>
   </div>
 
@@ -348,9 +354,68 @@ var APPS = [
 
 
 document.getElementById("waLink").href = CONFIG.whatsapp;
-(function(){ var pay=CONFIG.pay||{}, wallets=pay.wallets||[]; var pp=document.getElementById("payprice"); if(pp)pp.textContent=pay.priceUsd?("Premium \u00b7 all tests + AI feedback \u00b7 $"+pay.priceUsd+" in USDT"):"Premium \u00b7 all tests + AI feedback"; var nets=document.getElementById("paynets"), addrEl=document.getElementById("payaddr"); if(nets&&wallets.length){ nets.innerHTML=wallets.map(function(w,i){return '<button type="button" class="netbtn'+(i===0?" on":"")+'" onclick="selectNet('+i+')">'+w.label+'</button>';}).join(""); if(addrEl)addrEl.textContent=wallets[0].addr; } var wa=document.getElementById("payWa"); if(wa)wa.href=pay.proofWhatsapp||CONFIG.whatsapp||"#"; })();
-function togglePay(){ var p=document.getElementById("paypanel"); if(p)p.classList.toggle("on"); }
-function selectNet(i){ var w=(CONFIG.pay.wallets||[])[i]; if(!w)return; document.getElementById("payaddr").textContent=w.addr; document.querySelectorAll(".netbtn").forEach(function(b,j){b.classList.toggle("on",j===i);}); }
+/* ===== checkout: two products via /api/pay (HesabPay + USDT crypto) ===== */
+var PRODUCTS = {
+  tips:   { name:"Guided Tests", price:"14.99", blurb:"All tests + the why behind every answer, strategy tips, focus-area report and unlimited hearts." },
+  course: { name:"Full Course",  price:"19.99", blurb:"Everything in Guided Tests + the full gamified lessons course across all four exams." }
+};
+var SEL_ITEM = null;
+function fmtMoney(p){ return "$" + p; }
+function renderPlans(){
+  var host=document.getElementById("plans"); if(!host) return;
+  host.innerHTML = Object.keys(PRODUCTS).map(function(k){
+    var p=PRODUCTS[k], sel=(k===SEL_ITEM);
+    return '<div class="plan'+(sel?' sel':'')+'" id="plan-'+k+'">'
+      +'<div><div class="pn">'+p.name+'</div><div class="pd">'+p.blurb+'</div></div>'
+      +'<div style="text-align:right"><div class="pp">'+fmtMoney(p.price)+'</div>'
+      +'<button class="choose" type="button" onclick="selectPlan(\''+k+'\')">'+(sel?'Selected':'Choose')+'</button></div>'
+      +'</div>';
+  }).join("");
+}
+function selectPlan(item){ SEL_ITEM=item; renderPlans(); renderPayways(); var pp=document.getElementById("paypanel"); if(pp&&pp.scrollIntoView)pp.scrollIntoView({behavior:"smooth",block:"nearest"}); }
+function renderPayways(){
+  var pp=document.getElementById("paypanel"); if(!pp) return;
+  var p=PRODUCTS[SEL_ITEM]; if(!p){ pp.classList.remove("on"); pp.innerHTML=""; return; }
+  pp.classList.add("on");
+  pp.innerHTML =
+     '<div class="payprice">'+p.name+' · '+fmtMoney(p.price)+' · one-time</div>'
+    +'<div class="paymeta">Pay with the method that suits you — access unlocks on this account.</div>'
+    +'<div class="payways">'
+      +'<button class="payway" type="button" onclick="payWith(\'hesabpay\')">HesabPay<br><small>wallet · Visa / MC</small></button>'
+      +'<button class="payway" type="button" onclick="payWith(\'crypto\')">USDT crypto<br><small>TRC20 · TON · BSC</small></button>'
+    +'</div>'
+    +'<div id="payout"></div>';
+}
+function payWith(provider){
+  if(!SEL_ITEM) return;
+  if(!AUTHED){ PENDING={provider:provider,item:SEL_ITEM}; openClaim("","checkout"); return; }
+  doCheckout(provider, SEL_ITEM);
+}
+function doCheckout(provider, item){
+  var out=document.getElementById("payout"); if(out) out.innerHTML='<div class="paymeta">Setting up your payment…</div>';
+  apiPost("/api/pay/checkout",{provider:provider,item:item}).then(function(r){
+    if(!r){ if(out)out.innerHTML='<div class="msg err">Network error — please try again.</div>'; return; }
+    if(r.error==="unauth"){ PENDING={provider:provider,item:item}; openClaim("","checkout"); return; }
+    if(provider==="hesabpay"){
+      if(r.ok && r.payUrl){ if(out)out.innerHTML='<div class="paymeta">Redirecting to HesabPay…</div>'; location.href=r.payUrl; return; }
+      if(out)out.innerHTML='<div class="msg info">HesabPay isn’t live yet — it’s being set up. You can pay with USDT now; your access unlocks the same way.</div>';
+      return;
+    }
+    if(r.ok && r.wallets){
+      window.__wallets=r.wallets;
+      var wins=r.wallets.map(function(w,i){return '<button type="button" class="netbtn'+(i===0?" on":"")+'" onclick="cnet('+i+')">'+esc(w.label)+'</button>';}).join("");
+      var proof=r.proofContact||CONFIG.whatsapp||"#";
+      if(out)out.innerHTML=
+         '<div class="paynets">'+wins+'</div>'
+        +'<div class="payaddr"><code id="payaddr">'+esc(r.wallets[0].addr)+'</code><button type="button" class="copybtn" onclick="copyAddr(event)">Copy</button></div>'
+        +'<ol class="paysteps"><li>Send <b>'+fmtMoney(PRODUCTS[item].price)+' in USDT</b> to the address (match the network).</li><li>Send a screenshot on WhatsApp with your order id <b>'+esc(r.orderId||"")+'</b>.</li><li>Access unlocks once your payment is confirmed.</li></ol>'
+        +'<a class="sbtn wa" href="'+proof+'" target="_blank" rel="noopener" style="justify-content:center">Send proof on WhatsApp</a>';
+      return;
+    }
+    if(out)out.innerHTML='<div class="msg err">'+esc((r&&r.message)||"Could not start checkout.")+'</div>';
+  });
+}
+function cnet(i){ var w=(window.__wallets||[])[i]; if(!w)return; document.getElementById("payaddr").textContent=w.addr; document.querySelectorAll("#payout .netbtn").forEach(function(b,j){b.classList.toggle("on",j===i);}); }
 function copyAddr(e){ var t=document.getElementById("payaddr").textContent; if(navigator.clipboard)navigator.clipboard.writeText(t); var b=e.target,o=b.textContent; b.textContent="Copied!"; setTimeout(function(){b.textContent=o;},1200); }
 if (CONFIG.extraLinks && CONFIG.extraLinks.length) {
   document.getElementById("extra").innerHTML = "Also: " + CONFIG.extraLinks
@@ -389,13 +454,21 @@ var q = new URLSearchParams(location.search);
 if (q.get("need") === "login") showMsg("Enter your access code to sign in or create your account.", "info");
 else if (q.get("need") === "wrong") showMsg("Your access doesn't cover that page. Enter a code that does.", "info");
 else if (q.get("need") === "access") showMsg("Enter your access code to continue.", "info");
+else if (q.get("need") === "course") showMsg("The lessons course is a premium plan \u2014 unlock it below.", "info");
+
+(function initBuy(){
+  renderPlans();
+  var up=q.get("upgrade");
+  if(up==="course"||up==="tips"){ selectPlan(up); }
+  else if(up){ var bb=document.getElementById("buybox"); if(bb&&bb.scrollIntoView)bb.scrollIntoView({behavior:"smooth",block:"nearest"}); }
+})();
 
 var form = document.getElementById("gate"), go = document.getElementById("go");
 var AUTHED = false;
 function esc(x){ return String(x==null?"":x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
 function apiGet(path){ return fetch(path,{credentials:"include"}).then(function(r){return r.json();}).catch(function(){return null;}); }
 function apiPost(path,body){ return fetch(path,{method:"POST",headers:{"content-type":"application/json"},credentials:"include",body:JSON.stringify(body)}).then(function(r){return r.json();}).catch(function(){return null;}); }
-function route(user){ var prem = user && (user.tier==="premium" || user.access==="all"); location.href = prem ? "/hub" : "/app-lessons"; }
+function route(user){ var hasCourse = user && (user.course || (user.products&&user.products.course) || user.tier==="premium"); if(hasCourse){ location.href="/hub"; return; } if(user && user.access==="all"){ location.href="/hub"; return; } var map={toefl:"/app",ielts:"/app-ielts",duolingo:"/app-duolingo",ged:"/app-ged"}; location.href=(user&&map[user.access])||"/app"; }
 function success(user){ var st=document.getElementById("stamp"); if(st)st.classList.add("on"); setTimeout(function(){ route(user); }, 900); }
 form.addEventListener("submit", function(e){
   e.preventDefault();
@@ -412,8 +485,8 @@ form.addEventListener("submit", function(e){
     openClaim(code);
   }
 });
-var CLAIM_CODE = "", CLAIM_MODE = "create";
-function openClaim(code){ CLAIM_CODE = code; CLAIM_MODE = "create"; renderClaim(); var h=document.getElementById("claimhost"); if(h&&h.scrollIntoView)h.scrollIntoView({behavior:"smooth",block:"nearest"}); }
+var CLAIM_CODE = "", CLAIM_MODE = "create", CLAIM_PURPOSE = "redeem";
+function openClaim(code, purpose){ CLAIM_CODE = code||""; CLAIM_MODE = "create"; CLAIM_PURPOSE = purpose||"redeem"; renderClaim(); var h=document.getElementById("claimhost"); if(h&&h.scrollIntoView)h.scrollIntoView({behavior:"smooth",block:"nearest"}); }
 function claimMode(m){ CLAIM_MODE = m; renderClaim(); }
 function cancelClaim(){ var h=document.getElementById("claimhost"); if(h)h.innerHTML=""; }
 function cmsg(t,k){ var m=document.getElementById("cmsg"); if(m){ m.className="msg "+(k||""); m.textContent=t; } }
@@ -421,7 +494,7 @@ function renderClaim(){
   var create = CLAIM_MODE==="create";
   document.getElementById("claimhost").innerHTML =
    '<div class="claimp">'
-   +'<div class="fl">// '+(create?"create account":"sign in")+' &middot; saves code '+esc(CLAIM_CODE)+'</div>'
+   +'<div class="fl">// '+(create?"create account":"sign in")+(CLAIM_PURPOSE==="checkout"?' &middot; continue to checkout':(CLAIM_CODE?(' &middot; saves code '+esc(CLAIM_CODE)):''))+'</div>'
    +'<input id="cemail" type="email" autocomplete="email" placeholder="you@email.com">'
    +'<input id="cpw" type="password" autocomplete="'+(create?"new-password":"current-password")+'" placeholder="'+(create?"Create a password (8+ characters)":"Your password")+'">'
    +'<button class="btn" type="button" onclick="submitClaim()">'+(create?"Create account &amp; unlock":"Sign in &amp; unlock")+'</button>'
@@ -444,13 +517,14 @@ function submitClaim(){
       cmsg((r && r.message) || "Could not sign you in.","err"); return;
     }
     AUTHED = true;
+    if (CLAIM_PURPOSE==="checkout" && PENDING){ cmsg("Account ready \u2014 starting checkout\u2026","ok"); var pend=PENDING; PENDING=null; cancelClaim(); doCheckout(pend.provider, pend.item); return; }
     apiPost("/api/redeem",{code:CLAIM_CODE}).then(function(rr){
       if(rr && rr.ok){ cmsg("Unlocked!","ok"); success(rr.user); }
       else { cmsg((rr && rr.message) || "Account ready, but that code didn't work.","err"); }
     });
   });
 }
-function boot(){ apiGet("/api/account").then(function(r){ if(r && r.authed){ AUTHED=true; if(r.user && r.user.access){ route(r.user); } } }); }
+function boot(){ apiGet("/api/account").then(function(r){ if(r && r.authed){ AUTHED=true; if(r.user && r.user.access && !q.get("upgrade")){ route(r.user); } } }); }
 boot();
 
 (function(){

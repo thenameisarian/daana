@@ -128,8 +128,10 @@ export async function getSession(env, request) {
 }
 
 // Mint a single code (used by admin and the payment webhook).
-export async function mintCode(kv, { test = "toefl", kind = "rotating", tier = "free", note = "" } = {}) {
-  const code = genCode();
-  await kv.put("code:" + code, JSON.stringify({ test, kind, active: true, tier, note, createdAt: Date.now() }));
+export async function mintCode(kv, { test = "toefl", kind = "rotating", tier = "free", note = "", product = null } = {}) {
+  const code = genCode(product ? (product === "course" ? "CRS" : "TIP") : "DAANA");
+  const rec = { test, kind, active: true, tier, note, createdAt: Date.now() };
+  if (product) rec.product = product;
+  await kv.put("code:" + code, JSON.stringify(rec));
   return code;
 }

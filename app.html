@@ -500,7 +500,7 @@ const TIPS=[
  {h:"Speaking",items:["Listen and Repeat: listen to the whole statement, then repeat it naturally and in one go — you get one chance.","Take an Interview: there is no prep time. Start with a direct answer, then a reason, then an example. Keep talking for the full 45 seconds.","A simple structure works: Point → because → for example."]}
 ];
 let PREM=false;
-(function(){try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all"));}).catch(function(){});}catch(e){}})();
+(function(){try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tips));}).catch(function(){});}catch(e){}})();
 function premWall(title){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="prem"; setFab(false); homeEl().style.display="none"; testEl().classList.add("on");
  testEl().innerHTML='<div class="center-wrap"><div class="brand"><span class="mk">D</span><span>Daana</span></div>'
   +'<h1 class="h1" style="margin-top:16px">'+title+' &middot; Premium</h1>'
@@ -737,6 +737,6 @@ function cefr(b){ b=parseFloat(b)||0; return b>=5.5?"C1+":b>=4.5?"B2":b>=3.5?"B1
 document.addEventListener("keydown",function(e){ if(mode!=="run")return; var tag=((e.target&&e.target.tagName)||"").toLowerCase(); if(tag==="input"||tag==="textarea")return; if(e.key==="ArrowRight"){e.preventDefault();next();} else if(e.key==="ArrowLeft"){e.preventDefault();prev();} });
 showHome();
 </script>
-<script>(function(){var b=document.getElementById("premBar");if(!b)return;try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){if(!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all")))b.style.display="flex";}).catch(function(){});}catch(e){}})();</script>
+<script>(function(){var b=document.getElementById("premBar");if(!b)return;try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){if(!(d&&d.user&&(d.user.tips)))b.style.display="flex";}).catch(function(){});}catch(e){}})();</script>
 </body>
 </html>
