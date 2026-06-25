@@ -8,7 +8,7 @@ export const GEM_REFILL = 30;
 function todayStr(){ return new Date().toISOString().slice(0, 10); } // UTC day
 
 export function defaultProgress(){
-  return { xp: 0, gems: 0, hearts: HMAX, heartTs: null, streak: 0, bestStreak: 0, lastActiveDay: null, lastDay: null, dayXp: 0, dayDone: 0, done: {}, claimed: {} };
+  return { xp: 0, gems: 0, hearts: HMAX, heartTs: null, streak: 0, bestStreak: 0, lastActiveDay: null, lastDay: null, dayXp: 0, dayDone: 0, done: {}, claimed: {}, mistakes: {} };
 }
 
 function rollDay(p){ const t = todayStr(); if (p.lastDay !== t){ p.dayXp = 0; p.dayDone = 0; p.lastDay = t; } }
@@ -78,3 +78,9 @@ export function openChest(p, chestId){
   p.gems += 40; if (p.hearts < HMAX) p.hearts++;
   return true;
 }
+
+// ---- error log + spaced review (Leitner-style) ----
+const DAY = 86400000;
+export function logMiss(p, ref){ if(!ref) return; p.mistakes = p.mistakes || {}; p.mistakes[ref] = { due: Date.now(), box: 0 }; }
+export function reviewItem(p, ref, ok){ p.mistakes = p.mistakes || {}; const m = p.mistakes[ref]; if(!m) return; if(!ok){ m.box = 0; m.due = Date.now(); return; } m.box = (m.box||0) + 1; const steps = [1,3,7,21]; if(m.box > steps.length){ delete p.mistakes[ref]; return; } m.due = Date.now() + steps[m.box-1]*DAY; }
+export function dueRefs(p, limit){ p.mistakes = p.mistakes || {}; const now = Date.now(); const out = Object.keys(p.mistakes).filter(k => p.mistakes[k].due <= now); out.sort((a,b)=>p.mistakes[a].due - p.mistakes[b].due); return limit ? out.slice(0,limit) : out; }

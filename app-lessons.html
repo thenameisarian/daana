@@ -126,6 +126,9 @@ button{font-family:inherit;cursor:pointer}
 .opt.wrong{border-color:var(--heart);background:#fdeeec;animation:nudge .3s}
 @keyframes nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .fb{font-size:13px;margin-top:5px;min-height:18px}.fb.ok{color:var(--green)}.fb.no{color:var(--heart)}
+.fb.hint{color:var(--teald)}
+.hintbtn{border:1px solid var(--line);background:#fff;color:var(--teald);font-weight:700;font-size:12px;padding:7px 12px;border-radius:9px;cursor:pointer}
+.hintbtn:hover{border-color:var(--teal)}
 .move textarea{width:100%;margin-top:8px;background:#fff;border:1px solid var(--line);border-radius:9px;color:var(--ink);font-family:inherit;font-size:13.5px;padding:9px;resize:vertical;min-height:60px}
 .sfoot{display:flex;align-items:center;gap:11px;padding:12px 15px;border-top:1px solid var(--line2)}
 .rah{width:38px;height:38px;border-radius:50%;background:var(--tealsoft);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
@@ -212,6 +215,12 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
 .qcard .qbar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:7px}
 .qcard .qbar i{display:block;height:100%;background:var(--teal)}
 .qcard .qrew{flex:none;font-size:11.5px;font-weight:800;color:var(--mut);text-align:right}
+.revcard{display:flex;align-items:center;gap:13px;background:linear-gradient(180deg,#fff,var(--tealsoft));border:1px solid #bfe6db;border-radius:16px;padding:14px 16px;margin-top:14px;cursor:pointer;box-shadow:0 8px 24px rgba(26,143,147,.1)}
+.revcard:hover{border-color:var(--teal)}
+.revcard .ri{width:40px;height:40px;border-radius:12px;background:var(--tealsoft);display:flex;align-items:center;justify-content:center;font-size:20px;flex:none}
+.revcard .rt{font-weight:800;font-size:15px}
+.revcard .rs{font-size:12px;color:var(--mut)}
+.revcard .rgo{margin-left:auto;color:var(--teald);font-weight:800;font-size:13px;flex:none}
 </style>
 </head>
 <body>
@@ -224,6 +233,7 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
   </div>
 
   <div class="chips" id="examChips" style="margin-top:14px"></div>
+  <div id="reviewCard"></div>
 
   <div class="eyebrow" id="trailEye" style="margin-top:16px">TOEFL</div>
   <div class="sech2"><h2 id="trailName" class="serif">The Trail</h2><span class="more" id="trailPct"></span></div>
@@ -279,6 +289,16 @@ const LV_STEP=100; /* XP per level (level n needs n*100 cumulative-ish; simple) 
 
 /* ---------- content ---------- */
 const D=(q,opts,a,ok,no)=>({q,opts,a,ok,no});
+const HINTS={
+ "tf-main":[["A main idea covers the whole passage, not a single sentence.","Pick the option broad enough to include every paragraph."],["Length and exact wording are traps, not signals."]],
+ "tf-detail":[["The dates are in the sentence \u2014 do the subtraction.","Finished in 1937 after 4 years means it started 4 years earlier."],["Think speed: where do you look for one specific fact?"]],
+ "tf-scan":[["One specific fact = hunt for it, don\u2019t read everything.","Scanning targets a keyword; skimming is for the gist."],["Which technique gives the overall idea, not a detail?"]],
+ "tf-infer":[["She didn\u2019t say it outright \u2014 what do the actions imply?","Checking the sky + sighing + putting the basket away = ?"],["A good inference is supported by clues but never copied word-for-word."]],
+ "tf-vocab":[["Put each option back into the sentence and test the meaning.","A plan that gets approved is a sensible / solid one."],["The dictionary\u2019s first meaning is often the trap \u2014 use the context."]],
+ "tf-write":[["What loses points: missing a bullet, or not using rare words?","Cover every bullet point first."],["Match the greeting to the reader \u2014 polite and appropriate."]],
+ "tf-boss":[["Main idea = the whole passage, not one detail."],["\u2018Sharply\u2019 describes how much, not a tool."],["Why would someone grab an umbrella? That\u2019s the inference."]]
+};
+
 const CONTENT={
  toefl:{name:"TOEFL",eyebrow:"TOEFL · Reading & Writing",nodes:[
   {id:"tf-main",title:"Main idea & purpose",icon:"🧭",
@@ -402,7 +422,7 @@ const HMAX=5, GEM_REFILL=30;
 function save(){}
 function levelFor(xp){return Math.floor(xp/LV_STEP)+1}
 let exam="toefl";
-function applyProgress(p){if(!p)return;S.xp=p.xp;S.gems=p.gems;S.hearts=p.hearts;S.heartTs=p.heartTs;S.nextHeartMs=p.nextHeartMs||0;S.streak=p.streak;S.bestStreak=p.bestStreak||0;S.lastDay=p.lastDay||null;S.done=p.done||{};S.claimed=p.claimed||{};S.dayXp=p.dayXp||0;S.dayDone=p.dayDone||0;PREMIUM=!!p.premium;ACCESS=p.access||null;}
+function applyProgress(p){if(!p)return;S.xp=p.xp;S.gems=p.gems;S.hearts=p.hearts;S.heartTs=p.heartTs;S.nextHeartMs=p.nextHeartMs||0;S.streak=p.streak;S.bestStreak=p.bestStreak||0;S.lastDay=p.lastDay||null;S.done=p.done||{};S.claimed=p.claimed||{};S.dayXp=p.dayXp||0;S.dayDone=p.dayDone||0;PREMIUM=!!p.premium;ACCESS=p.access||null;S.dueReview=p.dueReview||0;S.review=p.review||[];S.mistakes=p.mistakes||{};}
 async function apiP(path,opts){try{const r=await fetch(path,Object.assign({headers:{"content-type":"application/json"},credentials:"include"},opts||{}));return await r.json();}catch(e){return null;}}
 async function gev(type,extra){const j=await apiP("/api/progress",{method:"POST",body:JSON.stringify(Object.assign({type:type},extra||{}))});if(j&&j.ok)applyProgress(j.progress);return j;}
 function nextHeartMs(){return PREMIUM?0:(S.nextHeartMs||0);}
@@ -552,11 +572,11 @@ function renderStep(){
  }
  const di=FL.step-1;
  if(di<FL.drillTotal){ /* a drill */
-  const q=n.drills[di];FL.firstTry=true;
+  const q=n.drills[di];FL.firstTry=true;FL.hintsShown=0;
   let opts=q.opts.map((o,k)=>'<button class="opt" onclick="pick(this,'+k+','+di+',event)">'+o+'</button>').join("");
   sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">Question '+(di+1)+' of '+FL.drillTotal+'</div>'+
    '<div class="q">'+q.q+'</div>'+opts+'<div class="fb" id="fb"></div></div>'+
-   '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg" id="rm">Pick the best answer.</div>'+
+   '<div class="sfoot"><div class="rah">🦉</div><button class="hintbtn" type="button" onclick="showHint('+di+')">Hint</button>'+
    '<button class="cta dim" id="nx" disabled onclick="nextStep()">Continue →</button></div>';
   return;
  }
@@ -566,6 +586,12 @@ function renderStep(){
   '<div class="move"><textarea placeholder="Write your answer (optional)…"></textarea></div></div>'+
   '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Practice makes it stick.</div>'+
   '<button class="cta" onclick="finishNode()">Finish ✓</button></div>';
+}
+function showHint(di){
+ var node=FL.node, fb=document.getElementById("fb"); if(!fb)return;
+ var hs=(typeof HINTS!=="undefined"&&HINTS[node.id]&&HINTS[node.id][di])?HINTS[node.id][di]:[];
+ if(FL.hintsShown<hs.length){ fb.className="fb hint"; fb.textContent="\uD83D\uDCA1 "+hs[FL.hintsShown]; FL.hintsShown++; }
+ else { fb.className="fb hint"; fb.textContent="\uD83D\uDCA1 Re-read the question, rule out the option that is clearly off-topic, then choose between what is left."; }
 }
 function pick(b,k,di,ev){
  if(b.disabled)return;
@@ -582,7 +608,7 @@ function pick(b,k,di,ev){
   b.classList.add("wrong");b.disabled=true;
   fb.className="fb no";fb.textContent=q.no+" — try again.";
   FL.firstTry=false;FL.combo=0;document.getElementById("cb").textContent="🔥 x0";
-  gev("lose").then(function(){renderHudHearts();syncHud();if(!PREMIUM&&S.hearts<=0)setTimeout(showWall,500);});
+  gev("lose").then(function(){return gev("miss",{ref:FL.node.id+":"+di});}).then(function(){renderHudHearts();syncHud();if(!PREMIUM&&S.hearts<=0)setTimeout(showWall,500);});
  }
 }
 function nextStep(){FL.step++;renderStep();}
@@ -651,7 +677,24 @@ function renderStreak(){
  strip.innerHTML=html;
 }
 function doBack(){ try{ if(document.referrer && document.referrer.indexOf(location.origin)===0){ history.back(); return; } }catch(e){} location.href = PREMIUM?"/hub":((typeof TESTROUTE!=="undefined"&&TESTROUTE[ACCESS])||"/"); }
-function renderAll(){syncHud();renderQuests();renderChips();renderMap();renderBadges();renderLeague();}
+let REV=null;
+function findDrill(ref){ var parts=String(ref).split(":"), nid=parts[0], di=+parts[1]; for(var ex in CONTENT){ var nodes=CONTENT[ex].nodes; for(var i=0;i<nodes.length;i++){ if(nodes[i].id===nid){ var dl=nodes[i].drills; return (dl&&dl[di])?{node:nodes[i],drill:dl[di],exam:ex}:null; } } } return null; }
+function renderReviewCard(){ var host=document.getElementById("reviewCard"); if(!host)return; var n=S.dueReview||0; if(n<=0){host.innerHTML="";return;} host.innerHTML='<div class="revcard" onclick="startRev()"><div class="ri">\uD83D\uDD01</div><div class="rm"><div class="rt">Daily Review</div><div class="rs">'+n+' item'+(n>1?'s':'')+' due \u2014 lock in what you missed</div></div><div class="rgo">Review \u2192</div></div>'; }
+function startRev(){ var refs=(S.review||[]).slice(); if(!refs.length)return; REV={refs:refs,i:0,right:0,total:refs.length}; ov.classList.add("show"); renderRev(); }
+function renderRev(){ if(REV.i>=REV.refs.length){revDone();return;} var f=findDrill(REV.refs[REV.i]); if(!f){REV.i++;renderRev();return;} REV.cur=f; var d=f.drill;
+ var opts=d.opts.map(function(o,k){return '<button class="opt" onclick="revPick("+k+")">'+o+'</button>';}).join("");
+ sheet.innerHTML='<div class="shead"><button class="x" onclick="closeOv()">\u2715</button><div class="lead2" style="margin-left:6px">Daily Review</div><div class="seg" style="margin-left:auto">'+REV.refs.map(function(_,k){return '<i class="'+(k<REV.i?"f":"")+'"></i>';}).join("")+'</div></div>'+
+  '<div class="sbody"><div class="lead2">'+CONTENT[f.exam].name+' \u00b7 '+f.node.title+'</div><div class="q">'+d.q+'</div>'+opts+'<div class="fb" id="rfb"></div></div>'+
+  '<div class="sfoot"><div class="rah">\uD83E\uDD89</div><div class="rmsg">Item '+(REV.i+1)+' of '+REV.refs.length+'</div></div>';
+ ov.classList.add("show");
+}
+function revPick(k){ var d=REV.cur.drill, fb=document.getElementById("rfb"), o=document.querySelectorAll(".opt"); o.forEach(function(b){b.disabled=true;}); var ok=(k===d.a);
+ o[d.a].classList.add("right"); if(ok){fb.className="fb ok";fb.textContent=d.ok;REV.right++;} else {o[k].classList.add("wrong");fb.className="fb no";fb.textContent=d.no;}
+ gev("review",{ref:REV.refs[REV.i],ok:ok});
+ setTimeout(function(){REV.i++;renderRev();},1100);
+}
+function revDone(){ burst(innerWidth/2,innerHeight*0.3,80); sheet.innerHTML='<div class="reward"><div class="chestbig">\uD83C\uDFAF</div><h3>Review complete</h3><p>'+REV.right+' of '+REV.total+' correct. Items you nailed move further out; misses come back sooner.</p></div><div class="sfoot"><div class="rah">\uD83E\uDD89</div><div class="rmsg">Spaced practice is where scores grow.</div><button class="cta" onclick="closeOv()">Done \u2192</button></div>'; }
+function renderAll(){syncHud();renderQuests();renderChips();renderReviewCard();renderMap();renderBadges();renderLeague();}
 async function init(){
  const acc=await apiP("/api/account");
  if(!acc||!acc.authed){location.href="/";return;}
