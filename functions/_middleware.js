@@ -10,7 +10,7 @@ const PROTECTED = {
   "/app-duolingo.html": "duolingo", "/app-duolingo": "duolingo",
   "/app-ged.html": "ged", "/app-ged": "ged",
   "/hub.html": "all", "/hub": "all",
-  "/app-lessons.html": "*", "/app-lessons": "*", "/lessons": "*"
+  "/app-lessons.html": "all", "/app-lessons": "all", "/lessons": "all"
 };
 
 export async function onRequest(context){

@@ -128,9 +128,13 @@ textarea:focus{border-color:var(--teal)}
 .tasktimer{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:18px;color:var(--teal);font-variant-numeric:tabular-nums;background:#eef6f6;border:1px solid #cfe6e6;border-radius:20px;padding:6px 14px;margin-bottom:12px}
 .tasktimer.low{color:#c2410c;background:#fff3e9;border-color:#f3cba3}
 .tasktimer.up{color:#a32d2d;background:#fbe3e3;border-color:#eebcbc}
+#premBar{display:none;position:sticky;top:0;z-index:300;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;background:linear-gradient(90deg,#0f6b6f,#157a7e);color:#fff;padding:9px 14px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:13px;font-weight:600;line-height:1.35}
+#premBar a{background:#9af6e4;color:#04201c;font-weight:800;padding:6px 13px;border-radius:8px;text-decoration:none;font-size:12.5px}
+#premBar .x{background:none;border:none;color:#bfe7e2;font-size:15px;cursor:pointer;line-height:1}
 </style>
 </head>
 <body>
+<div id="premBar"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9af6e4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Lessons &amp; guided tests are <b>Premium</b></span><a href="/login?upgrade=1">Go Premium &rarr;</a><button class="x" aria-label="Dismiss" onclick="this.parentNode.style.display='none'">&times;</button></div>
 <div id="home"></div>
 <div id="test"></div>
 <button class="fab" id="nfab" onclick="toggleNotes()" style="display:none">&#128221; Notes</button>
@@ -495,7 +499,16 @@ const TIPS=[
  {h:"Writing",items:["Build a Sentence: find the subject and verb first; put time and place phrases near the end; read it back in your head.","Write an Email: answer every bullet, use a greeting and a sign-off, write 100–150 words in complete sentences.","Academic Discussion: state a clear opinion, give one reason and one example, and react to a classmate's point. Aim for 100–130 words."]},
  {h:"Speaking",items:["Listen and Repeat: listen to the whole statement, then repeat it naturally and in one go — you get one chance.","Take an Interview: there is no prep time. Start with a direct answer, then a reason, then an example. Keep talking for the full 45 seconds.","A simple structure works: Point → because → for example."]}
 ];
-function showTips(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="tips"; setFab(false); homeEl().style.display="none"; testEl().classList.add("on");
+let PREM=false;
+(function(){try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all"));}).catch(function(){});}catch(e){}})();
+function premWall(title){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="prem"; setFab(false); homeEl().style.display="none"; testEl().classList.add("on");
+ testEl().innerHTML='<div class="center-wrap"><div class="brand"><span class="mk">D</span><span>Daana</span></div>'
+  +'<h1 class="h1" style="margin-top:16px">'+title+' &middot; Premium</h1>'
+  +'<p class="lead">Your free access includes the full practice tests and instant scoring. <b>Strategy tips and per-question explanations</b> are a Premium feature.</p>'
+  +'<div class="dir-card" style="margin-top:16px"><div class="dir-body"><ul style="margin:0;padding-left:18px"><li style="margin-bottom:8px">See <i>why</i> each answer is right &mdash; full per-question explanations</li><li style="margin-bottom:8px">Strategy tips for every section</li><li style="margin-bottom:8px">Priority on new exams &amp; AI feedback</li></ul></div></div>'
+  +'<div style="text-align:center;margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><a class="btn teal" style="text-decoration:none" href="/login?upgrade=1">Upgrade to Premium</a><button class="btn ghost" onclick="showHome()">Back</button></div></div>';
+}
+function showTips(){ if(!PREM){premWall("Tips &amp; Strategy");return;} if(window.speechSynthesis)speechSynthesis.cancel(); mode="tips"; setFab(false); homeEl().style.display="none"; testEl().classList.add("on");
  testEl().innerHTML=`<div class="center-wrap"><div class="brand"><span class="mk">D</span><span>Daana</span></div>
    <h1 class="h1" style="margin-top:16px">Tips &amp; Strategy</h1>
    <p class="lead">General strategies for the 2026 TOEFL iBT. Per-question explanations are added as each test's content is built.</p>
@@ -678,7 +691,7 @@ function collectReview(){ const out=[];
  if(flow.includes("speaking")) DATA.speaking.tasks.forEach((t,ti)=>{ if(t.type==="repeat") out.push({sec:"Speaking",kind:"open",title:"Listen and Repeat",prompt:t.scenario,statements:t.statements,guide:["Repeat each statement exactly and clearly","Don't pause for long — you get one chance","Match the speaker's rhythm and key words"]});
    else if(t.type==="interview") t.qs.forEach((q,qi)=>out.push({sec:"Speaking",kind:"open",title:"Interview — Question "+(qi+1),prompt:q,guide:["Start with a direct answer","Add one reason (because…)","Add one specific example (for example…)","Speak the full 45 seconds with few fillers"]})); });
  return out; }
-function startReview(){ reviewItems=collectReview(); if(!reviewItems.length){alert("No items to review in this run.");return;} reviewIdx=0; renderReview(); }
+function startReview(){ if(!PREM){premWall("Answers &amp; explanations");return;} reviewItems=collectReview(); if(!reviewItems.length){alert("No items to review in this run.");return;} reviewIdx=0; renderReview(); }
 function renderReview(){ window.scrollTo(0,0); mode="review"; setFab(false); const it=reviewItems[reviewIdx]; let status="", main="";
  if(it.kind==="mcq"){ const q=it.q,your=ans[it.key],a=q.a;
    status = your==null?'<div class="statusbar st-none">You did not answer this question</div>':(your===a?'<div class="statusbar st-ok">Correct</div>':'<div class="statusbar st-bad">Incorrect</div>');
@@ -707,5 +720,6 @@ function cefr(b){ b=parseFloat(b)||0; return b>=5.5?"C1+":b>=4.5?"B2":b>=3.5?"B1
 document.addEventListener("keydown",function(e){ if(mode!=="run")return; var tag=((e.target&&e.target.tagName)||"").toLowerCase(); if(tag==="input"||tag==="textarea")return; if(e.key==="ArrowRight"){e.preventDefault();next();} else if(e.key==="ArrowLeft"){e.preventDefault();prev();} });
 showHome();
 </script>
+<script>(function(){var b=document.getElementById("premBar");if(!b)return;try{fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){if(!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all")))b.style.display="flex";}).catch(function(){});}catch(e){}})();</script>
 </body>
 </html>
