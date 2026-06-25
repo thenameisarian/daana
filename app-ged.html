@@ -229,13 +229,20 @@ function scoreSubject(s){ let c=0,t=0; s.parts.forEach((part,pidx)=>part.groups.
    else if(g.type==="hotspot"){g.questions.forEach(q=>{t++;if(ans[q.id]===q.ans)c++;});}
    else if(g.type==="dragdrop"){g.questions.forEach(q=>{t++;const pl=ans[q.id]||[];if(pl.length===q.answer.length&&pl.every((x,i)=>x===q.answer[i]))c++;});}
  })); return {c,t}; }
+let PREM=false;
+(function(){try{if(typeof fetch==="function")fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all"));}).catch(function(){});}catch(e){}})();
+var GED_LESSONS={ rla:[["gd-read","Reading & evidence"],["gd-essay","The extended response"]], math:[["gd-math","Math reasoning"],["gd-algebra","Algebra & graphs"]], science:[["gd-sci","Science reasoning"]], social:[["gd-social","Social studies"]] };
+function focusHTML(subj,pct){ var ls=GED_LESSONS[subj.key]||[]; if(!ls.length||pct>=0.85)return "";
+ var rows=ls.map(function(l){ var cta=PREM?('<a class="btn teal" style="text-decoration:none;padding:7px 14px;font-size:13px" href="/app-lessons?exam=ged&node='+l[0]+'">Practice &rarr;</a>'):('<a class="btn ghost" style="text-decoration:none;padding:7px 14px;font-size:13px" href="/login?upgrade=1">Unlock in Premium</a>'); return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #e2e6ea"><div style="flex:1"><b>'+l[1]+'</b></div>'+cta+'</div>'; }).join("");
+ return '<div style="margin-top:16px;text-align:left;border:1px solid #e2e6ea;border-radius:12px;padding:14px 16px"><div style="font-weight:800;color:#1a8f93;margin-bottom:6px">Focus areas \u2014 sharpen '+esc(subj.short)+' in the Lessons course</div>'+rows+'</div>';
+}
 function finish(){ if(timerInt)clearInterval(timerInt); mode="result";
  const s=scoreSubject(subj); const pct=s.t?s.c/s.t:0; const score=gedScore(pct); const band=gedBand(score);
  testEl().innerHTML=`<div class="center-wrap"><div class="brand"><span class="mk">A</span><span>Arian Academy</span></div>
    <h1 class="h1" style="margin-top:14px">${esc(subj.name)} — result</h1>
    <div class="bigscore" style="color:${band[1]}">${score}<span style="font-size:22px;color:#6b7785"> / 200</span></div>
    <div style="text-align:center"><span class="bandpill" style="background:${band[1]}1a;color:${band[1]}">${band[0]}</span></div>
-   <p class="lead" style="text-align:center;margin-top:10px">${s.c} of ${s.t} auto-scored items correct. Pass mark is 145. The essay and short answers are not auto-scored - use the review to self-assess.</p>
+   <p class="lead" style="text-align:center;margin-top:10px">${s.c} of ${s.t} auto-scored items correct. Pass mark is 145. The essay and short answers are not auto-scored - use the review to self-assess.</p>${focusHTML(subj,pct)}
    <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="startReview()">Review answers</button><button class="btn" onclick="begin(subj.key)">Retake</button><button class="btn ghost" onclick="showHome()">Choose subject</button></div></div>`;
 }
 

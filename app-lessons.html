@@ -332,6 +332,36 @@ Object.assign(TIPCARDS,{
  "ie-task2":{rule:"State a clear position, then develop it with reasons and examples.",how:["Answer the exact question type asked.","Two or three developed body paragraphs."],trap:"A vague position, or running out of time (Task 2 is worth more)."},
  "ie-boss":{rule:"Name the question type, then apply its rule.",how:["TFNG \u2192 confirmed/contradicted/silent. Headings \u2192 main idea. Completion \u2192 copy + word limit."],trap:"Using outside knowledge instead of answering from the passage."}
 });
+Object.assign(HINTS,{
+ "de-select":[["Only tap a word you are SURE is real.","Wrong taps cost you \u2014 when unsure, leave it out."],["Invented words are built to look real.","If you have never seen it, do not tap it."]],
+ "de-complete":[["Read the whole sentence first.","Match tense and meaning, then spell it right."],["A correct word spelled wrong is still wrong."]],
+ "de-iread":[["Keep the whole passage in mind as it builds.","Later questions depend on the earlier part."],["Pick the word that fits meaning AND grammar."]],
+ "de-vocab":[["Choose the precise word, not the vague one.","\u2018Observation\u2019 fits a scientist and data."],["Precise vocabulary lifts Literacy and Production."]],
+ "de-write":[["Develop a couple of ideas fully \u2014 depth beats breadth.","Use varied, accurate grammar."],["Stay on topic \u2014 off-topic lowers the score."]],
+ "de-boss":[["Only \u2018splendid\u2019 is a real word."],["Match the tense: past \u2192 \u2018tried\u2019."],["Develop clear ideas, do not pad."]],
+ "gd-read":[["The answer is supported by the text, not your opinion.","Find the line that proves it."],["If a detail is not in the passage, do not choose it."]],
+ "gd-essay":[["Argue from the sources\u2019 evidence, use BOTH texts.","State a clear claim first."],["Address the opposing view, then show why your side is stronger."]],
+ "gd-math":[["25% of 80 is 20.","80 \u2212 20 = 60."],["\u2018Reduced by 25%\u2019 means it drops 25%, not down to 25%."]],
+ "gd-algebra":[["Subtract 7 from both sides.","x = 5."],["Do the same to both sides to stay balanced."]],
+ "gd-sci":[["The answer is in the chart/passage given.","Read the data, do not recall facts."],["Rising every year \u2192 sales increased."]],
+ "gd-social":[["Read the source \u2014 the answer is there.","Not from memory or opinion."],["Bar charts compare quantities."]],
+ "gd-boss":[["Divide both sides by 3 \u2192 x = 5."],["10% of 50 is 5 \u2192 $45."],["Answer from the passage evidence."]]
+});
+Object.assign(TIPCARDS,{
+ "de-select":{rule:"Tap only words you are sure are real \u2014 guessing costs you.",how:["Scan each word.","When unsure, leave it untapped."],trap:"Tapping an invented word because it looks plausible."},
+ "de-complete":{rule:"Use meaning + grammar to fill missing letters, then check spelling.",how:["Read the full sentence first.","Match tense and number."],trap:"A correct word spelled wrong still counts as wrong."},
+ "de-iread":{rule:"Understand the passage as it builds \u2014 later tasks rely on earlier ones.",how:["Read for meaning, not memorisation.","Pick words that fit meaning and grammar."],trap:"Answering a later task without grasping the earlier part."},
+ "de-vocab":{rule:"Precise vocabulary raises Literacy and Production.",how:["Prefer the exact word over a vague one.","Match the tone and context."],trap:"Choosing a word that is roughly right but imprecise."},
+ "de-write":{rule:"Develop two clear ideas well \u2014 depth beats breadth.",how:["Stay on topic.","Use varied, accurate grammar."],trap:"Padding with filler or going off-topic."},
+ "de-boss":{rule:"Apply each skill: real words, correct completion, developed writing.",how:["Verify words are real.","Match grammar; develop ideas."],trap:"Careless spelling or tense slips under time pressure."},
+ "gd-read":{rule:"Answer from the passage evidence, never your opinion.",how:["Read the question, then find the proving line.","Reject details the text does not support."],trap:"Choosing what you believe instead of what the text says."},
+ "gd-essay":{rule:"Argue which side the EVIDENCE supports, using both sources.",how:["State a clear claim.","Back it with evidence from both texts; address the other side."],trap:"Giving only your personal opinion with no source evidence."},
+ "gd-math":{rule:"Read carefully, use the calculator and formula sheet, check units.",how:["Note exactly what is asked.","Pick the right operation or formula."],trap:"Misreading \u2018reduced by\u2019 vs \u2018reduced to\u2019, or mixing up units."},
+ "gd-algebra":{rule:"Keep equations balanced \u2014 do the same to both sides.",how:["Isolate the unknown step by step.","Check by substituting back."],trap:"Changing only one side of the equation."},
+ "gd-sci":{rule:"A reasoning test \u2014 draw conclusions from the data given.",how:["Read the source first.","Find the exact row or point the question asks about."],trap:"Relying on outside knowledge instead of the stimulus."},
+ "gd-social":{rule:"Reason from the documents, maps and charts provided.",how:["Read the source closely.","Match the question to the right data."],trap:"Answering from memory instead of the source."},
+ "gd-boss":{rule:"Read the source, apply the right method, answer from evidence.",how:["Math: balance and compute. Reading: cite the line."],trap:"Careless arithmetic or answering from opinion."}
+});
 const CONTENT={
  toefl:{name:"TOEFL",eyebrow:"TOEFL · Reading & Writing",nodes:[
   {id:"tf-main",title:"Main idea & purpose",icon:"🧭",
