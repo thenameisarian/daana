@@ -221,6 +221,12 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
 .revcard .rt{font-weight:800;font-size:15px}
 .revcard .rs{font-size:12px;color:var(--mut)}
 .revcard .rgo{margin-left:auto;color:var(--teald);font-weight:800;font-size:13px;flex:none}
+.tipcard{margin-top:16px;background:var(--tealsoft);border:1px solid #bfe6db;border-radius:14px;padding:14px}
+.tipcard .tch{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--teald)}
+.tipcard .tcr{font-weight:800;font-size:15px;margin:5px 0 8px;line-height:1.4}
+.tipcard ul{margin:0 0 8px;padding-left:18px;font-size:13px;color:#33424d}
+.tipcard ul li{margin-bottom:4px}
+.tipcard .tctrap{font-size:12.5px;color:#9c4a12;background:#fff;border:1px solid #f1cba3;border-radius:9px;padding:8px 10px}
 </style>
 </head>
 <body>
@@ -229,7 +235,7 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
   <div class="topbar">
     <button class="backbtn" onclick="doBack()">← Back</button>
     <div class="tbrand"><span class="mk">د</span><span>Daana · Lessons</span></div>
-    <span style="width:62px"></span>
+    <button class="backbtn" onclick="openTipLibrary()">Tips</button>
   </div>
 
   <div class="chips" id="examChips" style="margin-top:14px"></div>
@@ -299,6 +305,15 @@ const HINTS={
  "tf-boss":[["Main idea = the whole passage, not one detail."],["\u2018Sharply\u2019 describes how much, not a tool."],["Why would someone grab an umbrella? That\u2019s the inference."]]
 };
 
+const TIPCARDS={
+ "tf-main":{rule:"The main idea covers the WHOLE passage \u2014 never just one detail.",how:["Read the first and last sentence of each paragraph.","Pick the option broad enough to include every paragraph."],trap:"An option that quotes one striking sentence word-for-word is usually too narrow."},
+ "tf-detail":{rule:"For a specific fact, scan for the keyword \u2014 do not reread.",how:["Find the name, number or date from the question in the text.","Read just that sentence carefully."],trap:"Answering from memory or common sense instead of the line you found."},
+ "tf-scan":{rule:"Skim for the gist; scan for one fact.",how:["Skim first to map the passage.","Scan back to the keyword for each question."],trap:"Reading every word twice and burning the clock \u2014 switch techniques on purpose."},
+ "tf-infer":{rule:"An inference is supported by clues but never stated outright.",how:["Ask: what MUST be true given these clues?","Reject anything the text states directly or does not support."],trap:"If an option copies the passage word-for-word, it is a detail, not an inference."},
+ "tf-vocab":{rule:"Context decides the meaning \u2014 not the dictionary first definition.",how:["Put each option back into the sentence.","Keep the one that preserves the meaning."],trap:"The most common dictionary meaning is often the distractor."},
+ "tf-write":{rule:"Cover every bullet, in full sentences, with the right tone.",how:["Answer each prompt point.","Greet and sign off; keep it polite and clear."],trap:"Fancy words do not save you if you skip a bullet \u2014 completeness scores first."},
+ "tf-boss":{rule:"Name the question type first, then apply its rule.",how:["Main idea \u2192 whole passage. Detail \u2192 scan. Inference \u2192 clues. Vocab \u2192 substitute."],trap:"Answering a detail question as if it were main-idea (or the reverse)."}
+};
 const CONTENT={
  toefl:{name:"TOEFL",eyebrow:"TOEFL · Reading & Writing",nodes:[
   {id:"tf-main",title:"Main idea & purpose",icon:"🧭",
@@ -583,7 +598,7 @@ function renderStep(){
  /* move step */
  sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">Your move — now, do it</div>'+
   '<div class="h3" style="font-size:17px">Put it into practice</div><p class="p">'+(n.move||"Try this skill in the wild today.")+'</p>'+
-  '<div class="move"><textarea placeholder="Write your answer (optional)…"></textarea></div></div>'+
+  '<div class="move"><textarea placeholder="Write your answer (optional)…"></textarea></div>'+tipHTML(n.id)+'</div>'+
   '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Practice makes it stick.</div>'+
   '<button class="cta" onclick="finishNode()">Finish ✓</button></div>';
 }
@@ -694,6 +709,12 @@ function revPick(k){ var d=REV.cur.drill, fb=document.getElementById("rfb"), o=d
  setTimeout(function(){REV.i++;renderRev();},1100);
 }
 function revDone(){ burst(innerWidth/2,innerHeight*0.3,80); sheet.innerHTML='<div class="reward"><div class="chestbig">\uD83C\uDFAF</div><h3>Review complete</h3><p>'+REV.right+' of '+REV.total+' correct. Items you nailed move further out; misses come back sooner.</p></div><div class="sfoot"><div class="rah">\uD83E\uDD89</div><div class="rmsg">Spaced practice is where scores grow.</div><button class="cta" onclick="closeOv()">Done \u2192</button></div>'; }
+function tipHTML(id){ var t=(typeof TIPCARDS!=="undefined")?TIPCARDS[id]:null; if(!t)return ""; return '<div class="tipcard"><div class="tch">Remember this</div><div class="tcr">'+t.rule+'</div>'+(t.how?'<ul>'+t.how.map(function(h){return '<li>'+h+'</li>';}).join("")+'</ul>':'')+(t.trap?'<div class="tctrap"><b>Common trap:</b> '+t.trap+'</div>':'')+'</div>'; }
+function openTipLibrary(){ var C=CONTENT[exam]; var cards=C.nodes.filter(function(nd){return typeof TIPCARDS!=="undefined"&&TIPCARDS[nd.id];}).map(function(nd){var t=TIPCARDS[nd.id];return '<div class="tipcard" style="margin-top:12px"><div class="tch">'+nd.title+'</div><div class="tcr">'+t.rule+'</div>'+(t.trap?'<div class="tctrap"><b>Common trap:</b> '+t.trap+'</div>':'')+'</div>';}).join("");
+ if(!cards)cards='<p style="color:var(--mut);font-size:14px">Tip cards for '+C.name+' arrive as the course expands.</p>';
+ sheet.innerHTML='<div class="shead"><button class="x" onclick="closeOv()">\u2715</button><div class="lead2" style="margin-left:6px">Tip Library \u00b7 '+C.name+'</div></div><div class="sbody" style="max-height:72vh;overflow:auto">'+cards+'</div>';
+ ov.classList.add("show");
+}
 function renderAll(){syncHud();renderQuests();renderChips();renderReviewCard();renderMap();renderBadges();renderLeague();}
 async function init(){
  const acc=await apiP("/api/account");
