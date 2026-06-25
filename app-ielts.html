@@ -491,6 +491,21 @@ function scoreSection(secKey){ let correct=0,total=0; (ACTIVE[secKey].parts||[])
    if(g.keys){ Object.keys(g.keys).forEach(id=>{ total++; if(gradeFill(ans[id],g.keys[id]))correct++; }); }
    else if(g.questions){ g.questions.forEach(q=>{ total++; if(typeof q.ans==="number"){ if(ans[q.id]===q.ans)correct++; } else { if((ans[q.id]||"")===q.ans)correct++; } }); }
  }); }); return {correct,total}; }
+let PREM=false;
+(function(){try{if(typeof fetch==="function")fetch("/api/account",{credentials:"include"}).then(function(r){return r.json();}).then(function(d){PREM=!!(d&&d.user&&(d.user.tier==="premium"||d.user.access==="all"));}).catch(function(){});}catch(e){}})();
+var IE_SKILL={tfng:"ie-tfng",ynng:"ie-tfng",headings:"ie-head",matching:"ie-match",fill:"ie-complete",map:"ie-complete"};
+var IE_TITLE={"ie-tfng":"True / False / Not Given","ie-head":"Matching headings","ie-match":"Matching information","ie-complete":"Sentence & summary completion"};
+function focusAreas(){ var miss={};
+ if(flow.includes("reading")&&ACTIVE.reading&&ACTIVE.reading.parts){ ACTIVE.reading.parts.forEach(function(part){ (part.groups||[]).forEach(function(g){ var sk=IE_SKILL[g.type]; if(!sk)return;
+   if(g.keys){ Object.keys(g.keys).forEach(function(id){ if(!gradeFill(ans[id],g.keys[id])) miss[sk]=(miss[sk]||0)+1; }); }
+   else if(g.questions){ g.questions.forEach(function(q){ var ok=(typeof q.ans==="number")?(ans[q.id]===q.ans):((ans[q.id]||"")===q.ans); if(!ok) miss[sk]=(miss[sk]||0)+1; }); }
+ }); }); }
+ var arr=Object.keys(miss).map(function(k){return {skill:k,title:IE_TITLE[k]||k,misses:miss[k]};}); arr.sort(function(a,b){return b.misses-a.misses;}); return arr.slice(0,3);
+}
+function focusHTML(){ var fa=focusAreas(); if(!fa.length)return "";
+ var rows=fa.map(function(f){ var cta=PREM?('<a class="btn teal" style="text-decoration:none;padding:7px 14px;font-size:13px" href="/app-lessons?exam=ielts&node='+f.skill+'">Practice &rarr;</a>'):('<a class="btn ghost" style="text-decoration:none;padding:7px 14px;font-size:13px" href="/login?upgrade=1">Unlock in Premium</a>'); return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #e2e6ea"><div style="flex:1"><b>'+f.title+'</b> <span style="color:#6b7785;font-size:13px">&middot; '+f.misses+' missed</span></div>'+cta+'</div>'; }).join("");
+ return '<div class="expcard" style="margin-top:18px;text-align:left"><div class="h">Your focus areas</div><div>Sharpen these in the Lessons course:'+rows+'</div></div>';
+}
 function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="result"; setFab(false);
  const bands=[]; let cells="";
  if(flow.includes("listening")){ const s=scoreSection("listening"); const b=listeningBand(s.correct); bands.push(b); cells+=scellHTML("Listening",b,`${s.correct}/${s.total} correct`); }
@@ -501,7 +516,7 @@ function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="re
  testEl().innerHTML=`<div class="center-wrap"><div class="brand"><span class="mk">A</span><span>Arian Academy</span></div>
    <h1 class="h1" style="margin-top:14px">Your IELTS result</h1>
    ${overall!=null?`<div style="text-align:center"><div class="bigband">${overall.toFixed(1)}<span style="font-size:20px;color:#6b7785"> / 9.0</span></div><div class="lead">overall band (auto-scored sections) · ${bandWord(overall)}</div></div>`:""}
-   <div class="scoregrid">${cells}</div>
+   <div class="scoregrid">${cells}</div>${focusHTML()}
    <p class="lead" style="margin-top:14px">Listening &amp; Reading use the official raw-to-band conversion. Writing &amp; Speaking are rated by an examiner on four criteria — use the review to self-assess.</p>
    <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="startReview()">Review answers</button><button class="btn ghost" onclick="begin(flow)">Retake</button><button class="btn ghost" onclick="showHome()">Home</button></div></div>`;
 }

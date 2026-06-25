@@ -314,6 +314,24 @@ const TIPCARDS={
  "tf-write":{rule:"Cover every bullet, in full sentences, with the right tone.",how:["Answer each prompt point.","Greet and sign off; keep it polite and clear."],trap:"Fancy words do not save you if you skip a bullet \u2014 completeness scores first."},
  "tf-boss":{rule:"Name the question type first, then apply its rule.",how:["Main idea \u2192 whole passage. Detail \u2192 scan. Inference \u2192 clues. Vocab \u2192 substitute."],trap:"Answering a detail question as if it were main-idea (or the reverse)."}
 };
+Object.assign(HINTS,{
+ "ie-tfng":[["If you cannot find it stated either way, it is Not Given \u2014 not False.","FALSE needs a clear contradiction in the text."],["Compare the quantity words.","\u2018All/every\u2019 vs \u2018most\u2019 is a contradiction \u2192 False."]],
+ "ie-head":[["A heading is the paragraph main point, not one detail.","Ask: what is this paragraph mostly about?"],["Beware a heading that matches just one keyword.","Pick the one that covers the whole paragraph."]],
+ "ie-complete":[["Count the words \u2014 articles count too.","Two words max here."],["Completion answers follow the passage order.","Use the order to find the next one."]],
+ "ie-match":[["IELTS rewords the idea \u2014 match meaning, not words.","Scan for the idea, not an identical keyword."],["Read the instructions about reuse.","A paragraph may be used more than once or not at all."]],
+ "ie-task1":[["Task 1 is description only.","Save opinions for Task 2."],["What frames the whole answer?","The overview of the main trend carries the most weight."]],
+ "ie-task2":[["Which task is worth more marks?","Task 2 \u2014 protect it if time is short."],["The introduction must state your position.","Make your stance clear up front."]],
+ "ie-boss":[["\u2018Each summer\u2019 means every year \u2192 True."],["Are the author feelings stated? No \u2192 Not Given."],["A heading = the main idea of the paragraph."]]
+});
+Object.assign(TIPCARDS,{
+ "ie-tfng":{rule:"FALSE needs a contradiction; NOT GIVEN means the text is silent.",how:["Find the matching part of the text.","Decide: confirmed, contradicted, or not mentioned?"],trap:"Marking something FALSE when the text simply never says it (it is Not Given)."},
+ "ie-head":{rule:"A heading matches the paragraph MAIN idea, not a detail.",how:["Ask what the paragraph is mostly about.","Cross off each heading as you use it."],trap:"A heading that matches one striking word but not the whole paragraph."},
+ "ie-complete":{rule:"Obey the word limit exactly and copy words from the text.",how:["Count words \u2014 articles count.","Answers usually appear in passage order."],trap:"Going over the word limit, or paraphrasing instead of copying."},
+ "ie-match":{rule:"Match the idea, not identical words \u2014 IELTS paraphrases.",how:["Scan for the meaning, not a keyword.","Check whether options can be used more than once."],trap:"Matching on a repeated keyword instead of the actual meaning."},
+ "ie-task1":{rule:"Describe the data \u2014 overview first, no opinions.",how:["Open with the main trend.","Then report key figures and comparisons."],trap:"Listing every number with no overview, or adding your opinion."},
+ "ie-task2":{rule:"State a clear position, then develop it with reasons and examples.",how:["Answer the exact question type asked.","Two or three developed body paragraphs."],trap:"A vague position, or running out of time (Task 2 is worth more)."},
+ "ie-boss":{rule:"Name the question type, then apply its rule.",how:["TFNG \u2192 confirmed/contradicted/silent. Headings \u2192 main idea. Completion \u2192 copy + word limit."],trap:"Using outside knowledge instead of answering from the passage."}
+});
 const CONTENT={
  toefl:{name:"TOEFL",eyebrow:"TOEFL · Reading & Writing",nodes:[
   {id:"tf-main",title:"Main idea & purpose",icon:"🧭",
