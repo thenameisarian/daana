@@ -209,6 +209,17 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:80}
 .fchip .ci{width:17px;height:17px;flex:none}
 .tdot svg{width:21px;height:21px}
 .dc-chip svg{width:15px;height:15px;flex:none}
+.price-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.plan{display:flex;flex-direction:column}
+.plan .ptag{display:inline-block;font-size:11px;font-weight:800;color:var(--mintl);background:rgba(47,205,184,.14);border:1px solid rgba(47,205,184,.3);border-radius:99px;padding:4px 11px;margin-bottom:8px;align-self:flex-start}
+.plan .psub{color:var(--mut);font-size:13px}
+.plan ul{flex:1}
+.plan .btn{width:100%;justify-content:center;margin-top:auto}
+.btn-light{background:rgba(47,205,184,.12);color:var(--mintl);border:1px solid rgba(47,205,184,.5)}
+.btn-light:hover{background:rgba(47,205,184,.2)}
+.plan .pnote{margin:0 0 12px;font-size:12px;color:var(--mintl);font-weight:600}
+.soon{font-size:9px;font-weight:800;color:var(--mint);background:rgba(47,205,184,.16);border:1px solid rgba(47,205,184,.3);border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:middle;text-transform:uppercase;letter-spacing:.05em}
+@media(max-width:880px){.price-grid3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -344,16 +355,20 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:80}
 
 <!-- PRICING -->
 <section id="pricing"><div class="wrap">
-  <div class="sec-head reveal"><div class="eyebrow">Pricing</div><h2>Start free. Upgrade when you're ready.</h2></div>
-  <div class="toggle reveal"><span>Monthly</span><div class="sw on" id="sw" onclick="this.classList.toggle('on')"><i></i></div><span>Yearly <b style="color:var(--mintl)">save 20%</b></span></div>
-  <div class="price-grid">
-    <div class="plan reveal"><h3>Free</h3><div class="pr">$0</div><div style="color:var(--mut);font-size:13px">for followers with a code</div>
-      <ul><li>All four exams &amp; lessons</li><li>Real practice tests + scoring</li><li>XP, streaks &amp; daily quests</li><li>5 hearts, refill over time</li></ul>
-      <a class="btn btn-ghost" href="/login">Get a code</a>
+  <div class="sec-head reveal"><div class="eyebrow">Pricing</div><h2>Your follower code is worth real money</h2><p>Members take the full practice tests free. The tips and the course are the paid upgrades — so that free code is a genuine gift.</p></div>
+  <div class="price-grid3">
+    <div class="plan reveal"><div class="ptag">Free for followers</div><h3>Member</h3><div class="pr">$0</div><div class="psub">with a follower code</div>
+      <div class="pnote">A real exam-prep test, free — most apps charge for this.</div>
+      <ul><li>Full practice tests for your exam</li><li>Instant, official-style scoring &amp; band</li><li>Your score report &amp; answer key</li><li>Retake as often as you like</li></ul>
+      <a class="btn btn-ghost" href="/login">Get your code</a>
     </div>
-    <div class="plan pro reveal"><div class="pop">Most access</div><h3>Premium</h3><div class="pr">$15<small>/mo</small></div><div style="color:var(--mut);font-size:13px">paid in USDT</div>
-      <ul><li>Everything in Free</li><li>Unlimited hearts — never wait</li><li>Streak freezes</li><li>Priority on new exams &amp; AI feedback</li></ul>
-      <a class="btn btn-pri" href="/login">Go Premium</a>
+    <div class="plan reveal"><h3>Guided Tests</h3><div class="pr">$14.99</div><div class="psub">one-time · in USDT</div>
+      <ul><li>Everything in Member</li><li>The <b>why</b> behind every answer</li><li>Strategy tips for each question type</li><li>Focus-area report &rarr; the right lessons</li><li>Unlimited hearts in practice</li><li>AI essay &amp; speaking feedback<span class="soon">soon</span></li></ul>
+      <a class="btn btn-light" href="/login?upgrade=tips">Unlock Guided Tests</a>
+    </div>
+    <div class="plan pro reveal"><div class="pop">Best value</div><h3>Full Course</h3><div class="pr">$19.99</div><div class="psub">one-time · in USDT · includes Guided Tests</div>
+      <ul><li><b>Everything in Guided Tests</b></li><li>The complete gamified lessons course</li><li>XP, levels, streaks &amp; daily quests</li><li>Spaced Daily Review, hints &amp; Tip Library</li><li>Every skill trail, all four exams</li><li>Study plan to your test date<span class="soon">soon</span></li><li>Certificate of completion<span class="soon">soon</span></li></ul>
+      <a class="btn btn-pri" href="/login?upgrade=course">Get the Course</a>
     </div>
   </div>
 </div></section>
