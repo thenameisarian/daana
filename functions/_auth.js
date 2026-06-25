@@ -94,3 +94,12 @@ export async function redeemCodeForUser(env, user, codeRaw){
   await saveUser(kv, user);
   return { ok: true, user };
 }
+
+/* ---- login throttling + password change (no external deps) ---- */
+const MAX_FAILS = 6;
+const FAIL_WINDOW_MS = 15 * 60 * 1000;
+async function _kvJson(kv, key){ const r = await kv.get(key); if (!r) return null; try { return JSON.parse(r); } catch { return null; } }
+export async function loginAllowed(kv, email){ const rec = await _kvJson(kv, "loginfail:" + normEmail(email)); if (rec && rec.count >= MAX_FAILS && (nowMs() - rec.firstAt) < FAIL_WINDOW_MS) return false; return true; }
+export async function noteLoginFail(kv, email){ const k = "loginfail:" + normEmail(email); let rec = await _kvJson(kv, k); const now = nowMs(); if (!rec || (now - rec.firstAt) >= FAIL_WINDOW_MS) rec = { count: 0, firstAt: now }; rec.count++; await kv.put(k, JSON.stringify(rec), { expirationTtl: Math.ceil(FAIL_WINDOW_MS / 1000) }); }
+export async function clearLoginFail(kv, email){ try { await kv.delete("loginfail:" + normEmail(email)); } catch (e) {} }
+export async function setUserPassword(kv, user, newPassword){ const salt = randHex(16); user.pwSalt = salt; user.pwHash = await hashPassword(newPassword, salt); user.pwIter = PBKDF2_ITER; await saveUser(kv, user); }

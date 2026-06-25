@@ -1,4 +1,5 @@
 import { genCode } from "../_lib.js";
+import { getUser, setUserPassword, normEmail } from "../_auth.js";
 
 function unauthorized() {
   return new Response(JSON.stringify({ ok: false, error: "unauthorized" }), {
@@ -16,6 +17,16 @@ export async function onRequestPost(context) {
   const action = body.action;
   const test = (body.test || "toefl").toString();
   const J = o => new Response(JSON.stringify(o), { status: 200, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } });
+
+  if (action === "resetpw") {
+    const email = normEmail(body.email || "");
+    const u = await getUser(kv, email);
+    if (!u) return J({ ok: false, error: "not_found" });
+    let np = body.newPassword, generated = null;
+    if (!np || String(np).length < 8) { np = genCode("TMP"); generated = np; }
+    await setUserPassword(kv, u, np);
+    return J({ ok: true, email, tempPassword: generated });
+  }
 
   if (action === "mint") {
     const kind = body.kind === "rotating" ? "rotating" : "person";
