@@ -723,6 +723,7 @@ async function init(){
  if(pr&&pr.ok)applyProgress(pr.progress);
  setNav();
  renderAll();
+ try{var _p=new URLSearchParams(location.search),_ex=_p.get("exam"),_nd=_p.get("node");if(_ex&&CONTENT[_ex]){exam=_ex;renderAll();}if(_nd){var _ns=CONTENT[exam].nodes;for(var _i=0;_i<_ns.length;_i++){if(_ns[_i].id===_nd){openNode(_i);break;}}}}catch(e){}
  setInterval(refreshProg,60000);
 }
 const TESTROUTE={toefl:"/app",ielts:"/app-ielts",duolingo:"/app-duolingo",ged:"/app-ged",all:"/hub"};

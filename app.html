@@ -661,6 +661,23 @@ function finishSection(){ clearTaskTimer(); if(timerInt)clearInterval(timerInt);
 
 /* ---------- results ---------- */
 function band(p){return (Math.round((1+p*5)*2)/2).toFixed(1);}
+var SKILLMAP={"tf-main":"Main idea & purpose","tf-detail":"Reading for detail","tf-infer":"Inference","tf-vocab":"Vocabulary in context","tf-write":"Writing tasks"};
+function skillOf(q,t){ var x=((q&&q.q)||"").toLowerCase();
+ if(/main idea|mainly about|primarily|best title|purpose of the/.test(x))return "tf-main";
+ if(/infer|imply|implies|suggest|most likely|conclude/.test(x))return "tf-infer";
+ if(/closest in meaning|the word|the phrase|best replaced|\bmeans\b/.test(x))return "tf-vocab";
+ if(t&&t.type==="cloze")return "tf-vocab";
+ return "tf-detail";
+}
+function focusAreas(){ var miss={};
+ if(flow.includes("reading")&&DATA.reading&&DATA.reading.tasks){ DATA.reading.tasks.forEach(function(t,ti){ if(t.qs){ t.qs.forEach(function(q,qi){ if(ans["reading-"+ti+"-"+qi]!==q.a){ var sk=skillOf(q,t); miss[sk]=(miss[sk]||0)+1; } }); } }); }
+ if(flow.includes("writing")&&DATA.writing&&DATA.writing.tasks){ var bt=DATA.writing.tasks.find(function(t){return t.type==="build";}); if(bt){ bt.items.forEach(function(it,qi){ var built=(bsPick[qi]||[]).join(" ").replace(/\s+/g," ").trim(); if(built.toLowerCase()!==it.answer.toLowerCase()) miss["tf-write"]=(miss["tf-write"]||0)+1; }); } }
+ var arr=Object.keys(miss).map(function(k){return {skill:k,title:SKILLMAP[k]||k,misses:miss[k]};}); arr.sort(function(a,b){return b.misses-a.misses;}); return arr.slice(0,3);
+}
+function focusHTML(){ var fa=focusAreas(); if(!fa.length)return "";
+ var rows=fa.map(function(f){ var cta=PREM?('<a class="btn teal" style="text-decoration:none;padding:7px 14px;font-size:13px" href="/app-lessons?exam=toefl&node='+f.skill+'">Practice &rarr;</a>'):('<a class="btn ghost" style="text-decoration:none;padding:7px 14px;font-size:13px" href="/login?upgrade=1">Unlock in Premium</a>'); return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #e2e6ea"><div style="flex:1"><b>'+f.title+'</b> <span style="color:#6b7785;font-size:13px">&middot; '+f.misses+' missed</span></div>'+cta+'</div>'; }).join("");
+ return '<div class="dir-card" style="margin-top:18px;text-align:left"><div class="dir-head">Your focus areas</div><div class="dir-body">Sharpen these in the Lessons course:'+rows+'</div></div>';
+}
 function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="result"; setFab(false);
  const did=k=>flow.includes(k);
  let rC=0,rT=0,lC=0,lT=0;
@@ -677,7 +694,7 @@ function results(){ if(window.speechSynthesis)speechSynthesis.cancel(); mode="re
    <h1 class="h1" style="margin-top:16px">Your result</h1>
    ${overall?`<div style="text-align:center"><div class="bigtimer" style="font-size:56px">${overall}<span style="font-size:20px;color:#6b7785"> / 6.0</span></div><div class="lead">estimated band · CEFR ${cefr(overall)} · ~${Math.round((overall-1)/5*120)}/120</div><div class="gauge"><div class="mk" style="left:${Math.round((overall-1)/5*100)}%"></div></div></div>`:""}
    <div class="homestat"><span>Time: <b>${testStartedAt?fmt(Math.round((Date.now()-testStartedAt)/1000)):"—"}</b></span><span>Sections: <b>${flow.length}</b></span></div>
-   <div class="scoregrid">${cells}</div>
+   <div class="scoregrid">${cells}</div>${focusHTML()}
    <p class="lead" style="margin-top:16px">Reading & Listening are auto-scored to the 2026 band (with a 0–120 estimate). Writing & Speaking need a teacher to rate — use the review to self-assess.</p>
    <div style="text-align:center;margin-top:18px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn teal" onclick="startReview()">Review answers &amp; explanations</button><button class="btn ghost" onclick="showTips()">Tips</button><button class="btn ghost" onclick="begin(flow)">Retake</button><button class="btn ghost" onclick="showHome()">Home</button></div></div>`;
 }
