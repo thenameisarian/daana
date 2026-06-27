@@ -42,59 +42,7 @@ button{font-family:inherit;cursor:pointer}
 .ltabs{display:flex;gap:4px;background:#e7efed;border-radius:13px;padding:4px;margin:6px 0 16px}
 .ltab{flex:1;border:none;background:transparent;border-radius:10px;padding:9px 0;font-weight:800;font-size:13px;color:#6a7b78;cursor:pointer;font-family:inherit}
 .ltab.on{background:#fff;color:#137074;box-shadow:0 2px 6px rgba(20,80,76,.1)}
-.geniebar{display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,#e7fbf4,#f1faf8);border:1px solid #cfe9e1;border-radius:18px;padding:8px 14px 8px 6px;margin:6px 0 14px;overflow:hidden}
-.genie-stage{width:104px;height:104px;flex:none;position:relative}
-.genie-stage svg{width:104px;height:104px;display:block;overflow:visible}
-.genie{transform-origin:72px 116px;animation:none}
-.genieInner{transform-origin:72px 116px;animation:genieBob 3.2s ease-in-out infinite}
-.smoke{stroke-dasharray:90;stroke-dashoffset:0}
-.geniebar.play .genie{animation:genieRise .9s cubic-bezier(.2,1.35,.35,1) both}
-.geniebar.play .smoke{animation:smokePuff .9s ease both}
-.geniebar.play .genie-speech{animation:gFade .55s ease .45s both}
-@keyframes genieRise{0%{transform:translateY(46px) scale(.12);opacity:0}55%{opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
-@keyframes genieBob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(-1.5deg)}}
-@keyframes smokePuff{0%{opacity:0;stroke-dashoffset:90}60%{opacity:.6}100%{opacity:.38;stroke-dashoffset:0}}
-@keyframes gFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.lamp{transform-box:fill-box;transform-origin:center bottom}
-.geniebar.play .lamp{animation:lampShake .4s ease both}
-@keyframes lampShake{0%,100%{transform:rotate(0)}20%{transform:rotate(-7deg)}55%{transform:rotate(6deg)}80%{transform:rotate(-2deg)}}
-.flash{opacity:0;transform-box:fill-box;transform-origin:center}
-.geniebar.play .flash{animation:flashRing .55s ease .42s both}
-@keyframes flashRing{0%{opacity:.95;transform:scale(.3)}100%{opacity:0;transform:scale(5.5)}}
-.spk{opacity:0;transform-box:fill-box;transform-origin:center}
-.geniebar.play .s1{animation:spk .7s ease .5s both}
-.geniebar.play .s2{animation:spk .7s ease .62s both}
-.geniebar.play .s3{animation:spk .75s ease .72s both}
-@keyframes spk{0%{opacity:0;transform:scale(.2) rotate(0)}45%{opacity:1;transform:scale(1.15) rotate(35deg)}100%{opacity:0;transform:scale(.5) rotate(60deg)}}
-.g-rig{transform-box:view-box;transform-origin:72px 106px;animation:rigAct 8.4s ease-in-out infinite}
-@keyframes rigAct{0%{transform:translateY(0) scaleY(1)}7%{transform:scaleY(.96)}11%{transform:translateY(-2px) scaleY(1.03)}15%{transform:scaleY(.98)}19%{transform:translateY(-1px)}22%{transform:translateY(0) scaleY(1)}37%{transform:translateY(2px)}62%{transform:translateY(-2px) scaleY(1.02)}87%{transform:translateY(1px)}100%{transform:translateY(0)}}
-.g-head{transform-box:view-box;transform-origin:72px 60px;animation:headAct 8.4s ease-in-out infinite}
-@keyframes headAct{0%{transform:rotate(0)}12%{transform:rotate(-8deg)}22%{transform:rotate(0)}37%{transform:rotate(5deg)}50%{transform:rotate(0)}62%{transform:scale(1.04)}72%{transform:scale(1)}87%{transform:rotate(10deg) translateX(2px)}100%{transform:rotate(0)}}
-.arms{opacity:0}
-.a-cross{animation:poseCross 8.4s ease-in-out infinite}
-.a-shrug{animation:poseShrug 8.4s ease-in-out infinite}
-.a-flex{animation:poseFlex 8.4s ease-in-out infinite}
-.a-think{animation:poseThink 8.4s ease-in-out infinite}
-@keyframes poseCross{0%,18%{opacity:1}24%,94%{opacity:0}100%{opacity:1}}
-@keyframes poseShrug{0%,24%{opacity:0}30%,45%{opacity:1}51%,100%{opacity:0}}
-@keyframes poseFlex{0%,51%{opacity:0}57%,72%{opacity:1}78%,100%{opacity:0}}
-@keyframes poseThink{0%,75%{opacity:0}81%,96%{opacity:1}100%{opacity:0}}
-.m{opacity:0}
-.m-grin{animation:mGrin 8.4s ease-in-out infinite}
-.m-laugh{animation:mLaugh 8.4s ease-in-out infinite}
-.m-think{animation:mThink 8.4s ease-in-out infinite}
-@keyframes mGrin{0%,20%{opacity:0}26%,74%{opacity:1}80%,100%{opacity:0}}
-@keyframes mLaugh{0%,18%{opacity:1}24%,94%{opacity:0}100%{opacity:1}}
-@keyframes mThink{0%,78%{opacity:0}82%,96%{opacity:1}100%{opacity:0}}
-.flexspark{opacity:0;transform-box:fill-box;transform-origin:center;animation:fspark 8.4s ease-in-out infinite}
-@keyframes fspark{0%,57%{opacity:0;transform:scale(.3) rotate(0)}63%{opacity:1;transform:scale(1.15) rotate(40deg)}70%,100%{opacity:0;transform:scale(.6) rotate(60deg)}}
-.thinkdots circle{opacity:0}
-.d1{animation:tdot 8.4s ease-in-out infinite}
-.d2{animation:tdot2 8.4s ease-in-out infinite}
-.d3{animation:tdot3 8.4s ease-in-out infinite}
-@keyframes tdot{0%,80%{opacity:0}84%,96%{opacity:.9}100%{opacity:0}}
-@keyframes tdot2{0%,84%{opacity:0}88%,96%{opacity:.9}100%{opacity:0}}
-@keyframes tdot3{0%,88%{opacity:0}92%,96%{opacity:.9}100%{opacity:0}}
+
 .gname{font-weight:800;font-size:13px;color:#137074}
 .gline{font-size:12.5px;color:#42554f;margin-top:2px;line-height:1.4}
 #pathPicker{margin-top:18px}
@@ -204,7 +152,6 @@ button{font-family:inherit;cursor:pointer}
 .move textarea{width:100%;margin-top:8px;background:#fff;border:1px solid var(--line);border-radius:9px;color:var(--ink);font-family:inherit;font-size:13.5px;padding:9px;resize:vertical;min-height:60px}
 .sfoot{display:flex;align-items:center;gap:11px;padding:12px 15px;border-top:1px solid var(--line2)}
 .rah{width:38px;height:38px;border-radius:50%;background:#eef9f5;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden}
-.gico{width:100%;height:100%;display:block}
 .rmsg{font-size:11.5px;color:var(--mut)}
 .cta{margin-left:auto;background:var(--teal);color:#fff;border:none;font-weight:800;font-size:13px;letter-spacing:.03em;padding:11px 20px;border-radius:11px;box-shadow:0 6px 16px rgba(26,143,147,.32)}
 .cta.dim{background:var(--panel);color:var(--mut);box-shadow:none}
@@ -312,30 +259,6 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="genieBust" viewBox="0 0 60 60">
-  <path d="M24 59 Q21 50 30 45 Q39 50 36 59 Z" fill="#1aa996"/>
-  <path d="M11 44 Q30 30 49 44 Q44 53 30 53 Q16 53 11 44 Z" fill="#23c7b4"/>
-  <path d="M21 44 q9 6 18 0" stroke="#0e8e7e" stroke-width="1.5" fill="none" opacity=".55"/>
-  <path d="M30 46 v6" stroke="#0e8e7e" stroke-width="1.1" opacity=".4"/>
-  <circle cx="13" cy="42" r="8.5" fill="#1fb6a6"/>
-  <circle cx="47" cy="42" r="8.5" fill="#1fb6a6"/>
-  <rect x="15" y="38" width="30" height="7.5" rx="3.75" transform="rotate(-11 30 41)" fill="#23c7b4"/>
-  <rect x="15" y="41" width="30" height="7.5" rx="3.75" transform="rotate(11 30 44)" fill="#1aa996"/>
-  <rect x="12" y="35" width="5.5" height="10" rx="1.8" transform="rotate(-11 30 41)" fill="#ffd968"/>
-  <rect x="42.5" y="35" width="5.5" height="10" rx="1.8" transform="rotate(11 30 44)" fill="#ffd968"/>
-  <circle cx="30" cy="20" r="11.5" fill="#23c7b4"/>
-  <path d="M20 17 q-3 -1 -4 2 q3 .5 4 1z" fill="#23c7b4"/>
-  <path d="M40 17 q3 -1 4 2 q-3 .5 -4 1z" fill="#23c7b4"/>
-  <rect x="26" y="4.5" width="8" height="5" rx="2" fill="#0c2a26"/>
-  <circle cx="30" cy="3.5" r="3.6" fill="#0c2a26"/>
-  <rect x="24" y="8.6" width="12" height="2.6" rx="1.3" fill="#ffd968"/>
-  <path d="M22.5 17.5 l5.5 1.2 M37.5 17.5 l-5.5 1.2" stroke="#0c2a26" stroke-width="2.1" stroke-linecap="round"/>
-  <circle cx="26" cy="21" r="1.6" fill="#0c2a26"/>
-  <circle cx="34" cy="21" r="1.6" fill="#0c2a26"/>
-  <path d="M25 25.5 q5 4.5 10 0" stroke="#0c2a26" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <path d="M27 29 Q30 34 33 29 Q30 31.5 27 29 Z" fill="#0c2a26"/>
-  <circle cx="42" cy="24" r="1.9" fill="#ffd968"/>
-</symbol></svg>
 <canvas id="cf"></canvas>
 <div class="wrap">
   <div class="topbar">
@@ -347,72 +270,6 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
   <div id="pathPicker"></div>
 
   <div id="examView" style="display:none">
-  <div class="geniebar" id="geniebar">
-    <div class="genie-stage"><svg viewBox="0 0 144 130" aria-hidden="true">
-      <g class="lamp"><ellipse cx="72" cy="120" rx="30" ry="6" fill="#caa030" opacity=".4"/>
-      <path d="M44 116 q-13 -2 -20 2 q10 5 20 4 z" fill="#e0a92e"/>
-      <ellipse cx="73" cy="116" rx="26" ry="11" fill="#f4c64a"/>
-      <path d="M97 110 q11 1 9 9 q-6 -3 -11 -3 z" fill="#e0a92e"/>
-      <ellipse cx="73" cy="108" rx="15" ry="5" fill="#ffd968"/>
-      <circle cx="73" cy="103" r="3" fill="#ffd968"/>
-      </g><path class="smoke" d="M50 112 C 42 96 66 92 60 80 C 55 70 80 70 72 60" stroke="#9fe3d6" stroke-width="8" fill="none" stroke-linecap="round"/>
-      <circle class="flash" cx="72" cy="58" r="7" fill="none" stroke="#ffe7a0" stroke-width="4"/>
-      <path class="spk s1" d="M30 50 l1.6 4.2 4.2 1.6 -4.2 1.6 -1.6 4.2 -1.6 -4.2 -4.2 -1.6 4.2 -1.6z" fill="#ffd968"/>
-      <path class="spk s2" d="M114 44 l1.3 3.3 3.3 1.3 -3.3 1.3 -1.3 3.3 -1.3 -3.3 -3.3 -1.3 3.3 -1.3z" fill="#9af0e0"/>
-      <path class="spk s3" d="M106 82 l1.1 2.8 2.8 1.1 -2.8 1.1 -1.1 2.8 -1.1 -2.8 -2.8 -1.1 2.8 -1.1z" fill="#ffd968"/>
-      <g class="genie"><g class="genieInner"><g class="g-rig">
-  <path class="g-tail" d="M62 96 Q72 90 82 96 L80 108 Q72 112 64 108 Z" fill="#19a895"/>
-  <path d="M52 92 Q72 82 92 92 L90 76 Q72 70 54 76 Z" fill="#1aa895"/>
-  <path d="M44 78 Q72 58 100 78 Q95 93 72 93 Q49 93 44 78 Z" fill="#23c7b4"/>
-  <path d="M58 80 q14 8 28 0" stroke="#0e8e7e" stroke-width="2" fill="none" opacity=".5"/>
-  <path d="M72 82 v9" stroke="#0e8e7e" stroke-width="1.4" opacity=".4"/>
-  <g class="arms a-cross">
-    <circle cx="48" cy="78" r="11" fill="#1fb6a6"/><circle cx="96" cy="78" r="11" fill="#1fb6a6"/>
-    <rect x="52" y="72" width="40" height="9" rx="4.5" transform="rotate(-10 72 76)" fill="#23c7b4"/>
-    <rect x="52" y="76" width="40" height="9" rx="4.5" transform="rotate(10 72 80)" fill="#1aa996"/>
-    <rect x="49" y="70" width="6" height="12" rx="2" transform="rotate(-10 72 76)" fill="#ffd968"/>
-    <rect x="89" y="70" width="6" height="12" rx="2" transform="rotate(10 72 80)" fill="#ffd968"/>
-  </g>
-  <g class="arms a-shrug">
-    <circle cx="46" cy="76" r="10" fill="#1fb6a6"/><circle cx="98" cy="76" r="10" fill="#1fb6a6"/>
-    <rect x="32" y="72" width="15" height="9" rx="4.5" transform="rotate(42 41 76)" fill="#23c7b4"/>
-    <rect x="97" y="72" width="15" height="9" rx="4.5" transform="rotate(-42 103 76)" fill="#23c7b4"/>
-    <circle cx="31" cy="65" r="5.2" fill="#23c7b4"/><circle cx="113" cy="65" r="5.2" fill="#23c7b4"/>
-  </g>
-  <g class="arms a-flex">
-    <circle cx="50" cy="78" r="13.5" fill="#1fb6a6"/><circle cx="94" cy="78" r="13.5" fill="#1fb6a6"/>
-    <rect x="44" y="52" width="11" height="26" rx="5.5" transform="rotate(16 49 65)" fill="#23c7b4"/>
-    <rect x="89" y="52" width="11" height="26" rx="5.5" transform="rotate(-16 95 65)" fill="#23c7b4"/>
-    <circle cx="56" cy="52" r="5.5" fill="#23c7b4"/><circle cx="88" cy="52" r="5.5" fill="#23c7b4"/>
-    <rect x="45" y="60" width="9" height="6" rx="2" transform="rotate(16 49 65)" fill="#ffd968"/>
-    <rect x="90" y="60" width="9" height="6" rx="2" transform="rotate(-16 95 65)" fill="#ffd968"/>
-  </g>
-  <g class="g-head">
-    <circle cx="72" cy="46" r="15" fill="#23c7b4"/>
-    <path d="M59 42 q-4 -1 -5 3 q4 .5 5 1z" fill="#23c7b4"/><path d="M85 42 q4 -1 5 3 q-4 .5 -5 1z" fill="#23c7b4"/>
-    <rect x="68" y="27" width="8" height="5" rx="2" fill="#0c2a26"/><circle cx="72" cy="25" r="3.6" fill="#0c2a26"/>
-    <rect x="66" y="31.6" width="12" height="2.6" rx="1.3" fill="#ffd968"/>
-    <path d="M64 43 l6 1.3 M80 43 l-6 1.3" stroke="#0c2a26" stroke-width="2.2" stroke-linecap="round"/>
-    <circle cx="67.5" cy="47" r="1.7" fill="#0c2a26"/><circle cx="76.5" cy="47" r="1.7" fill="#0c2a26"/>
-    <circle cx="87" cy="50" r="2" fill="#ffd968"/>
-    <path class="m m-grin" d="M66 52 q6 5 12 0" stroke="#0c2a26" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-    <ellipse class="m m-laugh" cx="72" cy="54" rx="5" ry="4.2" fill="#0c2a26"/>
-    <circle class="m m-think" cx="73" cy="53" r="1.9" fill="#0c2a26"/>
-    <path d="M68 58 Q72 63 76 58 Q72 60.5 68 58Z" fill="#0c2a26"/>
-  </g>
-  <g class="arms a-think">
-    <circle cx="50" cy="80" r="10" fill="#1fb6a6"/><circle cx="94" cy="80" r="11" fill="#1fb6a6"/>
-    <rect x="50" y="82" width="30" height="8" rx="4" transform="rotate(-5 65 86)" fill="#1aa996"/>
-    <rect x="83" y="58" width="9" height="25" rx="4.5" transform="rotate(30 88 70)" fill="#23c7b4"/>
-    <circle cx="77" cy="57" r="5" fill="#23c7b4"/>
-    <rect x="84" y="74" width="8" height="6" rx="2" transform="rotate(30 88 70)" fill="#ffd968"/>
-  </g>
-  <path class="flexspark" d="M52 60 l1.4 3.6 3.6 1.4 -3.6 1.4 -1.4 3.6 -1.4 -3.6 -3.6 -1.4 3.6 -1.4z" fill="#fff"/>
-  <g class="thinkdots"><circle class="d1" cx="90" cy="30" r="1.8" fill="#137074"/><circle class="d2" cx="96" cy="25" r="2.2" fill="#137074"/><circle class="d3" cx="103" cy="19" r="2.7" fill="#137074"/></g>
-</g></g></g>
-    </svg></div>
-    <div class="genie-speech"><div class="gname">Dana the Genie</div><div class="gline" id="gline">Make a wish. Then do the reps — that's the magic.</div></div>
-  </div>
   <div class="chips" id="examChips" style="display:none"></div>
   <div class="ltabs">
     <button class="ltab on" data-t="trail" onclick="selTab(this)">🗺️ Trail</button>
@@ -753,8 +610,7 @@ function renderMap(){
   else inner='<div class="dot">🔒</div><div class="lbl">'+n.title+'</div>';
   el.innerHTML=inner;map.appendChild(el);
  });
- if(goIdx>=0){const p=pts[goIdx];const m=document.createElement("div");m.className="mascot";m.innerHTML='<svg class="gico" viewBox="0 2 60 58"><use href="#genieBust"/></svg>';
-  m.style.left=((p.x-60)/W*100)+"%";m.style.top=(p.y-4)+"px";map.appendChild(m);}
+ 
 }
 /* ---------- badges ---------- */
 function badgeList(){
@@ -811,7 +667,7 @@ function renderStep(){
   let ex=n.example?'<div class="ex"><div class="bub bot">'+n.example.other+'</div><div class="bub bme">'+n.example.me+'</div></div>':"";
   sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">'+(n.type==="boss"?"Mastery test":"Lesson")+' · '+CONTENT[exam].name+'</div>'+
    '<div class="h3">'+n.title+'</div>'+(n.intro||[]).map(p=>'<p class="p">'+p+'</p>').join("")+ex+'</div>'+
-   '<div class="sfoot"><div class="rah"><svg class="gico" viewBox="7 4 46 42"><use href="#genieBust"/></svg></div><div class="rmsg">Dana the Genie: "Read it, then prove it — no wishes for guesses."</div>'+
+   '<div class="sfoot"><div class="rmsg">Read it, then prove it.</div>'+
    '<button class="cta" onclick="nextStep()">'+(FL.drillTotal?"Start drill ▶":"Continue →")+'</button></div>';
   return;
  }
@@ -821,7 +677,7 @@ function renderStep(){
   let opts=q.opts.map((o,k)=>'<button class="opt" onclick="pick(this,'+k+','+di+',event)">'+o+'</button>').join("");
   sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">Question '+(di+1)+' of '+FL.drillTotal+'</div>'+
    '<div class="q">'+q.q+'</div>'+opts+'<div class="fb" id="fb"></div></div>'+
-   '<div class="sfoot"><div class="rah"><svg class="gico" viewBox="7 4 46 42"><use href="#genieBust"/></svg></div><button class="hintbtn" type="button" onclick="showHint('+di+')">Hint</button>'+
+   '<div class="sfoot"><button class="hintbtn" type="button" onclick="showHint('+di+')">Hint</button>'+
    '<button class="cta dim" id="nx" disabled onclick="nextStep()">Continue →</button></div>';
   return;
  }
@@ -829,7 +685,7 @@ function renderStep(){
  sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">Your move — now, do it</div>'+
   '<div class="h3" style="font-size:17px">Put it into practice</div><p class="p">'+(n.move||"Try this skill in the wild today.")+'</p>'+
   '<div class="move"><textarea placeholder="Write your answer (optional)…"></textarea></div>'+tipHTML(n.id)+'</div>'+
-  '<div class="sfoot"><div class="rah"><svg class="gico" viewBox="7 4 46 42"><use href="#genieBust"/></svg></div><div class="rmsg">Dana: "Reps now, wishes later."</div>'+
+  '<div class="sfoot"><div class="rmsg">Practice makes it stick.</div>'+
   '<button class="cta" onclick="finishNode()">Finish ✓</button></div>';
 }
 function showHint(di){
@@ -874,7 +730,7 @@ function finishNode(){
    '<div><div class="v" style="color:var(--gem)">'+(already?"+0":"+"+gems+" 💎")+'</div><div class="k">gems</div></div>'+
    '<div><div class="v" style="color:var(--fire)">🔥 '+S.streak+'</div><div class="k">streak</div></div>'+
   '</div>'+(n.type==="boss"?'<div style="margin-top:16px"><a class="cta" style="text-decoration:none;display:inline-block" href="'+(TESTROUTE[exam]||"/")+'">Take the real '+CONTENT[exam].name+' test →</a></div>':'')+'</div>'+
-  '<div class="sfoot"><div class="rah"><svg class="gico" viewBox="7 4 46 42"><use href="#genieBust"/></svg></div><div class="rmsg">'+(n.type==="boss"?"You conquered the trail. ":"Next node unlocked. ")+'Keep going.</div>'+
+  '<div class="sfoot"><div class="rmsg">'+(n.type==="boss"?"You conquered the trail. ":"Next node unlocked. ")+'Keep going.</div>'+
   '<button class="cta" onclick="closeOv()">Continue →</button></div>';
  burst(innerWidth/2,innerHeight*0.32,110);
  if(lvUp)setTimeout(()=>burst(innerWidth/2,innerHeight*0.3,90),350);
@@ -887,18 +743,18 @@ function openChest(id,ev){
  sheet.innerHTML='<div class="reward"><div class="chestbig">🎁</div><h3>Treasure!</h3><p>Trail chest unlocked</p>'+
   '<div class="loot"><div><div class="v" style="color:var(--gem)">+40 💎</div><div class="k">gems</div></div>'+
   '<div><div class="v" style="color:var(--heart)">+1 ❤️</div><div class="k">heart</div></div></div></div>'+
-  '<div class="sfoot"><div class="rah"><svg class="gico" viewBox="7 4 46 42"><use href="#genieBust"/></svg></div><div class="rmsg">Spend gems on streak-freezes & hints (soon).</div>'+
+  '<div class="sfoot"><div class="rmsg">Spend gems on streak-freezes & hints (soon).</div>'+
   '<button class="cta" onclick="closeOv()">Collect →</button></div>';
  ov.classList.add("show");
 }
 /* ---------- hearts wall + practice ---------- */
 let PRAC=null;
 function gemRefill(){if(S.gems<GEM_REFILL)return;gev("gem").then(function(){burst(innerWidth/2,160,50);syncHud();closeOv();});}
-function showWall(){var ms=nextHeartMs();sheet.innerHTML='<div class="reward" style="padding-top:24px"><div class="chestbig" style="font-size:54px">💔</div><h3>Out of hearts</h3><p>'+(ms?("Next heart in "+fmtMs(ms)+". "):"")+'Hearts keep practice focused — earn one back by reviewing what tripped you up.</p><div class="wallrow"><button class="wbtn" onclick="practiceToEarn()"><span class="we">🧠</span><div>Practice to earn a heart<small>Review 3 questions correctly, gain ❤️</small></div></button><button class="wbtn" '+(S.gems>=GEM_REFILL?"":"disabled")+' onclick="gemRefill()"><span class="we">💎</span><div>Refill hearts — '+GEM_REFILL+' gems<small>You have '+S.gems+' 💎</small></div></button><a class="wbtn prem" href="/login?upgrade=1"><span class="we">⭐</span><div>Go Premium — unlimited<small>Monthly · never wait again</small></div></a></div></div><div class="sfoot"><div class="rah"><svg class="gico" viewBox="7 4 46 42"><use href="#genieBust"/></svg></div><div class="rmsg">Dana the Genie: a wrong answer is a lesson, not a loss — rub the lamp, try again.</div><button class="cta dim" onclick="closeOv()">Later →</button></div>';ov.classList.add("show");}
+function showWall(){var ms=nextHeartMs();sheet.innerHTML='<div class="reward" style="padding-top:24px"><div class="chestbig" style="font-size:54px">💔</div><h3>Out of hearts</h3><p>'+(ms?("Next heart in "+fmtMs(ms)+". "):"")+'Hearts keep practice focused — earn one back by reviewing what tripped you up.</p><div class="wallrow"><button class="wbtn" onclick="practiceToEarn()"><span class="we">🧠</span><div>Practice to earn a heart<small>Review 3 questions correctly, gain ❤️</small></div></button><button class="wbtn" '+(S.gems>=GEM_REFILL?"":"disabled")+' onclick="gemRefill()"><span class="we">💎</span><div>Refill hearts — '+GEM_REFILL+' gems<small>You have '+S.gems+' 💎</small></div></button><a class="wbtn prem" href="/login?upgrade=1"><span class="we">⭐</span><div>Go Premium — unlimited<small>Monthly · never wait again</small></div></a></div></div><div class="sfoot"><div class="rmsg">A wrong answer is a lesson, not a loss.</div><button class="cta dim" onclick="closeOv()">Later →</button></div>';ov.classList.add("show");}
 function practiceToEarn(){var pool=[];CONTENT[exam].nodes.forEach(function(nd){if(nd.drills)nd.drills.forEach(function(d){pool.push(d);});});var q=pool.sort(function(){return Math.random()-0.5;}).slice(0,3);PRAC={qs:q,i:0};renderPrac();}
-function renderPrac(){var d=PRAC.qs[PRAC.i];var opts=d.opts.map(function(o,k){return '<button class="opt" onclick="pracPick("+k+")">'+o+'</button>';}).join("");sheet.innerHTML='<div class="shead"><button class="x" onclick="closeOv()">✕</button><div class="lead2" style="margin-left:6px">Practice · earn a heart</div><div class="seg" style="margin-left:auto">'+PRAC.qs.map(function(_,k){return '<i class="'+(k<PRAC.i?"f":"")+'"></i>';}).join("")+'</div></div><div class="sbody"><div class="q">'+d.q+'</div>'+opts+'<div class="fb" id="pfb"></div></div><div class="sfoot"><div class="rah">🧠</div><div class="rmsg">Get all 3 right to earn a heart.</div></div>';ov.classList.add("show");}
+function renderPrac(){var d=PRAC.qs[PRAC.i];var opts=d.opts.map(function(o,k){return '<button class="opt" onclick="pracPick("+k+")">'+o+'</button>';}).join("");sheet.innerHTML='<div class="shead"><button class="x" onclick="closeOv()">✕</button><div class="lead2" style="margin-left:6px">Practice · earn a heart</div><div class="seg" style="margin-left:auto">'+PRAC.qs.map(function(_,k){return '<i class="'+(k<PRAC.i?"f":"")+'"></i>';}).join("")+'</div></div><div class="sbody"><div class="q">'+d.q+'</div>'+opts+'<div class="fb" id="pfb"></div></div><div class="sfoot"><div class="rmsg">Get all 3 right to earn a heart.</div></div>';ov.classList.add("show");}
 function pracPick(k){var d=PRAC.qs[PRAC.i],fb=document.getElementById("pfb");document.querySelectorAll(".opt").forEach(function(o){o.disabled=true;});if(k===d.a){fb.className="fb ok";fb.textContent="Correct!";setTimeout(function(){PRAC.i++;if(PRAC.i>=PRAC.qs.length)pracDone();else renderPrac();},650);}else{fb.className="fb no";fb.textContent="Not quite — "+d.no+" Practice resets.";setTimeout(function(){PRAC=null;showWall();},1400);}}
-function pracDone(){gev("practice").then(function(){syncHud();});burst(innerWidth/2,innerHeight*0.3,80);sheet.innerHTML='<div class="reward"><div class="chestbig">❤️</div><h3>Heart earned!</h3><p>Good reviewing — a heart is back. Keep going.</p></div><div class="sfoot"><div class="rah"><svg class="gico" viewBox="7 4 46 42"><use href="#genieBust"/></svg></div><div class="rmsg">Dana: "Wish granted. Back to it."</div><button class="cta" onclick="closeOv()">Continue →</button></div>';ov.classList.add("show");}
+function pracDone(){gev("practice").then(function(){syncHud();});burst(innerWidth/2,innerHeight*0.3,80);sheet.innerHTML='<div class="reward"><div class="chestbig">❤️</div><h3>Heart earned!</h3><p>Good reviewing — a heart is back. Keep going.</p></div><div class="sfoot"><div class="rmsg">Back to learning.</div><button class="cta" onclick="closeOv()">Continue →</button></div>';ov.classList.add("show");}
 /* ---------- confetti ---------- */
 const cv=document.getElementById("cf"),cx=cv.getContext("2d");let parts=[],raf;
 function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener("resize",size);
@@ -930,7 +786,7 @@ function renderRev(){ if(REV.i>=REV.refs.length){revDone();return;} var f=findDr
  var opts=d.opts.map(function(o,k){return '<button class="opt" onclick="revPick("+k+")">'+o+'</button>';}).join("");
  sheet.innerHTML='<div class="shead"><button class="x" onclick="closeOv()">\u2715</button><div class="lead2" style="margin-left:6px">Daily Review</div><div class="seg" style="margin-left:auto">'+REV.refs.map(function(_,k){return '<i class="'+(k<REV.i?"f":"")+'"></i>';}).join("")+'</div></div>'+
   '<div class="sbody"><div class="lead2">'+CONTENT[f.exam].name+' \u00b7 '+f.node.title+'</div><div class="q">'+d.q+'</div>'+opts+'<div class="fb" id="rfb"></div></div>'+
-  '<div class="sfoot"><div class="rah"><svg class="gico" viewBox="7 4 46 42"><use href="#genieBust"/></svg></div><div class="rmsg">Item '+(REV.i+1)+' of '+REV.refs.length+'</div></div>';
+  '<div class="sfoot"><div class="rmsg">Item '+(REV.i+1)+' of '+REV.refs.length+'</div></div>';
  ov.classList.add("show");
 }
 function revPick(k){ var d=REV.cur.drill, fb=document.getElementById("rfb"), o=document.querySelectorAll(".opt"); o.forEach(function(b){b.disabled=true;}); var ok=(k===d.a);
@@ -938,7 +794,7 @@ function revPick(k){ var d=REV.cur.drill, fb=document.getElementById("rfb"), o=d
  gev("review",{ref:REV.refs[REV.i],ok:ok});
  setTimeout(function(){REV.i++;renderRev();},1100);
 }
-function revDone(){ burst(innerWidth/2,innerHeight*0.3,80); sheet.innerHTML='<div class="reward"><div class="chestbig">\uD83C\uDFAF</div><h3>Review complete</h3><p>'+REV.right+' of '+REV.total+' correct. Items you nailed move further out; misses come back sooner.</p></div><div class="sfoot"><div class="rah"><svg class="gico" viewBox="7 4 46 42"><use href="#genieBust"/></svg></div><div class="rmsg">Spaced practice is where scores grow.</div><button class="cta" onclick="closeOv()">Done \u2192</button></div>'; }
+function revDone(){ burst(innerWidth/2,innerHeight*0.3,80); sheet.innerHTML='<div class="reward"><div class="chestbig">\uD83C\uDFAF</div><h3>Review complete</h3><p>'+REV.right+' of '+REV.total+' correct. Items you nailed move further out; misses come back sooner.</p></div><div class="sfoot"><div class="rmsg">Spaced practice is where scores grow.</div><button class="cta" onclick="closeOv()">Done \u2192</button></div>'; }
 function tipHTML(id){ var t=(typeof TIPCARDS!=="undefined")?TIPCARDS[id]:null; if(!t)return ""; return '<div class="tipcard"><div class="tch">Remember this</div><div class="tcr">'+t.rule+'</div>'+(t.how?'<ul>'+t.how.map(function(h){return '<li>'+h+'</li>';}).join("")+'</ul>':'')+(t.trap?'<div class="tctrap"><b>Common trap:</b> '+t.trap+'</div>':'')+'</div>'; }
 function openTipLibrary(){ var C=CONTENT[exam]; var cards=C.nodes.filter(function(nd){return typeof TIPCARDS!=="undefined"&&TIPCARDS[nd.id];}).map(function(nd){var t=TIPCARDS[nd.id];return '<div class="tipcard" style="margin-top:12px"><div class="tch">'+nd.title+'</div><div class="tcr">'+t.rule+'</div>'+(t.trap?'<div class="tctrap"><b>Common trap:</b> '+t.trap+'</div>':'')+'</div>';}).join("");
  if(!cards)cards='<p style="color:var(--mut);font-size:14px">Tip cards for '+C.name+' arrive as the course expands.</p>';
@@ -974,9 +830,8 @@ function renderPaths(){
   }).join("");
   host.innerHTML='<div class="pathhead">Choose your path</div><div class="pathsub">Pick an exam to open its gamified trail.</div><div class="paths">'+cards+'</div>';
 }
-function openPath(k){ if(!CONTENT[k])return; exam=k; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="none"; var ev=document.getElementById("examView"); if(ev)ev.style.display="block"; renderAll(); selTabKey("trail"); playGenie(k); window.scrollTo(0,0); }
-var GLINES={toefl:'TOEFL band 6? Consider it summoned \u2014 now, the reps.',ielts:'IELTS band 7? Granted, one drill at a time.',duolingo:'160 on the DET? Easy magic. Start rubbing the lamp.',ged:'GED pass? Done deal. Flex those brain muscles.',_:"Make a wish. Then do the reps \u2014 that's the magic."};
-function playGenie(k){ var gl=document.getElementById("gline"); if(gl)gl.textContent=GLINES[k]||GLINES._; var gb=document.getElementById("geniebar"); if(gb){ gb.classList.remove("play"); void gb.offsetWidth; gb.classList.add("play"); } }
+function openPath(k){ if(!CONTENT[k])return; exam=k; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="none"; var ev=document.getElementById("examView"); if(ev)ev.style.display="block"; renderAll(); selTabKey("trail"); window.scrollTo(0,0); }
+
 function selTab(btn){ document.querySelectorAll(".ltab").forEach(function(t){t.classList.remove("on");}); btn.classList.add("on"); var t=btn.getAttribute("data-t"); document.querySelectorAll(".tb").forEach(function(el){ el.style.display = el.classList.contains("tab-"+t) ? "" : "none"; }); window.scrollTo(0,0); }
 function selTabKey(t){ var b=document.querySelector('.ltab[data-t="'+t+'"]'); if(b)selTab(b); }
 function backToPaths(){ var ev=document.getElementById("examView"); if(ev)ev.style.display="none"; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="block"; renderPaths(); window.scrollTo(0,0); }
