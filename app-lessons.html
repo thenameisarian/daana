@@ -982,7 +982,7 @@ function renderStreak(){
   html+='<div class="'+cls+'"><div class="dot">'+inner+'</div><div class="dl">'+labels[i]+'</div></div>'; }
  strip.innerHTML=html;
 }
-function doBack(){ var ev=document.getElementById("examView"); if(ev && ev.style.display!=="none"){ backToPaths(); return; } try{ if(document.referrer && document.referrer.indexOf(location.origin)===0){ history.back(); return; } }catch(e){} location.href = PREMIUM?"/hub":((typeof TESTROUTE!=="undefined"&&TESTROUTE[ACCESS])||"/"); }
+function doBack(){ var ev=document.getElementById("examView"); if(ev && ev.style.display!=="none" && typeof exam!=="undefined" && exam){ location.href="/hub#"+exam; return; } location.href="/hub"; }
 let REV=null;
 function findDrill(ref){ var parts=String(ref).split(":"), nid=parts[0], di=+parts[1]; for(var ex in CONTENT){ var nodes=CONTENT[ex].nodes; for(var i=0;i<nodes.length;i++){ if(nodes[i].id===nid){ var dl=nodes[i].drills; return (dl&&dl[di])?{node:nodes[i],drill:dl[di],exam:ex}:null; } } } return null; }
 function renderReviewCard(){ var host=document.getElementById("reviewCard"); if(!host)return; var n=S.dueReview||0; if(n<=0){host.innerHTML="";return;} host.innerHTML='<div class="revcard" onclick="startRev()"><div class="ri">\uD83D\uDD01</div><div class="rm"><div class="rt">Daily Review</div><div class="rs">'+n+' item'+(n>1?'s':'')+' due \u2014 lock in what you missed</div></div><div class="rgo">Review \u2192</div></div>'; }
@@ -1023,7 +1023,7 @@ function renderPaths(){
   var ICO={toefl:"📘",ielts:"🌐",duolingo:"🦉",ged:"🎓"};
   var cards=Object.keys(CONTENT).map(function(k){
     var C=CONTENT[k], nodes=C.nodes, done=0;
-    nodes.forEach(function(n,i){ if(nodeState(k,i)==="done") done=i+1; });
+    nodes.forEach(function(n,i){ if(nodeState(k,i)==="done") done++; });
     var pct=nodes.length?Math.round(done/nodes.length*100):0;
     return '<button class="pathcard" onclick="openPath(\''+k+'\')">'
       +'<div class="pcico">'+(ICO[k]||"📘")+'</div>'
@@ -1048,8 +1048,11 @@ async function init(){
  if(pr&&pr.ok)applyProgress(pr.progress);
  setNav();
  renderAll();
- renderPaths();
- try{var _p=new URLSearchParams(location.search),_ex=_p.get("exam"),_nd=_p.get("node");if(_ex&&CONTENT[_ex]){openPath(_ex);}if(_nd){var _ns=CONTENT[exam].nodes;for(var _i=0;_i<_ns.length;_i++){if(_ns[_i].id===_nd){openNode(_i);break;}}}}catch(e){}
+ try{var _p=new URLSearchParams(location.search),_ex=_p.get("exam"),_nd=_p.get("node");
+   if(!_ex||!CONTENT[_ex]){ location.replace("/hub"); return; }
+   openPath(_ex);
+   if(_nd){var _ns=CONTENT[exam].nodes;for(var _i=0;_i<_ns.length;_i++){if(_ns[_i].id===_nd){openNode(_i);break;}}}
+ }catch(e){}
  setInterval(refreshProg,60000);
 }
 const TESTROUTE={toefl:"/app",ielts:"/app-ielts",duolingo:"/app-duolingo",ged:"/app-ged",all:"/hub"};
