@@ -54,7 +54,7 @@ h1{font-size:26px;font-weight:800;margin:0 0 14px}
 
 <script>
 var EXAMS=[
-  {key:"toefl",   ico:"📘", name:"TOEFL iBT", sub:"Reading &amp; Writing",          test:"/app",          pre:"tf-", total:20, mock:"Full practice exams · 5 tests · instant band 1–6"},
+  {key:"toefl",   ico:"📘", name:"TOEFL iBT", sub:"Reading, Listening &amp; more",    test:"/app",          pre:"tf-", pres:["tf-","tl-"], total:34, mock:"Full practice exams · 5 tests · instant band 1–6"},
   {key:"ielts",   ico:"🌐", name:"IELTS",     sub:"Academic &amp; General Training", test:"/app-ielts",    pre:"ie-", total:8,  mock:"Academic &amp; General · Reading &amp; Writing · band 0–9"},
   {key:"duolingo",ico:"🦉", name:"Duolingo",  sub:"Adaptive English Test",          test:"/app-duolingo", pre:"de-", total:8,  mock:"Adaptive practice · 10–160 · four subscores"},
   {key:"ged",     ico:"🎓", name:"GED",       sub:"RLA · Math · Science · Social",  test:"/app-ged",      pre:"gd-", total:8,  mock:"RLA · Math · Science · Social Studies · 100–200"}
@@ -62,7 +62,7 @@ var EXAMS=[
 var STATE={done:{},hasCourse:false,email:""};
 function apiGet(p){ return fetch(p,{credentials:"include"}).then(function(r){return r.json();}).catch(function(){return null;}); }
 function exById(k){ for(var i=0;i<EXAMS.length;i++) if(EXAMS[i].key===k) return EXAMS[i]; return null; }
-function lessonsDone(e){ var n=0; for(var k in STATE.done){ if(k.indexOf(e.pre)===0) n++; } return n; }
+function lessonsDone(e){ var pres=e.pres||[e.pre]; var n=0; for(var k in STATE.done){ for(var i=0;i<pres.length;i++){ if(k.indexOf(pres[i])===0){ n++; break; } } } return n; }
 
 function renderGrid(){
   var host=document.getElementById("view");

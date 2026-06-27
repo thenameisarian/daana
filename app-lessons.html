@@ -42,6 +42,10 @@ button{font-family:inherit;cursor:pointer}
 .ltabs{display:flex;gap:4px;background:#e7efed;border-radius:13px;padding:4px;margin:6px 0 16px}
 .ltab{flex:1;border:none;background:transparent;border-radius:10px;padding:9px 0;font-weight:800;font-size:13px;color:#6a7b78;cursor:pointer;font-family:inherit}
 .ltab.on{background:#fff;color:#137074;box-shadow:0 2px 6px rgba(20,80,76,.1)}
+.audio{background:#eef6ff;border:1px solid #cfe0f5;border-radius:12px;padding:12px;margin-bottom:12px;text-align:center}
+.playbtn{background:#2f6bd6;color:#fff;border:none;border-radius:99px;padding:9px 20px;font-weight:800;font-size:13px;cursor:pointer}
+.ahint{font-size:11px;color:#5b6b86;margin-top:7px}
+.secsel{margin:4px 0 14px}
 
 .gname{font-weight:800;font-size:13px;color:#137074}
 .gline{font-size:12.5px;color:#42554f;margin-top:2px;line-height:1.4}
@@ -316,6 +320,7 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
     <button class="ltab" data-t="daily" onclick="selTab(this)">⚡ Daily</button>
   </div>
   <div id="trailHud" class="tb tab-trail"></div>
+  <div id="sectionSel" class="tb tab-trail"></div>
   <div id="reviewCard" class="tb tab-daily"></div>
   <div id="nextCard" class="tb tab-trail"></div>
 
@@ -746,6 +751,186 @@ var PHASES={
   {name:"Test mastery",sub:"cohesion, traps, pacing, the boss",ids:["tf-insert","tf-org","tf-traps","tf-pace","tf-boss"]}
  ]
 };
+const L=(audio,q,opts,a,ok,no)=>({audio,q,opts,a,ok,no});
+var TF_LISTEN_NODES=[
+  {id:"tl-orient",title:"How TOEFL Listening works",icon:"🎧",
+   intro:["TOEFL Listening 2026 has four task types: <b>Choose a Response</b>, <b>Conversation</b>, <b>Announcement</b>, and <b>Academic Talk</b>. Two adaptive modules, about 27 minutes.",
+          "You hear each recording <b>once</b> — so take notes as you listen. In these lessons you can replay; on test day you cannot."],
+   drills:[
+    D("How many times can you hear each recording on test day?",["as many as you like","once","twice"],1,"Right — once, so your notes matter.","On the real test you hear it once — train your notes."),
+    D("Which is NOT a 2026 Listening task type?",["Choose a Response","Academic Talk","Read the Lecture"],2,"Correct — there's no 'Read the Lecture'.","The four types are Response, Conversation, Announcement, Academic Talk."),
+    D("Best habit while listening:",["write a full transcript","note who, the problem, the decision","just relax and listen"],1,"Yes — capture the key points, not every word.","Note the essentials: who, the problem, the decision.")
+   ],move:"Listen to a 30-second clip and jot 3 key words."},
+  {id:"tl-notes",title:"Active listening & notes",icon:"✏️",
+   intro:["You can't write everything. Capture a <b>skeleton</b>: who is speaking, the <b>problem</b> or topic, and the <b>decision</b> or main point.",
+          "Strategy <b>W-P-D</b>: Who · Problem · Decision. Three lines is often enough to answer the questions."],
+   drills:[
+    L("Student: I can't open the online reading for tomorrow's class. Professor: Try the link in the syllabus, not the library page.",
+      "What is the student's problem?",["She missed class.","She can't open the reading.","She lost the syllabus."],1,"Right — she can't open the reading.","The student says she can't open the online reading."),
+    D("Good notes capture:",["every word spoken","who, the problem, the decision","only the first sentence"],1,"Yes — the skeleton, not the transcript.","Note who, the problem, and the decision."),
+    D("A useful note shortcut is:",["writing full sentences","arrows and abbreviations","drawing pictures"],1,"Right — arrows and short forms keep up with speech.","Short forms and arrows let your notes keep pace.")
+   ],move:"Take W-P-D notes on any short clip."},
+  {id:"tl-predict",title:"Predict & prime",icon:"🔮",
+   intro:["Before audio starts you often get a setup line (a title or context). Use it to <b>predict</b> what you'll hear and what to listen for.",
+          "If the prompt says 'a conversation in a library', expect a problem about books, hours, or a fine — and listen for the solution."],
+   drills:[
+    D("A prompt says: 'Listen to a talk in a biology class.' You should expect:",["a refund policy","a science explanation","a sports score"],1,"Right — a science explanation.","A biology talk explains a science topic."),
+    L("Welcome to the campus library orientation. Today I'll explain how to borrow books, use study rooms, and access e-resources.",
+      "This announcement is mainly about:",["a book sale","how to use the library","a class schedule"],1,"Yes — how to use the library.","The speaker lists borrowing, study rooms, and e-resources."),
+    D("Predicting helps because it:",["replaces listening","focuses your attention on what matters","lets you skip the audio"],1,"Right — it primes you for the key info.","Prediction focuses attention; you still listen.")
+   ],move:"Read a prompt and predict two things you'll hear."},
+  {id:"tl-respond",title:"Choose a response",icon:"💬",
+   intro:["You hear one short line and pick the most <b>natural reply</b>. Catch the line's <b>function</b>: is it a question, a request, a complaint, an offer?",
+          "Match the function: a question wants an answer; an offer wants acceptance or a polite no; a complaint wants sympathy or a fix."],
+   drills:[
+    L("Could you hand me those files on the desk?","Best response:",["Sure, here you go.","I like files too.","The desk is brown."],0,"Right — it's a request; you comply.","A request like this expects 'Sure, here you go.'"),
+    L("I left my umbrella at home again.","Best response:",["You can share mine.","Umbrellas are expensive.","What time is it?"],0,"Yes — the implied need is staying dry; offering to share fits.","The line implies they'll get wet; offering to share is natural."),
+    L("Would you like to join us for lunch?","Best response:",["I'd love to, thanks!","Lunch is a meal.","I have an umbrella."],0,"Right — it's an invitation; accept or politely decline.","An invitation expects acceptance or a polite no.")
+   ],move:"For one overheard line, name its function."},
+  {id:"tl-conv",title:"Conversations",icon:"🗣️",
+   intro:["A ~30-second exchange between two people. Catch the <b>problem</b> and the <b>solution</b> they agree on.",
+          "Listen for the turn where someone proposes a fix and the other agrees — that's usually the answer."],
+   drills:[
+    L("Student: The printer in the lab is out of toner. Assistant: Use the one on the second floor — it was refilled this morning.","What does the assistant suggest?",["Buy new toner","Use the second-floor printer","Come back tomorrow"],1,"Right — use the second-floor printer.","The assistant points to the refilled printer upstairs."),
+    L("A: I'm worried about the group project deadline. B: Let's split the tasks — I'll do research, you write the intro.","How do they solve the problem?",["Cancel the project","Divide the tasks","Ask for an extension"],1,"Yes — they split the work.","They agree to divide the tasks."),
+    D("In a conversation question, the answer is often:",["the first thing said","the solution they agree on","a random detail"],1,"Right — the agreed solution.","Catch the fix both speakers accept.")
+   ],move:"Summarise a short dialogue as 'problem then solution'."},
+  {id:"tl-announce",title:"Announcements",icon:"📢",
+   intro:["A ~30-second message from one speaker. Pull the <b>key details</b>: what is happening, when, where, and any <b>action</b> you must take.",
+          "Announcements front-load the main point, then give specifics. Note dates, places, and instructions."],
+   drills:[
+    L("Attention students: the career fair has moved to the main gym and now starts at 10 a.m. instead of 9. Bring copies of your resume.","What changed about the career fair?",["The location and start time","Only the date","It was cancelled"],0,"Right — new place and new time.","It moved to the gym and now starts at 10."),
+    L("The shuttle to the north campus will not run this Friday due to road work. Please use the city bus, route 12.","What should listeners do on Friday?",["Take route 12 bus","Wait for the shuttle","Drive to north campus"],0,"Yes — use the city bus route 12.","The shuttle is off; take route 12."),
+    D("Announcements usually put the main point:",["at the very end","near the start","in the middle only"],1,"Right — main point first, then details.","They front-load the key message.")
+   ],move:"Note the what, when, where and action of any announcement."},
+  {id:"tl-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"tl-gist",title:"Gist & main idea",icon:"🎯",
+   intro:["For a lecture, first get the <b>gist</b>: the topic and the speaker's overall point — not one detail.",
+          "The main idea is usually stated near the start and restated at the end. If an option is just one example, it's too narrow."],
+   drills:[
+    L("Today we'll look at why some birds migrate thousands of miles. It comes down to three things: food, climate, and breeding sites.","The talk is mainly about:",["one bird species","why birds migrate","how to watch birds"],1,"Right — why birds migrate.","The speaker frames the whole talk around reasons birds migrate."),
+    D("A main-idea answer for a lecture is:",["one small detail","the overall point","the last word spoken"],1,"Yes — the overall point.","Gist is the whole point, not a detail."),
+    L("In this session I'll explain how vaccines train the immune system to recognise a germ before you ever meet it.","Main idea:",["vaccines cause illness","how vaccines prepare the immune system","the history of medicine"],1,"Right — how vaccines prepare immunity.","The speaker says the talk is about how vaccines train the immune system.")
+   ],move:"After a clip, say its topic in one phrase."},
+  {id:"tl-detail",title:"Detail & examples",icon:"🔍",
+   intro:["Lectures give specific <b>details</b> and <b>examples</b>. Catch the facts asked about, and notice what an example is there to <b>illustrate</b>.",
+          "When you hear 'for example' or 'such as', the example supports the point just made — note the link."],
+   drills:[
+    L("Coral reefs are built by tiny animals called polyps. For example, the Great Barrier Reef formed over thousands of years from countless polyps.","The Great Barrier Reef is mentioned to:",["show how reefs form from polyps","sell a tour","change the topic"],0,"Right — it illustrates reefs forming from polyps.","The example supports the point that polyps build reefs."),
+    L("Bees communicate by dancing. A 'waggle dance' tells other bees the direction and distance of flowers.","What does the waggle dance tell other bees?",["the time of day","direction and distance of flowers","the colour of flowers"],1,"Yes — direction and distance.","The talk says it signals direction and distance to flowers."),
+    D("An example in a lecture usually:",["replaces the main point","illustrates the point just made","is unrelated"],1,"Right — it supports the point.","Examples back up the idea before them.")
+   ],move:"Catch one example and the point it supports."},
+  {id:"tl-org",title:"Lecture organization",icon:"🗂️",
+   intro:["Lectures follow a structure. <b>Signpost words</b> — first, next, then, finally, on the other hand — tell you what's coming and how parts relate.",
+          "Tracking the structure helps you answer 'how is the talk organised' and predict the next point."],
+   drills:[
+    L("There are three stages of the water cycle. First, water evaporates. Next, it condenses into clouds. Finally, it falls as rain.","How is this talk organised?",["as a sequence of stages","as a debate","as a list of names"],0,"Right — first, next, finally is a sequence.","The signposts mark a sequence of stages."),
+    D("Signpost words like 'on the other hand' signal:",["a contrast is coming","the end of class","a repeated point"],0,"Yes — a contrast.","'On the other hand' introduces a contrasting idea."),
+    L("Today, two views on screen time. Some argue it harms focus. However, others say it builds digital skills.","The word 'however' signals:",["agreement","a contrasting view","a conclusion"],1,"Right — a contrasting view.","'However' introduces the opposing view.")
+   ],move:"Spot two signpost words in a talk and what they signal."},
+  {id:"tl-purpose",title:"Speaker's purpose",icon:"🎤",
+   intro:["Sometimes you're asked <b>why</b> a speaker says something — to clarify, give an example, correct a mistake, or make a joke. Answer the <b>function</b>, not the words.",
+          "Tone and context decide purpose. 'Let me put it another way' means the speaker is about to clarify."],
+   drills:[
+    L("Professor: The test is on Friday. Well, actually, let me check. Yes, Friday. I want to be sure I don't mislead you.","Why does the professor pause and check?",["to make a joke","to avoid giving wrong information","to end class"],1,"Right — to be accurate.","The professor checks so as not to mislead."),
+    L("Student: So photosynthesis needs sunlight? Professor: Exactly, and that's the key point to remember.","Why does the professor say 'that's the key point to remember'?",["to emphasise importance","to change topic","to assign homework"],0,"Yes — to stress it matters.","The professor flags it as important to remember."),
+    D("A purpose answer is phrased as:",["a date","a function, like to clarify or to stress","a name"],1,"Right — name the job it does.","Purpose is what the speaker is doing.")
+   ],move:"Note one line and why the speaker said it."},
+  {id:"tl-attitude",title:"Attitude & stance",icon:"😐",
+   intro:["Speakers reveal <b>attitude</b> through tone and word choice — certain, doubtful, surprised, impressed, critical. Listen for how they say it, not just what.",
+          "Words like 'surprisingly', 'unfortunately', or a hesitant tone signal feeling."],
+   drills:[
+    L("Honestly, I expected the experiment to fail, but the results were remarkable. I'm genuinely impressed.","How does the speaker feel about the results?",["disappointed","impressed","bored"],1,"Right — impressed.","'Remarkable' and 'genuinely impressed' show admiration."),
+    L("Well, the data is interesting, I suppose, but I'm not fully convinced it proves anything.","What is the speaker's attitude?",["certain and excited","doubtful","angry"],1,"Yes — doubtful.","'I'm not fully convinced' signals doubt."),
+    D("Attitude is signalled by:",["tone and word choice","only the topic","the length of the talk"],0,"Right — how it's said.","Tone and word choice reveal attitude.")
+   ],move:"Name a speaker's attitude and the word that shows it."},
+  {id:"tl-infer",title:"Inference & connections",icon:"💡",
+   intro:["Some questions ask what's <b>implied</b> or how ideas <b>connect</b> — not stated outright. Use the clues and your notes to conclude what must be true.",
+          "If a professor says a deadline 'won't move', you can infer late work won't be accepted."],
+   drills:[
+    L("Professor: I won't be in my office Thursday, but email me and I'll reply by Friday morning.","What can you infer?",["The professor never answers email","Students can reach the professor by email","Office hours are cancelled forever"],1,"Right — email reaches the professor.","The professor offers email and a Friday reply."),
+    L("Student: Should I read chapter 5 before the quiz? Professor: The quiz only covers what we did in class this week.","What can the student infer?",["Chapter 5 won't be on the quiz","Chapter 5 is required","There is no quiz"],0,"Yes — only class material is tested, so not chapter 5.","The quiz covers only class work, so chapter 5 isn't needed."),
+    D("A good inference is:",["stated word-for-word","supported by clues but not stated","a wild guess"],1,"Right — supported, not stated.","Inference is backed by clues, never copied.")
+   ],move:"Make one inference from a short clip."},
+  {id:"tl-chest2",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"tl-notespeed",title:"Notes under time",icon:"⏱️",
+   intro:["On test day you hear it <b>once</b> and questions come after. Your notes are your memory. Write fast, in short forms, and trust them.",
+          "Don't try to write full sentences — capture key nouns, numbers, and the decision."],
+   drills:[
+    L("The museum opens at 9, closes at 5, and is free on the first Sunday of each month. Group tours need booking a week ahead.","When is the museum free?",["every Sunday","the first Sunday of the month","every day"],1,"Right — the first Sunday.","Free on the first Sunday of each month — catch it in notes."),
+    D("Under time pressure you should:",["write every word","note key nouns and numbers fast","stop taking notes"],1,"Yes — capture key nouns and numbers.","Fast, short notes beat full sentences."),
+    D("After the audio ends, you answer from:",["the replay","your notes and memory","the transcript"],1,"Right — notes and memory; there's no replay.","On test day there's no replay.")
+   ],move:"Take notes on a clip, then answer from notes only."},
+  {id:"tl-pace",title:"Pacing & the modules",icon:"🏃",
+   intro:["Listening has two <b>adaptive</b> modules. Stay focused through both — early accuracy unlocks harder, higher-value items. Answer, then move on; you can't go back.",
+          "Don't dwell on a missed detail — refocus for the next recording."],
+   drills:[
+    D("Because Listening is adaptive, you should:",["zone out early","stay accurate from the start","skip the first module"],1,"Right — early accuracy raises your score.","Adaptive modules reward steady, accurate listening."),
+    D("If you miss one detail, you should:",["panic and replay","refocus for the next recording","leave the section"],1,"Yes — let it go and refocus.","You can't replay; refocus for what's next."),
+    D("Within Listening you can:",["go back to earlier questions","not go back","pause the audio"],1,"Right — no going back.","Listening moves forward; answer and continue.")
+   ],move:"Answer one clip, then immediately refocus for the next."},
+  {id:"tl-boss",title:"Listening: mastery test",icon:"👑",type:"boss",
+   intro:["Prove it — a quick mix across Listening: a response, a conversation, an announcement, and a talk. Play each, take notes, answer."],
+   drills:[
+    L("Do you know where the registrar's office is?","Best response:",["It's on the second floor, room 210.","I like offices.","Registrars are people."],0,"Right — a where-question wants the location.","Give directions in reply to a where-question."),
+    L("Student: I can't make the Tuesday session. Tutor: No problem, come to the Thursday one instead.","What does the tutor suggest?",["Skip the session","Attend Thursday's session","Cancel tutoring"],1,"Yes — attend Thursday instead.","The tutor offers the Thursday session."),
+    L("Reminder: the library closes early, at 6 p.m., during exam week. Plan your study time accordingly.","What is the announcement about?",["a new library","early closing during exams","a book sale"],1,"Right — early closing during exams.","The library closes at 6 during exam week."),
+    L("Today's topic: why leaves change colour in autumn. As days shorten, trees stop making chlorophyll, revealing other pigments.","Why do leaves change colour?",["more sunlight","trees stop making chlorophyll","rain washes them"],1,"Right — chlorophyll production stops.","Shorter days stop chlorophyll, revealing other colours.")
+   ],move:"You finished the Listening trail — open Mastery and sharpen any skill below 80%."}
+];
+var TF_LISTEN_PHASES=[
+ {name:"Foundations",sub:"how it works, notes, predicting",ids:["tl-orient","tl-notes","tl-predict"]},
+ {name:"Everyday listening",sub:"responses, conversations, announcements",ids:["tl-respond","tl-conv","tl-announce","tl-chest1"]},
+ {name:"Academic talks",sub:"gist, detail, organization",ids:["tl-gist","tl-detail","tl-org"]},
+ {name:"Deeper comprehension",sub:"purpose, attitude, inference",ids:["tl-purpose","tl-attitude","tl-infer","tl-chest2"]},
+ {name:"Test mastery",sub:"notes under time, pacing, the boss",ids:["tl-notespeed","tl-pace","tl-boss"]}
+];
+Object.assign(HINTS,{
+ "tl-orient":[["You hear it once on test day.","Notes are your memory."],["Four types: Response, Conversation, Announcement, Talk."]],
+ "tl-notes":[["What is she unable to do?","She can't open the reading."],["Capture who, problem, decision."]],
+ "tl-predict":[["A biology class talk explains science.","Predict the topic."],["Borrow, study rooms, e-resources = using the library."]],
+ "tl-respond":[["It's a request to pass files.","Comply: here you go."],["Match the function: question, offer, complaint."]],
+ "tl-conv":[["Where does the assistant send the student?","The refilled printer upstairs."],["Catch the solution they agree on."]],
+ "tl-announce":[["Two things changed: place and time.","Gym, and 10 a.m."],["Note what, when, where, action."]],
+ "tl-gist":[["The whole talk lists reasons birds migrate.","That's the gist."],["Gist is the overall point, not one detail."]],
+ "tl-detail":[["The reef example shows polyps build reefs.","That's its job."],["'For example' links to the point before it."]],
+ "tl-org":[["First, next, finally marks a sequence.","Name the structure."],["'However' signals a contrast."]],
+ "tl-purpose":[["The professor checks to avoid misleading you.","That's the purpose."],["Answer the function, not the words."]],
+ "tl-attitude":[["'Remarkable' and 'impressed' = positive.","Read the tone."],["'Not fully convinced' = doubt."]],
+ "tl-infer":[["Email is offered with a Friday reply.","So email reaches them."],["Inference is supported, not stated."]],
+ "tl-chest1":[["Open it for gems!"]],
+ "tl-chest2":[["Another reward — keep going."]],
+ "tl-notespeed":[["Free on the first Sunday — catch it.","Trust your notes."],["No replay on test day."]],
+ "tl-pace":[["Adaptive rewards early accuracy.","Stay focused."],["You can't go back."]],
+ "tl-boss":[["Name the type, then answer.","Response, conversation, announcement, talk."]]
+});
+Object.assign(TIPCARDS,{
+ "tl-orient":{rule:"Four task types, two adaptive modules, you hear it once.",how:["Take notes as you listen.","Answer from notes; you can't replay."],trap:"Trying to remember everything without notes."},
+ "tl-notes":{rule:"Capture a skeleton: Who, Problem, Decision (W-P-D).",how:["Use arrows and short forms.","Three lines is often enough."],trap:"Writing full sentences and falling behind."},
+ "tl-predict":{rule:"Use the setup line to predict and prime your attention.",how:["Read the context.","Decide what to listen for."],trap:"Ignoring the prompt and listening cold."},
+ "tl-respond":{rule:"Catch the function, then pick the natural reply.",how:["Question -> answer. Offer -> accept/decline. Complaint -> sympathy/fix.","Reject literal, off-topic options."],trap:"Choosing a reply that repeats a word but doesn't fit the function."},
+ "tl-conv":{rule:"Catch the problem and the solution they agree on.",how:["Note who wants what.","Find the proposed fix that's accepted."],trap:"Picking a detail instead of the agreed solution."},
+ "tl-announce":{rule:"Pull the key details: what, when, where, action.",how:["Listen at the start for the main point.","Note dates, places, instructions."],trap:"Missing the action you're told to take."},
+ "tl-gist":{rule:"Gist = the topic and overall point, not one detail.",how:["Listen to the opening and closing.","Reject options that are just one example."],trap:"Choosing a narrow detail as the main idea."},
+ "tl-detail":{rule:"Catch the fact, and what an example illustrates.",how:["Note specifics.","Link 'for example' to the point it supports."],trap:"Hearing the example but missing the point it backs."},
+ "tl-org":{rule:"Follow signposts to track structure.",how:["first/next/finally = sequence.","however/on the other hand = contrast."],trap:"Losing the thread of how parts connect."},
+ "tl-purpose":{rule:"Answer why the speaker said it — the function.",how:["Use tone and context.","Name a verb: to clarify, to stress, to correct."],trap:"Restating the words instead of the function."},
+ "tl-attitude":{rule:"Attitude shows in tone and word choice.",how:["Listen for surprisingly/unfortunately and hesitation.","Decide: certain, doubtful, impressed, critical."],trap:"Judging attitude from topic alone."},
+ "tl-infer":{rule:"Conclude what must be true from the clues.",how:["Combine what's said with your notes.","Reject anything unsupported or copied."],trap:"Choosing a stated detail instead of the implication."},
+ "tl-notespeed":{rule:"You hear it once — fast notes carry you.",how:["Capture key nouns and numbers.","Answer from notes and memory."],trap:"Freezing because you tried to write it all."},
+ "tl-pace":{rule:"Stay accurate across both adaptive modules.",how:["Answer and move on.","Refocus after a missed detail."],trap:"Dwelling on one item — you can't go back."},
+ "tl-boss":{rule:"Name the task type, then apply its skill.",how:["Response -> function. Conversation -> solution. Announcement -> details. Talk -> gist."],trap:"Treating a talk question like a quick response."}
+});
+
+var TF_SECTIONS={
+ reading:{eyebrow:"TOEFL \u00b7 Reading",nodes:CONTENT.toefl.nodes,phases:PHASES.toefl},
+ listening:{eyebrow:"TOEFL \u00b7 Listening",nodes:TF_LISTEN_NODES,phases:TF_LISTEN_PHASES}
+};
+var SECTION_ORDER=[["reading","Reading",true],["listening","Listening",true],["writing","Writing",false],["speaking","Speaking",false]];
+var section="reading";
+function setSection(sec){ if(!TF_SECTIONS[sec])return; section=sec; CONTENT.toefl.nodes=TF_SECTIONS[sec].nodes; CONTENT.toefl.eyebrow=TF_SECTIONS[sec].eyebrow; PHASES.toefl=TF_SECTIONS[sec].phases; OPENPHASE=null; renderMap(); window.scrollTo(0,0); }
+function renderSectionSel(){ var host=document.getElementById("sectionSel"); if(!host)return; if(typeof exam==="undefined"||exam!=="toefl"){ host.style.display="none"; host.innerHTML=""; return; } host.style.display="block"; host.innerHTML='<div class="eyebrow" style="margin:2px 0 4px">TOEFL section</div><div class="ltabs secsel">'+SECTION_ORDER.map(function(o){ var k=o[0],label=o[1],ready=o[2]; if(!ready) return '<button class="ltab" disabled style="opacity:.45;cursor:default">'+label+'</button>'; return '<button class="ltab '+(section===k?"on":"")+'" type="button" onclick="setSection(\''+k+'\')">'+label+'</button>'; }).join("")+'</div>'; }
+
 var OPENPHASE=null;
 var SVG_CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l9 -10"/></svg>';
 var SVG_PLAY='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11 -7z"/></svg>';
@@ -816,6 +1001,7 @@ function renderMap(){
   map.innerHTML=html;
   renderStepper(info);
   renderTrailHud();
+  renderSectionSel();
 }
 /* ---------- badges ---------- */
 function badgeList(){
@@ -866,6 +1052,8 @@ function head(){return '<div class="shead"><button class="x" onclick="closeOv()"
   '<div class="hp3" id="hp">'+(PREMIUM?"∞":heartStr(S.hearts))+'</div>'+
   '<div class="combo" id="cb">🔥 x'+FL.combo+'</div>'+segBar()+'</div>';}
 function heartStr(h){let s="";for(let k=0;k<5;k++)s+=k<h?"❤️":'<span class="d">❤️</span>';return s;}
+function tts(t){ try{ if("speechSynthesis"in window){ window.speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(t); u.rate=0.95; u.lang="en-US"; window.speechSynthesis.speak(u); } }catch(e){} }
+function playDrill(di){ var d=FL&&FL.node&&FL.node.drills&&FL.node.drills[di]; if(d&&d.audio)tts(d.audio); }
 function renderStep(){
  const n=FL.node;
  if(FL.step===0){ /* intro */
@@ -881,9 +1069,11 @@ function renderStep(){
   const q=n.drills[di];FL.firstTry=true;FL.hintsShown=0;
   let opts=q.opts.map((o,k)=>'<button class="opt" onclick="pick(this,'+k+','+di+',event)">'+o+'</button>').join("");
   sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">Question '+(di+1)+' of '+FL.drillTotal+'</div>'+
+   (q.audio?('<div class="audio"><button class="playbtn" type="button" onclick="playDrill('+di+')">\u25B6 Play audio</button><div class="ahint">Listen, then choose \u2014 you can replay.</div></div>'):'')+
    '<div class="q">'+q.q+'</div>'+opts+'<div class="fb" id="fb"></div></div>'+
    '<div class="sfoot"><button class="hintbtn" type="button" onclick="showHint('+di+')">Hint</button>'+
    '<button class="cta dim" id="nx" disabled onclick="nextStep()">Continue →</button></div>';
+  if(q.audio){setTimeout(function(){playDrill(di);},350);}
   return;
  }
  /* move step */
