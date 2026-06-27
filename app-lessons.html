@@ -105,8 +105,9 @@ button{font-family:inherit;cursor:pointer}
 .ph .body{display:none;padding:2px 8px 8px}.ph.open .body{display:block}
 .phasemap{position:relative;margin:0 auto;max-width:320px}
 .pnode{position:absolute;transform:translate(-50%,-50%);text-align:center;width:128px}
-.bub{width:60px;height:60px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:4px solid #fff;box-shadow:0 5px 14px rgba(20,80,76,.16)}
-.bub svg{width:25px;height:25px}
+.tbub{width:60px;height:60px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:4px solid #fff;box-shadow:0 5px 14px rgba(20,80,76,.16)}
+.tbub svg{width:25px;height:25px}
+.phasemap>svg{position:absolute;left:0;top:0;width:100%;height:100%}
 .d-done{background:linear-gradient(180deg,#2fcdb8,var(--teald));color:#fff}
 .d-go{background:#fff;border:3px solid var(--teal);color:var(--teal);cursor:pointer;animation:pulse2 1.7s ease-in-out infinite}
 .d-lock{background:#eef2f1;border:1.5px solid var(--line);color:#aeb6bf}
@@ -787,11 +788,11 @@ function renderPhaseBody(ph,idx){
   s2+='</svg>';
   ph.ids.forEach(function(id,i){
     var gi=idx[id], n=nodes[gi], stt=nodeState(exam,gi), p=pts[i], inner="";
-    if(stt==="done"){ var m=(typeof nodeMastery==="function")?nodeMastery(id):100; inner='<div class="bub d-done">'+(n.type==="boss"?"\uD83D\uDC51":SVG_CHECK)+'</div><div class="nl">'+n.title+'</div>'+starsRow(m); }
-    else if(stt==="chest"){ inner='<div class="bub d-chest" onclick="openChest(\''+id+'\',event)">\uD83C\uDF81</div><div class="nl">Treasure</div>'; }
-    else if(stt==="go"){ inner='<div class="bub d-go" onclick="openNode('+gi+')">'+SVG_PLAY+'</div><div class="nl">'+n.title+'</div><button class="startp" onclick="openNode('+gi+')">Start \u25B6</button>'; }
-    else if(stt==="boss"){ inner='<div class="bub d-go" onclick="openNode('+gi+')">\uD83D\uDC51</div><div class="nl">'+n.title+'</div><button class="startp" onclick="openNode('+gi+')">Boss \u25B6</button>'; }
-    else { inner='<div class="bub d-lock">'+SVG_LOCK+'</div><div class="nl">'+n.title+'</div>'; }
+    if(stt==="done"){ var m=(typeof nodeMastery==="function")?nodeMastery(id):100; inner='<div class="tbub d-done">'+(n.type==="boss"?"\uD83D\uDC51":SVG_CHECK)+'</div><div class="nl">'+n.title+'</div>'+starsRow(m); }
+    else if(stt==="chest"){ inner='<div class="tbub d-chest" onclick="openChest(\''+id+'\',event)">\uD83C\uDF81</div><div class="nl">Treasure</div>'; }
+    else if(stt==="go"){ inner='<div class="tbub d-go" onclick="openNode('+gi+')">'+SVG_PLAY+'</div><div class="nl">'+n.title+'</div><button class="startp" onclick="openNode('+gi+')">Start \u25B6</button>'; }
+    else if(stt==="boss"){ inner='<div class="tbub d-go" onclick="openNode('+gi+')">\uD83D\uDC51</div><div class="nl">'+n.title+'</div><button class="startp" onclick="openNode('+gi+')">Boss \u25B6</button>'; }
+    else { inner='<div class="tbub d-lock">'+SVG_LOCK+'</div><div class="nl">'+n.title+'</div>'; }
     s2+='<div class="pnode" style="left:'+(p.x/W*100)+'%;top:'+p.y+'px">'+inner+'</div>';
   });
   return s2+'</div>';
