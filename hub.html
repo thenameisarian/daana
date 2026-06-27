@@ -18,7 +18,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Ar
 .eyebrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teald);font-weight:700;margin:6px 0 3px}
 h1{font-size:26px;font-weight:800;margin:0 0 14px}
 .paths{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.pcard{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;text-align:left;text-decoration:none;color:inherit;transition:.14s;display:block}
+.pcard{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;text-align:left;color:inherit;transition:.14s;display:block;width:100%;font-family:inherit}
 .pcard:hover{transform:translateY(-2px);border-color:var(--teal);box-shadow:0 12px 28px rgba(20,80,76,.12)}
 .pcard .pcico{width:44px;height:44px;border-radius:13px;background:#e8f6f3;display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:10px}
 .pcard .pcname{font-weight:800;font-size:17px}
@@ -27,10 +27,16 @@ h1{font-size:26px;font-weight:800;margin:0 0 14px}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,#1fb6a6,#137074);transition:width .4s}
 .pcfoot{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:12px;color:#54635f;font-weight:600}
 .pcgo{color:var(--teald);font-weight:800}
-.coursecard{display:flex;align-items:center;gap:13px;background:linear-gradient(180deg,#fff,#f1faf7);border:1.5px solid #cfe9e1;border-radius:18px;padding:16px;margin-top:14px;text-decoration:none;color:inherit;cursor:pointer;transition:.14s}
-.coursecard:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(20,80,76,.12);border-color:var(--teal)}
-.coursecard .ci{width:48px;height:48px;border-radius:14px;background:#e8f6f3;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
+.big{display:flex;align-items:center;gap:14px;background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:18px;cursor:pointer;color:inherit;text-decoration:none;transition:.14s;width:100%;text-align:left;font-family:inherit;margin-bottom:12px}
+.big:hover{transform:translateY(-2px);border-color:var(--teal);box-shadow:0 12px 28px rgba(20,80,76,.12)}
+.big .bi{width:52px;height:52px;border-radius:15px;background:#e8f6f3;display:flex;align-items:center;justify-content:center;font-size:26px;flex:none}
+.big .bt{flex:1;min-width:0}
+.big .bn{font-weight:800;font-size:18px}
+.big .bs{font-size:12.5px;color:var(--mut);margin-top:2px}
+.big .barwrap{margin-top:9px}
 .badge{font-size:10px;font-weight:800;color:#b26a00;background:#fff3e0;border:1px solid #f0d3a0;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+.tagfree{font-size:10px;font-weight:800;color:var(--teald);background:#e3f6f1;border:1px solid #bfe6db;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+.arr{color:var(--teald);font-weight:800;font-size:20px;flex:none}
 .foot{text-align:center;color:var(--mut);font-size:12px;margin-top:24px}
 @media(max-width:560px){.paths{grid-template-columns:1fr}h1{font-size:22px}}
 </style>
@@ -41,55 +47,80 @@ h1{font-size:26px;font-weight:800;margin:0 0 14px}
     <div class="tbrand"><span class="mk">د</span><span>Daana</span></div>
     <a class="backbtn" href="#" onclick="signOut(event)">Sign out</a>
   </div>
-  <div class="eyebrow" id="welcome">Welcome back</div>
-  <h1 class="serif">Your exams</h1>
-  <div class="paths" id="exams"></div>
-  <a class="coursecard" id="courseCard" href="/app-lessons">
-    <div class="ci">🎮</div>
-    <div style="flex:1"><b>The gamified lessons course <span class="badge" id="courseBadge">game mode</span></b><div style="font-size:12px;color:var(--mut);margin-top:2px" id="courseSub">XP, streaks, daily quests and skill trails across all four exams.</div></div>
-    <span class="pcgo">→</span>
-  </a>
+  <div id="view"></div>
   <div class="foot">Listening &amp; Speaking sections arrive with the audio update. Original practice material by Arian Academy.</div>
 </div>
 
 <script>
 var EXAMS=[
-  {key:"toefl",   ico:"📘", name:"TOEFL iBT", sub:"Reading &amp; Writing · 5 practice tests", href:"/app",          pre:"tf-"},
-  {key:"ielts",   ico:"🌐", name:"IELTS",     sub:"Academic &amp; General Training",          href:"/app-ielts",    pre:"ie-"},
-  {key:"duolingo",ico:"🦉", name:"Duolingo",  sub:"Adaptive English Test · 10–160",           href:"/app-duolingo", pre:"de-"},
-  {key:"ged",     ico:"🎓", name:"GED",       sub:"RLA · Math · Science · Social Studies",    href:"/app-ged",      pre:"gd-"}
+  {key:"toefl",   ico:"📘", name:"TOEFL iBT", sub:"Reading &amp; Writing",          test:"/app",          pre:"tf-", total:20, mock:"Full practice exams · 5 tests · instant band 1–6"},
+  {key:"ielts",   ico:"🌐", name:"IELTS",     sub:"Academic &amp; General Training", test:"/app-ielts",    pre:"ie-", total:8,  mock:"Academic &amp; General · Reading &amp; Writing · band 0–9"},
+  {key:"duolingo",ico:"🦉", name:"Duolingo",  sub:"Adaptive English Test",          test:"/app-duolingo", pre:"de-", total:8,  mock:"Adaptive practice · 10–160 · four subscores"},
+  {key:"ged",     ico:"🎓", name:"GED",       sub:"RLA · Math · Science · Social",  test:"/app-ged",      pre:"gd-", total:8,  mock:"RLA · Math · Science · Social Studies · 100–200"}
 ];
-var NODES_PER={toefl:19,ielts:8,duolingo:8,ged:8};
+var STATE={done:{},hasCourse:false,email:""};
 function apiGet(p){ return fetch(p,{credentials:"include"}).then(function(r){return r.json();}).catch(function(){return null;}); }
-function render(done, hasCourse){
-  done = done || {};
-  var host=document.getElementById("exams");
-  host.innerHTML=EXAMS.map(function(e){
-    var n=0; for(var k in done){ if(k.indexOf(e.pre)===0) n++; }
-    var total=NODES_PER[e.key]||8, pct=Math.min(100, Math.round(n/total*100));
-    var status = n>0 ? (n+" lesson"+(n>1?"s":"")+" done") : "Ready to start";
-    return '<a class="pcard" href="'+e.href+'">'
-      +'<div class="pcico">'+e.ico+'</div>'
-      +'<div class="pcname">'+e.name+'</div>'
-      +'<div class="pcsub">'+e.sub+'</div>'
-      +'<div class="bar"><i style="width:'+pct+'%"></i></div>'
-      +'<div class="pcfoot"><span>'+status+'</span><span class="pcgo">Open →</span></div>'
-      +'</a>';
-  }).join("");
-  var card=document.getElementById("courseCard"), badge=document.getElementById("courseBadge"), sub=document.getElementById("courseSub");
-  if(!hasCourse){
-    card.setAttribute("href","/login?upgrade=course");
-    badge.textContent="Premium";
-    sub.textContent="Unlock the full gamified lessons course — XP, streaks, quests and every skill trail.";
-  }
+function exById(k){ for(var i=0;i<EXAMS.length;i++) if(EXAMS[i].key===k) return EXAMS[i]; return null; }
+function lessonsDone(e){ var n=0; for(var k in STATE.done){ if(k.indexOf(e.pre)===0) n++; } return n; }
+
+function renderGrid(){
+  var host=document.getElementById("view");
+  host.innerHTML='<div class="eyebrow">'+(STATE.email?("Welcome back · "+STATE.email):"Welcome back")+'</div>'
+    +'<h1 class="serif">Your exams</h1>'
+    +'<div class="paths">'+EXAMS.map(function(e){
+      var n=lessonsDone(e), pct=Math.min(100,Math.round(n/(e.total||8)*100));
+      var status=n>0?(n+" lesson"+(n>1?"s":"")+" done"):"Ready to start";
+      return '<button class="pcard" onclick="go(\''+e.key+'\')">'
+        +'<div class="pcico">'+e.ico+'</div>'
+        +'<div class="pcname">'+e.name+'</div>'
+        +'<div class="pcsub">'+e.sub+'</div>'
+        +'<div class="bar"><i style="width:'+pct+'%"></i></div>'
+        +'<div class="pcfoot"><span>'+status+'</span><span class="pcgo">Open →</span></div>'
+        +'</button>';
+    }).join("")+'</div>';
 }
+
+function renderExam(key){
+  var e=exById(key); if(!e){ location.hash=""; return; }
+  var host=document.getElementById("view");
+  var n=lessonsDone(e), pct=Math.min(100,Math.round(n/(e.total||8)*100));
+  var lessonsHref = STATE.hasCourse ? ("/app-lessons?exam="+e.key) : "/login?upgrade=course";
+  var lessonsTag  = STATE.hasCourse ? "" : '<span class="badge">Premium</span>';
+  host.innerHTML=''
+    +'<a class="backbtn" href="#" onclick="back(event)">← Your exams</a>'
+    +'<div class="eyebrow" style="margin-top:14px">You’re preparing for</div>'
+    +'<h1 class="serif">'+e.ico+' '+e.name+'</h1>'
+    +'<a class="big" href="'+lessonsHref+'">'
+      +'<div class="bi">🎮</div>'
+      +'<div class="bt"><div class="bn">Lessons'+lessonsTag+'</div>'
+        +'<div class="bs">Gamified skill trail — XP, streaks, daily quests</div>'
+        +(STATE.hasCourse?('<div class="barwrap"><div class="bar"><i style="width:'+pct+'%"></i></div><div class="bs" style="margin-top:5px">'+(n>0?(n+" / "+e.total+" lessons · "+pct+"%"):"Start the trail")+'</div></div>'):'<div class="bs" style="margin-top:5px;color:#b26a00">Unlock the gamified course →</div>')
+      +'</div><span class="arr">→</span></a>'
+    +'<a class="big" href="'+e.test+'">'
+      +'<div class="bi">📝</div>'
+      +'<div class="bt"><div class="bn">Mock tests<span class="tagfree">Free</span></div>'
+        +'<div class="bs">'+e.mock+'</div>'
+        +'<div class="bs" style="margin-top:5px;color:var(--teald)">Take a full practice exam →</div>'
+      +'</div><span class="arr">→</span></a>';
+}
+
+function go(key){ location.hash=key; }
+function back(ev){ if(ev&&ev.preventDefault)ev.preventDefault(); location.hash=""; }
+function route(){
+  var k=(location.hash||"").replace(/^#/,"");
+  if(k && exById(k)) renderExam(k); else renderGrid();
+  window.scrollTo(0,0);
+}
+window.addEventListener("hashchange", route);
+
 (function init(){
   apiGet("/api/account").then(function(a){
     if(!a || !a.authed){ location.href="/login?need=login"; return; }
-    if(a.user && a.user.email){ document.getElementById("welcome").textContent="Welcome back · "+a.user.email; }
-    var hasCourse = !!(a.user && (a.user.course || a.user.tier==="premium"));
+    STATE.email = (a.user && a.user.email) || "";
+    STATE.hasCourse = !!(a.user && (a.user.course || a.user.tier==="premium"));
     apiGet("/api/progress").then(function(p){
-      render((p && p.progress && p.progress.done) || {}, hasCourse);
+      STATE.done = (p && p.progress && p.progress.done) || {};
+      route();
     });
   });
 })();
