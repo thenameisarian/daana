@@ -59,7 +59,7 @@ var EXAMS=[
   {key:"duolingo",ico:"🦉", name:"Duolingo",  sub:"Adaptive English Test · 10–160",           href:"/app-duolingo", pre:"de-"},
   {key:"ged",     ico:"🎓", name:"GED",       sub:"RLA · Math · Science · Social Studies",    href:"/app-ged",      pre:"gd-"}
 ];
-var NODES_PER={toefl:8,ielts:8,duolingo:8,ged:8};
+var NODES_PER={toefl:19,ielts:8,duolingo:8,ged:8};
 function apiGet(p){ return fetch(p,{credentials:"include"}).then(function(r){return r.json();}).catch(function(){return null;}); }
 function render(done, hasCourse){
   done = done || {};

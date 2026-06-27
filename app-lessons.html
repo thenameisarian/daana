@@ -335,23 +335,51 @@ const LV_STEP=100; /* XP per level (level n needs n*100 cumulative-ish; simple) 
 /* ---------- content ---------- */
 const D=(q,opts,a,ok,no)=>({q,opts,a,ok,no});
 const HINTS={
- "tf-main":[["A main idea covers the whole passage, not a single sentence.","Pick the option broad enough to include every paragraph."],["Length and exact wording are traps, not signals."]],
- "tf-detail":[["The dates are in the sentence \u2014 do the subtraction.","Finished in 1937 after 4 years means it started 4 years earlier."],["Think speed: where do you look for one specific fact?"]],
- "tf-scan":[["One specific fact = hunt for it, don\u2019t read everything.","Scanning targets a keyword; skimming is for the gist."],["Which technique gives the overall idea, not a detail?"]],
- "tf-infer":[["She didn\u2019t say it outright \u2014 what do the actions imply?","Checking the sky + sighing + putting the basket away = ?"],["A good inference is supported by clues but never copied word-for-word."]],
- "tf-vocab":[["Put each option back into the sentence and test the meaning.","A plan that gets approved is a sensible / solid one."],["The dictionary\u2019s first meaning is often the trap \u2014 use the context."]],
- "tf-write":[["What loses points: missing a bullet, or not using rare words?","Cover every bullet point first."],["Match the greeting to the reader \u2014 polite and appropriate."]],
- "tf-boss":[["Main idea = the whole passage, not one detail."],["\u2018Sharply\u2019 describes how much, not a tool."],["Why would someone grab an umbrella? That\u2019s the inference."]]
+ "tf-orient":[["The new TOEFL reports a 1–6 band.","Think CEFR-style levels, not 0–120 only."],["Adaptive = it reacts to you.","Do well early and it gets harder."]],
+ "tf-skim":[["Skimming is for the gist, not one figure.","Read title, tops and tails."],["Where do writers put the point?","First and last sentences."]],
+ "tf-scan":[["One fact = hunt its shape.","A year is four digits — sweep for them."],["Don't read everything.","Match the target's shape, then stop."]],
+ "tf-close":[["Two negatives soften each other.","not + unexpected = somewhat expected."],["Linking words flip meaning.","'however' reverses; 'very' doesn't."]],
+ "tf-vocab":[["Put each option back in the sentence.","An approved plan is a sensible one."],["The first dictionary meaning is often the trap.","Use the context."]],
+ "tf-roots":[["re- means again.","construct = build → reconstruct = build again."],["-able means 'able to be'.","manageable = able to be managed."]],
+ "tf-cwords":[["Read the whole sentence first.","Then fit meaning and grammar."],["Spelling must match exactly.","A mis-spelled word is wrong."]],
+ "tf-dgist":[["Purpose sits at the start or end.","'Just a reminder' = to remind."],["Ask: invite, remind, inform, sell?","Pick the verb that fits."]],
+ "tf-detail":[["The dates are in the sentence — subtract.","Finished 1937 after 4 years → began 1933."],["Distractors are true facts for the wrong question.","Match exactly what's asked."]],
+ "tf-negfact":[["Tick each option the text supports.","The one you can't tick is the answer."],["EXCEPT = the unsupported option.","Here, 'noise' isn't stated."]],
+ "tf-ref":[["Look back to the nearest matching noun.","'they' = the bees doing the visiting."],["Swap the pronoun for your choice.","It should read smoothly."]],
+ "tf-main":[["A main idea covers the whole passage.","Not one striking detail."],["Read first and last sentences.","Pick what covers every paragraph."]],
+ "tf-infer":[["She didn't say it — what do the actions imply?","Sky + sigh + basket away = ?"],["A good inference is supported, never copied.","Reject word-for-word options."]],
+ "tf-purpose":[["Answer with a verb: to show, to contrast…","Name the job the example does."],["Don't restate the sentence.","Explain why it's there."]],
+ "tf-simplify":[["Find the main subject and verb.","Keep them and the key relationship."],["Watch for dropped or added meaning.","Shorter isn't enough — meaning must match."]],
+ "tf-chest1":[["Open it for gems!"]],
+ "tf-chest2":[["Another reward — keep the streak."]],
+ "tf-insert":[["Match the glue: this, however, for example.","Put the sentence after the idea it refers to."],["'However… this method' must follow praise of the method."]],
+ "tf-org":[["first/then/finally = a time sequence.","Name the pattern."],["A paraphrase matches meaning, not keywords.","Lower prices → higher sales."]],
+ "tf-traps":[["Absolute words (never/all) are usually traps.","Be suspicious of extremes."],["Eliminate two clearly wrong, then choose.","Never leave a blank."]],
+ "tf-pace":[["Adaptive rewards early accuracy.","Start steady, not rushed."],["Stuck? Flag it and move on.","Return with saved time."]],
+ "tf-boss":[["One fact → scan. Main idea → whole passage.","Name the type, then apply its rule."],["EXCEPT → tick the supported ones, pick the leftover."],["Why grab an umbrella? That's the inference."]]
 };
 
 const TIPCARDS={
- "tf-main":{rule:"The main idea covers the WHOLE passage \u2014 never just one detail.",how:["Read the first and last sentence of each paragraph.","Pick the option broad enough to include every paragraph."],trap:"An option that quotes one striking sentence word-for-word is usually too narrow."},
- "tf-detail":{rule:"For a specific fact, scan for the keyword \u2014 do not reread.",how:["Find the name, number or date from the question in the text.","Read just that sentence carefully."],trap:"Answering from memory or common sense instead of the line you found."},
- "tf-scan":{rule:"Skim for the gist; scan for one fact.",how:["Skim first to map the passage.","Scan back to the keyword for each question."],trap:"Reading every word twice and burning the clock \u2014 switch techniques on purpose."},
- "tf-infer":{rule:"An inference is supported by clues but never stated outright.",how:["Ask: what MUST be true given these clues?","Reject anything the text states directly or does not support."],trap:"If an option copies the passage word-for-word, it is a detail, not an inference."},
- "tf-vocab":{rule:"Context decides the meaning \u2014 not the dictionary first definition.",how:["Put each option back into the sentence.","Keep the one that preserves the meaning."],trap:"The most common dictionary meaning is often the distractor."},
- "tf-write":{rule:"Cover every bullet, in full sentences, with the right tone.",how:["Answer each prompt point.","Greet and sign off; keep it polite and clear."],trap:"Fancy words do not save you if you skip a bullet \u2014 completeness scores first."},
- "tf-boss":{rule:"Name the question type first, then apply its rule.",how:["Main idea \u2192 whole passage. Detail \u2192 scan. Inference \u2192 clues. Vocab \u2192 substitute."],trap:"Answering a detail question as if it were main-idea (or the reverse)."}
+ "tf-orient":{rule:"Three task types, adaptive, 1–6 band — skim then target.",how:["Skim for shape, then scan or read closely.","Keep moving; early accuracy unlocks harder, higher-value items."],trap:"Reading every word twice and running out of time."},
+ "tf-skim":{rule:"Skim for the gist with Title → Tops → Tails.",how:["Read the title and first/last lines of each paragraph.","Aim to state the topic in one phrase."],trap:"Trying to absorb details while skimming — that's a different gear."},
+ "tf-scan":{rule:"Scan for one fact by its shape, then stop and read that line.",how:["Hold the keyword in mind (caps, digits).","Sweep, stop, read the sentence."],trap:"Re-reading everything instead of hunting the target."},
+ "tf-close":{rule:"For exact meaning, read slowly and watch the small words.",how:["Notice not, only, however, except, unless.","Re-read the one sentence the question hinges on."],trap:"Skimming a question that actually needs precise reading."},
+ "tf-vocab":{rule:"Context decides meaning — Swap & Check each option.",how:["Put each option in the sentence.","Keep the one that preserves meaning."],trap:"Picking the dictionary's first meaning."},
+ "tf-roots":{rule:"Break a word into prefix + root + suffix to guess meaning.",how:["Spot un-/re-/-able/-tion and roots like bio, port.","Combine the parts."],trap:"Guessing the whole word without using its parts."},
+ "tf-cwords":{rule:"Read → Fit → Spell: meaning + grammar, then exact spelling.",how:["Read the full sentence.","Match tense/number, then match the letters shown."],trap:"A right word spelled wrong still scores zero."},
+ "tf-dgist":{rule:"Find a short text's purpose at its start or end.",how:["Read the subject line and closing.","Name the verb: invite, remind, inform, sell."],trap:"Hunting the purpose in the middle paragraph."},
+ "tf-detail":{rule:"Scan to the keyword, then read that one line closely.",how:["Find the name/number/date from the question.","Match exactly what is asked."],trap:"Picking a true fact that answers a different question."},
+ "tf-negfact":{rule:"For NOT/EXCEPT, tick the supported options; the leftover wins.",how:["Verify each option in the text.","Choose the one you cannot support."],trap:"Choosing a clearly-stated option (that's the opposite of the task)."},
+ "tf-ref":{rule:"A pronoun points back to the nearest matching noun.",how:["Look back, not forward.","Swap it in and check it reads smoothly."],trap:"Linking 'it/they' to the wrong (but nearby) noun."},
+ "tf-main":{rule:"The main idea covers the WHOLE passage, never one detail.",how:["Read first and last sentences.","Pick the option broad enough to include every paragraph."],trap:"An option quoting one striking sentence — usually too narrow."},
+ "tf-infer":{rule:"An inference is supported by clues but never stated outright.",how:["Ask what MUST be true given the clues.","Reject anything copied word-for-word."],trap:"Choosing a detail (copied text) instead of an implication."},
+ "tf-purpose":{rule:"Purpose answers name the job: to show, contrast, emphasise.",how:["Ask why the author put this here.","Answer with a verb, not a restatement."],trap:"Restating what the sentence says instead of its function."},
+ "tf-simplify":{rule:"Keep the main subject, verb and key relationship; trim the rest.",how:["Find the main clause.","Reject options that drop or add meaning."],trap:"Choosing a shorter option that loses an essential idea."},
+ "tf-insert":{rule:"Place an inserted sentence by its cohesion glue.",how:["Find this/however/for example.","Put it right after the idea it refers to."],trap:"Ignoring the linking word and guessing the slot."},
+ "tf-org":{rule:"Spot the pattern; match answers by meaning, not keywords.",how:["Name it: cause/effect, sequence, problem/solution.","Prefer paraphrases over identical wording."],trap:"Matching a repeated keyword that twists the meaning."},
+ "tf-traps":{rule:"Name the trap, eliminate two, then choose.",how:["Watch for too-extreme, half-right, out-of-scope, keyword-bait.","Cut the clearly wrong, decide between the rest."],trap:"Leaving a blank — there's no penalty for guessing."},
+ "tf-pace":{rule:"Start accurate; flag hard items and return.",how:["Bank the sure marks first.","Use saved time on flagged questions."],trap:"Sinking five minutes into one question."},
+ "tf-boss":{rule:"Name the question type first, then apply its rule.",how:["Detail → scan. Main idea → whole passage. Inference → clues. EXCEPT → leftover."],trap:"Answering a detail question as if it were main-idea (or the reverse)."}
 };
 Object.assign(HINTS,{
  "ie-tfng":[["If you cannot find it stated either way, it is Not Given \u2014 not False.","FALSE needs a clear contradiction in the text."],["Compare the quantity words.","\u2018All/every\u2019 vs \u2018most\u2019 is a contradiction \u2192 False."]],
@@ -402,87 +430,171 @@ Object.assign(TIPCARDS,{
  "gd-boss":{rule:"Read the source, apply the right method, answer from evidence.",how:["Math: balance and compute. Reading: cite the line."],trap:"Careless arithmetic or answering from opinion."}
 });
 const CONTENT={
- toefl:{name:"TOEFL",eyebrow:"TOEFL · Reading & Writing",nodes:[
-  {id:"tf-main",title:"Main idea & purpose",icon:"🧭",
-   intro:["Every TOEFL passage is <b>about</b> one big thing. Main-idea questions ask for that whole point — not a small detail hiding in one line.",
-          "Read the first and last sentences of each paragraph first: writers put the main idea there. The right answer covers the <b>whole</b> passage, not just part of it."],
+ toefl:{name:"TOEFL",eyebrow:"TOEFL · Reading",nodes:[
+  {id:"tf-orient",title:"How TOEFL Reading works",icon:"🧭",
+   intro:["TOEFL Reading 2026 has three task types: <b>Complete the Words</b>, <b>Read in Daily Life</b>, and <b>Read an Academic Text</b>. It is <b>adaptive</b> — do well early and the questions get harder (and worth more).",
+          "Your plan for every text: <b>skim</b> for its shape, then <b>scan</b> or <b>read closely</b> for each question. Keep moving — the clock never stops."],
    drills:[
-    D("A passage describes how bees find flowers, communicate by dancing, and warn the hive of danger. The main idea is:",
-      ["A bee's dance is a figure-eight.","How bees behave and communicate.","Bees can be dangerous."],1,
-      "Yes — it covers the whole passage, not one detail.","That's a single detail. The main idea must cover the whole passage."),
-    D("The best main-idea answer usually...",
-      ["repeats one sentence exactly","covers the entire passage","is the longest option"],1,
-      "Right — it sums up everything.","Length and exact repetition are traps. Pick the option that covers it all.")
-   ],move:"In one sentence, state the main idea of the last article you read."},
-  {id:"tf-detail",title:"Reading for detail",icon:"🔍",
-   intro:["Detail questions ask for a specific fact: a date, a name, a number, a reason. The answer <b>is</b> in the text — your job is to find it fast.",
-          "Scan for the keyword from the question (a name, a year) rather than re-reading everything. Then read that one sentence carefully."],
+    D("TOEFL Reading 2026 is scored on a band of:",["0–120 only","1–6","200–800"],1,"Right — the new test reports a 1–6 band (with a 0–120 estimate).","The 2026 test uses a 1–6 band."),
+    D("\"Adaptive\" means:",["everyone gets identical questions","difficulty adjusts to how you perform","you pick the topics"],1,"Yes — strong answers unlock harder, higher-value questions.","Adaptive = difficulty adjusts to your performance."),
+    D("Best overall approach to a passage:",["read every word twice","skim for shape, then target each question","answer without reading"],1,"Exactly — skim first, then scan or read closely per question.","Reading everything twice burns the clock; skim, then target.")
+   ],move:"From memory, name the three TOEFL Reading task types."},
+  {id:"tf-skim",title:"Skimming",icon:"⚡",
+   intro:["<b>Skimming</b> = reading fast for the <i>gist</i> and structure, not the details. Your eyes hit the title, the first and last sentence of each paragraph, and any bold or repeated words.",
+          "Strategy <b>Title → Tops → Tails</b>: read the title, then the top sentence of each paragraph, then the last line. In ~20 seconds you know what the text is about and how it is organised."],
    drills:[
-    D("Text: \"The bridge, finished in 1937, took four years to build.\" When did construction begin?",
-      ["1937","1933","1941"],1,"Correct — 1937 minus 4 years = 1933.","Read carefully: it finished in 1937 after 4 years, so it began in 1933."),
-    D("Fastest way to answer a detail question:",
-      ["reread the whole passage","scan for the keyword","guess from memory"],1,
-      "Exactly — scan for the keyword, then read closely.","That's slow. Scan for the keyword first.")
-   ],move:"Find one specific number in any news article in under 10 seconds by scanning."},
-  {id:"tf-scan",title:"Scan & skim",icon:"⚡",
-   intro:["<b>Skimming</b> = reading fast for the gist. <b>Scanning</b> = hunting for one specific thing. Strong test-takers do both, switching as needed.",
-          "Skim first to get the shape of the passage, then scan back for each question's answer. Don't read every word twice."],
+    D("Skimming is best for:",["finding one exact date","getting the general idea fast","memorising every word"],1,"Yes — skim for the overall gist.","Skimming gives the gist, not a single exact fig­ure."),
+    D("To skim a paragraph, read first the:",["middle sentence","first and last sentences","longest sentence"],1,"Right — writers put the point at the top and tie off at the end.","The main point sits in the first and last sentences."),
+    D("After skimming, you should be able to say:",["every number in the text","what the text is about in one phrase","the author's full name"],1,"Exactly — a one-phrase topic is the goal of skimming.","Skimming gives you the topic in a phrase, not every detail.")
+   ],move:"Skim any article in 25 seconds, then say its topic in one phrase."},
+  {id:"tf-scan",title:"Scanning",icon:"🔎",
+   intro:["<b>Scanning</b> = hunting for one specific thing — a date, a name, a number, a keyword — without reading everything around it.",
+          "Strategy <b>Target → Sweep → Stop</b>: hold the keyword in mind, sweep your eyes down the text for its shape (a capital letter, digits), and stop the instant you spot it. Then read only that sentence."],
    drills:[
-    D("You need the year a company was founded. You should:",
-      ["skim the whole text","scan for a number/date","read every paragraph"],1,
-      "Right — scanning for the date is fastest.","For one fact, scan. Skimming is for the gist."),
-    D("Skimming is best for...",
-      ["finding one exact figure","getting the general idea","memorising the text"],1,
-      "Yes — skim for the overall gist.","Skimming gives the gist, not exact figures.")
-   ],move:"Skim a page in 30 seconds, then say its topic in one phrase."},
+    D("You need the year a company was founded. You should:",["skim the whole text","scan for the digits","read every paragraph"],1,"Right — scan for the number; it is fastest.","For one fact, scan for its shape (here, four digits)."),
+    D("Scanning works because you:",["read every word carefully","look only for the target's shape","translate each sentence"],1,"Yes — you match a shape (caps, digits), not full meaning.","Scanning matches the target's shape, skipping the rest."),
+    D("Once you scan to the keyword, you then:",["answer from memory","read just that sentence closely","skim the next page"],1,"Correct — read the one sentence you landed on.","Read the sentence you found; do not guess from memory.")
+   ],move:"Find one specific number in a news article in under 10 seconds."},
+  {id:"tf-close",title:"Close reading",icon:"🔬",
+   intro:["When a question turns on exact meaning, switch gears to <b>close (intensive) reading</b>: slow down and read one sentence word by word, noticing negatives, qualifiers and linking words.",
+          "Watch the small words that flip meaning: <i>not, only, however, although, unless, except</i>. Missing one of these is the most common careless error."],
+   drills:[
+    D("\"The results were not entirely unexpected.\" This means the results were:",["a total surprise","somewhat expected","impossible"],1,"Yes — \"not entirely unexpected\" = partly expected.","Two negatives soften: not + unexpected = somewhat expected."),
+    D("Which word most changes a sentence's meaning?",["very","however","really"],1,"Right — \"however\" signals a contrast that can flip the point.","Linking words like \"however\" reverse meaning; intensifiers don't."),
+    D("Close reading is the right gear when:",["you need the gist","a question hinges on exact wording","you are scanning for a date"],1,"Exactly — precise questions need slow, exact reading.","Use close reading for precise meaning, not for the gist.")
+   ],move:"Find a sentence with \"not\" or \"except\" and say what it rules in and out."},
+  {id:"tf-vocab",title:"Vocabulary in context",icon:"📖",
+   intro:["These questions give a word and ask its meaning <b>in this passage</b>. The same word can mean different things — context decides, not the dictionary's first entry.",
+          "Strategy <b>Swap & Check</b>: replace the word with each option in the sentence. The one that keeps the meaning is your answer."],
+   drills:[
+    D("\"The plan was sound, so we approved it.\" Here, 'sound' means:",["a noise","sensible / solid","deep"],1,"Yes — a plan that gets approved is a sensible one.","Context decides: 'sound' here = sensible, not a noise."),
+    D("Best method for vocabulary-in-context:",["use the dictionary's first meaning","substitute each option in the sentence","pick the hardest word"],1,"Right — swap each option in and test the meaning.","The first dictionary meaning is often the trap; test in context."),
+    D("\"Novel research methods\" — here 'novel' means:",["a long story","new / original","boring"],1,"Correct — 'novel' = new here.","In this phrase 'novel' means new, not a book.")
+   ],move:"Find a word with two meanings and use it in two different sentences."},
+  {id:"tf-roots",title:"Roots, prefixes & suffixes",icon:"🧩",
+   intro:["Big academic words are built from small parts. Break an unknown word into <b>prefix + root + suffix</b> and you can often guess its meaning — and finish it in Complete the Words.",
+          "Know a few: <i>un-/in-</i> (not), <i>re-</i> (again), <i>-able</i> (can be), <i>-tion</i> (a thing/act), <i>bio</i> (life), <i>port</i> (carry)."],
+   drills:[
+    D("'Reconstruct' most likely means:",["build again","destroy","build poorly"],0,"Right — re- (again) + construct = build again.","re- means again, so reconstruct = build again."),
+    D("The suffix '-able' in 'manageable' tells you it means:",["able to be managed","without management","the act of managing"],0,"Yes — -able = able to be.","-able means 'able to be', so manageable = able to be managed."),
+    D("'Biology' contains 'bio', which means:",["earth","life","sound"],1,"Correct — bio = life.","'bio' means life (biology = study of life).")
+   ],move:"Break one long word into its prefix, root and suffix."},
+  {id:"tf-cwords",title:"Complete the Words",icon:"🔤",
+   intro:["In <b>Complete the Words</b> you fill missing letters in an academic paragraph. Each blank shows the first letters and the length, so the answer is constrained — use grammar and meaning to land it.",
+          "Strategy <b>Read → Fit → Spell</b>: read the whole sentence first; choose the word that fits the meaning AND grammar (tense, plural); then spell it to match the letters and length shown."],
+   drills:[
+    D("\"Plants need sunlight to gr___ tall.\" The missing word is:",["grow","green","ground"],0,"Yes — 'grow' fits meaning and grammar.","Read the sentence: plants 'grow' tall."),
+    D("\"The two results were near___ identical.\" Best completion:",["nearly","nearby","nearer"],0,"Right — 'nearly identical' fits.","The adverb 'nearly' fits before 'identical'."),
+    D("A correct word that is mis-spelled is:",["still fully correct","marked wrong","worth half"],1,"Correct — spelling must match exactly.","Spelling counts: a mis-spelled answer is wrong.")
+   ],move:"Cover the end of five words in a paragraph and complete them from context."},
   {id:"tf-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"tf-dgist",title:"Daily Life: purpose & gist",icon:"✉️",
+   intro:["<b>Read in Daily Life</b> uses short practical texts — emails, announcements, posts. First find <b>why</b> the text exists: to invite, remind, complain, advertise, or inform?",
+          "Skim the subject line / first line and the closing. The purpose usually sits at the very start or the very end."],
+   drills:[
+    D("An email opens \"Just a reminder that the library closes early on Friday.\" Its purpose is to:",["sell something","remind the reader","apologise"],1,"Yes — it reminds about the early closing.","The phrase 'just a reminder' signals the purpose: to remind."),
+    D("To find a short text's purpose fastest, read the:",["middle paragraph","first line and the closing","longest sentence"],1,"Right — purpose lives at the start or end.","Purpose sits at the opening or closing, not the middle."),
+    D("A notice headed \"Road closed Saturday for repairs\" mainly aims to:",["entertain","inform","persuade"],1,"Correct — it informs of a closure.","A notice like this informs; it isn't selling or entertaining.")
+   ],move:"Read any email and state its purpose in three words."},
+  {id:"tf-detail",title:"Reading for detail",icon:"🔍",
+   intro:["Detail questions ask for a specific stated fact: a date, a place, a reason, a number. The answer <b>is</b> in the text — scan to it, then read that line closely.",
+          "Beware distractors: numbers or names from the text that answer a <i>different</i> question. Match the exact thing asked."],
+   drills:[
+    D("Text: \"The bridge, finished in 1937, took four years to build.\" When did construction begin?",["1937","1933","1941"],1,"Correct — 1937 minus 4 years = 1933.","It finished in 1937 after 4 years, so it began in 1933."),
+    D("A detail-question distractor is usually:",["a fact that answers a different question","a made-up word","the main idea"],0,"Right — distractors are real facts aimed at the wrong question.","Distractors are true details that don't answer what's asked."),
+    D("\"Tickets cost $12, or $8 for students.\" A student pays:",["$12","$8","$20"],1,"Yes — the student price is $8.","Read precisely: students pay $8, not the full $12.")
+   ],move:"Scan an article for one date and one number, and check what each refers to."},
+  {id:"tf-negfact",title:"Negative facts (EXCEPT)",icon:"🚫",
+   intro:["Some questions ask which option is <b>NOT</b> true, or true of all <i>EXCEPT</i> one. Three options are stated in the text; one is not. You are hunting the odd one out.",
+          "Strategy <b>Tick the three</b>: find and tick each option that the text supports. The one you cannot tick is the answer."],
+   drills:[
+    D("Text says a plant needs water, light and warm soil. \"The plant needs all EXCEPT:\"",["water","loud noise","light"],1,"Right — noise isn't mentioned; it's the odd one out.","Tick water and light (stated). 'Noise' isn't — that's the EXCEPT answer."),
+    D("For an EXCEPT question, the correct answer is the option that is:",["stated most clearly","NOT supported by the text","the longest"],1,"Yes — pick the one the text does not support.","EXCEPT means choose the unsupported option."),
+    D("Best method for a NOT/EXCEPT question:",["guess quickly","tick each supported option, pick the leftover","read only the first line"],1,"Correct — tick the supported ones; the leftover is your answer.","Verify each option; the unsupported leftover is correct.")
+   ],move:"List three things a short text states, then one it never says."},
+  {id:"tf-ref",title:"Reference words",icon:"🔗",
+   intro:["Words like <i>it, this, they, such, these, the former</i> point back to something already named. Reference questions ask: what does this word refer to?",
+          "Strategy <b>Look back & test</b>: the answer is almost always the nearest matching noun before the word. Replace the pronoun with your choice — it should read smoothly."],
+   drills:[
+    D("\"Bees visit many flowers. They spread pollen as they go.\" 'They' refers to:",["flowers","bees","pollen"],1,"Yes — 'they' = bees (the ones visiting).","Look back: the bees are doing the visiting and spreading."),
+    D("To find what a pronoun refers to, look:",["forward to the next paragraph","back to the nearest matching noun","at the title"],1,"Right — check the nearest earlier noun that fits.","Pronouns point back to a recent matching noun."),
+    D("\"The city built a dam. This reduced flooding.\" 'This' refers to:",["the city","building the dam","the flooding"],1,"Correct — 'this' = building the dam.","'This' refers to the action just described: building the dam.")
+   ],move:"Find a 'this' or 'they' in a paragraph and name exactly what it points to."},
+  {id:"tf-main",title:"Main idea & topic",icon:"🎯",
+   intro:["A passage is <b>about</b> one big thing. Main-idea questions want that whole point — not a detail hiding in one line. The <b>topic</b> is the subject; the <b>main idea</b> is what the text says about it.",
+          "The right answer is broad enough to cover <b>every</b> paragraph. Read the first and last sentences — writers put the main idea there."],
+   drills:[
+    D("A passage describes how bees find flowers, dance to communicate, and warn the hive. The main idea is:",["A bee's dance is a figure-eight.","How bees behave and communicate.","Bees can be dangerous."],1,"Yes — it covers the whole passage.","That's one detail. The main idea must cover everything."),
+    D("The best main-idea answer usually:",["repeats one sentence exactly","covers the entire passage","is the longest option"],1,"Right — it sums up the whole thing.","Exact repetition and length are traps; pick what covers it all."),
+    D("Topic vs main idea: the topic is the subject, the main idea is:",["a single fact","what the text says about the subject","the title only"],1,"Correct — the main idea is the point made about the topic.","Topic = subject; main idea = the point made about it.")
+   ],move:"State the topic AND the main idea of the last thing you read."},
   {id:"tf-infer",title:"Inference",icon:"💡",
-   intro:["An <b>inference</b> is what the text suggests but never says outright. The answer must be <i>supported</i> by clues — yet if an option copies the passage word-for-word, be suspicious.",
-          "Ask: what must be true, given these clues? That's your inference."],
+   intro:["An <b>inference</b> is what the text suggests but never says outright. It must be <i>supported</i> by clues — yet if an option copies the passage word-for-word, be suspicious: that's a detail, not an inference.",
+          "Ask: what <b>must</b> be true, given these clues? That's your inference."],
    example:{other:"\"Maria checked the sky, sighed, and put the picnic basket back in the cupboard.\"",me:"Nothing says 'rain' — but the clues imply she called off the picnic."},
    drills:[
-    D("From the sentence above, you can infer that:",
-      ["Maria dislikes picnics.","Maria decided not to go on the picnic.","Maria owns a cupboard."],1,
-      "Exactly — the clues imply she called it off.","That's stated or unrelated, not inferred. Look at what the clues imply."),
-    D("A good inference answer is...",
-      ["copied straight from the text","supported by clues but not stated","your personal opinion"],1,
-      "Right — supported, but not stated.","Inference lives between the lines — supported by clues, never copied or invented.")
-   ],move:"Write one sentence that implies someone is nervous, without using the word 'nervous'."},
-  {id:"tf-vocab",title:"Vocabulary in context",icon:"📖",
-   intro:["These questions give a word and ask its meaning <b>in this passage</b>. The same word can mean different things — context decides.",
-          "Replace the word with each option in the sentence. The one that keeps the meaning is your answer."],
+    D("From the sentence above, you can infer that:",["Maria dislikes picnics.","Maria decided not to go on the picnic.","Maria owns a cupboard."],1,"Exactly — the clues imply she called it off.","That's stated or unrelated, not inferred. Read the clues."),
+    D("A good inference is:",["copied straight from the text","supported by clues but not stated","your personal opinion"],1,"Right — supported, but not stated.","Inference lives between the lines — supported, never copied."),
+    D("\"He grabbed an umbrella before leaving.\" You can infer:",["He expected rain.","He hates umbrellas.","He was late."],0,"Yes — grabbing an umbrella implies expected rain.","Why grab an umbrella? The clue points to expected rain.")
+   ],move:"Write a sentence that implies someone is nervous, without the word 'nervous'."},
+  {id:"tf-purpose",title:"Rhetorical purpose",icon:"🎤",
+   intro:["These ask <b>why</b> the author included something — an example, a comparison, a question, a date. The answer is a verb: <i>to illustrate, to contrast, to emphasise, to define</i>.",
+          "Don't restate what the sentence says — explain the <b>job</b> it does in the paragraph."],
    drills:[
-    D("\"The plan was sound, so we approved it.\" Here, 'sound' means:",
-      ["a noise","sensible / solid","deep"],1,
-      "Yes — 'sound' = sensible here.","Context decides: a plan that gets approved is a sensible one."),
-    D("Best method for vocab-in-context:",
-      ["use the dictionary meaning only","substitute each option in the sentence","pick the hardest word"],1,
-      "Right — substitute and test the meaning.","The dictionary's first meaning is often a trap. Test each option in context.")
-   ],move:"Find a word with two meanings and use it in two different sentences."},
-  {id:"tf-write",title:"Write an email",icon:"✉️",
-   intro:["The TOEFL email task gives you a situation and bullet points. Answer <b>every</b> bullet, use a greeting and sign-off, and write full sentences (about 100–150 words).",
-          "Keep the tone polite and clear. Organisation and completeness matter more than fancy words."],
+    D("After stating bees communicate, the author describes the waggle dance. This example serves to:",["illustrate how bees communicate","prove bees are dangerous","change the topic"],0,"Right — the example illustrates the point just made.","The example's job is to illustrate the communication claim."),
+    D("A rhetorical-purpose answer is usually phrased as:",["a date","a verb (to show, to contrast…)","a name"],1,"Yes — it names the job the text does.","Purpose answers say what the text is doing: to show, to contrast…"),
+    D("The author asks \"But why does this matter?\" mainly to:",["confuse the reader","signal the importance of what follows","end the passage"],1,"Correct — the question flags that an important point is coming.","A rhetorical question like this sets up the key point.")
+   ],move:"Find an example in a text and say in one verb what job it does."},
+  {id:"tf-simplify",title:"Sentence simplification",icon:"✂️",
+   intro:["You're given one complex sentence and must pick the option that means the same with the <b>essential</b> information kept and the rest trimmed.",
+          "Strategy: find the <b>main</b> subject + verb. A right answer keeps those and the key relationship; a wrong one drops something essential or adds a new idea."],
    drills:[
-    D("Your email must always:",
-      ["address every bullet point","be exactly 300 words","use rare vocabulary"],0,
-      "Right — cover every bullet, or you lose points.","Completeness comes first: answer every bullet point."),
-    D("A good email opening is:",
-      ["'Hey what's up'","'Dear Professor Lee,'","no greeting at all"],1,
-      "Yes — polite and appropriate.","Match the tone to the reader; a polite greeting is expected.")
-   ],move:"Write a 2-sentence polite email asking a teacher to reschedule a meeting."},
+    D("\"Although it rained, the match continued because the field drained well.\" Best simplification:",["The match stopped due to rain.","The match went on despite rain, thanks to good drainage.","The field flooded."],1,"Yes — keeps the contrast and the reason.","A good simplification keeps the main facts: it continued despite rain."),
+    D("A wrong simplification often:",["keeps the main idea","drops essential info or adds a new idea","is shorter"],1,"Right — watch for dropped or added meaning.","Wrong options omit something essential or invent new info."),
+    D("To simplify, first find the:",["longest clause","main subject and verb","first comma"],1,"Correct — anchor on the main subject + verb.","Locate the main subject and verb, then keep their relationship.")
+   ],move:"Rewrite a long sentence in 8 words, keeping its essential meaning."},
+  {id:"tf-chest2",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"tf-insert",title:"Insert text & cohesion",icon:"🧵",
+   intro:["Insert-text questions give a sentence and four slots; you choose where it fits. The clue is <b>cohesion</b>: the sentence's linking words and pronouns must connect to what comes before.",
+          "Match the glue: <i>this, however, for example, such, therefore</i> point back to a specific idea. Put the sentence right after the idea it refers to."],
+   drills:[
+    D("Insert: \"However, this method has a serious flaw.\" It best follows a sentence that:",["introduces a new topic","praised the method","lists names"],1,"Right — 'However… this method' must follow praise of the method.","'However' + 'this method' must follow a positive claim about the method."),
+    D("The word 'this' in an inserted sentence tells you to place it:",["anywhere","right after the idea it refers to","at the very end"],1,"Yes — 'this' points back, so follow its referent.","'this' refers back, so the slot comes right after its idea."),
+    D("'For example' signals the inserted sentence is:",["a new argument","an illustration of the prior point","a conclusion"],1,"Correct — it gives an example of what came just before.","'For example' follows the general point it illustrates.")
+   ],move:"In a paragraph, find a 'however' or 'this' and the exact idea it links to."},
+  {id:"tf-org",title:"Organization & paraphrase",icon:"🗂️",
+   intro:["Academic texts follow patterns: <b>cause/effect, compare/contrast, problem/solution, chronology, classification</b>. Spotting the pattern predicts where answers live.",
+          "Also train <b>paraphrase</b> recognition: the correct answer restates the text in different words. Match meaning, not matching keywords."],
+   drills:[
+    D("Signal words \"first… then… finally\" show a text organised by:",["cause and effect","sequence / chronology","comparison"],1,"Right — those words mark a time sequence.","first/then/finally signal a chronological sequence."),
+    D("\"Sales rose because prices fell.\" A correct paraphrase is:",["Lower prices led to higher sales.","Sales and prices both rose.","Prices rose with sales."],0,"Yes — same meaning, new words.","A paraphrase keeps the cause→effect: lower prices → higher sales."),
+    D("A safe answer matches the text by:",["sharing the same keywords","sharing the same meaning","being the longest"],1,"Correct — meaning matches beat keyword matches.","TOEFL rewards meaning matches; identical keywords are often traps.")
+   ],move:"Name the organisation pattern of any article (cause/effect, sequence…) ."},
+  {id:"tf-traps",title:"Trap-spotting & guessing",icon:"🪤",
+   intro:["Wrong options are designed to tempt you: <b>too extreme</b> (all, never), <b>half-right</b> (true but doesn't answer), <b>out of scope</b> (true in the world, not in the text), or <b>keyword bait</b> (repeats a word but twists meaning).",
+          "When unsure, <b>eliminate two</b> clearly wrong options, then choose between the rest — never leave a blank on a no-penalty test."],
+   drills:[
+    D("An option saying a study \"proves humans will NEVER adapt\" is suspect because it is:",["too extreme","perfectly safe","too short"],0,"Right — absolute words like 'never' are usually traps.","Extreme words (never/all/always) rarely match careful texts."),
+    D("A 'half-right' trap is an option that is:",["fully correct","true but doesn't answer the question","made-up"],1,"Yes — true detail, wrong question.","Half-right options state a true fact that misses the question."),
+    D("Unsure between four options? Best move:",["leave it blank","eliminate two, then choose","always pick the longest"],1,"Correct — cut two wrong, then decide; there's no penalty.","Eliminate the clearly wrong, then choose — never blank.")
+   ],move:"In a practice set, name the trap type of one wrong option you eliminated."},
+  {id:"tf-pace",title:"Pacing & adaptive strategy",icon:"⏱️",
+   intro:["The clock doesn't stop and the test is adaptive — early accuracy unlocks harder, higher-value questions. So start steady and accurate, and don't sink five minutes into one item.",
+          "Strategy <b>Skim → answer the sure ones → return</b>: bank the questions you know, flag the hard ones, and come back with the time you saved."],
+   drills:[
+    D("Because Reading is adaptive, you should:",["rush the early questions","answer early ones carefully to unlock harder ones","skip the start"],1,"Right — early accuracy raises difficulty and your score.","Adaptive tests reward early accuracy; start steady, not rushed."),
+    D("Stuck on one hard question, you should:",["spend five minutes on it","flag it and move on, return later","leave the section"],1,"Yes — bank easy marks first, return to the hard one.","Don't sink time; flag it, answer the rest, come back."),
+    D("Smartest order within a passage:",["hardest questions first","the ones you're sure of, then the rest","random"],1,"Correct — secure the sure marks, then spend time on the rest.","Answer the certain ones first; use saved time on the hard ones.")
+   ],move:"On your next practice set, flag-and-return instead of forcing every question in order."},
   {id:"tf-boss",title:"Reading: mastery test",icon:"👑",type:"boss",
-   intro:["Time to prove it. A quick mix of everything on the Reading trail — main idea, detail, inference, vocabulary."],
+   intro:["Time to prove it. A quick mix across the whole Reading trail — skim/scan, vocabulary, detail, EXCEPT, reference, inference, purpose and paraphrase."],
    drills:[
-    D("A passage covers a city's history, climate, and economy. Main idea?",
-      ["The city's rainfall.","An overview of the city.","The city's main export."],1,
-      "Yes — it covers the whole passage.","That's one detail. The main idea covers it all."),
-    D("\"Profits fell sharply.\" 'Sharply' here means:",
-      ["with a knife","by a large amount","slowly"],1,
-      "Correct — 'sharply' = by a lot.","Context: profits fell by a large amount."),
-    D("\"He grabbed an umbrella before leaving.\" You can infer:",
-      ["He expected rain.","He hates umbrellas.","He was late."],0,
-      "Right — grabbing an umbrella implies expected rain.","Look at the clue: why grab an umbrella?")
-   ],move:"You finished the Reading trail — review any node you found tricky."}
+    D("For the single year a company was founded, you should:",["read every paragraph","scan for the digits","skim the whole text"],1,"Right — scan for one fact.","One fact = scan for its shape (digits)."),
+    D("A passage covers a city's history, climate and economy. Main idea?",["The city's rainfall.","An overview of the city.","The city's main export."],1,"Yes — it covers the whole passage.","That's one detail; the main idea covers it all."),
+    D("\"Profits fell sharply.\" 'Sharply' here means:",["with a knife","by a large amount","slowly"],1,"Correct — context: by a lot.","'Sharply' = by a large amount here."),
+    D("Text lists water, light and warm soil as needs. \"Needs all EXCEPT:\"",["water","loud noise","light"],1,"Right — 'noise' is the unsupported odd one out.","Tick water and light; 'noise' isn't stated — the EXCEPT answer."),
+    D("\"He grabbed an umbrella before leaving.\" You can infer:",["He expected rain.","He hates umbrellas.","He was late."],0,"Yes — the clue implies expected rain.","Why grab an umbrella? Expected rain.")
+   ],move:"You finished the Reading trail — open Mastery and sharpen any skill below 80%."}
  ]},
  ielts:{ name:"IELTS",eyebrow:"IELTS · Academic",nodes:[
   {id:"ie-tfng",title:"True / False / Not Given",icon:"⚖️",intro:["TRUE = the text agrees with the statement. FALSE = the text contradicts it. NOT GIVEN = the text simply does not say.","Most marks are lost confusing FALSE with NOT GIVEN: FALSE needs a clear contradiction in the text; NOT GIVEN means the information is genuinely absent."],drills:[D("The text says nothing about the topic in the statement. The answer is:",["False","Not Given","True"],1,"Right — no information means Not Given.","If the text neither confirms nor contradicts it, it is Not Given, not False."),D("Statement: every staff member was trained. Text: most staff were trained. Answer:",["True","False","Not Given"],1,"Correct — all vs most is a contradiction, so False.","Watch quantity words: all contradicts most, so it is False.")],move:"Find a news claim and decide: does the article confirm, contradict, or not mention it?"},
