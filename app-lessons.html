@@ -42,6 +42,21 @@ button{font-family:inherit;cursor:pointer}
 .ltabs{display:flex;gap:4px;background:#e7efed;border-radius:13px;padding:4px;margin:6px 0 16px}
 .ltab{flex:1;border:none;background:transparent;border-radius:10px;padding:9px 0;font-weight:800;font-size:13px;color:#6a7b78;cursor:pointer;font-family:inherit}
 .ltab.on{background:#fff;color:#137074;box-shadow:0 2px 6px rgba(20,80,76,.1)}
+.geniebar{display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,#e7fbf4,#f1faf8);border:1px solid #cfe9e1;border-radius:18px;padding:8px 14px 8px 6px;margin:6px 0 14px;overflow:hidden}
+.genie-stage{width:104px;height:104px;flex:none;position:relative}
+.genie-stage svg{width:104px;height:104px;display:block;overflow:visible}
+.genie{transform-origin:72px 116px;animation:none}
+.genieInner{transform-origin:72px 116px;animation:genieBob 3.2s ease-in-out infinite}
+.smoke{stroke-dasharray:90;stroke-dashoffset:0}
+.geniebar.play .genie{animation:genieRise .9s cubic-bezier(.2,1.35,.35,1) both}
+.geniebar.play .smoke{animation:smokePuff .9s ease both}
+.geniebar.play .genie-speech{animation:gFade .55s ease .45s both}
+@keyframes genieRise{0%{transform:translateY(46px) scale(.12);opacity:0}55%{opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes genieBob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(-1.5deg)}}
+@keyframes smokePuff{0%{opacity:0;stroke-dashoffset:90}60%{opacity:.6}100%{opacity:.38;stroke-dashoffset:0}}
+@keyframes gFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.gname{font-weight:800;font-size:13px;color:#137074}
+.gline{font-size:12.5px;color:#42554f;margin-top:2px;line-height:1.4}
 #pathPicker{margin-top:18px}
 .pathhead{font-family:Georgia,'Times New Roman',serif;font-size:23px;font-weight:800;color:#15322f;margin:4px 0 2px}
 .pathsub{font-size:13px;color:#6a7b78;margin-bottom:14px}
@@ -267,6 +282,38 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
   <div id="pathPicker"></div>
 
   <div id="examView" style="display:none">
+  <div class="geniebar" id="geniebar">
+    <div class="genie-stage"><svg viewBox="0 0 144 130" aria-hidden="true">
+      <ellipse cx="72" cy="120" rx="30" ry="6" fill="#caa030" opacity=".4"/>
+      <path d="M44 116 q-13 -2 -20 2 q10 5 20 4 z" fill="#e0a92e"/>
+      <ellipse cx="73" cy="116" rx="26" ry="11" fill="#f4c64a"/>
+      <path d="M97 110 q11 1 9 9 q-6 -3 -11 -3 z" fill="#e0a92e"/>
+      <ellipse cx="73" cy="108" rx="15" ry="5" fill="#ffd968"/>
+      <circle cx="73" cy="103" r="3" fill="#ffd968"/>
+      <path class="smoke" d="M50 112 C 42 96 66 92 60 80 C 55 70 80 70 72 60" stroke="#9fe3d6" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <g class="genie"><g class="genieInner">
+        <path d="M60 92 Q72 84 84 92 L82 74 Q72 68 62 74 Z" fill="#19a895"/>
+        <path d="M38 74 Q72 52 106 74 Q99 90 72 90 Q45 90 38 74 Z" fill="#23c7b4"/>
+        <path d="M58 76 q14 9 28 0" stroke="#0e8e7e" stroke-width="2.4" fill="none" opacity=".5"/>
+        <circle cx="44" cy="74" r="13" fill="#1fb6a6"/>
+        <circle cx="100" cy="74" r="13" fill="#1fb6a6"/>
+        <rect x="48" y="66" width="48" height="11" rx="5.5" transform="rotate(-10 72 71)" fill="#23c7b4"/>
+        <rect x="48" y="71" width="48" height="11" rx="5.5" transform="rotate(10 72 76)" fill="#1aa996"/>
+        <rect x="43" y="63" width="7" height="15" rx="2" transform="rotate(-10 72 71)" fill="#ffd968"/>
+        <rect x="94" y="63" width="7" height="15" rx="2" transform="rotate(10 72 76)" fill="#ffd968"/>
+        <circle cx="72" cy="44" r="15" fill="#23c7b4"/>
+        <path d="M63 41 l6 1 M81 41 l-6 1" stroke="#0c2a26" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="66" cy="45.5" r="1.7" fill="#0c2a26"/>
+        <circle cx="78" cy="45.5" r="1.7" fill="#0c2a26"/>
+        <path d="M65 50 q7 5 14 0" stroke="#0c2a26" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M67 55 Q72 64 77 55 Q72 60 67 55 Z" fill="#0c2a26"/>
+        <rect x="68" y="26" width="8" height="5" rx="2" fill="#0c2a26"/>
+        <circle cx="72" cy="24" r="4" fill="#0c2a26"/>
+        <circle cx="88" cy="49" r="2.2" fill="#ffd968"/>
+      </g></g>
+    </svg></div>
+    <div class="genie-speech"><div class="gname">Dana the Genie</div><div class="gline" id="gline">Make a wish. Then do the reps — that's the magic.</div></div>
+  </div>
   <div class="chips" id="examChips" style="display:none"></div>
   <div class="ltabs">
     <button class="ltab on" data-t="trail" onclick="selTab(this)">🗺️ Trail</button>
@@ -828,7 +875,9 @@ function renderPaths(){
   }).join("");
   host.innerHTML='<div class="pathhead">Choose your path</div><div class="pathsub">Pick an exam to open its gamified trail.</div><div class="paths">'+cards+'</div>';
 }
-function openPath(k){ if(!CONTENT[k])return; exam=k; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="none"; var ev=document.getElementById("examView"); if(ev)ev.style.display="block"; renderAll(); selTabKey("trail"); window.scrollTo(0,0); }
+function openPath(k){ if(!CONTENT[k])return; exam=k; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="none"; var ev=document.getElementById("examView"); if(ev)ev.style.display="block"; renderAll(); selTabKey("trail"); playGenie(k); window.scrollTo(0,0); }
+var GLINES={toefl:'TOEFL band 6? Consider it summoned \u2014 now, the reps.',ielts:'IELTS band 7? Granted, one drill at a time.',duolingo:'160 on the DET? Easy magic. Start rubbing the lamp.',ged:'GED pass? Done deal. Flex those brain muscles.',_:"Make a wish. Then do the reps \u2014 that's the magic."};
+function playGenie(k){ var gl=document.getElementById("gline"); if(gl)gl.textContent=GLINES[k]||GLINES._; var gb=document.getElementById("geniebar"); if(gb){ gb.classList.remove("play"); void gb.offsetWidth; gb.classList.add("play"); } }
 function selTab(btn){ document.querySelectorAll(".ltab").forEach(function(t){t.classList.remove("on");}); btn.classList.add("on"); var t=btn.getAttribute("data-t"); document.querySelectorAll(".tb").forEach(function(el){ el.style.display = el.classList.contains("tab-"+t) ? "" : "none"; }); window.scrollTo(0,0); }
 function selTabKey(t){ var b=document.querySelector('.ltab[data-t="'+t+'"]'); if(b)selTab(b); }
 function backToPaths(){ var ev=document.getElementById("examView"); if(ev)ev.style.display="none"; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="block"; renderPaths(); window.scrollTo(0,0); }
