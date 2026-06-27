@@ -248,6 +248,7 @@ body{
       </div>
       <div class="msg" id="msg"></div>
     </form>
+    <div class="signin-hint" style="text-align:center;margin-top:12px;font-size:12.5px;color:#9fb4b0">Already a member or the teacher? <a onclick="openSignin()" style="color:#9af0e0;cursor:pointer;font-weight:700">Sign in with email</a></div>
     <div class="orsep"><span>or</span></div>
     <div class="premium" id="buybox">
       <div class="prem-h">No code? Get instant access</div>
@@ -451,7 +452,7 @@ var msg = document.getElementById("msg");
 function showMsg(text, kind){ msg.className = "msg " + kind; msg.textContent = text; }
 
 var q = new URLSearchParams(location.search);
-if (q.get("need") === "login") showMsg("Enter your access code to sign in or create your account.", "info");
+if (q.get("need") === "login") showMsg("Sign in with your email below, or enter an access code.", "info");
 else if (q.get("need") === "wrong") showMsg("Your access doesn't cover that page. Enter a code that does.", "info");
 else if (q.get("need") === "access") showMsg("Enter your access code to continue.", "info");
 else if (q.get("need") === "course") showMsg("The lessons course is a premium plan \u2014 unlock it below.", "info");
@@ -487,6 +488,7 @@ form.addEventListener("submit", function(e){
 });
 var CLAIM_CODE = "", CLAIM_MODE = "create", CLAIM_PURPOSE = "redeem";
 function openClaim(code, purpose){ CLAIM_CODE = code||""; CLAIM_MODE = "create"; CLAIM_PURPOSE = purpose||"redeem"; renderClaim(); var h=document.getElementById("claimhost"); if(h&&h.scrollIntoView)h.scrollIntoView({behavior:"smooth",block:"nearest"}); }
+function openSignin(){ CLAIM_CODE=""; CLAIM_MODE="signin"; CLAIM_PURPOSE="signin"; PENDING=null; renderClaim(); var h=document.getElementById("claimhost"); if(h&&h.scrollIntoView)h.scrollIntoView({behavior:"smooth",block:"nearest"}); }
 function claimMode(m){ CLAIM_MODE = m; renderClaim(); }
 function cancelClaim(){ var h=document.getElementById("claimhost"); if(h)h.innerHTML=""; }
 function cmsg(t,k){ var m=document.getElementById("cmsg"); if(m){ m.className="msg "+(k||""); m.textContent=t; } }
@@ -518,6 +520,13 @@ function submitClaim(){
     }
     AUTHED = true;
     if (CLAIM_PURPOSE==="checkout" && PENDING){ cmsg("Account ready \u2014 starting checkout\u2026","ok"); var pend=PENDING; PENDING=null; cancelClaim(); doCheckout(pend.provider, pend.item); return; }
+    if (CLAIM_PURPOSE==="signin" || !CLAIM_CODE){
+      apiGet("/api/account").then(function(a){
+        if(a && a.user && a.user.access){ cmsg("Signed in!","ok"); success(a.user); }
+        else { cmsg("You're signed in - enter your access code below, or choose a plan to unlock.","info"); cancelClaim(); }
+      });
+      return;
+    }
     apiPost("/api/redeem",{code:CLAIM_CODE}).then(function(rr){
       if(rr && rr.ok){ cmsg("Unlocked!","ok"); success(rr.user); }
       else { cmsg((rr && rr.message) || "Account ready, but that code didn't work.","err"); }

@@ -76,6 +76,8 @@ export async function clearUserSession(env, request){
 export function hasTips(user){ return !!(user && ((user.products && (user.products.tips || user.products.course)) || user.tier === "premium")); }
 export function hasCourse(user){ return !!(user && ((user.products && user.products.course) || user.tier === "premium")); }
 export async function grantProduct(kv, user, product){ user.products = user.products || {}; if (product === "course") user.products.course = true; else user.products.tips = true; user.access = "all"; await saveUser(kv, user); return user; }
+export function isOwnerEmail(env, email){ const raw = (env && env.OWNER_EMAILS) || "romalarian@gmail.com"; const list = String(raw).toLowerCase().split(/[\s,;]+/).filter(Boolean); return list.includes(String(email || "").toLowerCase()); }
+export async function grantOwnerAccess(kv, user){ user.tier = "premium"; user.access = "all"; user.scope = null; await saveUser(kv, user); return user; }
 export function userPublic(user){
   return { email: user.email, tier: user.tier || "none", access: user.access || null, scope: user.scope || null, products: user.products || {}, tips: hasTips(user), course: hasCourse(user) };
 }
