@@ -39,6 +39,20 @@ button{font-family:inherit;cursor:pointer}
 .sech .more{margin-left:auto;font-size:11px;color:var(--mut)}
 /* chips */
 .chips{display:flex;gap:8px;overflow:auto;padding-bottom:3px}
+#pathPicker{margin-top:18px}
+.pathhead{font-family:Georgia,'Times New Roman',serif;font-size:23px;font-weight:800;color:#15322f;margin:4px 0 2px}
+.pathsub{font-size:13px;color:#6a7b78;margin-bottom:14px}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pathcard{font-family:inherit;text-align:left;background:#fff;border:1.5px solid #e3ebe9;border-radius:18px;padding:16px;cursor:pointer;transition:transform .12s,box-shadow .12s,border-color .12s}
+.pathcard:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(20,80,76,.12);border-color:#1a8f93}
+.pathcard .pcico{width:44px;height:44px;border-radius:13px;background:#e8f6f3;display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:10px}
+.pathcard .pcname{font-weight:800;font-size:17px;color:#16302d}
+.pathcard .pcsub{font-size:11.5px;color:#6a7b78;margin:2px 0 12px;min-height:30px;line-height:1.35}
+.pathcard .pcbar{height:7px;border-radius:99px;background:#eef3f2;overflow:hidden}
+.pathcard .pcbar i{display:block;height:100%;background:linear-gradient(90deg,#1fb6a6,#137074)}
+.pathcard .pcfoot{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:12px;color:#54635f;font-weight:600}
+.pathcard .pcgo{color:#137074;font-weight:800}
+@media(max-width:560px){.paths{grid-template-columns:1fr}}
 .chip{flex:none;border:1px solid var(--line);background:var(--white);color:var(--mut);border-radius:999px;
  padding:7px 15px;font-size:12.5px;font-weight:700}
 .chip.on{background:var(--teal);color:#fff;border-color:var(--teal);box-shadow:0 4px 14px rgba(26,143,147,.3)}
@@ -247,6 +261,9 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
     <button class="backbtn" onclick="openTipLibrary()">Tips</button>
   </div>
 
+  <div id="pathPicker"></div>
+
+  <div id="examView" style="display:none">
   <div class="chips" id="examChips" style="margin-top:14px"></div>
   <div id="reviewCard"></div>
   <div id="nextCard"></div>
@@ -292,6 +309,7 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
   </div>
 
   <a class="upsell" id="upsell" href="/login?upgrade=1"><span style="font-size:25px">⭐</span><div><div class="ut">Go Premium — unlimited hearts</div><div class="us">Never wait for hearts. Monthly access across all four exams.</div></div><span class="ub">Upgrade</span></a>
+  </div>
   <div class="foot">Progress saved to your account. <a id="backLink" href="/hub">← Your tests</a> · <a href="#" onclick="doSignOut(event)">Sign out</a></div>
 </div>
 
@@ -749,7 +767,7 @@ function renderStreak(){
   html+='<div class="'+cls+'"><div class="dot">'+inner+'</div><div class="dl">'+labels[i]+'</div></div>'; }
  strip.innerHTML=html;
 }
-function doBack(){ try{ if(document.referrer && document.referrer.indexOf(location.origin)===0){ history.back(); return; } }catch(e){} location.href = PREMIUM?"/hub":((typeof TESTROUTE!=="undefined"&&TESTROUTE[ACCESS])||"/"); }
+function doBack(){ var ev=document.getElementById("examView"); if(ev && ev.style.display!=="none"){ backToPaths(); return; } try{ if(document.referrer && document.referrer.indexOf(location.origin)===0){ history.back(); return; } }catch(e){} location.href = PREMIUM?"/hub":((typeof TESTROUTE!=="undefined"&&TESTROUTE[ACCESS])||"/"); }
 let REV=null;
 function findDrill(ref){ var parts=String(ref).split(":"), nid=parts[0], di=+parts[1]; for(var ex in CONTENT){ var nodes=CONTENT[ex].nodes; for(var i=0;i<nodes.length;i++){ if(nodes[i].id===nid){ var dl=nodes[i].drills; return (dl&&dl[di])?{node:nodes[i],drill:dl[di],exam:ex}:null; } } } return null; }
 function renderReviewCard(){ var host=document.getElementById("reviewCard"); if(!host)return; var n=S.dueReview||0; if(n<=0){host.innerHTML="";return;} host.innerHTML='<div class="revcard" onclick="startRev()"><div class="ri">\uD83D\uDD01</div><div class="rm"><div class="rt">Daily Review</div><div class="rs">'+n+' item'+(n>1?'s':'')+' due \u2014 lock in what you missed</div></div><div class="rgo">Review \u2192</div></div>'; }
@@ -784,6 +802,26 @@ function openMastery(){ var C=CONTENT[exam]; var rows=C.nodes.filter(function(nd
  sheet.innerHTML='<div class="shead"><button class="x" onclick="closeOv()">\u2715</button><div class="lead2" style="margin-left:6px">Skill mastery \u00b7 '+C.name+'</div></div><div class="sbody" style="max-height:72vh;overflow:auto">'+rows+'</div>';
  ov.classList.add("show");
 }
+/* ---------- path picker (choose exam) ---------- */
+function renderPaths(){
+  var host=document.getElementById("pathPicker"); if(!host)return;
+  var ICO={toefl:"📘",ielts:"🌐",duolingo:"🦉",ged:"🎓"};
+  var cards=Object.keys(CONTENT).map(function(k){
+    var C=CONTENT[k], nodes=C.nodes, done=0;
+    nodes.forEach(function(n,i){ if(nodeState(k,i)==="done") done=i+1; });
+    var pct=nodes.length?Math.round(done/nodes.length*100):0;
+    return '<button class="pathcard" onclick="openPath(\''+k+'\')">'
+      +'<div class="pcico">'+(ICO[k]||"📘")+'</div>'
+      +'<div class="pcname">'+C.name+'</div>'
+      +'<div class="pcsub">'+(C.eyebrow||"")+'</div>'
+      +'<div class="pcbar"><i style="width:'+pct+'%"></i></div>'
+      +'<div class="pcfoot"><span>'+done+' / '+nodes.length+' lessons</span><span class="pcgo">'+(done>0?"Continue →":"Start →")+'</span></div>'
+      +'</button>';
+  }).join("");
+  host.innerHTML='<div class="pathhead">Choose your path</div><div class="pathsub">Pick an exam to open its gamified trail.</div><div class="paths">'+cards+'</div>';
+}
+function openPath(k){ if(!CONTENT[k])return; exam=k; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="none"; var ev=document.getElementById("examView"); if(ev)ev.style.display="block"; renderAll(); window.scrollTo(0,0); }
+function backToPaths(){ var ev=document.getElementById("examView"); if(ev)ev.style.display="none"; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="block"; renderPaths(); window.scrollTo(0,0); }
 function renderAll(){syncHud();renderQuests();renderChips();renderReviewCard();renderNextCard();renderMap();renderBadges();renderLeague();}
 async function init(){
  const acc=await apiP("/api/account");
@@ -792,7 +830,8 @@ async function init(){
  if(pr&&pr.ok)applyProgress(pr.progress);
  setNav();
  renderAll();
- try{var _p=new URLSearchParams(location.search),_ex=_p.get("exam"),_nd=_p.get("node");if(_ex&&CONTENT[_ex]){exam=_ex;renderAll();}if(_nd){var _ns=CONTENT[exam].nodes;for(var _i=0;_i<_ns.length;_i++){if(_ns[_i].id===_nd){openNode(_i);break;}}}}catch(e){}
+ renderPaths();
+ try{var _p=new URLSearchParams(location.search),_ex=_p.get("exam"),_nd=_p.get("node");if(_ex&&CONTENT[_ex]){openPath(_ex);}if(_nd){var _ns=CONTENT[exam].nodes;for(var _i=0;_i<_ns.length;_i++){if(_ns[_i].id===_nd){openNode(_i);break;}}}}catch(e){}
  setInterval(refreshProg,60000);
 }
 const TESTROUTE={toefl:"/app",ielts:"/app-ielts",duolingo:"/app-duolingo",ged:"/app-ged",all:"/hub"};
