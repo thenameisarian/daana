@@ -66,6 +66,35 @@ button{font-family:inherit;cursor:pointer}
 .geniebar.play .s2{animation:spk .7s ease .62s both}
 .geniebar.play .s3{animation:spk .75s ease .72s both}
 @keyframes spk{0%{opacity:0;transform:scale(.2) rotate(0)}45%{opacity:1;transform:scale(1.15) rotate(35deg)}100%{opacity:0;transform:scale(.5) rotate(60deg)}}
+.g-rig{transform-box:view-box;transform-origin:72px 106px;animation:rigAct 8.4s ease-in-out infinite}
+@keyframes rigAct{0%{transform:translateY(0) scaleY(1)}7%{transform:scaleY(.96)}11%{transform:translateY(-2px) scaleY(1.03)}15%{transform:scaleY(.98)}19%{transform:translateY(-1px)}22%{transform:translateY(0) scaleY(1)}37%{transform:translateY(2px)}62%{transform:translateY(-2px) scaleY(1.02)}87%{transform:translateY(1px)}100%{transform:translateY(0)}}
+.g-head{transform-box:view-box;transform-origin:72px 60px;animation:headAct 8.4s ease-in-out infinite}
+@keyframes headAct{0%{transform:rotate(0)}12%{transform:rotate(-8deg)}22%{transform:rotate(0)}37%{transform:rotate(5deg)}50%{transform:rotate(0)}62%{transform:scale(1.04)}72%{transform:scale(1)}87%{transform:rotate(10deg) translateX(2px)}100%{transform:rotate(0)}}
+.arms{opacity:0}
+.a-cross{animation:poseCross 8.4s ease-in-out infinite}
+.a-shrug{animation:poseShrug 8.4s ease-in-out infinite}
+.a-flex{animation:poseFlex 8.4s ease-in-out infinite}
+.a-think{animation:poseThink 8.4s ease-in-out infinite}
+@keyframes poseCross{0%,18%{opacity:1}24%,94%{opacity:0}100%{opacity:1}}
+@keyframes poseShrug{0%,24%{opacity:0}30%,45%{opacity:1}51%,100%{opacity:0}}
+@keyframes poseFlex{0%,51%{opacity:0}57%,72%{opacity:1}78%,100%{opacity:0}}
+@keyframes poseThink{0%,75%{opacity:0}81%,96%{opacity:1}100%{opacity:0}}
+.m{opacity:0}
+.m-grin{animation:mGrin 8.4s ease-in-out infinite}
+.m-laugh{animation:mLaugh 8.4s ease-in-out infinite}
+.m-think{animation:mThink 8.4s ease-in-out infinite}
+@keyframes mGrin{0%,20%{opacity:0}26%,74%{opacity:1}80%,100%{opacity:0}}
+@keyframes mLaugh{0%,18%{opacity:1}24%,94%{opacity:0}100%{opacity:1}}
+@keyframes mThink{0%,78%{opacity:0}82%,96%{opacity:1}100%{opacity:0}}
+.flexspark{opacity:0;transform-box:fill-box;transform-origin:center;animation:fspark 8.4s ease-in-out infinite}
+@keyframes fspark{0%,57%{opacity:0;transform:scale(.3) rotate(0)}63%{opacity:1;transform:scale(1.15) rotate(40deg)}70%,100%{opacity:0;transform:scale(.6) rotate(60deg)}}
+.thinkdots circle{opacity:0}
+.d1{animation:tdot 8.4s ease-in-out infinite}
+.d2{animation:tdot2 8.4s ease-in-out infinite}
+.d3{animation:tdot3 8.4s ease-in-out infinite}
+@keyframes tdot{0%,80%{opacity:0}84%,96%{opacity:.9}100%{opacity:0}}
+@keyframes tdot2{0%,84%{opacity:0}88%,96%{opacity:.9}100%{opacity:0}}
+@keyframes tdot3{0%,88%{opacity:0}92%,96%{opacity:.9}100%{opacity:0}}
 .gname{font-weight:800;font-size:13px;color:#137074}
 .gline{font-size:12.5px;color:#42554f;margin-top:2px;line-height:1.4}
 #pathPicker{margin-top:18px}
@@ -331,7 +360,56 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
       <path class="spk s1" d="M30 50 l1.6 4.2 4.2 1.6 -4.2 1.6 -1.6 4.2 -1.6 -4.2 -4.2 -1.6 4.2 -1.6z" fill="#ffd968"/>
       <path class="spk s2" d="M114 44 l1.3 3.3 3.3 1.3 -3.3 1.3 -1.3 3.3 -1.3 -3.3 -3.3 -1.3 3.3 -1.3z" fill="#9af0e0"/>
       <path class="spk s3" d="M106 82 l1.1 2.8 2.8 1.1 -2.8 1.1 -1.1 2.8 -1.1 -2.8 -2.8 -1.1 2.8 -1.1z" fill="#ffd968"/>
-      <g class="genie"><g class="genieInner"><use href="#genieBust" width="60" height="60" transform="translate(24 14) scale(1.56)"/></g></g>
+      <g class="genie"><g class="genieInner"><g class="g-rig">
+  <path class="g-tail" d="M62 96 Q72 90 82 96 L80 108 Q72 112 64 108 Z" fill="#19a895"/>
+  <path d="M52 92 Q72 82 92 92 L90 76 Q72 70 54 76 Z" fill="#1aa895"/>
+  <path d="M44 78 Q72 58 100 78 Q95 93 72 93 Q49 93 44 78 Z" fill="#23c7b4"/>
+  <path d="M58 80 q14 8 28 0" stroke="#0e8e7e" stroke-width="2" fill="none" opacity=".5"/>
+  <path d="M72 82 v9" stroke="#0e8e7e" stroke-width="1.4" opacity=".4"/>
+  <g class="arms a-cross">
+    <circle cx="48" cy="78" r="11" fill="#1fb6a6"/><circle cx="96" cy="78" r="11" fill="#1fb6a6"/>
+    <rect x="52" y="72" width="40" height="9" rx="4.5" transform="rotate(-10 72 76)" fill="#23c7b4"/>
+    <rect x="52" y="76" width="40" height="9" rx="4.5" transform="rotate(10 72 80)" fill="#1aa996"/>
+    <rect x="49" y="70" width="6" height="12" rx="2" transform="rotate(-10 72 76)" fill="#ffd968"/>
+    <rect x="89" y="70" width="6" height="12" rx="2" transform="rotate(10 72 80)" fill="#ffd968"/>
+  </g>
+  <g class="arms a-shrug">
+    <circle cx="46" cy="76" r="10" fill="#1fb6a6"/><circle cx="98" cy="76" r="10" fill="#1fb6a6"/>
+    <rect x="32" y="72" width="15" height="9" rx="4.5" transform="rotate(42 41 76)" fill="#23c7b4"/>
+    <rect x="97" y="72" width="15" height="9" rx="4.5" transform="rotate(-42 103 76)" fill="#23c7b4"/>
+    <circle cx="31" cy="65" r="5.2" fill="#23c7b4"/><circle cx="113" cy="65" r="5.2" fill="#23c7b4"/>
+  </g>
+  <g class="arms a-flex">
+    <circle cx="50" cy="78" r="13.5" fill="#1fb6a6"/><circle cx="94" cy="78" r="13.5" fill="#1fb6a6"/>
+    <rect x="44" y="52" width="11" height="26" rx="5.5" transform="rotate(16 49 65)" fill="#23c7b4"/>
+    <rect x="89" y="52" width="11" height="26" rx="5.5" transform="rotate(-16 95 65)" fill="#23c7b4"/>
+    <circle cx="56" cy="52" r="5.5" fill="#23c7b4"/><circle cx="88" cy="52" r="5.5" fill="#23c7b4"/>
+    <rect x="45" y="60" width="9" height="6" rx="2" transform="rotate(16 49 65)" fill="#ffd968"/>
+    <rect x="90" y="60" width="9" height="6" rx="2" transform="rotate(-16 95 65)" fill="#ffd968"/>
+  </g>
+  <g class="g-head">
+    <circle cx="72" cy="46" r="15" fill="#23c7b4"/>
+    <path d="M59 42 q-4 -1 -5 3 q4 .5 5 1z" fill="#23c7b4"/><path d="M85 42 q4 -1 5 3 q-4 .5 -5 1z" fill="#23c7b4"/>
+    <rect x="68" y="27" width="8" height="5" rx="2" fill="#0c2a26"/><circle cx="72" cy="25" r="3.6" fill="#0c2a26"/>
+    <rect x="66" y="31.6" width="12" height="2.6" rx="1.3" fill="#ffd968"/>
+    <path d="M64 43 l6 1.3 M80 43 l-6 1.3" stroke="#0c2a26" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="67.5" cy="47" r="1.7" fill="#0c2a26"/><circle cx="76.5" cy="47" r="1.7" fill="#0c2a26"/>
+    <circle cx="87" cy="50" r="2" fill="#ffd968"/>
+    <path class="m m-grin" d="M66 52 q6 5 12 0" stroke="#0c2a26" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <ellipse class="m m-laugh" cx="72" cy="54" rx="5" ry="4.2" fill="#0c2a26"/>
+    <circle class="m m-think" cx="73" cy="53" r="1.9" fill="#0c2a26"/>
+    <path d="M68 58 Q72 63 76 58 Q72 60.5 68 58Z" fill="#0c2a26"/>
+  </g>
+  <g class="arms a-think">
+    <circle cx="50" cy="80" r="10" fill="#1fb6a6"/><circle cx="94" cy="80" r="11" fill="#1fb6a6"/>
+    <rect x="50" y="82" width="30" height="8" rx="4" transform="rotate(-5 65 86)" fill="#1aa996"/>
+    <rect x="83" y="58" width="9" height="25" rx="4.5" transform="rotate(30 88 70)" fill="#23c7b4"/>
+    <circle cx="77" cy="57" r="5" fill="#23c7b4"/>
+    <rect x="84" y="74" width="8" height="6" rx="2" transform="rotate(30 88 70)" fill="#ffd968"/>
+  </g>
+  <path class="flexspark" d="M52 60 l1.4 3.6 3.6 1.4 -3.6 1.4 -1.4 3.6 -1.4 -3.6 -3.6 -1.4 3.6 -1.4z" fill="#fff"/>
+  <g class="thinkdots"><circle class="d1" cx="90" cy="30" r="1.8" fill="#137074"/><circle class="d2" cx="96" cy="25" r="2.2" fill="#137074"/><circle class="d3" cx="103" cy="19" r="2.7" fill="#137074"/></g>
+</g></g></g>
     </svg></div>
     <div class="genie-speech"><div class="gname">Dana the Genie</div><div class="gline" id="gline">Make a wish. Then do the reps — that's the magic.</div></div>
   </div>
