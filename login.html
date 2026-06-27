@@ -190,6 +190,12 @@ body{
 .claimp .alt{margin-top:11px;font-size:12.5px;color:var(--mut);text-align:center}
 .claimp .alt a{color:var(--teal);cursor:pointer;font-weight:700}
 .claimp .cancel{display:block;text-align:center;margin-top:9px;color:var(--mut);font-size:12px;cursor:pointer;letter-spacing:.06em}
+#authView{margin-top:6px}
+#authView input{width:100%;background:rgba(0,0,0,.32);border:1.5px solid var(--line);border-radius:13px;padding:13px 14px;color:var(--txt);font-size:15px;outline:none;margin-bottom:10px;font-family:inherit}
+#authView input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(31,182,166,.22)}
+#authView .btn{width:100%;padding:13px;justify-content:center;height:auto;display:flex}
+#authView .alt{margin-top:11px;font-size:12.5px;color:var(--mut);text-align:center}
+#authView .alt a{color:var(--teal);cursor:pointer;font-weight:700}
 </style>
 </head>
 <body>
@@ -228,8 +234,8 @@ body{
     <div class="term"><span class="pr">daana@gate:~$</span> <span id="termtxt"></span><span class="cursor"></span></div>
 
     <div class="steps">
-      <div class="step"><div class="snum">1</div><div><div class="st">Free for followers</div><div class="sd">Join the WhatsApp channel and grab the current access code (in the pinned message).</div></div></div>
-      <div class="step"><div class="snum">2</div><div><div class="st">Enter the code below</div><div class="sd">It unlocks all the practice tests for 7 days on this device.</div></div></div>
+      <div class="step"><div class="snum">1</div><div><div class="st">Create your free account</div><div class="sd">Sign up with your email — it takes a few seconds and saves your progress.</div></div></div>
+      <div class="step"><div class="snum">2</div><div><div class="st">Unlock with a code or a plan</div><div class="sd">Members enter their follower code; or pick a plan. Premium gets you the lessons course &amp; tips.</div></div></div>
     </div>
 
     <div class="social">
@@ -238,23 +244,35 @@ body{
         Get the code on WhatsApp</a>
       </div>
 
-    <form id="gate" autocomplete="off">
-      <label class="fl" for="code">// access code &middot; 7-day pass</label>
-      <div class="codebox">
-        <div class="inwrap" id="inwrap">
-          <input id="code" name="code" placeholder="DAANA-XXXX-XXXX" autocapitalize="characters" spellcheck="false" inputmode="text" aria-label="Access code">
+    <div id="authView">
+      <label class="fl" id="authTitle">// create your free account</label>
+      <input id="aEmail" type="email" autocomplete="email" placeholder="you@email.com" aria-label="Email">
+      <input id="aPw" type="password" autocomplete="new-password" placeholder="Create a password (8+ characters)" aria-label="Password">
+      <button class="btn" id="aGo" type="button" onclick="submitAuth()">Create account</button>
+      <div class="msg" id="aMsg"></div>
+      <div class="alt" id="authAlt">Already have an account? <a onclick="authMode('signin')">Sign in</a></div>
+    </div>
+
+    <div id="unlockView" style="display:none">
+      <div class="fl" style="margin-bottom:8px">// you're in &mdash; unlock your access</div>
+      <form id="gate" autocomplete="off">
+        <label class="fl" for="code">// access code &middot; 7-day pass</label>
+        <div class="codebox">
+          <div class="inwrap" id="inwrap">
+            <input id="code" name="code" placeholder="DAANA-XXXX-XXXX" autocapitalize="characters" spellcheck="false" inputmode="text" aria-label="Access code">
+          </div>
+          <button class="btn" id="go" type="submit">Unlock</button>
         </div>
-        <button class="btn" id="go" type="submit">Unlock</button>
+        <div class="msg" id="msg"></div>
+      </form>
+      <div class="orsep"><span>or</span></div>
+      <div class="premium" id="buybox">
+        <div class="prem-h">No code? Get instant access</div>
+        <div class="prem-d">Choose a plan, pay once, and it unlocks on your account.</div>
+        <div class="plans" id="plans"></div>
+        <div class="paypanel" id="paypanel"></div>
       </div>
-      <div class="msg" id="msg"></div>
-    </form>
-    <div class="signin-hint" style="text-align:center;margin-top:12px;font-size:12.5px;color:#9fb4b0">Already a member or the teacher? <a onclick="openSignin()" style="color:#9af0e0;cursor:pointer;font-weight:700">Sign in with email</a></div>
-    <div class="orsep"><span>or</span></div>
-    <div class="premium" id="buybox">
-      <div class="prem-h">No code? Get instant access</div>
-      <div class="prem-d">Choose a plan, pay once, and it unlocks on your account.</div>
-      <div class="plans" id="plans"></div>
-      <div class="paypanel" id="paypanel"></div>
+      <div style="text-align:center;margin-top:14px"><a onclick="signOut()" style="color:#9fb4b0;cursor:pointer;font-size:12px">sign out</a></div>
     </div>
   </div>
 
@@ -452,17 +470,11 @@ var msg = document.getElementById("msg");
 function showMsg(text, kind){ msg.className = "msg " + kind; msg.textContent = text; }
 
 var q = new URLSearchParams(location.search);
-if (q.get("need") === "login") showMsg("Sign in with your email below, or enter an access code.", "info");
-else if (q.get("need") === "wrong") showMsg("Your access doesn't cover that page. Enter a code that does.", "info");
-else if (q.get("need") === "access") showMsg("Enter your access code to continue.", "info");
-else if (q.get("need") === "course") showMsg("The lessons course is a premium plan \u2014 unlock it below.", "info");
+if (q.get("need") === "login") amsg("Create an account or sign in to continue.", "info");
+else if (q.get("need") === "wrong" || q.get("need") === "access") amsg("Sign in, then unlock with your code or a plan.", "info");
+else if (q.get("need") === "course") amsg("Sign in to unlock the lessons course.", "info");
 
-(function initBuy(){
-  renderPlans();
-  var up=q.get("upgrade");
-  if(up==="course"||up==="tips"){ selectPlan(up); }
-  else if(up){ var bb=document.getElementById("buybox"); if(bb&&bb.scrollIntoView)bb.scrollIntoView({behavior:"smooth",block:"nearest"}); }
-})();
+/* account-first: plans render in showUnlock() after sign-in */
 
 var form = document.getElementById("gate"), go = document.getElementById("go");
 var AUTHED = false;
@@ -533,7 +545,40 @@ function submitClaim(){
     });
   });
 }
-function boot(){ apiGet("/api/account").then(function(r){ if(r && r.authed){ AUTHED=true; if(r.user && r.user.access && !q.get("upgrade")){ route(r.user); } } }); }
+var AUTH_MODE="create";
+function amsg(t,k){ var m=document.getElementById("aMsg"); if(m){ m.className="msg "+(k||""); m.textContent=t||""; } }
+function authMode(m){ AUTH_MODE=m;
+  var t=document.getElementById("authTitle"), g=document.getElementById("aGo"), alt=document.getElementById("authAlt"), pw=document.getElementById("aPw");
+  if(m==="signin"){ t.textContent="// sign in"; g.textContent="Sign in"; if(pw){pw.setAttribute("autocomplete","current-password"); pw.placeholder="Your password";} alt.innerHTML='New here? <a onclick="authMode(\'create\')">Create account</a>'; }
+  else { t.textContent="// create your free account"; g.textContent="Create account"; if(pw){pw.setAttribute("autocomplete","new-password"); pw.placeholder="Create a password (8+ characters)";} alt.innerHTML='Already have an account? <a onclick="authMode(\'signin\')">Sign in</a>'; }
+  amsg("");
+}
+function submitAuth(){
+  var email=(document.getElementById("aEmail").value||"").trim();
+  var pw=document.getElementById("aPw").value||"";
+  if(!email||!pw){ amsg("Enter your email and password.","err"); return; }
+  if(AUTH_MODE==="create" && pw.length<8){ amsg("Password must be at least 8 characters.","err"); return; }
+  var path = AUTH_MODE==="create" ? "/api/auth/register" : "/api/auth/login";
+  amsg("Working\u2026","info");
+  apiPost(path,{email:email,password:pw}).then(function(r){
+    if(!r || !r.ok){
+      if(r && r.error==="exists"){ authMode("signin"); amsg("That email already has an account - enter your password to sign in.","info"); return; }
+      amsg((r && r.message) || "Could not sign you in.","err"); return;
+    }
+    AUTHED=true; var u=r.user;
+    if(u && u.access && !q.get("upgrade")){ success(u); return; }
+    showUnlock();
+  });
+}
+function showUnlock(){
+  var av=document.getElementById("authView"); if(av)av.style.display="none";
+  var uv=document.getElementById("unlockView"); if(uv)uv.style.display="block";
+  renderPlans();
+  var up=q.get("upgrade"); if(up==="course"||up==="tips") selectPlan(up);
+}
+function signOut(){ apiPost("/api/auth/logout",{}).then(function(){ location.href="/login"; }).catch(function(){ location.href="/login"; }); }
+(function(){ var p=document.getElementById("aPw"); if(p)p.addEventListener("keydown",function(e){ if(e.key==="Enter") submitAuth(); }); })();
+function boot(){ apiGet("/api/account").then(function(r){ if(r && r.authed && r.user){ AUTHED=true; if(r.user.access && !q.get("upgrade")){ route(r.user); return; } showUnlock(); } }); }
 boot();
 
 (function(){
