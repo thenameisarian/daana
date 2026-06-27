@@ -39,6 +39,9 @@ button{font-family:inherit;cursor:pointer}
 .sech .more{margin-left:auto;font-size:11px;color:var(--mut)}
 /* chips */
 .chips{display:flex;gap:8px;overflow:auto;padding-bottom:3px}
+.ltabs{display:flex;gap:4px;background:#e7efed;border-radius:13px;padding:4px;margin:6px 0 16px}
+.ltab{flex:1;border:none;background:transparent;border-radius:10px;padding:9px 0;font-weight:800;font-size:13px;color:#6a7b78;cursor:pointer;font-family:inherit}
+.ltab.on{background:#fff;color:#137074;box-shadow:0 2px 6px rgba(20,80,76,.1)}
 #pathPicker{margin-top:18px}
 .pathhead{font-family:Georgia,'Times New Roman',serif;font-size:23px;font-weight:800;color:#15322f;margin:4px 0 2px}
 .pathsub{font-size:13px;color:#6a7b78;margin-bottom:14px}
@@ -264,14 +267,19 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
   <div id="pathPicker"></div>
 
   <div id="examView" style="display:none">
-  <div class="chips" id="examChips" style="margin-top:14px"></div>
-  <div id="reviewCard"></div>
-  <div id="nextCard"></div>
+  <div class="chips" id="examChips" style="display:none"></div>
+  <div class="ltabs">
+    <button class="ltab on" data-t="trail" onclick="selTab(this)">🗺️ Trail</button>
+    <button class="ltab" data-t="prog" onclick="selTab(this)">📈 Progress</button>
+    <button class="ltab" data-t="daily" onclick="selTab(this)">⚡ Daily</button>
+  </div>
+  <div id="reviewCard" class="tb tab-daily"></div>
+  <div id="nextCard" class="tb tab-trail"></div>
 
-  <div class="eyebrow" id="trailEye" style="margin-top:16px">TOEFL</div>
-  <div class="sech2"><h2 id="trailName" class="serif">The Trail</h2><span class="more" id="trailPct"></span> <button class="mlink" onclick="openMastery()">Mastery</button></div>
+  <div class="eyebrow tb tab-trail" id="trailEye" style="margin-top:0">TOEFL</div>
+  <div class="sech2 tb tab-trail"><h2 id="trailName" class="serif">The Trail</h2><span class="more" id="trailPct"></span> <button class="mlink" onclick="openMastery()">Mastery</button></div>
 
-  <div class="hero">
+  <div class="hero tb tab-prog">
     <div class="hero-top">
       <div class="ring"><svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="27" fill="none" stroke="#e7ebee" stroke-width="5"/><circle id="lvring" cx="31" cy="31" r="27" fill="none" stroke="#1a8f93" stroke-width="5" stroke-linecap="round" stroke-dasharray="169.6" stroke-dashoffset="40" transform="rotate(-90 31 31)"/></svg><div class="lvc"><b id="lvNum">1</b><span>Level</span></div></div>
       <div class="hero-info"><div class="nm" id="rankName">Learner</div><div class="sub" id="trailSub">&nbsp;</div></div>
@@ -280,35 +288,35 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
     <div class="xpwrap2"><div class="xprow2"><span class="l">Experience</span><span class="r" id="xpText">0 / 100 XP</span></div><div class="bar2"><i id="xpFill" style="width:0%"></i></div></div>
   </div>
 
-  <div class="tiles">
+  <div class="tiles tb tab-prog">
     <div class="tile"><div class="ic fire">🔥</div><div class="v" id="tStreak">0</div><div class="k">Day streak</div><div class="x" id="tStreakX">Best: 0 d</div></div>
     <div class="tile"><div class="ic gem">💎</div><div class="v" id="gemN">0</div><div class="k">Gems</div><div class="x">spend on refills</div></div>
     <div class="tile"><div class="ic heart">❤️</div><div class="v" id="hpN">5</div><div class="k">Hearts</div><div class="x" id="hpTimer">&nbsp;</div></div>
   </div>
 
-  <div class="sech2"><div class="eyebrow">Streak</div><span class="more">this week</span></div>
-  <div class="streakcard">
+  <div class="sech2 tb tab-prog"><div class="eyebrow">Streak</div><span class="more">this week</span></div>
+  <div class="streakcard tb tab-prog">
     <div class="stop"><div class="bigflame">🔥</div><div><div class="sbig"><span id="sBig">0</span> <small>days</small></div><div class="snote" id="sNote">Practice today to start your streak.</div></div></div>
     <div class="week" id="weekStrip"></div>
     <div class="sfootr"><span>Best <b id="sBest">0 days</b></span><span id="sHearts">❤️ 5/5</span></div>
   </div>
 
-  <div class="sech2"><div class="eyebrow">Daily quests</div><span class="more" id="qreset">resets daily</span></div>
-  <div class="qcard" id="quests"></div>
+  <div class="sech2 tb tab-daily"><div class="eyebrow">Daily quests</div><span class="more" id="qreset">resets daily</span></div>
+  <div class="qcard tb tab-daily" id="quests"></div>
 
-  <div class="map" id="map"></div>
+  <div class="map tb tab-trail" id="map"></div>
 
-  <div class="sec">
+  <div class="sec tb tab-prog">
     <div class="sech"><span class="e">🏅</span><b>Your honours</b><span class="more" id="badgeCount"></span></div>
     <div class="badrow" id="badges"></div>
   </div>
 
-  <div class="sec">
+  <div class="sec tb tab-prog">
     <div class="sech"><span class="e">🏆</span><b>Teal league</b><span class="more promo">top 3 promote</span></div>
     <div class="league" id="league"></div>
   </div>
 
-  <a class="upsell" id="upsell" href="/login?upgrade=1"><span style="font-size:25px">⭐</span><div><div class="ut">Go Premium — unlimited hearts</div><div class="us">Never wait for hearts. Monthly access across all four exams.</div></div><span class="ub">Upgrade</span></a>
+  <a class="upsell tb tab-prog" id="upsell" href="/login?upgrade=1"><span style="font-size:25px">⭐</span><div><div class="ut">Go Premium — unlimited hearts</div><div class="us">Never wait for hearts. Monthly access across all four exams.</div></div><span class="ub">Upgrade</span></a>
   </div>
   <div class="foot">Progress saved to your account. <a id="backLink" href="/hub">← Your tests</a> · <a href="#" onclick="doSignOut(event)">Sign out</a></div>
 </div>
@@ -820,7 +828,9 @@ function renderPaths(){
   }).join("");
   host.innerHTML='<div class="pathhead">Choose your path</div><div class="pathsub">Pick an exam to open its gamified trail.</div><div class="paths">'+cards+'</div>';
 }
-function openPath(k){ if(!CONTENT[k])return; exam=k; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="none"; var ev=document.getElementById("examView"); if(ev)ev.style.display="block"; renderAll(); window.scrollTo(0,0); }
+function openPath(k){ if(!CONTENT[k])return; exam=k; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="none"; var ev=document.getElementById("examView"); if(ev)ev.style.display="block"; renderAll(); selTabKey("trail"); window.scrollTo(0,0); }
+function selTab(btn){ document.querySelectorAll(".ltab").forEach(function(t){t.classList.remove("on");}); btn.classList.add("on"); var t=btn.getAttribute("data-t"); document.querySelectorAll(".tb").forEach(function(el){ el.style.display = el.classList.contains("tab-"+t) ? "" : "none"; }); window.scrollTo(0,0); }
+function selTabKey(t){ var b=document.querySelector('.ltab[data-t="'+t+'"]'); if(b)selTab(b); }
 function backToPaths(){ var ev=document.getElementById("examView"); if(ev)ev.style.display="none"; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="block"; renderPaths(); window.scrollTo(0,0); }
 function renderAll(){syncHud();renderQuests();renderChips();renderReviewCard();renderNextCard();renderMap();renderBadges();renderLeague();}
 async function init(){
