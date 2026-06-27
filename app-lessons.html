@@ -77,7 +77,45 @@ button{font-family:inherit;cursor:pointer}
 .banner .eyebrow{font-size:9.5px;color:var(--teald);letter-spacing:.16em;text-transform:uppercase;font-weight:800}
 .banner h2{font-weight:800;font-size:21px;margin:3px 0 0}
 /* ===== map ===== */
-.map{position:relative;margin:8px auto 0;width:330px}
+.map{position:relative;margin:6px auto 0;width:auto}
+.tbrand .logo{height:22px;width:auto;display:block}
+.thud{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px 11px;margin:10px 0 2px}
+.lvbox{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.lvr{width:34px;height:34px;border-radius:50%;border:4px solid #e7ebee;border-top-color:var(--teal);border-right-color:var(--teal);display:flex;align-items:center;justify-content:center;flex:none}
+.lvr b{font-size:12px;font-weight:800;color:var(--ink)}
+.thud .xpw{flex:1;min-width:0}
+.thud .xpr{display:flex;justify-content:space-between;font-size:10px;color:var(--mut);font-weight:700}
+.thud .xpb{height:6px;border-radius:99px;background:#eef3f2;overflow:hidden;margin-top:3px}
+.thud .xpb i{display:block;height:100%;background:linear-gradient(90deg,#1fb6a6,#137074)}
+.hchip{display:flex;align-items:center;gap:3px;font-weight:800;font-size:13px}
+.hchip svg{width:16px;height:16px}
+.hchip.fire{color:#f0892f}.hchip.heart{color:#ff5d6c}.hchip.gem{color:#2aa7d8}
+.stepper{display:flex;gap:5px;margin:8px 0 14px}
+.stp{flex:1;height:6px;border-radius:99px;background:#dde7e4}.stp.done{background:#1fb6a6}.stp.now{background:#1fb6a6;opacity:.45}
+.ph{background:#fff;border:1.5px solid var(--line);border-radius:18px;margin-bottom:11px;overflow:hidden}
+.ph.now{border-color:#9fe1cb;box-shadow:0 10px 24px rgba(20,80,76,.09)}
+.ph.lock{opacity:.62}
+.phh{display:flex;align-items:center;gap:11px;padding:13px 14px;cursor:pointer}
+.pbadge{width:36px;height:36px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex:none}
+.pbadge svg{width:18px;height:18px}
+.b-done{background:#d8f3ec;color:var(--teald)}.b-now{background:linear-gradient(145deg,#2fcdb8,#15a394);color:#fff}.b-lock{background:#eef2f1;color:#aeb9b6}
+.pht{flex:1;min-width:0}.pht .pn{font-weight:800;font-size:14.5px;color:var(--ink)}.pht .ps{font-size:11px;color:var(--mut);margin-top:1px}
+.phmeta{font-size:11px;color:var(--mut);font-weight:800;white-space:nowrap}
+.chev{display:inline-block;transition:transform .2s}.ph.open .chev{transform:rotate(180deg)}
+.ph .body{display:none;padding:2px 8px 8px}.ph.open .body{display:block}
+.phasemap{position:relative;margin:0 auto;max-width:320px}
+.pnode{position:absolute;transform:translate(-50%,-50%);text-align:center;width:128px}
+.bub{width:60px;height:60px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:4px solid #fff;box-shadow:0 5px 14px rgba(20,80,76,.16)}
+.bub svg{width:25px;height:25px}
+.d-done{background:linear-gradient(180deg,#2fcdb8,var(--teald));color:#fff}
+.d-go{background:#fff;border:3px solid var(--teal);color:var(--teal);cursor:pointer;animation:pulse2 1.7s ease-in-out infinite}
+.d-lock{background:#eef2f1;border:1.5px solid var(--line);color:#aeb6bf}
+.d-chest{background:#fff3e0;color:#e0922a;cursor:pointer}
+@keyframes pulse2{0%,100%{box-shadow:0 5px 14px rgba(20,80,76,.16),0 0 0 0 rgba(47,205,184,.5)}50%{box-shadow:0 5px 14px rgba(20,80,76,.16),0 0 0 9px rgba(47,205,184,0)}}
+.nl{font-size:11.5px;margin-top:7px;line-height:1.2;font-weight:700;color:var(--ink)}
+.stars{display:flex;gap:2px;justify-content:center;margin-top:3px;color:#f2b53b}
+.stars svg{width:12px;height:12px}.stars .off{color:#dfe7e4;display:inline-flex}
+.startp{display:inline-block;margin-top:6px;background:var(--teal);color:#fff;border:none;border-radius:99px;padding:5px 14px;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
 .map svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .node{position:absolute;transform:translate(-50%,-50%);text-align:center;width:130px}
 .dot{width:58px;height:58px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;position:relative;animation:float 3.4s ease-in-out infinite}
@@ -263,7 +301,7 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
 <div class="wrap">
   <div class="topbar">
     <button class="backbtn" onclick="doBack()">← Back</button>
-    <div class="tbrand"><span class="mk">د</span><span>Daana · Lessons</span></div>
+    <div class="tbrand"><svg class="logo" viewBox="0 0 1517 805" aria-hidden="true"><defs><linearGradient id="dlg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9af6e4"/><stop offset=".55" stop-color="#2fcdb8"/><stop offset="1" stop-color="#16a06a"/></linearGradient></defs><path transform="translate(-25,800) scale(1,-1)" d="M65 0Q65 0 55.0 0.5Q45 1 35.0 6.0Q25 11 25 23V772L152 800V127H245V0ZM308 452Q284 452 267.0 469.0Q250 486 250 510Q250 534 267.0 551.0Q284 568 308 568Q332 568 349.0 551.0Q366 534 366 510Q366 486 349.0 469.0Q332 452 308 452ZM205 0V127H298V299L425 327V23Q425 11 415.0 6.0Q405 1 395.0 0.5Q385 0 385 0ZM697 58Q691 36 666.5 20.0Q642 4 609.5 -2.0Q577 -8 546.5 -1.0Q516 6 495.5 28.5Q475 51 475 93V772L602 800V93Q602 71 613.0 60.5Q624 50 640.0 48.5Q656 47 672.0 50.5Q688 54 697 58ZM722 0 798 127H1415Q1416 159 1398.5 179.5Q1381 200 1325 200H832L980 447L990 440L938 327H1325Q1395 327 1437.5 307.0Q1480 287 1502.5 254.0Q1525 221 1533.0 181.0Q1541 141 1541.5 100.0Q1542 59 1542 23Q1542 11 1532.0 6.0Q1522 1 1512.0 0.5Q1502 0 1502 0Z" fill="url(#dlg)"/></svg><span>Lessons</span></div>
     <button class="backbtn" onclick="openTipLibrary()">Tips</button>
   </div>
 
@@ -276,11 +314,13 @@ canvas#cf{position:fixed;inset:0;pointer-events:none;z-index:70}
     <button class="ltab" data-t="prog" onclick="selTab(this)">📈 Progress</button>
     <button class="ltab" data-t="daily" onclick="selTab(this)">⚡ Daily</button>
   </div>
+  <div id="trailHud" class="tb tab-trail"></div>
   <div id="reviewCard" class="tb tab-daily"></div>
   <div id="nextCard" class="tb tab-trail"></div>
 
   <div class="eyebrow tb tab-trail" id="trailEye" style="margin-top:0">TOEFL</div>
   <div class="sech2 tb tab-trail"><h2 id="trailName" class="serif">The Trail</h2><span class="more" id="trailPct"></span> <button class="mlink" onclick="openMastery()">Mastery</button></div>
+  <div id="phaseStepper" class="tb tab-trail"></div>
 
   <div class="hero tb tab-prog">
     <div class="hero-top">
@@ -696,33 +736,85 @@ function nodeState(ex,i){const nodes=CONTENT[ex].nodes;const n=nodes[i];
  if(prevDone)return n.type==="boss"?"boss":(n.type==="chest"?"chest":"go");
  return "lock";
 }
+var PHASES={
+ toefl:[
+  {name:"Foundations",sub:"skim, scan, close reading",ids:["tf-orient","tf-skim","tf-scan","tf-close"]},
+  {name:"Word power",sub:"vocabulary, roots, complete the words",ids:["tf-vocab","tf-roots","tf-cwords","tf-chest1"]},
+  {name:"Everyday texts",sub:"emails, notices, posts",ids:["tf-dgist","tf-detail","tf-negfact","tf-ref"]},
+  {name:"Deep comprehension",sub:"main idea, inference, purpose, simplify",ids:["tf-main","tf-infer","tf-purpose","tf-simplify","tf-chest2"]},
+  {name:"Test mastery",sub:"cohesion, traps, pacing, the boss",ids:["tf-insert","tf-org","tf-traps","tf-pace","tf-boss"]}
+ ]
+};
+var OPENPHASE=null;
+var SVG_CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l9 -10"/></svg>';
+var SVG_PLAY='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11 -7z"/></svg>';
+var SVG_LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+var SVG_STAR='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 6.3 6.8 .5-5.2 4.4 1.6 6.6L12 17.7 6.2 21.3l1.6 -6.6L2.6 10.3l6.8 -.5z"/></svg>';
+var SVG_FLAME='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.786 3 -2.791 3 -4 2z"/></svg>';
+var SVG_HEART='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 12.6l-7.5 7.4l-7.5 -7.4a5 5 0 1 1 7.5 -6.6a5 5 0 1 1 7.5 6.6"/></svg>';
+var SVG_GEM='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12l3 5l-9 13L3 8z"/></svg>';
+function phasesFor(ex){ return PHASES[ex] || [{name:"Lessons",sub:CONTENT[ex].eyebrow,ids:CONTENT[ex].nodes.map(function(n){return n.id;})}]; }
+function starsRow(m){ var n=(m>=90)?3:(m>=70)?2:1, o=""; for(var i=0;i<3;i++){ o+= i<n?SVG_STAR:('<span class="off">'+SVG_STAR+'</span>'); } return '<div class="stars">'+o+'</div>'; }
+function renderTrailHud(){
+  var host=document.getElementById("trailHud"); if(!host)return;
+  var lv=levelFor(S.xp), inLv=S.xp%LV_STEP, pct=Math.round(inLv/LV_STEP*100);
+  host.innerHTML='<div class="thud"><div class="lvbox"><div class="lvr"><b>'+lv+'</b></div><div class="xpw"><div class="xpr"><span>Level '+lv+'</span><span>'+inLv+'/'+LV_STEP+' XP</span></div><div class="xpb"><i style="width:'+pct+'%"></i></div></div></div>'
+   +'<div class="hchip fire">'+SVG_FLAME+'<b>'+(S.streak||0)+'</b></div>'
+   +'<div class="hchip heart">'+SVG_HEART+'<b>'+(PREMIUM?"\u221E":(S.hearts||0))+'</b></div>'
+   +'<div class="hchip gem">'+SVG_GEM+'<b>'+(S.gems||0)+'</b></div></div>';
+}
+function phaseStates(ex){
+  var nodes=CONTENT[ex].nodes, idx={}; nodes.forEach(function(n,i){idx[n.id]=i;});
+  var phs=phasesFor(ex);
+  var st=phs.map(function(ph){ var d=0,allLock=true; ph.ids.forEach(function(id){ var s2=nodeState(ex,idx[id]); if(s2==="done")d++; if(s2!=="lock")allLock=false; }); return {d:d,tot:ph.ids.length,complete:d===ph.ids.length,allLock:allLock}; });
+  var active=st.findIndex(function(p){return !p.complete;}); if(active<0)active=phs.length-1;
+  return {phs:phs,idx:idx,st:st,active:active};
+}
+function renderStepper(info){
+  var host=document.getElementById("phaseStepper"); if(host){ host.innerHTML='<div class="stepper">'+info.phs.map(function(ph,i){ var c=info.st[i].complete?"done":(i===info.active?"now":""); return '<div class="stp '+c+'"></div>'; }).join("")+'</div>'; }
+  var td=0,tt=0; info.st.forEach(function(p){td+=p.d;tt+=p.tot;});
+  var _tp=document.getElementById("trailPct"); if(_tp)_tp.textContent="Phase "+(info.active+1)+" of "+info.phs.length+" \u00b7 "+Math.round(td/tt*100)+"%";
+  var _ts=document.getElementById("trailSub"); if(_ts)_ts.textContent=td+" of "+tt+" lessons done";
+}
+function renderPhaseBody(ph,idx){
+  var nodes=CONTENT[exam].nodes, k=ph.ids.length, PAD=44, GAP=98, W=300, H=PAD*2+GAP*Math.max(0,k-1)+18;
+  var pts=ph.ids.map(function(id,i){ return {x:150+74*Math.sin(0.95*i+(idx[id]%2?0.5:0)),y:PAD+GAP*i}; });
+  var lastDone=-1; ph.ids.forEach(function(id,i){ if(nodeState(exam,idx[id])==="done")lastDone=i; });
+  var s2='<div class="phasemap" style="height:'+H+'px"><svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">';
+  var d=''; pts.forEach(function(p,i){ d+=(i?'L':'M')+p.x+' '+p.y+' '; });
+  s2+='<path d="'+d+'" fill="none" stroke="#dfe6ea" stroke-width="7" stroke-dasharray="0.5 16" stroke-linecap="round"/>';
+  if(lastDone>=0){ var dd='', lim=Math.min(lastDone+1,pts.length-1); pts.slice(0,lim+1).forEach(function(p,i){ dd+=(i?'L':'M')+p.x+' '+p.y+' '; }); s2+='<path d="'+dd+'" fill="none" stroke="#1a8f93" stroke-width="6" stroke-linecap="round"/>'; }
+  s2+='</svg>';
+  ph.ids.forEach(function(id,i){
+    var gi=idx[id], n=nodes[gi], stt=nodeState(exam,gi), p=pts[i], inner="";
+    if(stt==="done"){ var m=(typeof nodeMastery==="function")?nodeMastery(id):100; inner='<div class="bub d-done">'+(n.type==="boss"?"\uD83D\uDC51":SVG_CHECK)+'</div><div class="nl">'+n.title+'</div>'+starsRow(m); }
+    else if(stt==="chest"){ inner='<div class="bub d-chest" onclick="openChest(\''+id+'\',event)">\uD83C\uDF81</div><div class="nl">Treasure</div>'; }
+    else if(stt==="go"){ inner='<div class="bub d-go" onclick="openNode('+gi+')">'+SVG_PLAY+'</div><div class="nl">'+n.title+'</div><button class="startp" onclick="openNode('+gi+')">Start \u25B6</button>'; }
+    else if(stt==="boss"){ inner='<div class="bub d-go" onclick="openNode('+gi+')">\uD83D\uDC51</div><div class="nl">'+n.title+'</div><button class="startp" onclick="openNode('+gi+')">Boss \u25B6</button>'; }
+    else { inner='<div class="bub d-lock">'+SVG_LOCK+'</div><div class="nl">'+n.title+'</div>'; }
+    s2+='<div class="pnode" style="left:'+(p.x/W*100)+'%;top:'+p.y+'px">'+inner+'</div>';
+  });
+  return s2+'</div>';
+}
+function togglePhase(i){ OPENPHASE=(OPENPHASE===i?-1:i); renderMap(); }
 function renderMap(){
- const C=CONTENT[exam];document.getElementById("trailEye").textContent=C.eyebrow;
- document.getElementById("trailName").textContent="The "+C.name+" Trail";
- const nodes=C.nodes,map=document.getElementById("map");
- const W=330,GAP=116,PAD=66,H=PAD*2+GAP*(nodes.length-1);map.style.height=H+"px";
- const pts=nodes.map((n,i)=>({x:165+98*Math.sin(0.78*i),y:PAD+GAP*i}));
- let doneCount=0;nodes.forEach((n,i)=>{if(nodeState(exam,i)==="done")doneCount=i+1;});var _ts=document.getElementById("trailSub");if(_ts)_ts.textContent=doneCount+" of "+nodes.length+" lessons done";var _tp=document.getElementById("trailPct");if(_tp)_tp.textContent=Math.round(doneCount/nodes.length*100)+"% complete";
- let s='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">';
- let d='';pts.forEach((p,i)=>d+=(i?'L':'M')+p.x+' '+p.y+' ');
- s+='<path d="'+d+'" fill="none" stroke="#dfe6ea" stroke-width="7" stroke-dasharray="0.5 16" stroke-linecap="round"/>';
- if(doneCount>0){let dd='';pts.slice(0,doneCount+1).forEach((p,i)=>dd+=(i?'L':'M')+p.x+' '+p.y+' ');
-  s+='<path d="'+dd+'" fill="none" stroke="#1a8f93" stroke-width="6" stroke-linecap="round"/>';}
- s+='</svg>';map.innerHTML=s;
- let goIdx=-1;
- nodes.forEach((n,i)=>{
-  const st=nodeState(exam,i),p=pts[i],el=document.createElement("div");
-  el.className="node n-"+(st==="chest"?"chest":st==="boss"?"boss":st);
-  el.style.left=(p.x/W*100)+"%";el.style.top=p.y+"px";
-  let inner="";
-  if(st==="done")inner='<div class="dot">'+(n.type==="boss"?"👑":"✓")+'<span class="check">✓</span></div><div class="lbl">'+n.title+'</div>';
-  else if(st==="chest"){inner='<div class="dot" onclick="openChest(\''+n.id+'\',event)">🎁</div><div class="lbl" style="color:var(--violet)">Treasure</div>';}
-  else if(st==="go"){goIdx=i;inner='<div class="dot" onclick="openNode('+i+')">'+n.icon+'</div><div class="lbl">'+n.title+'</div><span class="startpill" onclick="openNode('+i+')">Start ▶</span>';}
-  else if(st==="boss"){goIdx=i;inner='<div class="dot" onclick="openNode('+i+')">👑</div><div class="lbl">'+n.title+'</div><span class="startpill" onclick="openNode('+i+')">Boss ▶</span>';}
-  else inner='<div class="dot">🔒</div><div class="lbl">'+n.title+'</div>';
-  el.innerHTML=inner;map.appendChild(el);
- });
- 
+  var C=CONTENT[exam];
+  var te=document.getElementById("trailEye"); if(te)te.textContent=C.eyebrow;
+  var tn=document.getElementById("trailName"); if(tn)tn.textContent="The "+C.name+" Trail";
+  var map=document.getElementById("map"); if(!map)return;
+  var info=phaseStates(exam);
+  if(OPENPHASE===null)OPENPHASE=info.active;
+  var html="";
+  info.phs.forEach(function(ph,pi){
+    var ps=info.st[pi], state=ps.complete?"done":(ps.allLock?"lock":"now"), open=(OPENPHASE===pi);
+    var badge=state==="done"?SVG_CHECK:(state==="lock"?SVG_LOCK:(pi+1));
+    html+='<div class="ph '+(state==="now"?"now ":"")+(state==="lock"?"lock ":"")+(open?"open":"")+'">';
+    html+='<div class="phh" onclick="togglePhase('+pi+')"><div class="pbadge b-'+state+'">'+badge+'</div><div class="pht"><div class="pn">Phase '+(pi+1)+' \u00b7 '+ph.name+'</div><div class="ps">'+ph.sub+'</div></div><div class="phmeta">'+ps.d+'/'+ps.tot+' <span class="chev">\u25BE</span></div></div>';
+    html+='<div class="body">'+renderPhaseBody(ph,info.idx)+'</div></div>';
+  });
+  map.innerHTML=html;
+  renderStepper(info);
+  renderTrailHud();
 }
 /* ---------- badges ---------- */
 function badgeList(){
@@ -734,7 +826,7 @@ function badgeList(){
   {e:"📚",n:"5 lessons",on:totalDone>=5},
   {e:"👑",n:"Boss slayer",on:!!S.done["tf-boss"]},
   {e:"💯",n:"50 XP day",on:S.dayXp>=50},
-  {e:"🧞",n:"All trails",on:!!(S.done["tf-boss"]&&S.done["ie-boss"]&&S.done["de-boss"]&&S.done["gd-boss"])}
+  {e:"🏆",n:"All trails",on:!!(S.done["tf-boss"]&&S.done["ie-boss"]&&S.done["de-boss"]&&S.done["gd-boss"])}
  ];
 }
 function renderBadges(){
