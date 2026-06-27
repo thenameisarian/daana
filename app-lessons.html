@@ -922,11 +922,189 @@ Object.assign(TIPCARDS,{
  "tl-boss":{rule:"Name the task type, then apply its skill.",how:["Response -> function. Conversation -> solution. Announcement -> details. Talk -> gist."],trap:"Treating a talk question like a quick response."}
 });
 
+var TF_WRITE_NODES=[
+  {id:"tw-orient",title:"How TOEFL Writing works",icon:"✍️",
+   intro:["TOEFL Writing 2026 has three tasks: <b>Build a Sentence</b>, <b>Write an Email</b> (7 min), and <b>Academic Discussion</b> (10 min).",
+          "You're scored on completing the task, clear organisation, and accurate, natural English — not on fancy words."],
+   drills:[
+    D("Which is NOT a 2026 Writing task?",["Build a Sentence","Write an Email","Summarise a Lecture"],2,"Right — there's no 'Summarise a Lecture'.","The three tasks are Build a Sentence, Email, Academic Discussion."),
+    D("What matters most for a high score?",["rare vocabulary","completing the task clearly and accurately","the longest answer"],1,"Yes — complete the task, clearly and correctly.","Completeness, clarity and accuracy beat fancy words."),
+    D("The Email task gives you:",["7 minutes","30 minutes","no time limit"],0,"Right — 7 minutes.","The email is a quick 7-minute task.")
+   ],move:"Name the three TOEFL Writing tasks from memory."},
+  {id:"tw-build1",title:"Build a Sentence: word order",icon:"🧱",
+   intro:["You arrange given words into one correct sentence. English order is <b>Subject → Verb → Object</b>, with time/place phrases usually at the end.",
+          "Strategy: find the subject and verb first, build the core, then attach the rest."],
+   drills:[
+    D("Best order: the committee / will / announce / the results / next week",["The committee will announce the results next week.","Next week the results the committee will announce.","Will the committee the results announce next week."],0,"Right — subject + verb + object + time.","Subject-verb-object first; 'next week' at the end."),
+    D("Where do time phrases usually go?",["at the start only","near the end","between subject and verb"],1,"Yes — time and place sit near the end.","Put 'yesterday', 'at home' toward the end."),
+    D("Build the core of a sentence first by finding the:",["adjectives","subject and verb","longest word"],1,"Right — subject + verb is the backbone.","Anchor on subject and verb, then add the rest.")
+   ],move:"Unscramble: carefully / the team / the data / recorded."},
+  {id:"tw-build2",title:"Build a Sentence: clauses & links",icon:"🔗",
+   intro:["Harder sentences join ideas with connectors: <b>because, although, however, so, which</b>. The connector must match the logic — cause, contrast, or result.",
+          "Read the sentence back in your head; it should sound natural and keep one clear meaning."],
+   drills:[
+    D("Which connector fits: 'We stayed inside ___ it was raining.'",["because","although","however"],0,"Right — 'because' gives the reason.","'Because' signals the cause."),
+    D("'The plan was risky, ___ it worked.' Best word:",["because","but","so"],1,"Yes — 'but' marks the contrast.","Risky vs worked is a contrast, so 'but'."),
+    D("After building, you should:",["submit immediately","read it back for sense","add more words"],1,"Right — reread to check it's natural.","Always reread for meaning and flow.")
+   ],move:"Join two short sentences with 'because', then again with 'although'."},
+  {id:"tw-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"tw-email1",title:"Write an Email: cover every point",icon:"✉️",
+   intro:["The email gives a scenario with points to address. <b>Cover every point</b> — that's scored first. Use a greeting and a sign-off.",
+          "Plan for 20 seconds: note the points, then write a sentence or two for each."],
+   drills:[
+    D("Your email must always:",["address every point in the task","be exactly 300 words","use rare vocabulary"],0,"Right — completeness scores first.","Cover every point, or you lose marks."),
+    D("A good email opening is:",["'Hey what's up'","'Dear Professor Lee,'","no greeting"],1,"Yes — polite and appropriate.","Match the tone with a proper greeting."),
+    D("If the task asks two questions, you should:",["answer the easier one","answer both","ask your own"],1,"Right — answer both to be complete.","Address every part of the prompt.")
+   ],move:"Write a 3-sentence email to reschedule a meeting: why, a new time, and thanks."},
+  {id:"tw-email2",title:"Write an Email: tone & 7-min craft",icon:"⏱️",
+   intro:["Match the <b>tone</b> to the reader: formal for a professor, friendly for a classmate. Keep sentences complete and clear; finish inside 7 minutes.",
+          "A reliable shape: greeting → reason for writing → details → polite close."],
+   drills:[
+    D("Writing to a professor, the right tone is:",["casual slang","polite and formal","long and flowery"],1,"Right — polite and formal.","Professors get a formal, respectful tone."),
+    D("A strong email structure is:",["one long paragraph","greeting, purpose, details, close","just the answer"],1,"Yes — that clear shape scores well.","Greeting → purpose → details → close."),
+    D("With 7 minutes, you should:",["spend 6 minutes planning","plan briefly, then write and check","write without rereading"],1,"Right — quick plan, write, quick check.","Plan a little, write, leave time to reread.")
+   ],move:"Rewrite a casual note to a professor in a polite, formal tone."},
+  {id:"tw-disc1",title:"Academic Discussion: state your case",icon:"💭",
+   intro:["You join a class discussion board. State a <b>clear opinion</b>, give <b>one reason</b> and <b>one specific example</b>. Aim for ~100 words in 10 minutes.",
+          "Open with your stance so the reader knows your position immediately."],
+   drills:[
+    D("A strong discussion post starts with:",["a question","a clear opinion","an apology"],1,"Right — state your position up front.","Lead with your clear opinion."),
+    D("After your opinion you should add:",["nothing else","a reason and a specific example","three more opinions"],1,"Yes — reason + example develop it.","Back your view with a reason and an example."),
+    D("The Academic Discussion time limit is:",["3 minutes","10 minutes","unlimited"],1,"Right — 10 minutes.","You have 10 minutes for the post.")
+   ],move:"Write one sentence stating an opinion and one giving a specific example."},
+  {id:"tw-disc2",title:"Academic Discussion: react & connect",icon:"🤝",
+   intro:["A top post also <b>reacts to a classmate</b> — agreeing, disagreeing, or building on their point — and uses linking words (<b>moreover, however, for instance</b>).",
+          "Reference the other student's idea, then extend it with your own."],
+   drills:[
+    D("To lift your post, you should:",["ignore the classmate","react to the classmate's point","copy the classmate"],1,"Right — engage with their idea.","React to a classmate to show discussion skills."),
+    D("'___, I think the opposite is true.' Best linker:",["For instance","However","Because"],1,"Yes — 'However' signals disagreement.","'However' introduces a contrasting view."),
+    D("Linking words like 'moreover' help by:",["adding length","showing how ideas connect","replacing examples"],1,"Right — they connect ideas smoothly.","Linkers signal the relationship between ideas.")
+   ],move:"Write a sentence reacting to a classmate, using 'however' or 'moreover'."},
+  {id:"tw-chest2",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"tw-edit",title:"Edit like a pro",icon:"🔧",
+   intro:["Leave seconds to <b>edit</b>: check verb tense, subject-verb agreement, punctuation, and spelling. Small errors add up.",
+          "Paraphrase instead of repeating words, and vary sentence length for a natural feel."],
+   drills:[
+    D("Fix the error: 'She go to class every day.'",["She going to class.","She goes to class every day.","She go class."],1,"Right — 'goes' agrees with 'she'.","Subject-verb agreement: she goes."),
+    D("'Their are three reasons.' The error is:",["spelling of 'reasons'","'Their' should be 'There'","nothing"],1,"Yes — it's 'There are'.","'There are', not 'Their are'."),
+    D("Good editing includes:",["adding rare words","checking tense, agreement, punctuation","making it longer"],1,"Right — accuracy checks.","Edit for tense, agreement, punctuation, spelling.")
+   ],move:"Write two sentences, then find and fix one grammar slip."},
+  {id:"tw-boss",title:"Writing: mastery test",icon:"👑",type:"boss",
+   intro:["Prove it — a quick mix across Writing: word order, email completeness, discussion structure, and editing."],
+   drills:[
+    D("Best order: we / will / submit / the report / tomorrow",["We will submit the report tomorrow.","Tomorrow submit the report we will.","Will we the report submit tomorrow."],0,"Right — subject-verb-object, time at the end.","'We will submit the report tomorrow.'"),
+    D("Top priority in the email task:",["fancy words","covering every point","length"],1,"Yes — completeness first.","Cover every point in the prompt."),
+    D("A discussion post should include:",["only an opinion","opinion, reason, example, and a reaction","a question only"],1,"Right — develop and engage.","Opinion, reason, example, and react to a peer."),
+    D("Fix: 'He don't like tests.'",["He don't likes tests.","He doesn't like tests.","He not like tests."],1,"Right — 'doesn't' for he.","Subject-verb: he doesn't like.")
+   ],move:"You finished the Writing trail — open Mastery and sharpen any skill below 80%."}
+];
+var TF_WRITE_PHASES=[
+ {name:"Build a Sentence",sub:"word order, clauses, connectors",ids:["tw-orient","tw-build1","tw-build2","tw-chest1"]},
+ {name:"Write an Email",sub:"cover every point, tone, 7-min craft",ids:["tw-email1","tw-email2"]},
+ {name:"Academic Discussion",sub:"state your case, react & connect",ids:["tw-disc1","tw-disc2","tw-chest2"]},
+ {name:"Polish & mastery",sub:"editing, the boss",ids:["tw-edit","tw-boss"]}
+];
+var TF_SPEAK_NODES=[
+  {id:"ts-orient",title:"How TOEFL Speaking works",icon:"🎙️",
+   intro:["TOEFL Speaking 2026 has two tasks: <b>Listen and Repeat</b> (7 short sentences) and <b>Take an Interview</b> (4 questions, 45 seconds each, no prep).",
+          "You're scored on clear pronunciation, fluency, and a complete, organised answer — not a perfect accent."],
+   drills:[
+    D("How long do you have per interview answer?",["15 seconds","45 seconds","2 minutes"],1,"Right — 45 seconds each.","Each interview answer is 45 seconds."),
+    D("In 'Listen and Repeat' you:",["summarise the sentence","repeat it exactly","translate it"],1,"Yes — repeat it exactly.","You repeat the sentence as you heard it."),
+    D("Speaking is scored on:",["a perfect accent","clear, fluent, complete answers","speaking the fastest"],1,"Right — clarity, fluency, completeness.","A clear, organised answer matters more than accent.")
+   ],move:"Say one sentence aloud, clearly and at a natural pace."},
+  {id:"ts-repeat1",title:"Listen & Repeat: rhythm",icon:"🔁",
+   intro:["You hear a short sentence, then repeat it. Listen to the whole thing, hold it, then say it back in <b>one smooth go</b> — don't start before it ends.",
+          "Match the natural rhythm and stress; don't add long pauses."],
+   drills:[
+    L("The library closes at nine on weekdays.","After it plays, you should:",["repeat it word for word, smoothly","say a different sentence","explain what it means"],0,"Right — repeat it exactly and smoothly.","Repeat the whole sentence in one natural go."),
+    L("Please remember to bring your student ID tomorrow.","Best repetition strategy:",["start speaking before it ends","listen fully, then repeat","repeat only the last word"],1,"Yes — listen to all of it, then repeat.","Hear the whole sentence before you start."),
+    D("In Listen & Repeat, long pauses:",["help your score","hurt fluency","are required"],1,"Right — pauses hurt fluency.","Keep it smooth; avoid long gaps.")
+   ],move:"Play a sentence in your head and repeat it aloud in one smooth go."},
+  {id:"ts-interview1",title:"Interview: Point–Reason–Example",icon:"🎯",
+   intro:["For each question there's <b>no prep time</b>. Start with a direct <b>answer (Point)</b>, give a <b>reason (because…)</b>, then a <b>specific example</b>.",
+          "Strategy <b>P-R-E</b>: Point → because → for example. It fills 45 seconds with structure."],
+   drills:[
+    D("Best way to start an interview answer:",["a long introduction","a direct answer","'um, let me think'"],1,"Right — answer directly first.","Open with your point, then develop it."),
+    D("The P-R-E structure is:",["Point, Reason, Example","Pause, Rest, Exit","Plan, Read, Edit"],0,"Yes — Point, Reason, Example.","Answer, then because, then for example."),
+    L("Do you prefer studying alone or in a group?","A strong answer would:",["just say 'alone'","say 'alone', give a reason, then an example","stay silent"],1,"Right — point + reason + example.","Answer, then reason, then a specific example.")
+   ],move:"Answer aloud for 45s: 'Do you prefer mornings or evenings?' using Point–Reason–Example."},
+  {id:"ts-interview2",title:"Interview: timing & harder questions",icon:"⏲️",
+   intro:["Questions get harder as you go. Keep talking for the full <b>45 seconds</b> — if you run short, add another example or reason.",
+          "Don't freeze on a hard question; pick any clear position and support it. There's no single right answer."],
+   drills:[
+    D("If you finish early, you should:",["stop and wait","add another reason or example","change the topic"],1,"Right — keep going with more support.","Fill the time with another reason or example."),
+    D("On a hard question with no obvious answer:",["stay silent","pick a clear side and support it","say 'I don't know'"],1,"Yes — choose a position and back it.","Any clear, supported answer scores; silence doesn't."),
+    D("Speaking too fast tends to:",["always help","hurt clarity","be required"],1,"Right — rushing hurts clarity.","Speak at a clear, natural pace.")
+   ],move:"Time yourself: answer a question for a full 45 seconds without long pauses."},
+  {id:"ts-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"ts-fluency",title:"Fluency & filler control",icon:"🗯️",
+   intro:["Fluency means speaking smoothly, not perfectly. Reduce fillers (<b>um, like, you know</b>) by pausing silently to think instead.",
+          "A short silent pause sounds more confident than a string of 'um's."],
+   drills:[
+    D("To reduce 'um' and 'like', you should:",["speak faster","pause silently to think","memorise scripts"],1,"Right — a brief silent pause beats fillers.","Replace fillers with short silent pauses."),
+    D("Fluency means:",["a perfect accent","speaking smoothly and clearly","using big words"],1,"Yes — smooth and clear.","Fluency is smoothness, not accent or vocabulary."),
+    D("A confident answer uses:",["many fillers","clear pacing and few fillers","whispering"],1,"Right — clear pacing, few fillers.","Steady pace and minimal fillers sound confident.")
+   ],move:"Record yourself for 30s and count your fillers; try again with fewer."},
+  {id:"ts-boss",title:"Speaking: mastery test",icon:"👑",type:"boss",
+   intro:["Prove it — a quick mix across Speaking: repetition, answer structure, and timing."],
+   drills:[
+    L("Classes will resume on Monday after the holiday.","In Listen & Repeat, you would:",["repeat it exactly and smoothly","summarise it","ignore it"],0,"Right — repeat it smoothly.","Repeat the whole sentence in one go."),
+    D("Start an interview answer with:",["a direct point","a long story","'um'"],0,"Right — lead with your point.","Answer directly, then develop."),
+    D("Keep talking for:",["10 seconds","the full 45 seconds","as long as you want"],1,"Right — fill the 45 seconds.","Use the full time with reasons and examples."),
+    D("Best structure for an answer:",["Point, Reason, Example","random facts","one word"],0,"Right — P-R-E.","Point, then because, then for example.")
+   ],move:"You finished the Speaking trail — open Mastery and sharpen any skill below 80%."}
+];
+var TF_SPEAK_PHASES=[
+ {name:"Foundations",sub:"how it works, listen & repeat",ids:["ts-orient","ts-repeat1"]},
+ {name:"Interview",sub:"Point-Reason-Example, timing",ids:["ts-interview1","ts-interview2","ts-chest1"]},
+ {name:"Polish & mastery",sub:"fluency, the boss",ids:["ts-fluency","ts-boss"]}
+];
+Object.assign(HINTS,{
+ "tw-orient":[["Three tasks: Build a Sentence, Email, Discussion."],["Completeness and clarity beat fancy words."]],
+ "tw-build1":[["Subject + verb + object, time at the end.","Committee will announce the results next week."],["Time phrases sit near the end."]],
+ "tw-build2":[["'Because' = reason.","It was raining, so we stayed in."],["Reread for natural meaning."]],
+ "tw-email1":[["Cover every point in the prompt.","Two questions = answer both."],["Greet and sign off."]],
+ "tw-email2":[["Professor = formal, polite tone.","Greeting, purpose, details, close."],["Leave time to reread."]],
+ "tw-disc1":[["Open with a clear opinion.","Then a reason and an example."],["About 100 words, 10 minutes."]],
+ "tw-disc2":[["React to a classmate's point.","'However' for disagreement."],["Linkers connect your ideas."]],
+ "tw-edit":[["'She goes' agrees with she.","Check tense and agreement."],["'There are', not 'Their are'."]],
+ "tw-chest1":[["Open it for gems!"]],
+ "tw-chest2":[["Another reward — keep going."]],
+ "tw-boss":[["Subject-verb-object, then edit.","Cover every point; react to a peer."]],
+ "ts-orient":[["45 seconds per interview answer.","Repeat exactly in Listen & Repeat."],["Clarity beats accent."]],
+ "ts-repeat1":[["Listen fully, then repeat smoothly.","Don't start before it ends."],["Avoid long pauses."]],
+ "ts-interview1":[["Start with a direct point.","Then because, then for example."],["P-R-E fills 45 seconds."]],
+ "ts-interview2":[["Finished early? Add a reason or example.","Don't freeze — pick a side."],["Speak at a clear pace."]],
+ "ts-fluency":[["Pause silently instead of saying 'um'.","Fluency is smoothness."],["Clear pacing, few fillers."]],
+ "ts-chest1":[["Open it for gems!"]],
+ "ts-boss":[["Repeat smoothly; answer with P-R-E.","Fill the full 45 seconds."]]
+});
+Object.assign(TIPCARDS,{
+ "tw-orient":{rule:"Three tasks; you're scored on completing them clearly and accurately.",how:["Know Build a Sentence, Email (7 min), Discussion (10 min).","Aim for clear, correct English."],trap:"Chasing fancy words instead of completing the task."},
+ "tw-build1":{rule:"Subject -> Verb -> Object; time and place near the end.",how:["Find the subject and verb first.","Attach the rest, time last."],trap:"Putting time phrases in the middle."},
+ "tw-build2":{rule:"Pick the connector that matches the logic, then reread.",how:["because = cause, but = contrast, so = result.","Read it back for natural sense."],trap:"A connector that contradicts the meaning."},
+ "tw-email1":{rule:"Cover every point; greet and sign off.",how:["Note the points, answer each.","Address both questions if asked."],trap:"Missing a point — completeness scores first."},
+ "tw-email2":{rule:"Match tone to the reader; finish in 7 minutes.",how:["Formal for a professor.","Greeting -> purpose -> details -> close."],trap:"Too casual a tone, or no time to reread."},
+ "tw-disc1":{rule:"Clear opinion + one reason + one specific example.",how:["Lead with your stance.","Develop with a reason and example."],trap:"A vague opinion with no support."},
+ "tw-disc2":{rule:"React to a classmate and connect ideas with linkers.",how:["Reference their point, then extend it.","Use however, moreover, for instance."],trap:"Ignoring the discussion and just posting alone."},
+ "tw-edit":{rule:"Edit for tense, agreement, punctuation and spelling.",how:["Reread your last lines.","Fix small slips; paraphrase repeats."],trap:"Submitting without a quick proofread."},
+ "tw-boss":{rule:"Apply each skill: order, completeness, structure, accuracy.",how:["Build correct sentences.","Cover points; develop and edit."],trap:"Strong ideas undone by careless grammar."},
+ "ts-orient":{rule:"Two tasks; scored on clarity, fluency and complete answers.",how:["Listen & Repeat: repeat exactly.","Interview: 45 seconds, no prep."],trap:"Chasing a perfect accent over a clear answer."},
+ "ts-repeat1":{rule:"Listen fully, then repeat in one smooth go.",how:["Hold the whole sentence.","Match the rhythm; no long pauses."],trap:"Starting to speak before the audio ends."},
+ "ts-interview1":{rule:"Answer with Point -> Reason -> Example.",how:["Start with a direct point.","Add because, then for example."],trap:"A long intro that wastes your 45 seconds."},
+ "ts-interview2":{rule:"Use the full 45 seconds; commit to a clear position.",how:["Add another reason or example if short.","Pick a side and support it."],trap:"Freezing or going silent on a hard question."},
+ "ts-fluency":{rule:"Fluency is smoothness — replace fillers with silent pauses.",how:["Pause to think instead of saying 'um'.","Keep a clear, steady pace."],trap:"A string of 'um' and 'like'."},
+ "ts-boss":{rule:"Repeat smoothly and answer with P-R-E for the full time.",how:["Listen & Repeat: exact and smooth.","Interview: point, reason, example, 45s."],trap:"Stopping early or rambling without structure."}
+});
+
 var TF_SECTIONS={
  reading:{eyebrow:"TOEFL \u00b7 Reading",nodes:CONTENT.toefl.nodes,phases:PHASES.toefl},
- listening:{eyebrow:"TOEFL \u00b7 Listening",nodes:TF_LISTEN_NODES,phases:TF_LISTEN_PHASES}
+ listening:{eyebrow:"TOEFL \u00b7 Listening",nodes:TF_LISTEN_NODES,phases:TF_LISTEN_PHASES},
+ writing:{eyebrow:"TOEFL \u00b7 Writing",nodes:TF_WRITE_NODES,phases:TF_WRITE_PHASES},
+ speaking:{eyebrow:"TOEFL \u00b7 Speaking",nodes:TF_SPEAK_NODES,phases:TF_SPEAK_PHASES}
 };
-var SECTION_ORDER=[["reading","Reading",true],["listening","Listening",true],["writing","Writing",false],["speaking","Speaking",false]];
+var SECTION_ORDER=[["reading","Reading",true],["listening","Listening",true],["writing","Writing",true],["speaking","Speaking",true]];
 var section="reading";
 function setSection(sec){ if(!TF_SECTIONS[sec])return; section=sec; CONTENT.toefl.nodes=TF_SECTIONS[sec].nodes; CONTENT.toefl.eyebrow=TF_SECTIONS[sec].eyebrow; PHASES.toefl=TF_SECTIONS[sec].phases; OPENPHASE=null; renderMap(); window.scrollTo(0,0); }
 function renderSectionSel(){ var host=document.getElementById("sectionSel"); if(!host)return; if(typeof exam==="undefined"||exam!=="toefl"){ host.style.display="none"; host.innerHTML=""; return; } host.style.display="block"; host.innerHTML='<div class="eyebrow" style="margin:2px 0 4px">TOEFL section</div><div class="ltabs secsel">'+SECTION_ORDER.map(function(o){ var k=o[0],label=o[1],ready=o[2]; if(!ready) return '<button class="ltab" disabled style="opacity:.45;cursor:default">'+label+'</button>'; return '<button class="ltab '+(section===k?"on":"")+'" type="button" onclick="setSection(\''+k+'\')">'+label+'</button>'; }).join("")+'</div>'; }
