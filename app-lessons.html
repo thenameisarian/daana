@@ -607,7 +607,7 @@ function renderMap(){
   else inner='<div class="dot">🔒</div><div class="lbl">'+n.title+'</div>';
   el.innerHTML=inner;map.appendChild(el);
  });
- if(goIdx>=0){const p=pts[goIdx];const m=document.createElement("div");m.className="mascot";m.textContent="🦉";
+ if(goIdx>=0){const p=pts[goIdx];const m=document.createElement("div");m.className="mascot";m.textContent="🧞";
   m.style.left=((p.x-60)/W*100)+"%";m.style.top=(p.y-4)+"px";map.appendChild(m);}
 }
 /* ---------- badges ---------- */
@@ -620,7 +620,7 @@ function badgeList(){
   {e:"📚",n:"5 lessons",on:totalDone>=5},
   {e:"👑",n:"Boss slayer",on:!!S.done["tf-boss"]},
   {e:"💯",n:"50 XP day",on:S.dayXp>=50},
-  {e:"🦉",n:"All trails",on:!!(S.done["tf-boss"]&&S.done["ie-boss"]&&S.done["de-boss"]&&S.done["gd-boss"])}
+  {e:"🧞",n:"All trails",on:!!(S.done["tf-boss"]&&S.done["ie-boss"]&&S.done["de-boss"]&&S.done["gd-boss"])}
  ];
 }
 function renderBadges(){
@@ -665,7 +665,7 @@ function renderStep(){
   let ex=n.example?'<div class="ex"><div class="bub bot">'+n.example.other+'</div><div class="bub bme">'+n.example.me+'</div></div>':"";
   sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">'+(n.type==="boss"?"Mastery test":"Lesson")+' · '+CONTENT[exam].name+'</div>'+
    '<div class="h3">'+n.title+'</div>'+(n.intro||[]).map(p=>'<p class="p">'+p+'</p>').join("")+ex+'</div>'+
-   '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Dana: "Read it, then prove it."</div>'+
+   '<div class="sfoot"><div class="rah">🧞</div><div class="rmsg">Dana the Genie: "Read it, then prove it — no wishes for guesses."</div>'+
    '<button class="cta" onclick="nextStep()">'+(FL.drillTotal?"Start drill ▶":"Continue →")+'</button></div>';
   return;
  }
@@ -675,7 +675,7 @@ function renderStep(){
   let opts=q.opts.map((o,k)=>'<button class="opt" onclick="pick(this,'+k+','+di+',event)">'+o+'</button>').join("");
   sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">Question '+(di+1)+' of '+FL.drillTotal+'</div>'+
    '<div class="q">'+q.q+'</div>'+opts+'<div class="fb" id="fb"></div></div>'+
-   '<div class="sfoot"><div class="rah">🦉</div><button class="hintbtn" type="button" onclick="showHint('+di+')">Hint</button>'+
+   '<div class="sfoot"><div class="rah">🧞</div><button class="hintbtn" type="button" onclick="showHint('+di+')">Hint</button>'+
    '<button class="cta dim" id="nx" disabled onclick="nextStep()">Continue →</button></div>';
   return;
  }
@@ -683,7 +683,7 @@ function renderStep(){
  sheet.innerHTML=head()+'<div class="sbody"><div class="lead2">Your move — now, do it</div>'+
   '<div class="h3" style="font-size:17px">Put it into practice</div><p class="p">'+(n.move||"Try this skill in the wild today.")+'</p>'+
   '<div class="move"><textarea placeholder="Write your answer (optional)…"></textarea></div>'+tipHTML(n.id)+'</div>'+
-  '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Practice makes it stick.</div>'+
+  '<div class="sfoot"><div class="rah">🧞</div><div class="rmsg">Dana: "Reps now, wishes later."</div>'+
   '<button class="cta" onclick="finishNode()">Finish ✓</button></div>';
 }
 function showHint(di){
@@ -728,7 +728,7 @@ function finishNode(){
    '<div><div class="v" style="color:var(--gem)">'+(already?"+0":"+"+gems+" 💎")+'</div><div class="k">gems</div></div>'+
    '<div><div class="v" style="color:var(--fire)">🔥 '+S.streak+'</div><div class="k">streak</div></div>'+
   '</div>'+(n.type==="boss"?'<div style="margin-top:16px"><a class="cta" style="text-decoration:none;display:inline-block" href="'+(TESTROUTE[exam]||"/")+'">Take the real '+CONTENT[exam].name+' test →</a></div>':'')+'</div>'+
-  '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">'+(n.type==="boss"?"You conquered the trail. ":"Next node unlocked. ")+'Keep going.</div>'+
+  '<div class="sfoot"><div class="rah">🧞</div><div class="rmsg">'+(n.type==="boss"?"You conquered the trail. ":"Next node unlocked. ")+'Keep going.</div>'+
   '<button class="cta" onclick="closeOv()">Continue →</button></div>';
  burst(innerWidth/2,innerHeight*0.32,110);
  if(lvUp)setTimeout(()=>burst(innerWidth/2,innerHeight*0.3,90),350);
@@ -741,18 +741,18 @@ function openChest(id,ev){
  sheet.innerHTML='<div class="reward"><div class="chestbig">🎁</div><h3>Treasure!</h3><p>Trail chest unlocked</p>'+
   '<div class="loot"><div><div class="v" style="color:var(--gem)">+40 💎</div><div class="k">gems</div></div>'+
   '<div><div class="v" style="color:var(--heart)">+1 ❤️</div><div class="k">heart</div></div></div></div>'+
-  '<div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Spend gems on streak-freezes & hints (soon).</div>'+
+  '<div class="sfoot"><div class="rah">🧞</div><div class="rmsg">Spend gems on streak-freezes & hints (soon).</div>'+
   '<button class="cta" onclick="closeOv()">Collect →</button></div>';
  ov.classList.add("show");
 }
 /* ---------- hearts wall + practice ---------- */
 let PRAC=null;
 function gemRefill(){if(S.gems<GEM_REFILL)return;gev("gem").then(function(){burst(innerWidth/2,160,50);syncHud();closeOv();});}
-function showWall(){var ms=nextHeartMs();sheet.innerHTML='<div class="reward" style="padding-top:24px"><div class="chestbig" style="font-size:54px">💔</div><h3>Out of hearts</h3><p>'+(ms?("Next heart in "+fmtMs(ms)+". "):"")+'Hearts keep practice focused — earn one back by reviewing what tripped you up.</p><div class="wallrow"><button class="wbtn" onclick="practiceToEarn()"><span class="we">🧠</span><div>Practice to earn a heart<small>Review 3 questions correctly, gain ❤️</small></div></button><button class="wbtn" '+(S.gems>=GEM_REFILL?"":"disabled")+' onclick="gemRefill()"><span class="we">💎</span><div>Refill hearts — '+GEM_REFILL+' gems<small>You have '+S.gems+' 💎</small></div></button><a class="wbtn prem" href="/login?upgrade=1"><span class="we">⭐</span><div>Go Premium — unlimited<small>Monthly · never wait again</small></div></a></div></div><div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Dana: a wrong answer is a lesson, not a loss.</div><button class="cta dim" onclick="closeOv()">Later →</button></div>';ov.classList.add("show");}
+function showWall(){var ms=nextHeartMs();sheet.innerHTML='<div class="reward" style="padding-top:24px"><div class="chestbig" style="font-size:54px">💔</div><h3>Out of hearts</h3><p>'+(ms?("Next heart in "+fmtMs(ms)+". "):"")+'Hearts keep practice focused — earn one back by reviewing what tripped you up.</p><div class="wallrow"><button class="wbtn" onclick="practiceToEarn()"><span class="we">🧠</span><div>Practice to earn a heart<small>Review 3 questions correctly, gain ❤️</small></div></button><button class="wbtn" '+(S.gems>=GEM_REFILL?"":"disabled")+' onclick="gemRefill()"><span class="we">💎</span><div>Refill hearts — '+GEM_REFILL+' gems<small>You have '+S.gems+' 💎</small></div></button><a class="wbtn prem" href="/login?upgrade=1"><span class="we">⭐</span><div>Go Premium — unlimited<small>Monthly · never wait again</small></div></a></div></div><div class="sfoot"><div class="rah">🧞</div><div class="rmsg">Dana the Genie: a wrong answer is a lesson, not a loss — rub the lamp, try again.</div><button class="cta dim" onclick="closeOv()">Later →</button></div>';ov.classList.add("show");}
 function practiceToEarn(){var pool=[];CONTENT[exam].nodes.forEach(function(nd){if(nd.drills)nd.drills.forEach(function(d){pool.push(d);});});var q=pool.sort(function(){return Math.random()-0.5;}).slice(0,3);PRAC={qs:q,i:0};renderPrac();}
 function renderPrac(){var d=PRAC.qs[PRAC.i];var opts=d.opts.map(function(o,k){return '<button class="opt" onclick="pracPick("+k+")">'+o+'</button>';}).join("");sheet.innerHTML='<div class="shead"><button class="x" onclick="closeOv()">✕</button><div class="lead2" style="margin-left:6px">Practice · earn a heart</div><div class="seg" style="margin-left:auto">'+PRAC.qs.map(function(_,k){return '<i class="'+(k<PRAC.i?"f":"")+'"></i>';}).join("")+'</div></div><div class="sbody"><div class="q">'+d.q+'</div>'+opts+'<div class="fb" id="pfb"></div></div><div class="sfoot"><div class="rah">🧠</div><div class="rmsg">Get all 3 right to earn a heart.</div></div>';ov.classList.add("show");}
 function pracPick(k){var d=PRAC.qs[PRAC.i],fb=document.getElementById("pfb");document.querySelectorAll(".opt").forEach(function(o){o.disabled=true;});if(k===d.a){fb.className="fb ok";fb.textContent="Correct!";setTimeout(function(){PRAC.i++;if(PRAC.i>=PRAC.qs.length)pracDone();else renderPrac();},650);}else{fb.className="fb no";fb.textContent="Not quite — "+d.no+" Practice resets.";setTimeout(function(){PRAC=null;showWall();},1400);}}
-function pracDone(){gev("practice").then(function(){syncHud();});burst(innerWidth/2,innerHeight*0.3,80);sheet.innerHTML='<div class="reward"><div class="chestbig">❤️</div><h3>Heart earned!</h3><p>Good reviewing — a heart is back. Keep going.</p></div><div class="sfoot"><div class="rah">🦉</div><div class="rmsg">Back to learning.</div><button class="cta" onclick="closeOv()">Continue →</button></div>';ov.classList.add("show");}
+function pracDone(){gev("practice").then(function(){syncHud();});burst(innerWidth/2,innerHeight*0.3,80);sheet.innerHTML='<div class="reward"><div class="chestbig">❤️</div><h3>Heart earned!</h3><p>Good reviewing — a heart is back. Keep going.</p></div><div class="sfoot"><div class="rah">🧞</div><div class="rmsg">Dana: "Wish granted. Back to it."</div><button class="cta" onclick="closeOv()">Continue →</button></div>';ov.classList.add("show");}
 /* ---------- confetti ---------- */
 const cv=document.getElementById("cf"),cx=cv.getContext("2d");let parts=[],raf;
 function size(){cv.width=innerWidth;cv.height=innerHeight}size();addEventListener("resize",size);
