@@ -4,41 +4,96 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<title>Daana — Your Tests · Premium</title>
+<title>Daana — Your home</title>
 <style>
-:root{--ink:#28323b;--mut:#6b7785;--line:#dfe3e7;--teal:#1a8f93;--teald:#157074;--panel:#f5f7f8}
+:root{--ink:#15322f;--mut:#6a7b78;--line:#e3ebe9;--teal:#1a8f93;--teald:#137074;--lbg:#eef5f4}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:radial-gradient(1200px 500px at 50% -10%,#eafbf8,#fff 60%);line-height:1.55;display:flex;align-items:center;justify-content:center;padding:30px 16px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:radial-gradient(1200px 520px at 50% -10%,#eafbf8,var(--lbg) 60%);line-height:1.55;padding:26px 16px 50px;display:flex;justify-content:center}
+.serif{font-family:Georgia,"Times New Roman",serif}
 .wrap{max-width:680px;width:100%}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;justify-content:center}
-.mk{width:34px;height:34px;border:1.5px solid var(--teal);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--teal);font-weight:800;font-size:18px}
-.pill{display:inline-block;background:#fff3e0;color:#b26a00;font-weight:800;font-size:12px;padding:4px 12px;border-radius:999px;border:1px solid #f0d3a0}
-h1{font-size:25px;font-weight:800;text-align:center;margin:14px 0 2px}
-.lead{color:var(--mut);text-align:center;font-size:14.5px;margin:0 auto 6px;max-width:460px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
-.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 8px 26px rgba(20,60,60,.05);transition:transform .15s,box-shadow .15s}
-.card:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(20,60,60,.12);border-color:var(--teal)}
-.card .nm{font-weight:800;font-size:18px}
-.card .mt{font-size:13px;color:var(--mut);margin:4px 0 10px}
-.go{color:var(--teal);font-weight:800;font-size:13px}
-.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:22px}
-@media(max-width:560px){.grid{grid-template-columns:1fr}h1{font-size:22px}}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.tbrand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:17px}
+.tbrand .mk{width:30px;height:30px;border-radius:9px;background:#e8f6f3;display:flex;align-items:center;justify-content:center;color:var(--teald);font-family:Georgia,serif;font-weight:800}
+.backbtn{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 13px;font-weight:700;font-size:12.5px;color:var(--ink);cursor:pointer;text-decoration:none}
+.eyebrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teald);font-weight:700;margin:6px 0 3px}
+h1{font-size:26px;font-weight:800;margin:0 0 14px}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pcard{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:16px;cursor:pointer;text-align:left;text-decoration:none;color:inherit;transition:.14s;display:block}
+.pcard:hover{transform:translateY(-2px);border-color:var(--teal);box-shadow:0 12px 28px rgba(20,80,76,.12)}
+.pcard .pcico{width:44px;height:44px;border-radius:13px;background:#e8f6f3;display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:10px}
+.pcard .pcname{font-weight:800;font-size:17px}
+.pcard .pcsub{font-size:11.5px;color:var(--mut);margin:2px 0 12px;min-height:30px;line-height:1.35}
+.bar{height:7px;border-radius:99px;background:#eef3f2;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#1fb6a6,#137074);transition:width .4s}
+.pcfoot{display:flex;justify-content:space-between;align-items:center;margin-top:9px;font-size:12px;color:#54635f;font-weight:600}
+.pcgo{color:var(--teald);font-weight:800}
+.coursecard{display:flex;align-items:center;gap:13px;background:linear-gradient(180deg,#fff,#f1faf7);border:1.5px solid #cfe9e1;border-radius:18px;padding:16px;margin-top:14px;text-decoration:none;color:inherit;cursor:pointer;transition:.14s}
+.coursecard:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(20,80,76,.12);border-color:var(--teal)}
+.coursecard .ci{width:48px;height:48px;border-radius:14px;background:#e8f6f3;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
+.badge{font-size:10px;font-weight:800;color:#b26a00;background:#fff3e0;border:1px solid #f0d3a0;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+.foot{text-align:center;color:var(--mut);font-size:12px;margin-top:24px}
+@media(max-width:560px){.paths{grid-template-columns:1fr}h1{font-size:22px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="brand"><span class="mk">D</span><span>Daana</span></div>
-  <div style="text-align:center;margin-top:8px"><span class="pill">★ Premium · all-access</span></div>
-  <h1>Choose your test</h1>
-  <p class="lead">You have full access to every exam. Pick one to begin — your access lasts 7 days on this device.</p>
-  <div class="grid">
-    <a class="card" href="/app"><div class="nm">TOEFL iBT 2026</div><div class="mt">Reading &amp; Writing · 5 practice tests · band 1.0–6.0</div><div class="go">Start TOEFL →</div></a>
-    <a class="card" href="/app-ielts"><div class="nm">IELTS</div><div class="mt">Academic &amp; General Training · Reading &amp; Writing · band 0–9</div><div class="go">Start IELTS →</div></a>
-    <a class="card" href="/app-duolingo"><div class="nm">Duolingo English Test</div><div class="mt">Adaptive practice · 10–160 scale · four subscores</div><div class="go">Start DET →</div></a>
-    <a class="card" href="/app-ged"><div class="nm">GED</div><div class="mt">RLA · Math · Science · Social Studies · 100–200, pass 145</div><div class="go">Start GED →</div></a>
+  <div class="topbar">
+    <div class="tbrand"><span class="mk">د</span><span>Daana</span></div>
+    <a class="backbtn" href="#" onclick="signOut(event)">Sign out</a>
   </div>
-  <a class="card" href="/app-lessons" style="display:block;margin-top:14px;background:linear-gradient(180deg,#fff,#eafaf7);border-color:#bfe6db"><div class="nm">🦉 Lessons &amp; Tips <span style="font-size:11px;color:#b26a00;background:#fff3e0;border:1px solid #f0d3a0;border-radius:999px;padding:2px 9px;vertical-align:middle;margin-left:6px">New · game mode</span></div><div class="mt">Level up your skills on the trail — XP, streaks, drills and daily quests across all four exams</div><div class="go">Play lessons →</div></a>
+  <div class="eyebrow" id="welcome">Welcome back</div>
+  <h1 class="serif">Your exams</h1>
+  <div class="paths" id="exams"></div>
+  <a class="coursecard" id="courseCard" href="/app-lessons">
+    <div class="ci">🎮</div>
+    <div style="flex:1"><b>The gamified lessons course <span class="badge" id="courseBadge">game mode</span></b><div style="font-size:12px;color:var(--mut);margin-top:2px" id="courseSub">XP, streaks, daily quests and skill trails across all four exams.</div></div>
+    <span class="pcgo">→</span>
+  </a>
   <div class="foot">Listening &amp; Speaking sections arrive with the audio update. Original practice material by Arian Academy.</div>
 </div>
+
+<script>
+var EXAMS=[
+  {key:"toefl",   ico:"📘", name:"TOEFL iBT", sub:"Reading &amp; Writing · 5 practice tests", href:"/app",          pre:"tf-"},
+  {key:"ielts",   ico:"🌐", name:"IELTS",     sub:"Academic &amp; General Training",          href:"/app-ielts",    pre:"ie-"},
+  {key:"duolingo",ico:"🦉", name:"Duolingo",  sub:"Adaptive English Test · 10–160",           href:"/app-duolingo", pre:"de-"},
+  {key:"ged",     ico:"🎓", name:"GED",       sub:"RLA · Math · Science · Social Studies",    href:"/app-ged",      pre:"gd-"}
+];
+var NODES_PER={toefl:8,ielts:8,duolingo:8,ged:8};
+function apiGet(p){ return fetch(p,{credentials:"include"}).then(function(r){return r.json();}).catch(function(){return null;}); }
+function render(done, hasCourse){
+  done = done || {};
+  var host=document.getElementById("exams");
+  host.innerHTML=EXAMS.map(function(e){
+    var n=0; for(var k in done){ if(k.indexOf(e.pre)===0) n++; }
+    var total=NODES_PER[e.key]||8, pct=Math.min(100, Math.round(n/total*100));
+    var status = n>0 ? (n+" lesson"+(n>1?"s":"")+" done") : "Ready to start";
+    return '<a class="pcard" href="'+e.href+'">'
+      +'<div class="pcico">'+e.ico+'</div>'
+      +'<div class="pcname">'+e.name+'</div>'
+      +'<div class="pcsub">'+e.sub+'</div>'
+      +'<div class="bar"><i style="width:'+pct+'%"></i></div>'
+      +'<div class="pcfoot"><span>'+status+'</span><span class="pcgo">Open →</span></div>'
+      +'</a>';
+  }).join("");
+  var card=document.getElementById("courseCard"), badge=document.getElementById("courseBadge"), sub=document.getElementById("courseSub");
+  if(!hasCourse){
+    card.setAttribute("href","/login?upgrade=course");
+    badge.textContent="Premium";
+    sub.textContent="Unlock the full gamified lessons course — XP, streaks, quests and every skill trail.";
+  }
+}
+(function init(){
+  apiGet("/api/account").then(function(a){
+    if(!a || !a.authed){ location.href="/login?need=login"; return; }
+    if(a.user && a.user.email){ document.getElementById("welcome").textContent="Welcome back · "+a.user.email; }
+    var hasCourse = !!(a.user && (a.user.course || a.user.tier==="premium"));
+    apiGet("/api/progress").then(function(p){
+      render((p && p.progress && p.progress.done) || {}, hasCourse);
+    });
+  });
+})();
+function signOut(e){ if(e&&e.preventDefault)e.preventDefault(); fetch("/api/auth/logout",{method:"POST",credentials:"include"}).then(function(){ location.href="/login"; }).catch(function(){ location.href="/login"; }); }
+</script>
 </body>
 </html>
