@@ -96,13 +96,14 @@ export async function redeemCodeForUser(env, user, codeRaw){
   if (rec.product === "course" || rec.product === "tips") {
     user.products = user.products || {};
     if (rec.product === "course") user.products.course = true; else user.products.tips = true;
-    user.access = rec.examScope ? rec.examScope : "all"; user.scope = null; user.codeRedeemed = c;
+    user.access = rec.examScope ? rec.examScope : "all"; user.scope = null; if (rec.unlimited) user.unlimited = true; user.codeRedeemed = c;
     await saveUser(kv, user);
     return { ok: true, user };
   }
   user.access = rec.test || "toefl";
   user.tier = rec.tier === "premium" ? "premium" : "free";
   user.scope = rec.scope || null;
+  if (rec.unlimited) user.unlimited = true;
   user.codeRedeemed = c;
   await saveUser(kv, user);
   return { ok: true, user };
