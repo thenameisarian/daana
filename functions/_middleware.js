@@ -34,7 +34,7 @@ export async function onRequest(context){
   let ok = false;
   if (required === "*") ok = !!access;
   else if (required === "course") ok = hasCourse;
-  else if (required === "all") ok = allAccess;
+  else if (required === "all") ok = allAccess || hasCourse || !!access;
   else ok = (access === required || access === "all");
 
   if (ok) return next();
