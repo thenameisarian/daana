@@ -1098,17 +1098,433 @@ Object.assign(TIPCARDS,{
  "ts-boss":{rule:"Repeat smoothly and answer with P-R-E for the full time.",how:["Listen & Repeat: exact and smooth.","Interview: point, reason, example, 45s."],trap:"Stopping early or rambling without structure."}
 });
 
-var TF_SECTIONS={
- reading:{eyebrow:"TOEFL \u00b7 Reading",nodes:CONTENT.toefl.nodes,phases:PHASES.toefl},
- listening:{eyebrow:"TOEFL \u00b7 Listening",nodes:TF_LISTEN_NODES,phases:TF_LISTEN_PHASES},
- writing:{eyebrow:"TOEFL \u00b7 Writing",nodes:TF_WRITE_NODES,phases:TF_WRITE_PHASES},
- speaking:{eyebrow:"TOEFL \u00b7 Speaking",nodes:TF_SPEAK_NODES,phases:TF_SPEAK_PHASES}
-};
-var SECTION_ORDER=[["reading","Reading",true],["listening","Listening",true],["writing","Writing",true],["speaking","Speaking",true]];
-var section="reading";
-function setSection(sec){ if(!TF_SECTIONS[sec])return; section=sec; CONTENT.toefl.nodes=TF_SECTIONS[sec].nodes; CONTENT.toefl.eyebrow=TF_SECTIONS[sec].eyebrow; PHASES.toefl=TF_SECTIONS[sec].phases; OPENPHASE=null; renderMap(); window.scrollTo(0,0); }
-function renderSectionSel(){ var host=document.getElementById("sectionSel"); if(!host)return; if(typeof exam==="undefined"||exam!=="toefl"){ host.style.display="none"; host.innerHTML=""; return; } host.style.display="block"; host.innerHTML='<div class="eyebrow" style="margin:2px 0 4px">TOEFL section</div><div class="ltabs secsel">'+SECTION_ORDER.map(function(o){ var k=o[0],label=o[1],ready=o[2]; if(!ready) return '<button class="ltab" disabled style="opacity:.45;cursor:default">'+label+'</button>'; return '<button class="ltab '+(section===k?"on":"")+'" type="button" onclick="setSection(\''+k+'\')">'+label+'</button>'; }).join("")+'</div>'; }
+/* ================= IELTS — four full sections ================= */
+var IE_LISTEN_NODES=[
+  {id:"ie-l-orient",title:"How IELTS Listening works",icon:"🎧",
+   intro:["IELTS Listening is <b>40 questions</b> across <b>4 recordings</b> (~30 min). Sections 1–2 are everyday (a conversation, a talk); 3–4 are academic (a discussion, a lecture).",
+          "You hear each recording <b>once</b> and answer <b>as you listen</b>. On paper you then get 10 minutes to transfer answers; on computer you get 2 minutes to check."],
+   drills:[
+    D("How many times do you hear each recording?",["once","twice","as often as you like"],0,"Right — once only.","You hear it a single time, so answer as you listen."),
+    D("Sections 1 and 2 are usually about:",["academic lectures","everyday/social topics","grammar rules"],1,"Yes — everyday situations.","1–2 are social/everyday; 3–4 are academic."),
+    D("On the paper test, the 10 extra minutes are for:",["a break","transferring answers to the sheet","listening again"],1,"Right — transfer your answers.","Paper test gives 10 min to copy answers neatly.")
+   ],move:"Listen to a 1-minute clip and note the speaker, place, and purpose."},
+  {id:"ie-l-predict",title:"Read & predict",icon:"🔮",
+   intro:["Before each section you get a few seconds to <b>read the questions</b>. Use them to predict what you'll hear and <b>what kind of word</b> fits each gap — a number, a name, a noun?",
+          "Underline keywords in the questions so your ear is ready for them or their paraphrase."],
+   drills:[
+    L("Now look at questions one to four. You will hear a man booking a hotel room.",
+      "Before listening you should:",["relax until it starts","read the questions and predict","write a summary"],1,"Right — read ahead and predict.","Use the lead-in to read questions and predict answers."),
+    D("A gap that says 'Name: ____' probably needs:",["a number","a proper name (often spelled out)","an opinion"],1,"Yes — listen for a spelled-out name.","Predict the word type: this gap wants a name."),
+    D("Underlining keywords helps you:",["write faster","catch them or their paraphrase","skip the audio"],1,"Right — primes your ear.","Keywords prime you for the answer or its paraphrase.")
+   ],move:"Look at any 3 quiz questions and predict the word type each answer needs."},
+  {id:"ie-l-notes",title:"Catch specific detail",icon:"🎯",
+   intro:["Section 1 is full of <b>details</b>: names, dates, phone numbers, prices, addresses. Spell names letter-by-letter and write numbers as you hear them.",
+          "Watch for <b>corrections</b> — a speaker may say a number then change it."],
+   drills:[
+    L("My surname is Smith — that's S-M-I-T-H. And the postcode is B-T-4 7-G-Q.",
+      "The surname is:",["Smyth","Smith","Smithe"],1,"Right — S-M-I-T-H.","Spelled out as Smith."),
+    D("If you hear '...at four — sorry, at five o'clock', the answer is:",["four","five","both"],1,"Yes — take the correction.","The speaker corrected it to five."),
+    D("For a price like 'fifteen fifty', you write:",["£15.50","£1550","£50.15"],0,"Right — £15.50.","'Fifteen fifty' means £15.50.")
+   ],move:"Have someone spell a name and a postcode aloud; write them down correctly."},
+  {id:"ie-l-form",title:"Form, note & table completion",icon:"📝",
+   intro:["You fill gaps in a form, notes, or a table with words from the recording. <b>Obey the word limit</b> (e.g. NO MORE THAN TWO WORDS AND/OR A NUMBER) and <b>spell correctly</b> — a misspelt word is marked wrong.",
+          "Check singular vs plural; the grammar of the sentence tells you which."],
+   drills:[
+    D("Limit: ONE WORD AND/OR A NUMBER. Allowed answer:",["nine thirty","platform 9","the main hall"],1,"Right — 'platform 9' is one word + a number.","One word and/or a number — 'platform 9' fits."),
+    D("A correct word spelled wrong is:",["still correct","marked wrong","worth half"],1,"Yes — spelling counts.","Spelling matters: misspelt = wrong."),
+    L("You'll need to bring two documents and a passport-sized photo.",
+      "Gap: 'Bring two ____.' Answer:",["document","documents","photos"],1,"Right — plural 'documents'.","The sentence needs the plural form.")
+   ],move:"Fill a 4-line form from a short spoken message, obeying a 2-word limit."},
+  {id:"ie-l-mcq",title:"Multiple choice & matching",icon:"🔀",
+   intro:["For multiple choice and matching, the audio <b>paraphrases</b> the options — it rarely uses the exact words on the page. Listen for meaning.",
+          "Beware <b>distractors</b>: a speaker mentions an option then rejects it."],
+   drills:[
+    L("I was going to study biology, but in the end I chose chemistry.",
+      "Which subject did the speaker choose?",["biology","chemistry","neither"],1,"Right — chemistry (biology was rejected).","'But in the end' signals the real answer: chemistry."),
+    D("Options on the page are usually:",["word-for-word in the audio","paraphrased in the audio","not mentioned"],1,"Yes — listen for the paraphrase.","The recording rewords the options."),
+    D("A distractor is:",["the correct answer","an option mentioned then rejected","background noise"],1,"Right — a tempting wrong option.","Distractors are mentioned then dismissed.")
+   ],move:"Listen for a 'but/however' in a clip and note what it changes."},
+  {id:"ie-l-map",title:"Maps, plans & diagrams",icon:"🗺️",
+   intro:["You label a map or plan with letters or words. <b>Orient yourself first</b>: find 'you are here', the entrance, and the compass.",
+          "Follow direction language: <b>opposite, next to, on your left, at the end of, second turning</b>."],
+   drills:[
+    L("From the entrance, go straight ahead; the library is the second room on your right.",
+      "The library is:",["first on the left","second on the right","opposite the entrance"],1,"Right — second on the right.","Follow the directions: second room, right side."),
+    D("Before labelling a map you should find:",["the entrance and orientation","the longest word","the title only"],0,"Yes — orient first.","Locate 'you are here', entrance, and compass first."),
+    D("'Opposite the café' means:",["next to it","facing it across the way","behind the map"],1,"Right — directly across from it.","Opposite = directly across from.")
+   ],move:"Describe how to get from your door to the kitchen using left/right/past."},
+  {id:"ie-l-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"ie-l-distract",title:"Signposts & staying on track",icon:"🧭",
+   intro:["Speakers <b>signpost</b>: 'firstly… moving on… finally…'. These tell you which question you're near. If you miss one answer, <b>let it go</b> and catch the next — don't freeze.",
+          "Academic sections (3–4) go faster and use more paraphrase; keep your eyes one question ahead."],
+   drills:[
+    D("If you miss an answer, you should:",["stop and panic","move on to the next question","guess randomly now"],1,"Right — move on, don't freeze.","Missing one shouldn't cost you the next.","")
+,
+    D("Signpost words like 'finally' tell you:",["the topic is changing/ending","to stop listening","the answer is wrong"],0,"Yes — they mark structure.","Signposts show where you are in the talk."),
+    D("In sections 3–4 you should keep your eyes:",["on the last question","one question ahead","closed"],1,"Right — read ahead.","Stay one question ahead of the speaker.")
+   ],move:"Listen to a talk and note each signpost word you hear."},
+  {id:"ie-l-boss",title:"IELTS Listening: mastery test",icon:"👑",type:"boss",
+   intro:["Prove it — a quick mix of detail, completion, choice and direction."],
+   drills:[
+    L("The meeting's moved from Tuesday to Thursday this week.",
+      "The meeting is now on:",["Tuesday","Thursday","Wednesday"],1,"Right — moved to Thursday.","It changed from Tuesday to Thursday."),
+    D("Limit: NO MORE THAN TWO WORDS. Allowed:",["a return train ticket","return ticket","tickets for the train"],1,"Right — 'return ticket' is two words.","Two-word limit: 'return ticket'."),
+    L("Take the first left, and the office is at the end of the corridor.",
+      "The office is:",["first on the left","at the end of the corridor","opposite the lift"],1,"Right — at the end of the corridor.","Follow: first left, then to the end."),
+    D("Options on the page are usually ____ in the audio.",["identical","paraphrased","missing"],1,"Right — paraphrased.","Listen for meaning, not the same words.")
+   ],move:"You finished IELTS Listening — replay any node that felt shaky."}
+];
+var IE_LISTEN_PHASES=[
+ {name:"Foundations",sub:"how it works, predict, catch detail",ids:["ie-l-orient","ie-l-predict","ie-l-notes"]},
+ {name:"Question types",sub:"completion, choice, maps",ids:["ie-l-form","ie-l-mcq","ie-l-map","ie-l-chest1"]},
+ {name:"Stay on track",sub:"signposts & the boss",ids:["ie-l-distract","ie-l-boss"]}
+];
 
+var IE_READ_NODES=[
+  {id:"ie-r-orient",title:"How IELTS Reading works",icon:"📚",
+   intro:["IELTS Reading is <b>3 passages, 40 questions, 60 minutes</b> — and <b>no extra transfer time</b>, so write answers straight onto the sheet.",
+          "Academic uses 3 long academic texts; General Training uses everyday notices and one longer text. Skills are the same."],
+   drills:[
+    D("How long is the Reading test, and is there transfer time?",["60 min, no extra transfer time","90 min, +10 to transfer","30 min, +5"],0,"Right — 60 minutes, no extra time.","Unlike Listening, Reading has no transfer minutes."),
+    D("You should spend roughly:",["all 60 min on passage 3","about 20 min per passage","5 min total"],1,"Yes — about 20 minutes each.","Budget ~20 minutes per passage."),
+    D("General Training Reading mainly differs by:",["the skills tested","the text types (everyday material)","having no questions"],1,"Right — same skills, everyday texts.","GT uses everyday texts; the skills are identical.")
+   ],move:"Find a long article and skim it in two minutes for the gist."},
+  {id:"ie-r-skim",title:"Skim for gist",icon:"💨",
+   intro:["<b>Skim</b> first: read the title, first and last lines of each paragraph, to learn what each paragraph is about. Don't read every word yet.",
+          "A 1–2 minute skim builds a map so you can find answers fast."],
+   drills:[
+    D("Skimming means reading:",["every word carefully","quickly for the main idea","only the last paragraph"],1,"Right — fast, for gist.","Skim = quick read for the overall idea."),
+    D("A good skim focuses on:",["titles and topic sentences","footnotes","page numbers"],0,"Yes — titles and first lines.","Topic sentences carry the paragraph's gist."),
+    D("Skimming first helps you later:",["memorise the text","locate answers quickly","skip questions"],1,"Right — builds a map.","Knowing the layout speeds up scanning.")
+   ],move:"Skim an article and write one phrase per paragraph."},
+  {id:"ie-r-scan",title:"Scan for specifics",icon:"🔎",
+   intro:["<b>Scan</b> to find specific facts: names, dates, numbers, capitalised words. Move your eyes quickly until the target jumps out, then read closely around it.",
+          "Most answers come in <b>passage order</b>, so the next answer is usually below the last."],
+   drills:[
+    D("Scanning is best for finding:",["the main idea","a specific name or number","the writer's tone"],1,"Right — specific details.","Scan for facts; skim for gist."),
+    D("Answers usually appear:",["in random order","in passage order","only at the end"],1,"Yes — roughly in order.","Use passage order to locate the next answer."),
+    D("Capital letters and numbers are useful because:",["they're easy to scan for","they're always answers","they're decorative"],0,"Right — they stand out.","Names/dates are easy scan targets.")
+   ],move:"Scan a page to find a date and a proper name as fast as you can."},
+  {id:"ie-r-tfng",title:"True / False / Not Given",icon:"⚖️",
+   intro:["TRUE = the text agrees with the statement. FALSE = the text <b>contradicts</b> it. NOT GIVEN = the text simply doesn't say.",
+          "Most marks are lost confusing FALSE with NOT GIVEN: FALSE needs a clear contradiction; NOT GIVEN means the info is genuinely absent."],
+   drills:[
+    D("The text says nothing about the statement's topic. Answer:",["False","Not Given","True"],1,"Right — no info = Not Given.","If it's neither confirmed nor contradicted, it's Not Given."),
+    D("Statement: all staff were trained. Text: most staff were trained. Answer:",["True","False","Not Given"],1,"Correct — all vs most is a contradiction.","Quantity words: 'all' contradicts 'most' = False."),
+    D("FALSE requires the text to:",["omit the idea","contradict the statement","repeat it"],1,"Right — a clear contradiction.","False = the text says the opposite.")
+   ],move:"Find a news claim and decide: confirm, contradict, or not mention?"},
+  {id:"ie-r-ynng",title:"Yes / No / Not Given",icon:"💬",
+   intro:["Same logic as TFNG, but about the <b>writer's opinions or claims</b>, not facts. YES = the writer agrees; NO = the writer disagrees; NOT GIVEN = the writer never states that view.",
+          "Look for opinion language: 'argues, believes, surprisingly, should'."],
+   drills:[
+    D("YES/NO/NOT GIVEN questions test the:",["facts in the text","writer's views/claims","reader's opinion"],1,"Right — the writer's opinion.","YNNG is about the writer's stance."),
+    D("Writer says a policy is 'misguided'. Statement: the writer supports the policy. Answer:",["Yes","No","Not Given"],1,"Correct — 'misguided' = disagrees.","The writer opposes it, so No."),
+    D("If the writer never gives that opinion, answer:",["Yes","No","Not Given"],2,"Right — Not Given.","No stated view = Not Given.")
+   ],move:"Read an opinion column and note one view the writer clearly holds."},
+  {id:"ie-r-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"ie-r-head",title:"Matching headings",icon:"🏷️",
+   intro:["You match the best heading to each paragraph. The heading captures the paragraph's <b>main idea</b>, not one small detail.",
+          "Do the easy paragraphs first and cross off headings as you use them."],
+   drills:[
+    D("A heading should capture the paragraph's:",["first sentence only","main idea","longest example"],1,"Right — the overall main idea.","A striking detail is the classic trap."),
+    D("If two headings seem to fit, pick the one that:",["matches one keyword","covers the whole paragraph","is shortest"],1,"Yes — it must fit the whole paragraph.","One keyword is a trap; choose full coverage."),
+    D("A smart order is to:",["go strictly top to bottom","do the easy paragraphs first","guess all at once"],1,"Right — bank the easy ones.","Easy matches first narrows the rest.")
+   ],move:"Give a one-line heading to each paragraph of a short article."},
+  {id:"ie-r-match",title:"Matching information & features",icon:"🔗",
+   intro:["You locate which paragraph contains a piece of information, or match features (people, theories, years) to statements. The idea is <b>paraphrased</b>, so match meaning, not words.",
+          "Some paragraphs/features may be used more than once or not at all — read the instructions."],
+   drills:[
+    D("The text usually expresses the idea by:",["the exact same words","paraphrasing it","never mentioning it"],1,"Right — match the meaning.","IELTS paraphrases; match the idea."),
+    D("A paragraph in a matching task can be:",["used exactly once","used more than once or not at all","ignored entirely"],1,"Yes — check the rubric.","Often a paragraph is reused or unused."),
+    D("To match a feature to a name, find:",["the longest sentence","where that name is discussed","the first paragraph"],1,"Right — locate the name.","Scan to where the person/theory appears.")
+   ],move:"Reword one sentence so it keeps the meaning but shares no key words."},
+  {id:"ie-r-complete",title:"Completion (sentence, summary, notes)",icon:"✏️",
+   intro:["You complete sentences, a summary, notes, or a table using words <b>from the passage</b>. Obey the word limit exactly and copy words as they appear.",
+          "Answers usually follow passage order; check the word fits grammatically."],
+   drills:[
+    D("Limit: NO MORE THAN TWO WORDS. Allowed:",["a busy market street","ancient bridge","the old stone bridge"],1,"Right — 'ancient bridge' is two words.","Count the words; articles count too."),
+    D("Completion answers usually appear:",["in random order","in passage order","only in the last paragraph"],1,"Yes — they follow the passage.","Use passage order to find them."),
+    D("You should take the words:",["from your own knowledge","straight from the passage","from the questions"],1,"Right — from the text.","Copy the exact words the passage uses.")
+   ],move:"Summarise a paragraph in one sentence using only its own words."},
+  {id:"ie-r-mcq",title:"Multiple choice",icon:"✅",
+   intro:["Read the question stem first, predict the answer, then check the options. Wrong options are often <b>true statements that don't answer the question</b>, or use a word from the text but twist the meaning.",
+          "Eliminate two clearly wrong options to improve your odds."],
+   drills:[
+    D("A common wrong option is one that is:",["true but doesn't answer the question","obviously silly","not in the text"],0,"Right — true but off-target.","IELTS hides traps as true-but-irrelevant."),
+    D("Best first step on an MCQ:",["read options then guess","read the stem and predict","pick the longest option"],1,"Yes — predict from the stem.","Predict, then match to an option."),
+    D("If stuck, you should:",["leave it blank","eliminate wrong options first","pick A always"],1,"Right — narrow it down.","Eliminating raises your odds.")
+   ],move:"On any quiz question, cross out two wrong options before choosing."},
+  {id:"ie-r-pace",title:"Pacing & no transfer time",icon:"⏱️",
+   intro:["With 60 minutes for 3 passages and <b>no extra transfer time</b>, write answers directly on the sheet as you go. Don't sink 10 minutes into one hard question.",
+          "If stuck, mark a sensible guess (never leave blanks — there's no penalty) and move on."],
+   drills:[
+    D("Because there's no transfer time, you should:",["copy answers at the end","write straight onto the sheet","memorise them"],1,"Right — write as you go.","No spare minutes to copy later."),
+    D("Should you ever leave a blank?",["yes, if unsure","no — always guess","only on passage 3"],1,"Right — no penalty for wrong.","Always put an answer; blanks can't score."),
+    D("If one question is eating time, you should:",["keep going until solved","guess and move on","skip the passage"],1,"Yes — protect your time.","Mark a guess and come back if time allows.")
+   ],move:"Set a 20-minute timer and finish one full passage within it."},
+  {id:"ie-r-boss",title:"IELTS Reading: mastery test",icon:"👑",type:"boss",
+   intro:["Prove your Reading skills — a quick mix of TFNG, YNNG, headings and completion."],
+   drills:[
+    D("Statement: the festival is held every year. Text: it is held each summer. Answer:",["True","False","Not Given"],0,"Right — each summer = yearly.","'Each summer' confirms it's annual: True."),
+    D("Writer calls a plan 'flawed'. Statement: the writer backs the plan. Answer:",["Yes","No","Not Given"],1,"Correct — 'flawed' = disagrees.","The writer opposes it: No."),
+    D("A heading matches a paragraph's:",["main idea","first word","longest sentence"],0,"Yes — the main idea.","Headings capture the main idea."),
+    D("Limit: ONE WORD. Allowed answer:",["stone walls","walls","the wall"],1,"Right — 'walls' is one word.","One word only — 'walls'.")
+   ],move:"You finished IELTS Reading — revisit any node that felt shaky."}
+];
+var IE_READ_PHASES=[
+ {name:"Foundations",sub:"how it works, skim, scan",ids:["ie-r-orient","ie-r-skim","ie-r-scan"]},
+ {name:"Judge the claim",sub:"True/False/Not Given · Yes/No/Not Given",ids:["ie-r-tfng","ie-r-ynng","ie-r-chest1"]},
+ {name:"Matching",sub:"headings, information & features",ids:["ie-r-head","ie-r-match"]},
+ {name:"Complete & master",sub:"completion, MCQ, pacing, boss",ids:["ie-r-complete","ie-r-mcq","ie-r-pace","ie-r-boss"]}
+];
+
+var IE_WRITE_NODES=[
+  {id:"ie-w-t1over",title:"Task 1: the overview",icon:"📊",
+   intro:["Academic Task 1 (150+ words, ~20 min) describes a chart, graph, map or process — <b>no opinions</b>. The single most important sentence is the <b>overview</b>: the main trend or biggest contrast.",
+          "Shape: a 1-sentence intro (paraphrase the prompt) → an overview of the main features → 1–2 paragraphs of key data."],
+   drills:[
+    D("In Academic Task 1 you should NOT:",["describe the main trend","give your opinion","compare figures"],1,"Right — no opinions in Task 1.","Save opinions for Task 2."),
+    D("The most important sentence is the:",["title","overview of main features","final figure"],1,"Yes — the overview.","Examiners look for a clear overview."),
+    D("Task 1 should be at least:",["50 words","150 words","400 words"],1,"Right — 150+ words.","Aim for 150 words in ~20 minutes.")
+   ],move:"Write a one-sentence overview of any chart's main trend."},
+  {id:"ie-w-t1lang",title:"Task 1: data language",icon:"📈",
+   intro:["Use precise change words: <b>rose, increased, climbed, fell, declined, plummeted, peaked, levelled off, fluctuated</b> — and pair them with adverbs (sharply, gradually, slightly).",
+          "Group and compare data instead of listing every number; quote a few key figures accurately."],
+   drills:[
+    D("'Sales went up a lot then stopped rising' is best as:",["plummeted then fell","rose sharply then levelled off","fluctuated wildly"],1,"Right — rose sharply, then levelled off.","Match the words to the movement."),
+    D("Good Task 1 writing:",["lists every single number","groups and compares key data","gives no numbers"],1,"Yes — group and compare.","Select key figures; don't list them all."),
+    D("'Gradually' describes change that is:",["sudden","slow and steady","downward only"],1,"Right — slow and steady.","Adverbs show the speed of change.")
+   ],move:"Describe one rise and one fall using a change verb + an adverb."},
+  {id:"ie-w-t1types",title:"Task 1: processes, maps & GT letters",icon:"🔁",
+   intro:["A <b>process</b> diagram needs sequence words (first, next, then, finally) and often the <b>passive</b> ('the beans are roasted'). A <b>map</b> describes changes over time (was replaced by, a new road was built).",
+          "General Training Task 1 is a <b>letter</b>: open and close with the right tone (formal/semi-formal/informal) and cover all three bullet points."],
+   drills:[
+    D("A process diagram often uses:",["personal opinions","the passive and sequence words","past-tense stories"],1,"Right — passive + sequence.","'Is/are + past participle', plus first/next/finally."),
+    D("A GT letter must:",["ignore the bullets","cover all bullet points with the right tone","be 400 words"],1,"Yes — cover every bullet, correct tone.","Hit all three points and match the register."),
+    D("A map task usually describes:",["personal feelings","changes over time","a single number"],1,"Right — how a place changed.","Maps compare before/after over time.")
+   ],move:"Describe a simple process (making tea) in 3 passive sentences."},
+  {id:"ie-w-t2q",title:"Task 2: read the question",icon:"❓",
+   intro:["Task 2 (250+ words, ~40 min) is worth <b>more marks</b>. First, identify the <b>question type</b>: agree/disagree, discuss both views (and give your opinion), advantages/disadvantages, or problem/solution.",
+          "Answer the <b>exact</b> question. Going off-topic caps your score no matter how good the English."],
+   drills:[
+    D("If time is short, protect:",["Task 1","Task 2","neither"],1,"Right — Task 2 is worth more.","Task 2 carries more weight."),
+    D("'Discuss both views and give your opinion' means:",["pick one side only","cover both sides AND state your view","just list problems"],1,"Yes — both sides plus your opinion.","Miss a part and you lose marks."),
+    D("Going off-topic will:",["score higher","cap your score","be ignored"],1,"Right — it limits your band.","Task response is a scored criterion.")
+   ],move:"Take an essay prompt and name its question type in one phrase."},
+  {id:"ie-w-t2struct",title:"Task 2: structure",icon:"🏗️",
+   intro:["A clear shape scores well: <b>Introduction</b> (paraphrase the topic + state your position/thesis) → <b>two body paragraphs</b>, each with one main idea and a topic sentence → <b>short conclusion</b> that restates your position.",
+          "One clear idea per paragraph beats many half-ideas."],
+   drills:[
+    D("A good Task 2 introduction:",["lists every idea","paraphrases the topic and states a position","gives the conclusion only"],1,"Right — paraphrase + clear position.","State your stance up front."),
+    D("Each body paragraph should have:",["three unrelated ideas","one main idea with a topic sentence","no structure"],1,"Yes — one idea, signposted.","Topic sentence + development per paragraph."),
+    D("The conclusion should:",["add a brand-new argument","restate your position briefly","apologise"],1,"Right — restate, don't add new points.","Wrap up; no new arguments.")
+   ],move:"Write a thesis sentence that clearly agrees or disagrees with a prompt."},
+  {id:"ie-w-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"ie-w-t2dev",title:"Task 2: develop ideas & cohesion",icon:"🌱",
+   intro:["Develop each point with the chain <b>idea → reason → example → result</b>. A specific example (a study, a personal case, a 'for instance') is far more convincing than a vague claim.",
+          "Link ideas with cohesion: <b>however, moreover, as a result, for example, in contrast</b> — but don't overuse them."],
+   drills:[
+    D("The strongest way to support a point is:",["repeat it louder","add a reason and a specific example","use rarer words"],1,"Right — reason + example.","Develop with reason and example."),
+    D("Cohesive devices (however, moreover) should be:",["in every sentence","used naturally to link ideas","avoided entirely"],1,"Yes — natural linking.","Use linkers to connect, not to decorate."),
+    D("A vague claim with no example tends to:",["score top marks","weaken your argument","save time well"],1,"Right — it's less convincing.","Examples lift task response and coherence.")
+   ],move:"Take one opinion and add a reason and a real example to it."},
+  {id:"ie-w-edit",title:"Range, accuracy & timing",icon:"🔧",
+   intro:["Bands reward a <b>range</b> of accurate grammar (mix simple and complex sentences) and vocabulary (paraphrase, don't repeat). Leave 2–3 minutes to <b>proofread</b> for tense, agreement, articles and spelling.",
+          "Split your hour: ~20 minutes on Task 1, ~40 on Task 2."],
+   drills:[
+    D("Band scores reward grammar that is:",["only simple sentences","a range used accurately","always complex and risky"],1,"Right — varied and accurate.","Mix sentence types correctly."),
+    D("Best time split for the hour:",["30/30","20 on Task 1, 40 on Task 2","50 on Task 1"],1,"Yes — 20/40.","Task 2 deserves the larger share."),
+    D("Proofreading should check:",["font size","tense, agreement, articles, spelling","the title"],1,"Right — accuracy basics.","Catch small errors before time's up.")
+   ],move:"Write two sentences — one simple, one complex — then fix any error."},
+  {id:"ie-w-boss",title:"IELTS Writing: mastery test",icon:"👑",type:"boss",
+   intro:["Prove it — a quick mix across Task 1 description, Task 2 question types, structure and development."],
+   drills:[
+    D("In Academic Task 1 you must include:",["your opinion","a clear overview","a conclusion with new ideas"],1,"Right — the overview.","Task 1 needs a strong overview, no opinion."),
+    D("'Advantages and disadvantages' essays must:",["argue one side","cover both sides","list problems only"],1,"Yes — both sides.","Address advantages and disadvantages."),
+    D("Each body paragraph should carry:",["one main idea","three ideas","no idea"],0,"Right — one main idea.","One idea per paragraph, well developed."),
+    D("Best support for a point:",["a vague claim","a reason plus a specific example","a longer word"],1,"Right — reason + example.","Develop with reason and example.")
+   ],move:"You finished IELTS Writing — revisit any node that felt shaky."}
+];
+var IE_WRITE_PHASES=[
+ {name:"Task 1",sub:"overview, data language, variety",ids:["ie-w-t1over","ie-w-t1lang","ie-w-t1types"]},
+ {name:"Task 2 foundations",sub:"read the question, structure",ids:["ie-w-t2q","ie-w-t2struct","ie-w-chest1"]},
+ {name:"Develop & master",sub:"development, range & timing, boss",ids:["ie-w-t2dev","ie-w-edit","ie-w-boss"]}
+];
+
+var IE_SPEAK_NODES=[
+  {id:"ie-s-orient",title:"How IELTS Speaking works",icon:"🎙️",
+   intro:["IELTS Speaking is a <b>face-to-face interview</b> with an examiner (~11–14 min), in <b>3 parts</b>. It's scored on four equal criteria: <b>fluency & coherence, lexical resource, grammatical range & accuracy, pronunciation</b>.",
+          "There's no 'right answer' — examiners assess how you speak, not what you believe."],
+   drills:[
+    D("IELTS Speaking has how many parts?",["two","three","five"],1,"Right — three parts.","Part 1 interview, Part 2 long turn, Part 3 discussion."),
+    D("Which is NOT a scoring criterion?",["fluency & coherence","lexical resource","handwriting"],2,"Correct — handwriting isn't scored (it's spoken).","The four criteria are fluency, lexis, grammar, pronunciation."),
+    D("The examiner scores:",["whether your opinion is correct","how well you speak","your accent's nationality"],1,"Right — how you communicate.","Content opinions aren't graded; delivery is.")
+   ],move:"Answer aloud: 'Where are you from?' in two full sentences."},
+  {id:"ie-s-p1",title:"Part 1: the interview",icon:"💬",
+   intro:["Part 1 (4–5 min) asks familiar questions about you: home, work/study, hobbies, food. <b>Don't give one-word answers</b> — extend with a reason or example.",
+          "Aim for 2–3 sentences per answer; keep it natural, not memorised."],
+   drills:[
+    L("Do you enjoy cooking?",
+      "The best answer is:",["'Yes.'","'Yes, I do — especially on weekends, because it helps me relax.'","'No comment.'"],1,"Right — extend with a reason.","Add detail: a reason or example."),
+    D("A one-word answer in Part 1:",["is ideal","gives the examiner too little to score","saves time well"],1,"Yes — extend every answer.","Short answers limit your fluency score."),
+    D("Part 1 answers should be about:",["one word","2–3 natural sentences","a 2-minute speech"],1,"Right — a few sentences.","Keep Part 1 answers short but developed.")
+   ],move:"Answer 'What do you do in your free time?' in 3 sentences."},
+  {id:"ie-s-p2",title:"Part 2: the long turn",icon:"🗣️",
+   intro:["You get a <b>cue card</b> with a topic and bullet points, <b>1 minute to prepare</b> (make notes!), then speak for <b>1.5–2 minutes</b> without interruption.",
+          "Use your prep minute to jot keywords for each bullet — not full sentences."],
+   drills:[
+    D("In Part 2 you prepare for:",["no time","one minute","ten minutes"],1,"Right — one minute.","Use the minute to make quick notes."),
+    D("You should speak for about:",["20 seconds","1.5–2 minutes","5 minutes"],1,"Yes — up to two minutes.","Keep going for the full long turn."),
+    D("Your prep notes should be:",["full sentences","a few keywords","a drawing"],1,"Right — keywords only.","Jot keywords for each bullet, then talk.")
+   ],move:"Take a topic (a memorable trip) and make 1-minute keyword notes."},
+  {id:"ie-s-p2dev",title:"Part 2: cover the bullets & keep going",icon:"📋",
+   intro:["Cover <b>every bullet</b> on the card, and don't stop early. If you run short, <b>add detail</b>: how you felt, why it mattered, what happened next. Tell it like a story.",
+          "It's fine to invent details — examiners reward fluent, developed speech, not true facts."],
+   drills:[
+    D("If you finish the bullets with time left, you should:",["stop talking","add feelings/reasons/what happened next","repeat the card"],1,"Right — keep developing.","Extend with detail until the examiner stops you."),
+    D("Inventing details on the cue card is:",["not allowed","fine — it's about language","an automatic fail"],1,"Yes — content isn't fact-checked.","Make it up if needed; speak fluently."),
+    D("You should cover:",["only the first bullet","every bullet on the card","none of them"],1,"Right — all bullets.","Address each point on the card.")
+   ],move:"Speak for 90 seconds about a person you admire, covering who/why/how."},
+  {id:"ie-s-chest1",title:"Treasure",icon:"🎁",type:"chest"},
+  {id:"ie-s-p3",title:"Part 3: the discussion",icon:"🧠",
+   intro:["Part 3 (4–5 min) is an abstract discussion linked to the Part 2 topic ('Why do people…', 'How might this change…'). Give an <b>opinion + reason + example</b>, and be ready to <b>speculate</b> ('it might…', 'one possibility is…').",
+          "It's fine to think aloud briefly: 'That's an interesting question — I'd say…'."],
+   drills:[
+    L("Why do you think people enjoy travelling?",
+      "A strong Part 3 answer:",["'I don't know.'","gives an opinion, a reason and an example","names one country"],1,"Right — opinion + reason + example.","Develop abstract answers fully."),
+    D("Part 3 questions are usually:",["about you personally","abstract/general","yes-no only"],1,"Yes — broader and abstract.","Part 3 moves from you to society/ideas."),
+    D("To handle a hard question, you can:",["stay silent","speculate with 'it might…'","change the subject"],1,"Right — speculate aloud.","Hedging language keeps you fluent.")
+   ],move:"Answer 'How has technology changed how we work?' with opinion + reason + example."},
+  {id:"ie-s-fluency",title:"Fluency & coherence",icon:"🌊",
+   intro:["Fluency means speaking <b>smoothly</b> at a natural pace, not fast or perfect. Reduce fillers ('um', 'like') by pausing silently to think. Use linkers to stay coherent: <b>well, actually, on the other hand, that said</b>.",
+          "A short silent pause sounds far more confident than a string of 'um's."],
+   drills:[
+    D("To reduce 'um' and 'like', you should:",["speak faster","pause silently to think","memorise scripts"],1,"Right — a silent pause beats fillers.","Replace fillers with brief pauses."),
+    D("Fluency means:",["a native accent","smooth, natural-paced speech","talking as fast as possible"],1,"Yes — smooth and natural.","Fluency is flow, not speed or accent."),
+    D("Linkers like 'on the other hand' help you:",["sound robotic","connect ideas coherently","fill silence with noise"],1,"Right — they aid coherence.","Linkers signal how ideas relate.")
+   ],move:"Speak for 30 seconds on your week; count and cut your fillers."},
+  {id:"ie-s-lexis",title:"Lexical resource & paraphrase",icon:"📖",
+   intro:["Show a <b>range</b> of vocabulary and <b>paraphrase</b> instead of repeating the examiner's words. Use topic vocabulary and a few less common words/collocations — used correctly beats rare-but-wrong.",
+          "If you forget a word, describe it ('the thing you use to…') rather than freezing."],
+   drills:[
+    D("Repeating the examiner's exact words shows:",["great vocabulary","limited lexical range","perfect grammar"],1,"Right — paraphrase instead.","Reword to show range."),
+    D("A rare word used incorrectly is:",["better than a correct common one","worse than a correct common word","always best"],1,"Yes — accuracy first.","Correct common words beat wrong rare ones."),
+    D("If you forget a word, you should:",["stop speaking","describe it in other words","switch language"],1,"Right — paraphrase around it.","Describe it to keep going.")
+   ],move:"Say a sentence, then say it again paraphrasing the key word."},
+  {id:"ie-s-boss",title:"IELTS Speaking: mastery test",icon:"👑",type:"boss",
+   intro:["Prove it — a quick mix across the three parts and the delivery skills."],
+   drills:[
+    D("Part 1 answers should be:",["one word","2–3 developed sentences","two minutes long"],1,"Right — short but extended.","Extend Part 1 answers with a reason."),
+    D("Part 2 long turn lasts about:",["20 seconds","1.5–2 minutes","6 minutes"],1,"Yes — up to two minutes.","Speak for the full long turn."),
+    L("Do you think city life will change in the future?",
+      "Best Part 3 approach:",["say 'maybe'","speculate with an opinion, reason and example","list cities"],1,"Right — develop and speculate.","Opinion + reason + example, hedged."),
+    D("Best way to cut fillers:",["talk faster","pause silently to think","add more 'um's"],1,"Right — silent pauses.","Replace 'um' with a brief pause.")
+   ],move:"You finished IELTS Speaking — revisit any node that felt shaky."}
+];
+var IE_SPEAK_PHASES=[
+ {name:"Parts 1 & 2",sub:"interview and the long turn",ids:["ie-s-orient","ie-s-p1","ie-s-p2","ie-s-p2dev","ie-s-chest1"]},
+ {name:"Part 3 & delivery",sub:"discussion, fluency, lexis",ids:["ie-s-p3","ie-s-fluency","ie-s-lexis"]},
+ {name:"Mastery",sub:"the boss",ids:["ie-s-boss"]}
+];
+Object.assign(HINTS,{
+ "ie-l-orient":[["40 questions, 4 recordings, heard once."],["Answer as you listen; transfer later."]],
+ "ie-l-predict":[["Read the questions in the lead-in.","Predict the word type for each gap."],["Underline keywords to prime your ear."]],
+ "ie-l-notes":[["Spell names; write numbers as you hear them.","'Fifteen fifty' = £15.50."],["Take any correction the speaker makes."]],
+ "ie-l-form":[["Obey the word limit exactly.","Spelling counts — misspelt = wrong."],["Check singular vs plural."]],
+ "ie-l-mcq":[["Options are paraphrased, not identical.","Listen for meaning."],["Beware distractors: mentioned then rejected."]],
+ "ie-l-map":[["Orient first: entrance, 'you are here', compass.","Follow opposite/next to/second on the right."],["Match directions, not just words."]],
+ "ie-l-distract":[["Signposts (firstly/finally) show where you are.","Miss one? Move on, don't freeze."],["Stay one question ahead."]],
+ "ie-l-chest1":[["Open it for gems!"]],
+ "ie-l-boss":[["Take corrections; obey word limits.","Options are paraphrased."]],
+ "ie-r-orient":[["3 passages, 40 Q, 60 min, no transfer time.","~20 min per passage."],["Write straight onto the sheet."]],
+ "ie-r-skim":[["Skim titles and first lines for gist.","Don't read every word yet."],["Build a map of the passage."]],
+ "ie-r-scan":[["Scan for names, dates, numbers.","Answers come in passage order."],["Read closely once you find the target."]],
+ "ie-r-tfng":[["No info = Not Given.","'All' vs 'most' is a contradiction = False."],["False needs a clear contradiction."]],
+ "ie-r-ynng":[["YNNG = the writer's views.","'Flawed/misguided' = the writer disagrees."],["No stated view = Not Given."]],
+ "ie-r-head":[["Match the main idea, not a detail.","Do easy paragraphs first."],["Cross off headings as used."]],
+ "ie-r-match":[["Match meaning — it's paraphrased.","A paragraph may be used more than once."],["Scan to where the name/idea appears."]],
+ "ie-r-complete":[["Obey the word limit; articles count.","Take words straight from the passage."],["Answers follow passage order."]],
+ "ie-r-mcq":[["Read the stem and predict first.","Wrong options are often true-but-off-target."],["Eliminate two wrong options."]],
+ "ie-r-pace":[["No transfer time — write as you go.","Never leave a blank; always guess."],["Don't sink 10 min into one question."]],
+ "ie-r-chest1":[["Open it for gems!"]],
+ "ie-r-boss":[["'Each summer' = yearly = True.","Writer 'flawed' = No."]],
+ "ie-w-t1over":[["Task 1: describe, no opinion.","The overview is the key sentence."],["150+ words in ~20 minutes."]],
+ "ie-w-t1lang":[["Use rose/fell/peaked/levelled off + adverbs.","Group and compare key data."],["Quote a few figures accurately."]],
+ "ie-w-t1types":[["Process: passive + sequence words.","GT letter: right tone, all bullets."],["Maps describe changes over time."]],
+ "ie-w-t2q":[["Identify the question type first.","Answer the exact question."],["Off-topic caps your score."]],
+ "ie-w-t2struct":[["Intro: paraphrase + clear position.","One main idea per body paragraph."],["Conclusion restates, no new points."]],
+ "ie-w-t2dev":[["Idea → reason → example → result.","A specific example convinces."],["Link with however/moreover, naturally."]],
+ "ie-w-edit":[["Mix simple and complex sentences.","Split the hour 20/40."],["Proofread tense, agreement, articles."]],
+ "ie-w-chest1":[["Open it for gems!"]],
+ "ie-w-boss":[["Task 1 needs an overview, no opinion.","One developed idea per paragraph."]],
+ "ie-s-orient":[["3 parts, ~11–14 min, face-to-face.","Scored on fluency, lexis, grammar, pronunciation."],["No 'right answer' — delivery is graded."]],
+ "ie-s-p1":[["Extend answers with a reason/example.","2–3 natural sentences each."],["Avoid one-word answers."]],
+ "ie-s-p2":[["1 minute to prepare — make keyword notes.","Speak 1.5–2 minutes."],["Notes = keywords, not sentences."]],
+ "ie-s-p2dev":[["Cover every bullet; keep going.","Add feelings/reasons/what happened next."],["Inventing details is fine."]],
+ "ie-s-p3":[["Opinion + reason + example.","Speculate: 'it might…'."],["Part 3 is abstract/general."]],
+ "ie-s-fluency":[["Pause silently instead of 'um'.","Fluency is smooth, natural pace."],["Use linkers for coherence."]],
+ "ie-s-lexis":[["Paraphrase the examiner's words.","Correct common beats wrong rare."],["Forgot a word? Describe it."]],
+ "ie-s-chest1":[["Open it for gems!"]],
+ "ie-s-boss":[["Extend Part 1; fill the Part 2 long turn.","Part 3: speculate with opinion + reason."]]
+});
+Object.assign(TIPCARDS,{
+ "ie-l-orient":{rule:"40 questions, 4 recordings, heard once — answer as you listen.",how:["Sections 1–2 everyday, 3–4 academic.","Paper test gives 10 min to transfer."],trap:"Waiting to 'understand it all' instead of answering live."},
+ "ie-l-predict":{rule:"Use the lead-in to read questions and predict the word type.",how:["Underline keywords.","Decide: number, name, or noun?"],trap:"Sitting idle until the audio starts."},
+ "ie-l-notes":{rule:"Capture exact detail; take any correction the speaker makes.",how:["Spell names; write numbers live.","'Fifteen fifty' = £15.50."],trap:"Writing the first number when it's later corrected."},
+ "ie-l-form":{rule:"Obey the word limit and spell correctly.",how:["Count words; articles count.","Check singular vs plural."],trap:"A correct word spelled wrong — still marked wrong."},
+ "ie-l-mcq":{rule:"Options are paraphrased; listen for meaning, beware distractors.",how:["Match the idea, not the words.","Watch 'but/however' reversals."],trap:"Picking an option just because its word was said."},
+ "ie-l-map":{rule:"Orient first, then follow direction language.",how:["Find entrance, 'you are here', compass.","Track opposite/next to/second right."],trap:"Labelling before you've oriented the map."},
+ "ie-l-distract":{rule:"Use signposts; if you miss one, move on.",how:["Listen for firstly/next/finally.","Stay one question ahead."],trap:"Freezing on a missed answer and losing the next."},
+ "ie-l-boss":{rule:"Detail + word limits + paraphrase, all at once.",how:["Take corrections.","Obey the limit; listen for meaning."],trap:"Exact-word matching."},
+ "ie-r-orient":{rule:"3 passages, 60 minutes, no transfer time.",how:["~20 minutes per passage.","Write answers straight on the sheet."],trap:"Expecting extra minutes to copy answers."},
+ "ie-r-skim":{rule:"Skim for gist before reading closely.",how:["Read titles and topic sentences.","One phrase per paragraph."],trap:"Reading every word from the start."},
+ "ie-r-scan":{rule:"Scan for specific facts; answers run in order.",how:["Hunt names, dates, numbers.","Read closely once you land."],trap:"Re-reading the whole text for one detail."},
+ "ie-r-tfng":{rule:"True agrees, False contradicts, Not Given is silent.",how:["No info = Not Given.","'All' vs 'most' = False."],trap:"Calling a missing idea 'False'."},
+ "ie-r-ynng":{rule:"YNNG is about the writer's opinions, not facts.",how:["Spot 'argues/believes/should'.","No stated view = Not Given."],trap:"Using your own opinion instead of the writer's."},
+ "ie-r-head":{rule:"A heading captures the paragraph's main idea.",how:["Do easy paragraphs first.","Cross off used headings."],trap:"Choosing a heading that matches one detail."},
+ "ie-r-match":{rule:"Match meaning — the text paraphrases.",how:["Scan to where the idea appears.","Some options reused or unused."],trap:"Hunting identical words."},
+ "ie-r-complete":{rule:"Use words from the passage within the word limit.",how:["Articles count toward the limit.","Check it fits grammatically."],trap:"Paraphrasing when you must copy the text."},
+ "ie-r-mcq":{rule:"Predict from the stem, then eliminate wrong options.",how:["Read the question first.","Cut two clear wrongs."],trap:"A true statement that doesn't answer the question."},
+ "ie-r-pace":{rule:"No transfer time; never leave blanks.",how:["Write as you read.","Guess and move on when stuck."],trap:"Spending 10 minutes on one question."},
+ "ie-r-boss":{rule:"Apply TFNG, YNNG, headings and completion together.",how:["Contradiction = False/No.","Headings = main idea."],trap:"Confusing Not Given with False/No."},
+ "ie-w-t1over":{rule:"Task 1 describes data with a clear overview — no opinion.",how:["Paraphrase the prompt.","State the main trend/contrast."],trap:"Giving an opinion or skipping the overview."},
+ "ie-w-t1lang":{rule:"Use precise change verbs and group the data.",how:["rose/fell/peaked/levelled off + adverb.","Compare, don't list every number."],trap:"Listing every figure with no comparison."},
+ "ie-w-t1types":{rule:"Match the language to the visual type.",how:["Process: passive + sequence.","GT letter: tone + all bullets."],trap:"Describing a map with no time changes."},
+ "ie-w-t2q":{rule:"Identify the question type and answer it exactly.",how:["Agree/both views/adv-disadv/problem-solution.","Address every part."],trap:"A great essay that's off the actual question."},
+ "ie-w-t2struct":{rule:"Intro states a position; one idea per paragraph.",how:["Paraphrase + thesis up front.","Topic sentence each body para."],trap:"A conclusion that adds new arguments."},
+ "ie-w-t2dev":{rule:"Develop idea → reason → example → result.",how:["Use a specific example.","Link with natural cohesion."],trap:"Vague claims with no example."},
+ "ie-w-edit":{rule:"Show range accurately; budget 20/40 and proofread.",how:["Mix sentence types.","Check tense, agreement, articles."],trap:"Risky complex sentences full of errors."},
+ "ie-w-boss":{rule:"Task 1 overview + Task 2 response, structure, development.",how:["No opinion in Task 1.","One developed idea per paragraph."],trap:"Ignoring part of the Task 2 question."},
+ "ie-s-orient":{rule:"3 parts, ~13 min; scored on four equal criteria.",how:["Fluency, lexis, grammar, pronunciation.","No 'right' opinion."],trap:"Trying to give the 'correct' answer instead of speaking well."},
+ "ie-s-p1":{rule:"Extend Part 1 answers with a reason or example.",how:["2–3 natural sentences.","Keep it conversational."],trap:"One-word answers that give nothing to score."},
+ "ie-s-p2":{rule:"Use the prep minute for keyword notes; speak ~2 min.",how:["Jot keywords per bullet.","Don't write full sentences."],trap:"Wasting the minute or stopping after 30 seconds."},
+ "ie-s-p2dev":{rule:"Cover every bullet and keep developing.",how:["Add feelings, reasons, next steps.","Invent detail if needed."],trap:"Finishing the bullets and falling silent."},
+ "ie-s-p3":{rule:"Develop abstract answers with opinion, reason, example.",how:["Speculate: 'it might…'.","Think aloud briefly if needed."],trap:"One-line answers to broad questions."},
+ "ie-s-fluency":{rule:"Fluency is smooth, natural pace — cut fillers.",how:["Pause silently to think.","Use linkers for coherence."],trap:"A string of 'um' and 'like'."},
+ "ie-s-lexis":{rule:"Show range and paraphrase; accuracy beats rarity.",how:["Reword the examiner's words.","Describe a word you forget."],trap:"Rare words used incorrectly."},
+ "ie-s-boss":{rule:"Extend Part 1, fill Part 2, develop & speculate in Part 3.",how:["2–3 sentences in Part 1.","Opinion + reason + example in Part 3."],trap:"Short answers and long silences."}
+});
+
+var SECTIONS={
+ toefl:{ order:["reading","listening","writing","speaking"], labels:{reading:"Reading",listening:"Listening",writing:"Writing",speaking:"Speaking"},
+   map:{
+     reading:{eyebrow:"TOEFL \u00b7 Reading",nodes:CONTENT.toefl.nodes,phases:PHASES.toefl},
+     listening:{eyebrow:"TOEFL \u00b7 Listening",nodes:TF_LISTEN_NODES,phases:TF_LISTEN_PHASES},
+     writing:{eyebrow:"TOEFL \u00b7 Writing",nodes:TF_WRITE_NODES,phases:TF_WRITE_PHASES},
+     speaking:{eyebrow:"TOEFL \u00b7 Speaking",nodes:TF_SPEAK_NODES,phases:TF_SPEAK_PHASES}
+   }},
+ ielts:{ order:["listening","reading","writing","speaking"], labels:{listening:"Listening",reading:"Reading",writing:"Writing",speaking:"Speaking"},
+   map:{
+     listening:{eyebrow:"IELTS \u00b7 Listening",nodes:IE_LISTEN_NODES,phases:IE_LISTEN_PHASES},
+     reading:{eyebrow:"IELTS \u00b7 Reading",nodes:IE_READ_NODES,phases:IE_READ_PHASES},
+     writing:{eyebrow:"IELTS \u00b7 Writing",nodes:IE_WRITE_NODES,phases:IE_WRITE_PHASES},
+     speaking:{eyebrow:"IELTS \u00b7 Speaking",nodes:IE_SPEAK_NODES,phases:IE_SPEAK_PHASES}
+   }}
+};
+var sectionByExam={toefl:"reading",ielts:"listening"};
+function applySection(ex,sec){ var SS=SECTIONS[ex]; if(!SS||!SS.map[sec])return; sectionByExam[ex]=sec; CONTENT[ex].nodes=SS.map[sec].nodes; CONTENT[ex].eyebrow=SS.map[sec].eyebrow; PHASES[ex]=SS.map[sec].phases; }
+function setSection(sec){ if(!SECTIONS[exam]||!SECTIONS[exam].map[sec])return; applySection(exam,sec); OPENPHASE=null; renderMap(); window.scrollTo(0,0); }
+function renderSectionSel(){ var host=document.getElementById("sectionSel"); if(!host)return; var SS=SECTIONS[exam]; if(!SS){ host.style.display="none"; host.innerHTML=""; return; } var cur=sectionByExam[exam]; host.style.display="block"; host.innerHTML='<div class="eyebrow" style="margin:2px 0 4px">'+CONTENT[exam].name+' section</div><div class="ltabs secsel">'+SS.order.map(function(k){ var label=SS.labels[k]; return '<button class="ltab '+(cur===k?"on":"")+'" type="button" onclick="setSection(\''+k+'\')">'+label+'</button>'; }).join("")+'</div>'; }
 var OPENPHASE=null;
 var SVG_CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l9 -10"/></svg>';
 var SVG_PLAY='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11 -7z"/></svg>';
@@ -1403,7 +1819,7 @@ function renderPaths(){
   }).join("");
   host.innerHTML='<div class="pathhead">Choose your path</div><div class="pathsub">Pick an exam to open its gamified trail.</div><div class="paths">'+cards+'</div>';
 }
-function openPath(k){ if(!CONTENT[k])return; exam=k; var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="none"; var ev=document.getElementById("examView"); if(ev)ev.style.display="block"; renderAll(); selTabKey("trail"); window.scrollTo(0,0); }
+function openPath(k){ if(!CONTENT[k])return; exam=k; if(typeof SECTIONS!=="undefined"&&SECTIONS[k])applySection(k,sectionByExam[k]); var pp=document.getElementById("pathPicker"); if(pp)pp.style.display="none"; var ev=document.getElementById("examView"); if(ev)ev.style.display="block"; renderAll(); selTabKey("trail"); window.scrollTo(0,0); }
 
 function selTab(btn){ document.querySelectorAll(".ltab").forEach(function(t){t.classList.remove("on");}); btn.classList.add("on"); var t=btn.getAttribute("data-t"); document.querySelectorAll(".tb").forEach(function(el){ el.style.display = el.classList.contains("tab-"+t) ? "" : "none"; }); window.scrollTo(0,0); }
 function selTabKey(t){ var b=document.querySelector('.ltab[data-t="'+t+'"]'); if(b)selTab(b); }
