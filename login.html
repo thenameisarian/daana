@@ -254,6 +254,7 @@ body{
     </div>
 
     <div id="unlockView" style="display:none">
+      <div id="createdMsg" style="display:none;background:#0f2e28;border:1px solid #1f9d76;color:#7ff0c4;border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:13px;font-weight:700">✓ Account created! Now enter your access code below to unlock.</div>
       <div class="fl" style="margin-bottom:8px">// you're in &mdash; unlock your access</div>
       <form id="gate" autocomplete="off">
         <label class="fl" for="code">// access code &middot; 7-day pass</label>
@@ -567,14 +568,17 @@ function submitAuth(){
     }
     AUTHED=true; var u=r.user;
     if(u && u.access && !q.get("upgrade")){ success(u); return; }
-    showUnlock();
+    showUnlock(AUTH_MODE==="create");
   });
 }
-function showUnlock(){
+function showUnlock(justCreated){
   var av=document.getElementById("authView"); if(av)av.style.display="none";
   var uv=document.getElementById("unlockView"); if(uv)uv.style.display="block";
+  var cm=document.getElementById("createdMsg"); if(cm)cm.style.display=justCreated?"block":"none";
   renderPlans();
   var up=q.get("upgrade"); if(up==="course"||up==="tips") selectPlan(up);
+  if(uv&&uv.scrollIntoView){ try{ uv.scrollIntoView({behavior:"smooth",block:"start"}); }catch(e){ try{uv.scrollIntoView();}catch(_){} } }
+  var ce=document.getElementById("code"); if(ce&&justCreated){ try{ ce.focus(); }catch(e){} }
 }
 function signOut(){ apiPost("/api/auth/logout",{}).then(function(){ location.href="/login"; }).catch(function(){ location.href="/login"; }); }
 (function(){ var p=document.getElementById("aPw"); if(p)p.addEventListener("keydown",function(e){ if(e.key==="Enter") submitAuth(); }); })();
