@@ -133,6 +133,7 @@ body{
 .cd-u b{font-family:ui-monospace,monospace;font-size:25px;font-weight:800;color:var(--txt);line-height:1;font-variant-numeric:tabular-nums}
 .cd-u span{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--mut);margin-top:5px}
 .cd-c{font-size:20px;color:var(--teal);font-weight:800;margin-top:2px}
+.cd-live{font-size:19px;font-weight:800;color:#7ff0c4;letter-spacing:.01em;margin:8px 0 2px}
 .cd-date{font-size:11px;color:#8df0df;margin-top:9px;font-weight:700;letter-spacing:.04em}
 .logo{margin:14px auto 6px;display:flex;justify-content:center}
 .logo svg{height:84px;width:auto;display:block;filter:drop-shadow(0 8px 22px rgba(31,182,166,.45))}
@@ -221,14 +222,9 @@ body{
 
   <div class="stub">
     <div class="cd" id="cd">
-      <div class="cd-l">Next access drop</div>
-      <div class="cd-grid">
-        <div class="cd-u"><b id="cdD">00</b><span>days</span></div><div class="cd-c">:</div>
-        <div class="cd-u"><b id="cdH">00</b><span>hrs</span></div><div class="cd-c">:</div>
-        <div class="cd-u"><b id="cdM">00</b><span>min</span></div><div class="cd-c">:</div>
-        <div class="cd-u"><b id="cdS">00</b><span>sec</span></div>
-      </div>
-      <div class="cd-date" id="cdDate"></div>
+      <div class="cd-l">Access is open now</div>
+      <div class="cd-live">TOEFL lessons — free today 🎉</div>
+      <div class="cd-date">Create your free account below to start learning.</div>
     </div>
 
     <div class="term"><span class="pr">daana@gate:~$</span> <span id="termtxt"></span><span class="cursor"></span></div>
@@ -585,23 +581,7 @@ function signOut(){ apiPost("/api/auth/logout",{}).then(function(){ location.hre
 function boot(){ apiGet("/api/account").then(function(r){ if(r && r.authed && r.user){ AUTHED=true; if(r.user.access && !q.get("upgrade")){ route(r.user); return; } showUnlock(); } }); }
 boot();
 
-(function(){
-  function nextFirst(){ var n=new Date(); return new Date(n.getFullYear(), n.getMonth()+1, 1, 0,0,0,0); }
-  var months=["January","February","March","April","May","June","July","August","September","October","November","December"];
-  var target=nextFirst();
-  var dE=document.getElementById("cdD"),hE=document.getElementById("cdH"),mE=document.getElementById("cdM"),sE=document.getElementById("cdS"),dateE=document.getElementById("cdDate");
-  function pad(x){return String(x).padStart(2,"0");}
-  function upd(){
-    var now=new Date(); if(now>=target){target=nextFirst();}
-    dateE.textContent=months[target.getMonth()]+" 1, "+target.getFullYear();
-    var diff=Math.max(0,target-now), t=Math.floor(diff/1000);
-    dE.textContent=pad(Math.floor(t/86400));
-    hE.textContent=pad(Math.floor(t%86400/3600));
-    mE.textContent=pad(Math.floor(t%3600/60));
-    sE.textContent=pad(t%60);
-  }
-  upd(); setInterval(upd,1000);
-})();
+/* countdown removed — access is open */
 </script>
 </body>
 </html>
